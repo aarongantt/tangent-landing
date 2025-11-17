@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Tangent Pro – Signup & Pricing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Signup for Tangent Pro – the AI assistant that lives on every page you open." />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="images/tangent-icon.png" />
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo-link">
+                <img src="images/tangent-logo.png" alt="Tangent" class="logo-wordmark" />
+            </a>
+            <nav class="nav">
+                <a href="index.html#how-it-works" class="nav-link">How it works</a>
+                <a href="index.html#faq" class="nav-link">FAQ</a>
+                <a href="signup.html" class="nav-link nav-link-cta nav-link-cta-active">Pro / Signup</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="section section-alt">
+            <div class="container pricing-layout">
+                <div class="pricing-intro">
+                    <h1>Tangent Pro</h1>
+                    <p class="section-intro">
+                        One simple plan for people who live in their browser and rely on AI
+                        every day. No confusing tiers. No upsells. Just powerful on-page AI.
+                    </p>
+                </div>
+
+                <div class="pricing-card">
+                    <h2 class="pricing-name">Tangent Pro</h2>
+                    <p class="pricing-price">
+                        <span class="pricing-amount">$10</span>
+                        <span class="pricing-interval">/ month</span>
+                    </p>
+                    <p class="pricing-tagline">
+                        Includes generous monthly AI usage, tuned for real-world browsing.
+                    </p>
+
+                    <ul class="pricing-features">
+                        <li>All core Tangent chips (Explain, Summarize, Translate, Teach Me, and more)</li>
+                        <li>Context-aware responses that automatically understand the page</li>
+                        <li>Support for long articles and PDFs</li>
+                        <li>Ability to create and save custom chips</li>
+                        <li>Priority access to new features and improvements</li>
+                    </ul>
+
+                    <div class="pricing-cta">
+                        <p class="pricing-note">
+                            We’re not accepting payments yet, but you can reserve your spot in the
+                            first wave of Pro users.
+                        </p>
+                        <form class="waitlist-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                            <label for="pro-email" class="visually-hidden">Email address</label>
+                            <input id="pro-email" name="email" type="email" required
+                                placeholder="Enter your email to join the Pro waitlist" />
+                            <button type="submit">Reserve my Pro spot</button>
+                            <input type="hidden" name="plan" value="Tangent Pro" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2>What happens after I join?</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3>1. You join the early access list</h3>
+                        <p>
+                            We’ll email you when the Chrome extension is ready for early testing,
+                            with instructions for installing and using Tangent.
+                        </p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>2. You help shape Tangent</h3>
+                        <p>
+                            Early users will have a direct line to suggest chips, workflows, and
+                            improvements. Tangent is being built with power users in mind.
+                        </p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>3. You get launch pricing locked in</h3>
+                        <p>
+                            Founding Pro users will keep early-adopter pricing even as the product
+                            grows and improves.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <span>© <span id="year"></span> Tangent.</span>
+            <span>Made for people who think in tabs.</span>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>
