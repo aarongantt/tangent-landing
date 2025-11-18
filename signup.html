@@ -55,16 +55,18 @@
 
                     <div class="pricing-cta">
                         <p class="pricing-note">
-                            We’re not accepting payments yet, but you can reserve your spot in the
-                            first wave of Pro users.
+                            Enter your email to start your Tangent Pro subscription. You’ll be
+                            redirected to Stripe’s secure checkout page to confirm payment.
                         </p>
-                        <form class="waitlist-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                        <form class="waitlist-form" id="pro-checkout-form">
                             <label for="pro-email" class="visually-hidden">Email address</label>
-                            <input id="pro-email" name="email" type="email" required
-                                placeholder="Enter your email to join the Pro waitlist" />
-                            <button type="submit">Reserve my Pro spot</button>
-                            <input type="hidden" name="plan" value="Tangent Pro" />
+                            <input id="pro-email" name="email" type="email" required placeholder="Email address"
+                                autocomplete="email" />
+                            <button type="submit" id="pro-subscribe-button">
+                                Subscribe to Tangent Pro
+                            </button>
                         </form>
+                        <p class="pricing-note" id="pro-status" aria-live="polite"></p>
                     </div>
                 </div>
             </div>
@@ -108,7 +110,65 @@
     </footer>
 
     <script>
-        document.getElementById("year").textContent = new Date().getFullYear();
+        (function () {
+            // Keep the footer year in sync
+            var yearEl = document.getElementById("year");
+            if (yearEl) {
+                yearEl.textContent = new Date().getFullYear();
+            }
+
+            var form = document.getElementById("pro-checkout-form");
+            var emailInput = document.getElementById("pro-email");
+            var statusEl = document.getElementById("pro-status");
+            var submitBtn = document.getElementById("pro-subscribe-button");
+
+            if (!form || !emailInput || !statusEl || !submitBtn) {
+                return;
+            }
+
+            form.addEventListener("submit", async function (event) {
+                event.preventDefault();
+
+                var email = (emailInput.value || "").trim();
+                if (!email) {
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                statusEl.textContent = "Contacting Stripe…";
+
+                try {
+                    const res = await fetch(
+                        "https://api.tangentapp.co/api/create-checkout-session",
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ email: email })
+                        }
+                    );
+
+                    const rawText = await res.text();
+                    let data = {};
+                    try {
+                        data = rawText ? JSON.parse(rawText) : {};
+                    } catch (e) {
+                        throw new Error("Unexpected response from server.");
+                    }
+
+                    if (!res.ok || !data.url) {
+                        throw new Error(data.error || ("HTTP " + res.status));
+                    }
+
+                    statusEl.textContent = "Redirecting to Stripe…";
+                    window.location.href = data.url;
+                } catch (err) {
+                    console.error(err);
+                    statusEl.textContent =
+                        "Error starting checkout. Please try again in a moment.";
+                    submitBtn.disabled = false;
+                }
+            });
+        })();
     </script>
 </body>
 
