@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tangent Pro – Checkout Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #05060a;
+      color: #e9eef5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .card {
+      padding: 24px 28px;
+      border-radius: 16px;
+      background: radial-gradient(circle at top left,#272f3c,#13151c);
+      box-shadow: 0 16px 40px rgba(0,0,0,.6);
+      max-width: 420px;
+      width: 100%;
+    }
+    h1 { margin-top: 0; font-size: 20px; }
+    label { display:block; margin: 12px 0 6px; font-size: 14px; opacity: .9; }
+    input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(8,10,16,0.8);
+      color: inherit;
+    }
+    button {
+      margin-top: 16px;
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      color: #020617;
+    }
+    button[disabled] { opacity: .6; cursor: default; }
+    .status { margin-top: 10px; font-size: 13px; opacity: .85; }
+    .status.error { color: #f97373; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Tangent Pro – Stripe Test</h1>
+    <p>Enter an email and click the button to start a real Stripe Checkout session using your backend.</p>
+
+    <label for="email">Email (optional if you’re testing from the extension later)</label>
+    <input id="email" type="email" placeholder="you@example.com" />
+
+    <button id="subscribeBtn" type="button">Subscribe to Tangent Pro</button>
+    <div id="status" class="status"></div>
+  </div>
+
+  <script>
+    const subscribeBtn = document.getElementById("subscribeBtn");
+    const statusEl = document.getElementById("status");
+    const emailInput = document.getElementById("email");
+
+    subscribeBtn.addEventListener("click", async () => {
+      subscribeBtn.disabled = true;
+      statusEl.textContent = "Contacting backend…";
+      statusEl.classList.remove("error");
+
+      try {
+        const res = await fetch("https://tangent-backend.vercel.app/api/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: emailInput.value || undefined
+          })
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.url) {
+          throw new Error(data.error || ("HTTP " + res.status));
+        }
+
+        statusEl.textContent = "Redirecting to Stripe…";
+        window.location.href = data.url;
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = "Error starting checkout: " + (err.message || err);
+        statusEl.classList.add("error");
+        subscribeBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
