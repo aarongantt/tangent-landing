@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Tangent Pro – Checkout Test</title>
@@ -15,24 +16,37 @@
       min-height: 100vh;
       margin: 0;
     }
+
     .card {
       padding: 24px 28px;
       border-radius: 16px;
-      background: radial-gradient(circle at top left,#272f3c,#13151c);
-      box-shadow: 0 16px 40px rgba(0,0,0,.6);
+      background: radial-gradient(circle at top left, #272f3c, #13151c);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, .6);
       max-width: 420px;
       width: 100%;
     }
-    h1 { margin-top: 0; font-size: 20px; }
-    label { display:block; margin: 12px 0 6px; font-size: 14px; opacity: .9; }
+
+    h1 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-size: 14px;
+      opacity: .9;
+    }
+
     input {
       width: 100%;
       padding: 8px 10px;
       border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.25);
-      background: rgba(8,10,16,0.8);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(8, 10, 16, 0.8);
       color: inherit;
     }
+
     button {
       margin-top: 16px;
       width: 100%;
@@ -44,11 +58,24 @@
       background: linear-gradient(135deg, #4ade80, #22c55e);
       color: #020617;
     }
-    button[disabled] { opacity: .6; cursor: default; }
-    .status { margin-top: 10px; font-size: 13px; opacity: .85; }
-    .status.error { color: #f97373; }
+
+    button[disabled] {
+      opacity: .6;
+      cursor: default;
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 13px;
+      opacity: .85;
+    }
+
+    .status.error {
+      color: #f97373;
+    }
   </style>
 </head>
+
 <body>
   <div class="card">
     <h1>Tangent Pro – Stripe Test</h1>
@@ -72,28 +99,51 @@
       statusEl.classList.remove("error");
 
       try {
-        const res = await fetch("https://tangent-backend.vercel.app/api/create-checkout-session", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: emailInput.value || undefined
-          })
-        });
+        const res = await fetch(
+          "https://tangent-backend.vercel.app/api/create-checkout-session",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: emailInput.value || undefined,
+            }),
+          }
+        );
 
-        const data = await res.json();
-        if (!res.ok || !data.url) {
-          throw new Error(data.error || ("HTTP " + res.status));
+        const rawText = await res.text();
+        console.log("create-checkout-session raw response:", rawText);
+
+        let data
+        try {
+          data = rawText ? JSON.parse(rawText) : {};
+        } catch (e) {
+          throw new Error(
+            "Backend did not return valid JSON: " + (e.message || e)
+          );
         }
 
-        statusEl.textContent = "Redirecting to Stripe…";
+        if (!res.ok || !data.url) {
+          throw new Error(data.error || "HTTP " + res.status);
+        }
+
+        // Show the URL on the page and as a clickable link
+        statusEl.innerHTML =
+          'Checkout URL received. <br><a href="' +
+          data.url +
+          '" target="_blank" rel="noopener noreferrer">Open Stripe Checkout in a new tab</a>';
+        console.log("Stripe Checkout URL:", data.url);
+
+        // Optional: auto-redirect as well
         window.location.href = data.url;
       } catch (err) {
         console.error(err);
-        statusEl.textContent = "Error starting checkout: " + (err.message || err);
+        statusEl.textContent =
+          "Error starting checkout: " + (err.message || err);
         statusEl.classList.add("error");
         subscribeBtn.disabled = false;
       }
     });
   </script>
 </body>
+
 </html>
