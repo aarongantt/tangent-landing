@@ -110,19 +110,25 @@ a {
 .nav-link-cta {
     padding: 6px 14px;
     border-radius: var(--radius-pill);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid #ffffff;
     background: linear-gradient(
         135deg,
         #4da3ff 0%,
         #0053cc 100%
     );
     box-shadow: 0 0 12px rgba(77, 163, 255, 0.35);
-    color: #05060a;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* Remove underline animation for CTA button */
+.nav-link-cta::after {
+    content: none !important;
 }
 
 .nav-link-cta:hover {
-    filter: brightness(1.08);
-    box-shadow: 0 0 16px rgba(77, 163, 255, 0.55);
+    filter: none;
+    box-shadow: 0 0 12px rgba(77, 163, 255, 0.35);
 }
 
 .nav-link-cta-active {
