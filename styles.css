@@ -457,15 +457,15 @@ a {
 /* ---- Pricing page ---- */
 
 .pricing-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+    display: flex;
+    flex-direction: column;
     gap: 30px;
-    align-items: flex-start;
+    align-items: stretch;
 }
 
 .pricing-tier-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
 }
 
@@ -612,8 +612,11 @@ a {
 @media (max-width: 880px) {
 
     .hero-grid,
-    .value-grid,
-    .pricing-layout {
+    .value-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .pricing-tier-grid {
         grid-template-columns: minmax(0, 1fr);
     }
 
