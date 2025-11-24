@@ -30,50 +30,122 @@
         <section class="section section-alt">
             <div class="container pricing-layout">
                 <div class="pricing-intro">
-                    <h1>Tangent Pro</h1>
+                    <h1>Tangent plans</h1>
                     <p class="section-intro">
-                        One simple plan for people who live in their browser and rely on AI
-                        every day. No confusing tiers. No upsells. Just powerful on-page AI.
-                    </p>
-                </div>
-
-                <div class="pricing-card">
-                    <h2 class="pricing-name">Tangent Pro</h2>
-                    <p class="pricing-price">
-                        <span class="pricing-amount">$10</span>
-                        <span class="pricing-interval">/ month</span>
-                    </p>
-                    <p class="pricing-tagline">
-                        Includes generous monthly AI usage, tuned for real-world browsing.
+                        Choose the plan that fits how you work. All plans use the same on-page Tangent experience, with
+                        different monthly AI budgets for Standard and Deep usage.
                     </p>
 
-                    <ul class="pricing-features">
-                        <li>All core Tangent chips (Explain, Summarize, Translate, Teach Me, and more)</li>
-                        <li>Context-aware responses that automatically understand the page</li>
-                        <li>Support for long articles and PDFs</li>
-                        <li>Ability to create and save custom chips</li>
-                        <li>Priority access to new features and improvements</li>
-                    </ul>
-
-                    <div class="pricing-cta">
+                    <div class="pricing-email-block">
                         <p class="pricing-note">
-                            Enter your email to start your Tangent Pro subscription. You’ll be
-                            redirected to Stripe’s secure checkout page to confirm payment.
+                            Enter your email once, then pick a plan. You’ll be redirected to Stripe’s secure checkout
+                            page to confirm payment.
                         </p>
+                        <form class="waitlist-form" id="checkout-form">
+                            <label for="checkout-email" class="visually-hidden">Email address</label>
+                            <input id="checkout-email" name="email" type="email" required placeholder="Email address"
+                                autocomplete="email" />
+                        </form>
                         <p class="pricing-note">
-                            Already subscribed? <a href="https://api.tangentapp.co/auth/extension.html">Log in to Tangent</a>
+                            Already subscribed?
+                            <a href="https://api.tangentapp.co/auth/extension.html">Log in to Tangent</a>
                             from Chrome to link your browser.
                         </p>
-                        <form class="waitlist-form" id="pro-checkout-form">
-                            <label for="pro-email" class="visually-hidden">Email address</label>
-                            <input id="pro-email" name="email" type="email" required placeholder="Email address"
-                                autocomplete="email" />
-                            <button type="submit" id="pro-subscribe-button">
-                                Subscribe to Tangent Pro
-                            </button>
-                        </form>
-                        <p class="pricing-note" id="pro-status" aria-live="polite"></p>
+                        <p class="pricing-note" id="checkout-status" aria-live="polite"></p>
                     </div>
+                </div>
+
+                <div class="pricing-tier-grid">
+                    <!-- Pro -->
+                    <article class="pricing-card">
+                        <h2 class="pricing-name">Pro</h2>
+                        <p class="pricing-price">
+                            <span class="pricing-amount">$10</span>
+                            <span class="pricing-interval">/ month</span>
+                        </p>
+                        <p class="pricing-tagline">
+                            For people who live in their browser and rely on AI every day.
+                        </p>
+
+                        <ul class="pricing-features">
+                            <li>12M Standard tokens / month</li>
+                            <li>750k Deep tokens / month</li>
+                            <li>All core Tangent chips (Explain, Summarize, Translate, Teach Me, etc.)</li>
+                            <li>Context-aware responses that automatically understand the page</li>
+                            <li>Support for long articles and PDFs</li>
+                            <li>Ability to create and save custom chips</li>
+                            <li>Priority access to new features and improvements</li>
+                        </ul>
+
+                        <div class="pricing-cta">
+                            <button type="button" class="plan-button" data-plan="pro_monthly">
+                                Pro – $10 / month
+                            </button>
+                            <button type="button" class="plan-button plan-button-secondary" data-plan="pro_annual">
+                                Pro – $105 / year
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Business (Solo) -->
+                    <article class="pricing-card">
+                        <h2 class="pricing-name">Business (Solo)</h2>
+                        <p class="pricing-price">
+                            <span class="pricing-amount">$29</span>
+                            <span class="pricing-interval">/ month</span>
+                        </p>
+                        <p class="pricing-tagline">
+                            For creators, freelancers, and power users who need more headroom.
+                        </p>
+
+                        <ul class="pricing-features">
+                            <li>20M Standard tokens / month</li>
+                            <li>2M Deep tokens / month</li>
+                            <li>Great for research, scripting, and batch work</li>
+                            <li>All Pro features included</li>
+                            <li>Email support</li>
+                        </ul>
+
+                        <div class="pricing-cta">
+                            <button type="button" class="plan-button" data-plan="business_solo_monthly">
+                                Business (Solo) – $29 / month
+                            </button>
+                            <button type="button" class="plan-button plan-button-secondary"
+                                data-plan="business_solo_annual">
+                                Business (Solo) – $290 / year
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Business (Team) -->
+                    <article class="pricing-card">
+                        <h2 class="pricing-name">Business (Team)</h2>
+                        <p class="pricing-price">
+                            <span class="pricing-amount">$49</span>
+                            <span class="pricing-interval">/ seat / month</span>
+                        </p>
+                        <p class="pricing-tagline">
+                            For teams, studios, and agencies. Seat-based, with shared billing.
+                        </p>
+
+                        <ul class="pricing-features">
+                            <li>35M Standard tokens / seat / month</li>
+                            <li>3M Deep tokens / seat / month</li>
+                            <li>Seat-based limits for clear budgeting</li>
+                            <li>All Pro features included for each seat</li>
+                            <li>Priority support</li>
+                        </ul>
+
+                        <div class="pricing-cta">
+                            <button type="button" class="plan-button" data-plan="business_team_monthly">
+                                Business (Team) – $49 / seat / month
+                            </button>
+                            <button type="button" class="plan-button plan-button-secondary"
+                                data-plan="business_team_annual">
+                                Business (Team) – $490 / seat / year
+                            </button>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -83,9 +155,9 @@
                 <h2>What happens after I join?</h2>
                 <div class="faq-grid">
                     <div class="faq-item">
-                        <h3>1. You join the early access list</h3>
+                        <h3>1. You join early access</h3>
                         <p>
-                            We’ll email you when the Chrome extension is ready for early testing,
+                            We’ll email you when the Chrome extension is ready for testing,
                             with instructions for installing and using Tangent.
                         </p>
                     </div>
@@ -97,9 +169,9 @@
                         </p>
                     </div>
                     <div class="faq-item">
-                        <h3>3. You get launch pricing locked in</h3>
+                        <h3>3. You lock in launch pricing</h3>
                         <p>
-                            Founding Pro users will keep early-adopter pricing even as the product
+                            Founding users will keep early-adopter pricing even as the product
                             grows and improves.
                         </p>
                     </div>
@@ -107,6 +179,7 @@
             </div>
         </section>
     </main>
+
 
     <footer class="site-footer">
         <div class="container footer-inner">
@@ -123,24 +196,37 @@
                 yearEl.textContent = new Date().getFullYear();
             }
 
-            var form = document.getElementById("pro-checkout-form");
-            var emailInput = document.getElementById("pro-email");
-            var statusEl = document.getElementById("pro-status");
-            var submitBtn = document.getElementById("pro-subscribe-button");
+            var emailInput = document.getElementById("checkout-email");
+            var statusEl = document.getElementById("checkout-status");
+            var planButtons = document.querySelectorAll(".plan-button");
 
-            if (!form || !emailInput || !statusEl || !submitBtn) {
+            if (!emailInput || !statusEl || !planButtons.length) {
                 return;
             }
 
-            form.addEventListener("submit", async function (event) {
-                event.preventDefault();
+            // TODO: replace these with your real Stripe price IDs
+            var PRICE_IDS = {
+                pro_monthly: "price_1SUFFhFYbfjZcbAUKs2AroSG",
+                pro_annual: "price_1SWtj8FYbfjZcbAUByySQeK7",
+                business_solo_monthly: "price_1SWtkiFYbfjZcbAUv0QsKWy6",
+                business_solo_annual: "price_1SWtl8FYbfjZcbAU4JzU5pTK",
+                business_team_monthly: "price_1SWtlcFYbfjZcbAUnebgB9UU",
+                business_team_annual: "price_1SWtm2FYbfjZcbAU8pWGPFYr"
+            };
 
+            async function startCheckout(planCode) {
                 var email = (emailInput.value || "").trim();
                 if (!email) {
+                    statusEl.textContent = "Please enter an email address first.";
                     return;
                 }
 
-                submitBtn.disabled = true;
+                var priceId = PRICE_IDS[planCode];
+                if (!priceId) {
+                    statusEl.textContent = "Unknown plan selected. Please refresh and try again.";
+                    return;
+                }
+
                 statusEl.textContent = "Contacting Stripe…";
 
                 try {
@@ -149,7 +235,7 @@
                         {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ email: email })
+                            body: JSON.stringify({ email: email, priceId: priceId })
                         }
                     );
 
@@ -171,8 +257,14 @@
                     console.error(err);
                     statusEl.textContent =
                         "Error starting checkout. Please try again in a moment.";
-                    submitBtn.disabled = false;
                 }
+            }
+
+            planButtons.forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    var planCode = btn.getAttribute("data-plan");
+                    startCheckout(planCode);
+                });
             });
         })();
     </script>

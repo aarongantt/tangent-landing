@@ -463,6 +463,41 @@ a {
     align-items: flex-start;
 }
 
+.pricing-tier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+/* Buttons inside pricing cards */
+.plan-button {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: var(--radius-pill);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    color: #05060a;
+    box-shadow: 0 10px 24px rgba(5, 122, 255, 0.45);
+    margin-bottom: 8px;
+    transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, filter 0.12s ease-out;
+}
+
+.plan-button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    box-shadow: 0 14px 28px rgba(5, 122, 255, 0.55);
+}
+
+.plan-button-secondary {
+    background: transparent;
+    color: var(--text-main);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: none;
+}
+
 .pricing-card {
     background: var(--bg-soft);
     border-radius: 22px;
