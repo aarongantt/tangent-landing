@@ -471,7 +471,6 @@ a {
 
 /* Buttons inside pricing cards */
 .plan-button {
-    width: 100%;
     padding: 10px 14px;
     border-radius: var(--radius-pill);
     border: none;
@@ -555,6 +554,19 @@ a {
     left: 4px;
     top: 0;
     color: var(--accent-strong);
+}
+
+.pricing-cta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.pricing-cta .plan-button,
+.pricing-cta .plan-button-secondary {
+    flex: 1 1 0;
+    text-align: center;
 }
 
 .pricing-note {
