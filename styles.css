@@ -110,13 +110,19 @@ a {
 .nav-link-cta {
     padding: 6px 14px;
     border-radius: var(--radius-pill);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: linear-gradient(135deg, rgba(74, 144, 226, 0.12), rgba(10, 20, 40, 0.9));
-    box-shadow: 0 0 0 1px rgba(74, 144, 226, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(
+        135deg,
+        #4da3ff 0%,
+        #0053cc 100%
+    );
+    box-shadow: 0 0 12px rgba(77, 163, 255, 0.35);
+    color: #05060a;
 }
 
 .nav-link-cta:hover {
-    box-shadow: 0 0 0 1px rgba(74, 144, 226, 0.35);
+    filter: brightness(1.08);
+    box-shadow: 0 0 16px rgba(77, 163, 255, 0.55);
 }
 
 .nav-link-cta-active {
