@@ -575,6 +575,20 @@ a {
     margin-bottom: 10px;
 }
 
+.pricing-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.pricing-cta .plan-button,
+.pricing-cta .plan-button-secondary {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
 /* ---- Footer ---- */
 
 .site-footer {

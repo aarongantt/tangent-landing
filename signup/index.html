@@ -69,11 +69,11 @@
                         </ul>
 
                         <div class="pricing-cta">
+                            <button type="button" class="plan-button plan-button-secondary" data-plan="pro_annual">
+                                Pro – $105 / year ($8.75/mo)
+                            </button>
                             <button type="button" class="plan-button" data-plan="pro_monthly">
                                 Pro – $10 / month
-                            </button>
-                            <button type="button" class="plan-button plan-button-secondary" data-plan="pro_annual">
-                                Pro – $105 / year
                             </button>
                         </div>
                     </article>
@@ -98,12 +98,12 @@
                         </ul>
 
                         <div class="pricing-cta">
-                            <button type="button" class="plan-button" data-plan="business_solo_monthly">
-                                Business (Solo) – $29 / month
-                            </button>
                             <button type="button" class="plan-button plan-button-secondary"
                                 data-plan="business_solo_annual">
-                                Business (Solo) – $290 / year
+                                Business (Solo) – $290 / year ($24.17/mo)
+                            </button>
+                            <button type="button" class="plan-button" data-plan="business_solo_monthly">
+                                Business (Solo) – $29 / month
                             </button>
                         </div>
                     </article>
@@ -128,12 +128,12 @@
                         </ul>
 
                         <div class="pricing-cta">
-                            <button type="button" class="plan-button" data-plan="business_team_monthly">
-                                Business (Team) – $49 / seat / month
-                            </button>
                             <button type="button" class="plan-button plan-button-secondary"
                                 data-plan="business_team_annual">
-                                Business (Team) – $490 / seat / year
+                                Business (Team) – $490 / seat / year ($40.83/mo)
+                            </button>
+                            <button type="button" class="plan-button" data-plan="business_team_monthly">
+                                Business (Team) – $49 / seat / month
                             </button>
                         </div>
                     </article>
@@ -179,73 +179,73 @@
         </div>
     </footer>
 
-<script>
-    (function () {
-        // Keep the footer year in sync
-        var yearEl = document.getElementById("year");
-        if (yearEl) {
-            yearEl.textContent = new Date().getFullYear();
-        }
+    <script>
+        (function () {
+            // Keep the footer year in sync
+            var yearEl = document.getElementById("year");
+            if (yearEl) {
+                yearEl.textContent = new Date().getFullYear();
+            }
 
-        var planButtons = document.querySelectorAll(".plan-button");
-        if (!planButtons.length) {
-            return;
-        }
-
-        var PRICE_IDS = {
-            pro_monthly: "price_1SUFFhFYbfjZcbAUKs2AroSG",
-            pro_annual: "price_1SWtj8FYbfjZcbAUByySQeK7",
-            business_solo_monthly: "price_1SWtkiFYbfjZcbAUv0QsKWy6",
-            business_solo_annual: "price_1SWtl8FYbfjZcbAU4JzU5pTK",
-            business_team_monthly: "price_1SWtlcFYbfjZcbAUnebgB9UU",
-            business_team_annual: "price_1SWtm2FYbfjZcbAU8pWGPFYr"
-        };
-
-        async function startCheckout(planCode) {
-            var priceId = PRICE_IDS[planCode];
-            if (!priceId) {
-                console.error("Unknown plan selected:", planCode);
-                alert("Unknown plan selected. Please refresh and try again.");
+            var planButtons = document.querySelectorAll(".plan-button");
+            if (!planButtons.length) {
                 return;
             }
 
-            try {
-                const res = await fetch(
-                    "https://api.tangentapp.co/api/create-checkout-session",
-                    {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ priceId: priceId })
-                    }
-                );
+            var PRICE_IDS = {
+                pro_monthly: "price_1SUFFhFYbfjZcbAUKs2AroSG",
+                pro_annual: "price_1SWtj8FYbfjZcbAUByySQeK7",
+                business_solo_monthly: "price_1SWtkiFYbfjZcbAUv0QsKWy6",
+                business_solo_annual: "price_1SWtl8FYbfjZcbAU4JzU5pTK",
+                business_team_monthly: "price_1SWtlcFYbfjZcbAUnebgB9UU",
+                business_team_annual: "price_1SWtm2FYbfjZcbAU8pWGPFYr"
+            };
 
-                const rawText = await res.text();
-                let data = {};
+            async function startCheckout(planCode) {
+                var priceId = PRICE_IDS[planCode];
+                if (!priceId) {
+                    console.error("Unknown plan selected:", planCode);
+                    alert("Unknown plan selected. Please refresh and try again.");
+                    return;
+                }
+
                 try {
-                    data = rawText ? JSON.parse(rawText) : {};
-                } catch (e) {
-                    throw new Error("Unexpected response from server.");
-                }
+                    const res = await fetch(
+                        "https://api.tangentapp.co/api/create-checkout-session",
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ priceId: priceId })
+                        }
+                    );
 
-                if (!res.ok || !data.url) {
-                    throw new Error(data.error || ("HTTP " + res.status));
-                }
+                    const rawText = await res.text();
+                    let data = {};
+                    try {
+                        data = rawText ? JSON.parse(rawText) : {};
+                    } catch (e) {
+                        throw new Error("Unexpected response from server.");
+                    }
 
-                window.location.href = data.url;
-            } catch (err) {
-                console.error(err);
-                alert("Error starting checkout. Please try again in a moment.");
+                    if (!res.ok || !data.url) {
+                        throw new Error(data.error || ("HTTP " + res.status));
+                    }
+
+                    window.location.href = data.url;
+                } catch (err) {
+                    console.error(err);
+                    alert("Error starting checkout. Please try again in a moment.");
+                }
             }
-        }
 
-        planButtons.forEach(function (btn) {
-            btn.addEventListener("click", function () {
-                var planCode = btn.getAttribute("data-plan");
-                startCheckout(planCode);
+            planButtons.forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    var planCode = btn.getAttribute("data-plan");
+                    startCheckout(planCode);
+                });
             });
-        });
-    })();
-</script>
+        })();
+    </script>
 </body>
 
 </html>
