@@ -110,14 +110,14 @@ a {
 .nav-link-cta {
     padding: 6px 14px;
     border-radius: var(--radius-pill);
-    border: 1px solid #ffffff;
+    border: 1px solid #bfc4d6; /* light grey */
     background: linear-gradient(
         135deg,
         #4da3ff 0%,
         #0053cc 100%
     );
     box-shadow: 0 0 12px rgba(77, 163, 255, 0.35);
-    color: #ffffff;
+    color: #d5d9e6; /* light grey text */
     font-weight: 700;
 }
 
@@ -127,6 +127,8 @@ a {
 }
 
 .nav-link-cta:hover {
+    border-color: #ffffff;
+    color: #ffffff;
     filter: none;
     box-shadow: 0 0 12px rgba(77, 163, 255, 0.35);
 }
