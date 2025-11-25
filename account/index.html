@@ -105,7 +105,7 @@
         const { data: session } = await supabaseClient.auth.getSession();
         const token = session?.session?.access_token;
         if (!token) {
-          window.location.href = "/account/login";
+          window.location.href = "/account/login/";
           return;
         }
         const info = await fetchPlan(token);
