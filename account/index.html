@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tangent Account</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" type="image/png" href="/images/tangent_t_logo.png" />
+</head>
+<body class="account-body">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo-link">
+        <img src="/images/tangent_logo.png" alt="Tangent" class="logo-wordmark" />
+      </a>
+      <nav class="nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/signup" class="nav-link">Pricing</a>
+        <a href="/account" class="nav-link nav-link-cta nav-link-cta-active">Account</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="account-main">
+    <section class="section section-alt">
+      <div class="container account-grid">
+        <div class="account-card">
+          <h1>Sign in to manage your subscription</h1>
+          <p class="section-intro">Use the same email and password you use in the Tangent extension.</p>
+
+          <form id="login-form" class="account-form">
+            <label class="form-label">
+              Email
+              <input type="email" id="email" required placeholder="you@example.com" />
+            </label>
+            <label class="form-label">
+              Password
+              <input type="password" id="password" required placeholder="••••••••" />
+            </label>
+            <button type="submit" class="btn-primary">Sign in</button>
+            <p id="login-status" class="status"></p>
+          </form>
+        </div>
+
+        <div class="account-card">
+          <h2>Your plan</h2>
+          <div id="plan-details" class="plan-details">
+            <p>Sign in to see your plan.</p>
+          </div>
+          <button id="billing-portal" class="btn-secondary" disabled>Open billing portal</button>
+          <p id="plan-status" class="status"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Tangent.</span>
+      <span>Manage your plan securely.</span>
+    </div>
+  </footer>
+
+  <!-- Supabase client -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script>
+    // TODO: set these at deploy time (public anon key only; never the service key)
+    const SUPABASE_URL = window.TANGENT_SUPABASE_URL || "https://YOUR_SUPABASE_URL";
+    const SUPABASE_ANON_KEY = window.TANGENT_SUPABASE_ANON_KEY || "YOUR_SUPABASE_ANON_KEY";
+    const API_BASE = "https://api.tangentapp.co";
+
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: true }
+    });
+
+    const yearEl = document.getElementById("year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    const loginForm = document.getElementById("login-form");
+    const loginStatus = document.getElementById("login-status");
+    const planDetails = document.getElementById("plan-details");
+    const planStatus = document.getElementById("plan-status");
+    const billingBtn = document.getElementById("billing-portal");
+
+    async function signIn(email, password) {
+      loginStatus.textContent = "Signing in…";
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) {
+        loginStatus.textContent = error.message || "Login failed.";
+        throw error;
+      }
+      loginStatus.textContent = "Signed in.";
+      return data.session?.access_token || null;
+    }
+
+    async function fetchPlan(token) {
+      planStatus.textContent = "Loading plan…";
+      const res = await fetch(`${API_BASE}/api/user-plan`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) {
+        const msg = await res.text();
+        throw new Error(msg || `HTTP ${res.status}`);
+      }
+      return res.json();
+    }
+
+    async function openBillingPortal(token) {
+      planStatus.textContent = "Opening billing portal…";
+      const res = await fetch(`${API_BASE}/api/billing-portal`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok || !body.url) {
+        throw new Error(body.error || `HTTP ${res.status}`);
+      }
+      window.location.href = body.url;
+    }
+
+    async function renderPlan() {
+      try {
+        const { data: session } = await supabaseClient.auth.getSession();
+        const token = session?.session?.access_token;
+        if (!token) {
+          planDetails.innerHTML = "<p>Please sign in to view your plan.</p>";
+          billingBtn.disabled = true;
+          return;
+        }
+        const info = await fetchPlan(token);
+        const plan = info.plan_code || "Unknown plan";
+        const remainingStd = info.remaining_tokens ?? info.remaining_standard_tokens;
+        const remainingDeep = info.remaining_deep_tokens ?? 0;
+        planDetails.innerHTML = `
+          <p><strong>Plan:</strong> ${plan}</p>
+          <p><strong>Email:</strong> ${info.email || info.user_email || "—"}</p>
+          <p><strong>Standard remaining:</strong> ${remainingStd ?? "—"}</p>
+          <p><strong>Deep remaining:</strong> ${remainingDeep}</p>
+        `;
+        planStatus.textContent = "";
+        billingBtn.disabled = false;
+        billingBtn.onclick = () => openBillingPortal(token).catch(err => {
+          planStatus.textContent = err.message || "Failed to open billing portal.";
+        });
+      } catch (e) {
+        planStatus.textContent = e.message || "Failed to load plan.";
+        billingBtn.disabled = true;
+      }
+    }
+
+    loginForm?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = /** @type {HTMLInputElement} */ (document.getElementById("email")).value.trim();
+      const password = /** @type {HTMLInputElement} */ (document.getElementById("password")).value;
+      if (!email || !password) return;
+      try {
+        await signIn(email, password);
+        await renderPlan();
+      } catch (_) { /* handled */ }
+    });
+
+    // On load, if already logged in, show plan
+    renderPlan();
+  </script>
+</body>
+</html>
