@@ -26,12 +26,14 @@
     <section class="section section-alt">
       <div class="container account-grid">
         <div class="account-card">
-          <h1>Your subscription</h1>
-          <p class="section-intro">Signed-in users can see their plan and open the billing portal.</p>
+          <h1>Account</h1>
           <div id="plan-details" class="plan-details">
             <p>Loading…</p>
           </div>
-          <button id="billing-portal" class="btn-secondary" disabled>Open billing portal</button>
+          <div class="account-actions">
+            <button id="billing-portal" class="btn-secondary" disabled>Billing Portal</button>
+            <button id="sign-out" class="btn-secondary">Sign Out</button>
+          </div>
           <p id="plan-status" class="status"></p>
         </div>
       </div>
@@ -63,6 +65,7 @@
     const planDetails = document.getElementById("plan-details");
     const planStatus = document.getElementById("plan-status");
     const billingBtn = document.getElementById("billing-portal");
+    const signOutBtn = document.getElementById("sign-out");
     const loginLink = document.getElementById("loginNavLink");
     const signupBtn = document.getElementById("signupNavButton");
 
@@ -245,6 +248,18 @@
         setNavLoggedOut();
       }
     }
+
+    signOutBtn?.addEventListener("click", async () => {
+      try {
+        await supabaseClient.auth.signOut();
+        planDetails.innerHTML = "<p>You have been signed out.</p>";
+        billingBtn.disabled = true;
+        setNavLoggedOut();
+        openLoginModal();
+      } catch (e) {
+        planStatus.textContent = e.message || "Failed to sign out.";
+      }
+    });
 
     // On load, ensure session or redirect to login, then show plan
     renderPlan();
