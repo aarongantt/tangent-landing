@@ -64,9 +64,9 @@
   <!-- Supabase client -->
   <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script>
-    // TODO: set these at deploy time (public anon key only; never the service key)
-    const SUPABASE_URL = window.TANGENT_SUPABASE_URL || "https://YOUR_SUPABASE_URL";
-    const SUPABASE_ANON_KEY = window.TANGENT_SUPABASE_ANON_KEY || "YOUR_SUPABASE_ANON_KEY";
+    // Public anon key only (same project used by the extension)
+    const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
     const API_BASE = "https://api.tangentapp.co";
 
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
