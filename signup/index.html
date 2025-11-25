@@ -20,7 +20,7 @@
                 <a href="/#how-it-works" class="nav-link">How it works</a>
                 <a href="/#pricing" class="nav-link">Pricing</a>
                 <a href="/#faq" class="nav-link">FAQ</a>
-                <a href="/account/login/" class="nav-link">Log in</a>
+                <a href="/account/login/" class="nav-link" id="loginNavLink">Log in</a>
                 <a href="/signup" class="nav-link nav-link-cta nav-link-cta-active">Signup</a>
             </nav>
         </div>
@@ -246,6 +246,31 @@
                     var planCode = btn.getAttribute("data-plan");
                     startCheckout(planCode);
                 });
+            });
+        })();
+    </script>
+
+    <!-- Swap Login→Account when Supabase session exists -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script>
+        (function () {
+            var link = document.getElementById("loginNavLink");
+            if (!link || !window.supabase) return;
+            var SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
+            var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
+            var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
+            client.auth.getSession().then(function (res) {
+                var data = res && res.data;
+                if (data && data.session && data.session.access_token) {
+                    link.textContent = "Account";
+                    link.href = "/account";
+                } else {
+                    link.textContent = "Log in";
+                    link.href = "/account/login/";
+                }
+            }).catch(function () {
+                link.textContent = "Log in";
+                link.href = "/account/login/";
             });
         })();
     </script>

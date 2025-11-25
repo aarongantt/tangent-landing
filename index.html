@@ -21,7 +21,7 @@
             <nav class="nav">
                 <a href="#how-it-works" class="nav-link">How it works</a>
                 <a href="#faq" class="nav-link">FAQ</a>
-                <a href="/account/login/" class="nav-link">Log in</a>
+                <a href="/account/login/" class="nav-link" id="loginNavLink">Log in</a>
                 <a href="/signup" class="nav-link nav-link-cta">Sign Up</a>
             </nav>
         </div>
@@ -225,6 +225,30 @@
     <script>
         // Simple current-year setter
         document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
+    <!-- Swap Login→Account when Supabase session exists -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script>
+        (function () {
+            const link = document.getElementById("loginNavLink");
+            if (!link || !window.supabase) return;
+            const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
+            const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
+            const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
+            client.auth.getSession().then(({ data }) => {
+                if (data?.session?.access_token) {
+                    link.textContent = "Account";
+                    link.href = "/account";
+                } else {
+                    link.textContent = "Log in";
+                    link.href = "/account/login/";
+                }
+            }).catch(() => {
+                link.textContent = "Log in";
+                link.href = "/account/login/";
+            });
+        })();
     </script>
 </body>
 
