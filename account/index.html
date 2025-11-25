@@ -25,27 +25,10 @@
     <section class="section section-alt">
       <div class="container account-grid">
         <div class="account-card">
-          <h1>Sign in to manage your subscription</h1>
-          <p class="section-intro">Use the same email and password you use in the Tangent extension.</p>
-
-          <form id="login-form" class="account-form">
-            <label class="form-label">
-              Email
-              <input type="email" id="email" required placeholder="you@example.com" />
-            </label>
-            <label class="form-label">
-              Password
-              <input type="password" id="password" required placeholder="••••••••" />
-            </label>
-            <button type="submit" class="btn-primary">Sign in</button>
-            <p id="login-status" class="status"></p>
-          </form>
-        </div>
-
-        <div class="account-card">
-          <h2>Your plan</h2>
+          <h1>Your subscription</h1>
+          <p class="section-intro">Signed-in users can see their plan and open the billing portal.</p>
           <div id="plan-details" class="plan-details">
-            <p>Sign in to see your plan.</p>
+            <p>Loading…</p>
           </div>
           <button id="billing-portal" class="btn-secondary" disabled>Open billing portal</button>
           <p id="plan-status" class="status"></p>
@@ -76,8 +59,6 @@
     const yearEl = document.getElementById("year");
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    const loginForm = document.getElementById("login-form");
-    const loginStatus = document.getElementById("login-status");
     const planDetails = document.getElementById("plan-details");
     const planStatus = document.getElementById("plan-status");
     const billingBtn = document.getElementById("billing-portal");
@@ -124,8 +105,7 @@
         const { data: session } = await supabaseClient.auth.getSession();
         const token = session?.session?.access_token;
         if (!token) {
-          planDetails.innerHTML = "<p>Please sign in to view your plan.</p>";
-          billingBtn.disabled = true;
+          window.location.href = "/account/login";
           return;
         }
         const info = await fetchPlan(token);
@@ -149,18 +129,7 @@
       }
     }
 
-    loginForm?.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = /** @type {HTMLInputElement} */ (document.getElementById("email")).value.trim();
-      const password = /** @type {HTMLInputElement} */ (document.getElementById("password")).value;
-      if (!email || !password) return;
-      try {
-        await signIn(email, password);
-        await renderPlan();
-      } catch (_) { /* handled */ }
-    });
-
-    // On load, if already logged in, show plan
+    // On load, ensure session or redirect to login, then show plan
     renderPlan();
   </script>
 </body>
