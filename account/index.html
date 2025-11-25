@@ -16,7 +16,8 @@
       <nav class="nav">
         <a href="/" class="nav-link">Home</a>
         <a href="/signup" class="nav-link">Pricing</a>
-        <a href="/account" class="nav-link nav-link-cta nav-link-cta-active">Account</a>
+        <a href="/account/login/" class="nav-link" id="loginNavLink">Log in</a>
+        <a href="/signup" class="nav-link nav-link-cta" id="signupNavButton">Sign Up</a>
       </nav>
     </div>
   </header>
@@ -48,9 +49,9 @@
   <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script>
     // Public anon key only (same project used by the extension)
-    const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
-    const API_BASE = "https://api.tangentapp.co";
+        const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
+        const API_BASE = "https://api.tangentapp.co";
 
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       auth: { persistSession: true }
@@ -62,6 +63,32 @@
     const planDetails = document.getElementById("plan-details");
     const planStatus = document.getElementById("plan-status");
     const billingBtn = document.getElementById("billing-portal");
+    const loginLink = document.getElementById("loginNavLink");
+    const signupBtn = document.getElementById("signupNavButton");
+
+    function setNavLoggedIn() {
+      if (loginLink) {
+        loginLink.textContent = "Account";
+        loginLink.href = "/account";
+        loginLink.classList.add("nav-link-cta", "nav-link-cta-active");
+        loginLink.onclick = null;
+      }
+      if (signupBtn) signupBtn.style.display = "none";
+    }
+
+    function setNavLoggedOut() {
+      if (loginLink) {
+        loginLink.textContent = "Log in";
+        loginLink.href = "javascript:void(0)";
+        loginLink.classList.remove("nav-link-cta", "nav-link-cta-active");
+        loginLink.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+      }
+      if (signupBtn) {
+        signupBtn.style.display = "inline-flex";
+        signupBtn.href = "/signup";
+        signupBtn.classList.add("nav-link-cta");
+      }
+    }
 
     async function signIn(email, password) {
       loginStatus.textContent = "Signing in…";
@@ -100,12 +127,100 @@
       window.location.href = body.url;
     }
 
+    let loginModal;
+    function ensureModal() {
+      if (loginModal) return loginModal;
+      loginModal = document.createElement("div");
+      loginModal.id = "tg-login-modal";
+      loginModal.style.position = "fixed";
+      loginModal.style.inset = "0";
+      loginModal.style.background = "rgba(15,23,42,0.55)";
+      loginModal.style.backdropFilter = "blur(8px)";
+      loginModal.style.display = "none";
+      loginModal.style.alignItems = "center";
+      loginModal.style.justifyContent = "center";
+      loginModal.style.zIndex = "9999";
+      loginModal.innerHTML = `
+        <div style="background:#0b1224;border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px;width:100%;max-width:400px;box-shadow:0 18px 40px rgba(0,0,0,0.35);color:#e5e7eb;position:relative;">
+          <button id="tgLoginClose" style="position:absolute;top:10px;right:10px;background:transparent;border:0;color:#cbd5e1;font-size:18px;cursor:pointer;">×</button>
+          <h2 style="margin:0 0 8px 0;">Sign in to Tangent</h2>
+          <p style="margin:0 0 12px 0;color:#cbd5e1;">Use the same email and password you use in the Tangent extension.</p>
+          <label style="display:block;margin-bottom:10px;">Email
+            <input id="tgLoginEmail" type="email" autocomplete="email" style="width:100%;padding:10px 12px;margin-top:4px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#f8fafc;" />
+          </label>
+          <label style="display:block;margin-bottom:10px;">Password
+            <input id="tgLoginPassword" type="password" autocomplete="current-password" style="width:100%;padding:10px 12px;margin-top:4px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#f8fafc;" />
+          </label>
+          <div style="display:flex;gap:10px;margin-top:12px;">
+            <button id="tgLoginSignIn" class="btn-primary" style="flex:1;">Sign in</button>
+            <button id="tgLoginSignUp" class="btn-secondary" style="flex:1;">Sign up</button>
+          </div>
+          <p id="tgLoginStatus" style="min-height:18px;font-size:13px;margin-top:10px;"></p>
+        </div>
+      `;
+      document.body.appendChild(loginModal);
+      loginModal.addEventListener("click", (e) => { if (e.target === loginModal) closeLoginModal(); });
+      loginModal.querySelector("#tgLoginClose").addEventListener("click", closeLoginModal);
+      loginModal.querySelector("#tgLoginSignIn").addEventListener("click", () => handleAuth("signin"));
+      loginModal.querySelector("#tgLoginSignUp").addEventListener("click", () => handleAuth("signup"));
+      const emailInput = loginModal.querySelector("#tgLoginEmail");
+      const pwdInput = loginModal.querySelector("#tgLoginPassword");
+      const onKey = (e) => { if (e.key === "Enter") { e.preventDefault(); handleAuth("signin"); } };
+      emailInput.addEventListener("keydown", onKey);
+      pwdInput.addEventListener("keydown", onKey);
+      return loginModal;
+    }
+
+    function setStatus(msg, isError) {
+      const el = loginModal?.querySelector("#tgLoginStatus");
+      if (!el) return;
+      el.textContent = msg || "";
+      el.style.color = isError ? "#f87171" : "#cbd5e1";
+    }
+
+    function openLoginModal() {
+      ensureModal();
+      loginModal.style.display = "flex";
+      const emailInput = loginModal.querySelector("#tgLoginEmail");
+      if (emailInput) emailInput.focus();
+    }
+    function closeLoginModal() { if (loginModal) loginModal.style.display = "none"; }
+
+    async function handleAuth(mode) {
+      ensureModal();
+      const email = loginModal.querySelector("#tgLoginEmail").value.trim();
+      const password = loginModal.querySelector("#tgLoginPassword").value;
+      if (!email || !password) {
+        setStatus("Enter email and password.", true);
+        return;
+      }
+      setStatus(mode === "signin" ? "Signing in…" : "Creating account…", false);
+      try {
+        if (mode === "signin") {
+          const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+          setStatus("Signed in. Redirecting…", false);
+          setNavLoggedIn();
+          setTimeout(() => { renderPlan(); closeLoginModal(); }, 200);
+        } else {
+          const { error } = await supabaseClient.auth.signUp({ email, password });
+          if (error) throw error;
+          setStatus("Account created. Check email to confirm, then sign in.", false);
+        }
+      } catch (e) {
+        setStatus(e.message || "Authentication failed.", true);
+      }
+    }
+
     async function renderPlan() {
       try {
         const { data: session } = await supabaseClient.auth.getSession();
         const token = session?.session?.access_token;
         if (!token) {
-          window.location.href = "/account/login/";
+          planDetails.innerHTML = "<p>Please sign in to view your plan.</p>";
+          billingBtn.disabled = true;
+          openLoginModal();
+          setNavLoggedOut();
           return;
         }
         const info = await fetchPlan(token);
@@ -123,9 +238,11 @@
         billingBtn.onclick = () => openBillingPortal(token).catch(err => {
           planStatus.textContent = err.message || "Failed to open billing portal.";
         });
+        setNavLoggedIn();
       } catch (e) {
         planStatus.textContent = e.message || "Failed to load plan.";
         billingBtn.disabled = true;
+        setNavLoggedOut();
       }
     }
 

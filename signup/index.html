@@ -21,7 +21,7 @@
                 <a href="/#pricing" class="nav-link">Pricing</a>
                 <a href="/#faq" class="nav-link">FAQ</a>
                 <a href="/account/login/" class="nav-link" id="loginNavLink">Log in</a>
-                <a href="/signup" class="nav-link nav-link-cta nav-link-cta-active">Signup</a>
+                <a href="/signup" class="nav-link nav-link-cta nav-link-cta-active" id="signupNavButton">Signup</a>
             </nav>
         </div>
     </header>
@@ -250,28 +250,134 @@
         })();
     </script>
 
-    <!-- Swap Login→Account when Supabase session exists -->
+    <!-- Shared auth/nav logic with modal overlay -->
     <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
     <script>
         (function () {
-            var link = document.getElementById("loginNavLink");
-            if (!link || !window.supabase) return;
             var SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
             var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
             var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
+
+            var loginLink = document.getElementById("loginNavLink");
+            var signupBtn = document.getElementById("signupNavButton");
+
+            function setNavLoggedIn() {
+                if (loginLink) {
+                    loginLink.textContent = "Account";
+                    loginLink.href = "/account";
+                    loginLink.classList.add("nav-link-cta", "nav-link-cta-active");
+                    loginLink.onclick = null;
+                }
+                if (signupBtn) signupBtn.style.display = "none";
+            }
+
+            function setNavLoggedOut() {
+                if (loginLink) {
+                    loginLink.textContent = "Log in";
+                    loginLink.href = "javascript:void(0)";
+                    loginLink.classList.remove("nav-link-cta", "nav-link-cta-active");
+                    loginLink.onclick = function (e) { e.preventDefault(); openLoginModal(); };
+                }
+                if (signupBtn) {
+                    signupBtn.style.display = "inline-flex";
+                    signupBtn.href = "/signup";
+                    signupBtn.classList.add("nav-link-cta", "nav-link-cta-active");
+                }
+            }
+
+            var modal;
+            function ensureModal() {
+                if (modal) return modal;
+                modal = document.createElement("div");
+                modal.id = "tg-login-modal";
+                modal.style.position = "fixed";
+                modal.style.inset = "0";
+                modal.style.background = "rgba(15,23,42,0.55)";
+                modal.style.backdropFilter = "blur(8px)";
+                modal.style.display = "none";
+                modal.style.alignItems = "center";
+                modal.style.justifyContent = "center";
+                modal.style.zIndex = "9999";
+                modal.innerHTML = `
+                  <div style="background:#0b1224;border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:20px;width:100%;max-width:400px;box-shadow:0 18px 40px rgba(0,0,0,0.35);color:#e5e7eb;position:relative;">
+                    <button id="tgLoginClose" style="position:absolute;top:10px;right:10px;background:transparent;border:0;color:#cbd5e1;font-size:18px;cursor:pointer;">×</button>
+                    <h2 style="margin:0 0 8px 0;">Sign in to Tangent</h2>
+                    <p style="margin:0 0 12px 0;color:#cbd5e1;">Use the same email and password you use in the Tangent extension.</p>
+                    <label style="display:block;margin-bottom:10px;">Email
+                      <input id="tgLoginEmail" type="email" autocomplete="email" style="width:100%;padding:10px 12px;margin-top:4px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#f8fafc;" />
+                    </label>
+                    <label style="display:block;margin-bottom:10px;">Password
+                      <input id="tgLoginPassword" type="password" autocomplete="current-password" style="width:100%;padding:10px 12px;margin-top:4px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#f8fafc;" />
+                    </label>
+                    <div style="display:flex;gap:10px;margin-top:12px;">
+                      <button id="tgLoginSignIn" class="btn-primary" style="flex:1;">Sign in</button>
+                      <button id="tgLoginSignUp" class="btn-secondary" style="flex:1;">Sign up</button>
+                    </div>
+                    <p id="tgLoginStatus" style="min-height:18px;font-size:13px;margin-top:10px;"></p>
+                  </div>
+                `;
+                document.body.appendChild(modal);
+                modal.addEventListener("click", function (e) { if (e.target === modal) closeLoginModal(); });
+                modal.querySelector("#tgLoginClose").addEventListener("click", closeLoginModal);
+                modal.querySelector("#tgLoginSignIn").addEventListener("click", function () { handleAuth("signin"); });
+                modal.querySelector("#tgLoginSignUp").addEventListener("click", function () { handleAuth("signup"); });
+                var emailInput = modal.querySelector("#tgLoginEmail");
+                var pwdInput = modal.querySelector("#tgLoginPassword");
+                var onKey = function (e) { if (e.key === "Enter") { e.preventDefault(); handleAuth("signin"); } };
+                emailInput.addEventListener("keydown", onKey);
+                pwdInput.addEventListener("keydown", onKey);
+                return modal;
+            }
+
+            function setStatus(msg, isError) {
+                var el = modal && modal.querySelector("#tgLoginStatus");
+                if (!el) return;
+                el.textContent = msg || "";
+                el.style.color = isError ? "#f87171" : "#cbd5e1";
+            }
+
+            function openLoginModal() {
+                ensureModal();
+                modal.style.display = "flex";
+                var emailInput = modal.querySelector("#tgLoginEmail");
+                if (emailInput) emailInput.focus();
+            }
+            function closeLoginModal() { if (modal) modal.style.display = "none"; }
+
+            async function handleAuth(mode) {
+                ensureModal();
+                var email = modal.querySelector("#tgLoginEmail").value.trim();
+                var password = modal.querySelector("#tgLoginPassword").value;
+                if (!email || !password) {
+                    setStatus("Enter email and password.", true);
+                    return;
+                }
+                setStatus(mode === "signin" ? "Signing in…" : "Creating account…", false);
+                try {
+                    if (mode === "signin") {
+                        var signRes = await client.auth.signInWithPassword({ email: email, password: password });
+                        if (signRes.error) throw signRes.error;
+                        setStatus("Signed in. Redirecting…", false);
+                        setNavLoggedIn();
+                        setTimeout(function () { window.location.href = "/account"; }, 300);
+                    } else {
+                        var upRes = await client.auth.signUp({ email: email, password: password });
+                        if (upRes.error) throw upRes.error;
+                        setStatus("Account created. Check your email to confirm, then sign in.", false);
+                    }
+                } catch (e) {
+                    setStatus(e.message || "Authentication failed.", true);
+                }
+            }
+
             client.auth.getSession().then(function (res) {
                 var data = res && res.data;
                 if (data && data.session && data.session.access_token) {
-                    link.textContent = "Account";
-                    link.href = "/account";
+                    setNavLoggedIn();
                 } else {
-                    link.textContent = "Log in";
-                    link.href = "/account/login/";
+                    setNavLoggedOut();
                 }
-            }).catch(function () {
-                link.textContent = "Log in";
-                link.href = "/account/login/";
-            });
+            }).catch(function () { setNavLoggedOut(); });
         })();
     </script>
 </body>
