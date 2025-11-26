@@ -26,6 +26,34 @@
         .cta-button:hover { opacity: 0.9; }
         .cta-button:disabled { opacity: 0.6; cursor: not-allowed; }
         .nav-guard { opacity: 0; visibility: hidden; }
+        /* Keep login modal inputs dark even on autofill */
+        #tgLoginEmail, #tgLoginPassword {
+            background: #0b1220 !important;
+            color: #e5e7eb !important;
+            border: 1px solid rgba(255,255,255,0.25);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        #tgLoginEmail:-webkit-autofill,
+        #tgLoginPassword:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 1000px #0b1220 inset !important;
+            -webkit-text-fill-color: #e5e7eb !important;
+            caret-color: #e5e7eb;
+        }
+        /* Uniform plan buttons (remove glow) */
+        .plan-button,
+        .plan-button.plan-button-secondary {
+            background: #3b82f6;
+            color: #fff;
+            border: 1px solid #fff;
+            box-shadow: none;
+        }
+        .plan-button.plan-button-secondary {
+            background: #3b82f6;
+        }
+        .plan-button:hover,
+        .plan-button.plan-button-secondary:hover {
+            opacity: 0.9;
+        }
     </style>
 </head>
 
