@@ -34,8 +34,11 @@
     .account-actions {
       display: flex;
       gap: 10px;
-      flex-wrap: wrap;
+      justify-content: center;
       margin-top: 12px;
+    }
+    .account-actions .cta-button {
+      width: 180px;
     }
   </style>
 </head>
@@ -256,6 +259,19 @@
       }
     }
 
+    function formatPlan(planCode = "") {
+      const map = {
+        tangent_pro_monthly: "Tangent Pro (Monthly)",
+        tangent_pro_annual: "Tangent Pro (Annual)",
+        tangent_business_solo_monthly: "Tangent Business Solo (Monthly)",
+        tangent_business_solo_annual: "Tangent Business Solo (Annual)",
+        tangent_business_teams_monthly: "Tangent Business Teams (Monthly)",
+        tangent_business_teams_annual: "Tangent Business Teams (Annual)",
+        free_trial: "Free Trial"
+      };
+      return map[planCode] || planCode || "Unknown";
+    }
+
     async function renderPlan() {
       try {
         const { data: session } = await supabaseClient.auth.getSession();
@@ -271,7 +287,7 @@
         const remainingStd = info.remaining_tokens ?? info.remaining_standard_tokens;
         const remainingDeep = info.remaining_deep_tokens ?? 0;
         planDetails.innerHTML = `
-          <p><strong>Plan:</strong> ${plan}</p>
+          <p><strong>Plan:</strong> ${formatPlan(plan)}</p>
           <p><strong>Email:</strong> ${info.email || info.user_email || "—"}</p>
           <p><strong>Standard remaining:</strong> ${remainingStd ?? "—"}</p>
           <p><strong>Deep remaining:</strong> ${remainingDeep}</p>
