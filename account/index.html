@@ -307,9 +307,10 @@
               background: linear-gradient(135deg, #2a8fd5, #3b82f6);
               border: 1px solid #ffffff;
               color: #ffffff;
-              text-align: center;
               text-decoration: none;
-              display: inline-block;
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
               width: 178px;
               height: 50px;
             ">Download Tangent</a>
@@ -663,7 +664,7 @@
         </div>`}
         <div class="section-block" style="margin-top:24px;">
           <div class="content-narrow">
-            <h3>Subscription Plans</h3>
+            <h3 style="margin-bottom:14px;">Subscription Plans</h3>
             <div class="plans-grid">
               ${plans.map(pl => {
                 const monthlyId = PLAN_PRICE_IDS[pl.code]?.monthly || "";
