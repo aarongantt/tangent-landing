@@ -319,6 +319,8 @@
                     alert("Error starting checkout. Please try again in a moment.");
                 }
             }
+            // Expose globally so the modal script can call it
+            window.tgStartCheckout = startCheckout;
 
             planButtons.forEach(function (btn) {
                 btn.addEventListener("click", function () {
@@ -467,7 +469,9 @@
                         if (window.tgPendingPlanCode) {
                             var plan = window.tgPendingPlanCode;
                             window.tgPendingPlanCode = null;
-                            startCheckout(plan);
+                            if (window.tgStartCheckout) {
+                                window.tgStartCheckout(plan);
+                            }
                         } else {
                             setTimeout(function () { window.location.href = "/account"; }, 300);
                         }
