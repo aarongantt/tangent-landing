@@ -28,6 +28,7 @@
       background: #3b82f6;
       color: #ffffff;
       font-weight: 700;
+      border: 1px solid #ffffff;
     }
     .cta-button:hover {
       opacity: 0.9;
@@ -645,7 +646,6 @@
         planStatus.textContent = "Unknown token pack.";
         return;
       }
-      planStatus.textContent = "Starting checkout…";
       try {
         const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
           method: "POST",
@@ -656,7 +656,7 @@
         if (!res.ok || !body.url) {
           throw new Error(body.error || `HTTP ${res.status}`);
         }
-        window.location.href = body.url;
+        window.open(body.url, "_blank", "noopener");
       } catch (e) {
         planStatus.textContent = e.message || "Failed to start checkout.";
       }
