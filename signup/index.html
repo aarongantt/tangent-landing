@@ -253,10 +253,19 @@
                 business_team_annual: "price_1SWtm2FYbfjZcbAU8pWGPFYr"
             };
 
+            let pendingPlanCode = null;
+
             async function startCheckout(planCode) {
                 // Require auth first; if not signed in, show modal and bail
-                const { data: sessionData } = await client.auth.getSession();
+                let sessionData = null;
+                try {
+                    const res = await client.auth.getSession();
+                    sessionData = res?.data || null;
+                } catch (e) {
+                    sessionData = null;
+                }
                 if (!sessionData?.session?.access_token) {
+                    pendingPlanCode = planCode;
                     openLoginModal();
                     return;
                 }
@@ -439,7 +448,13 @@
                         if (signRes.error) throw signRes.error;
                         setStatus("Signed in. Redirecting…", false);
                         setNavLoggedIn();
-                        setTimeout(function () { window.location.href = "/account"; }, 300);
+                        if (pendingPlanCode) {
+                            var plan = pendingPlanCode;
+                            pendingPlanCode = null;
+                            startCheckout(plan);
+                        } else {
+                            setTimeout(function () { window.location.href = "/account"; }, 300);
+                        }
                     } else {
                         var upRes = await client.auth.signUp({ email: email, password: password });
                         if (upRes.error) throw upRes.error;
