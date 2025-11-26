@@ -152,7 +152,6 @@
     }
 
     async function openBillingPortal(token) {
-      planStatus.textContent = "Opening billing portal…";
       const res = await fetch(`${API_BASE}/api/billing-portal`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` }
@@ -188,10 +187,10 @@
           <label style="display:block;margin-bottom:10px;">Password
             <input id="tgLoginPassword" type="password" autocomplete="current-password" style="width:100%;padding:10px 12px;margin-top:4px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#f8fafc;" />
           </label>
-          <div style="display:flex;gap:10px;margin-top:12px;">
-            <button id="tgLoginSignIn" class="btn-primary" style="flex:1;">Sign in</button>
-            <button id="tgLoginSignUp" class="btn-secondary" style="flex:1;">Sign up</button>
-          </div>
+                  <div style="display:flex;gap:10px;margin-top:12px;">
+                    <button id="tgLoginSignIn" class="cta-button" style="flex:1;">Sign In</button>
+                    <button id="tgLoginSignUp" class="cta-button" style="flex:1;">Sign Up</button>
+                  </div>
           <p id="tgLoginStatus" style="min-height:18px;font-size:13px;margin-top:10px;"></p>
         </div>
       `;
