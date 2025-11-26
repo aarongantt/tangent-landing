@@ -256,28 +256,28 @@
             let pendingPlanCode = null;
 
             async function startCheckout(planCode) {
-                // Require auth first; if not signed in, show modal and bail
-                let sessionData = null;
                 try {
-                    const res = await client.auth.getSession();
-                    sessionData = res?.data || null;
-                } catch (e) {
-                    sessionData = null;
-                }
-                if (!sessionData?.session?.access_token) {
+                    // Remember the plan either way
                     pendingPlanCode = planCode;
-                    openLoginModal();
-                    return;
-                }
 
-                var priceId = PRICE_IDS[planCode];
-                if (!priceId) {
-                    console.error("Unknown plan selected:", planCode);
-                    alert("Unknown plan selected. Please refresh and try again.");
-                    return;
-                }
+                    let sessionData = null;
+                    try {
+                        const res = await client.auth.getSession();
+                        sessionData = res?.data || null;
+                    } catch (_) { sessionData = null; }
 
-                try {
+                    // Require login: if not signed in, show modal and bail
+                    if (!sessionData?.session?.access_token) {
+                        openLoginModal();
+                        return;
+                    }
+
+                    var priceId = PRICE_IDS[planCode];
+                    if (!priceId) {
+                        alert("Unknown plan selected. Please refresh and try again.");
+                        return;
+                    }
+
                     const res = await fetch(
                         "https://api.tangentapp.co/api/create-checkout-session",
                         {
@@ -295,15 +295,15 @@
                         throw new Error("Unexpected response from server.");
                     }
 
-                if (!res.ok || !data.url) {
-                    throw new Error(data.error || ("HTTP " + res.status));
-                }
+                    if (!res.ok || !data.url) {
+                        throw new Error(data.error || ("HTTP " + res.status));
+                    }
 
-                window.open(data.url, "_blank", "noopener");
-            } catch (err) {
-                console.error(err);
-                alert("Error starting checkout. Please try again in a moment.");
-            }
+                    window.open(data.url, "_blank", "noopener");
+                } catch (err) {
+                    console.error(err);
+                    alert("Error starting checkout. Please try again in a moment.");
+                }
             }
 
             planButtons.forEach(function (btn) {
