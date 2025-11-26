@@ -222,7 +222,6 @@
         if (!token) {
           planDetails.innerHTML = "<p>Please sign in to view your plan.</p>";
           billingBtn.disabled = true;
-          openLoginModal();
           setNavLoggedOut();
           return;
         }
@@ -255,7 +254,6 @@
         planDetails.innerHTML = "<p>You have been signed out.</p>";
         billingBtn.disabled = true;
         setNavLoggedOut();
-        openLoginModal();
       } catch (e) {
         planStatus.textContent = e.message || "Failed to sign out.";
       }
