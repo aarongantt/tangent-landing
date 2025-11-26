@@ -26,6 +26,8 @@
         .cta-button.secondary { background: #64748b; }
         .cta-button:hover { opacity: 0.9; }
         .cta-button:disabled { opacity: 0.6; cursor: not-allowed; }
+        /* Hide nav until state is resolved to avoid flash */
+        .nav-guard { opacity: 0; visibility: hidden; }
     </style>
 </head>
 
@@ -36,7 +38,7 @@
             <a href="/" class="logo-link">
                 <img src="images/tangent_logo.png" alt="Tangent" class="logo-wordmark" />
             </a>
-            <nav class="nav">
+            <nav class="nav nav-guard" id="navRoot">
                 <a href="#how-it-works" class="nav-link" id="navHow">How It Works</a>
                 <a href="#faq" class="nav-link" id="navFaq">FAQ</a>
                 <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
@@ -380,7 +382,11 @@
                 } else {
                     setNavLoggedOut();
                 }
-            }).catch(() => setNavLoggedOut());
+                if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
+            }).catch(() => {
+                setNavLoggedOut();
+                if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
+            });
         })();
     </script>
 </body>

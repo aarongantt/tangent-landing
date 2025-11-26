@@ -31,6 +31,7 @@
       opacity: 0.6;
       cursor: not-allowed;
     }
+    .nav-guard { opacity: 0; visibility: hidden; }
     .account-actions {
       display: flex;
       gap: 10px;
@@ -154,7 +155,7 @@
       <a href="/" class="logo-link">
         <img src="/images/tangent_logo.png" alt="Tangent" class="logo-wordmark" />
       </a>
-      <nav class="nav">
+      <nav class="nav nav-guard" id="navRoot">
         <a href="/" class="nav-link">Home</a>
         <a href="/#how-it-works" class="nav-link" id="navHow">How It Works</a>
         <a href="/#faq" class="nav-link" id="navFaq">FAQ</a>
@@ -214,6 +215,7 @@
     const pricingLink = document.getElementById("navPricing");
     const signupBtn = document.getElementById("navSignup");
     const accountLink = document.getElementById("navAccount");
+    const navRoot = document.getElementById("navRoot");
     const plansContainer = document.getElementById("plans-container");
 
     function setNavLoggedIn() {
@@ -496,6 +498,7 @@
           billingBtn.disabled = true;
           setNavLoggedOut();
           if (plansContainer) plansContainer.innerHTML = "";
+          if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
           return;
         }
         const info = await fetchPlan(token);
@@ -515,10 +518,12 @@
           planStatus.textContent = err.message || "Failed to open billing portal.";
         });
         setNavLoggedIn();
+        if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
       } catch (e) {
         planStatus.textContent = e.message || "Failed to load plan.";
         billingBtn.disabled = true;
         setNavLoggedOut();
+        if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
       }
     }
 

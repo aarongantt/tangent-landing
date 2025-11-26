@@ -25,6 +25,7 @@
         .cta-button.secondary { background: #64748b; }
         .cta-button:hover { opacity: 0.9; }
         .cta-button:disabled { opacity: 0.6; cursor: not-allowed; }
+        .nav-guard { opacity: 0; visibility: hidden; }
     </style>
 </head>
 
@@ -34,7 +35,7 @@
             <a href="/" class="logo-link">
                 <img src="/images/tangent_logo.png" alt="Tangent" class="logo-wordmark" />
             </a>
-            <nav class="nav">
+            <nav class="nav nav-guard" id="navRoot">
                 <a href="/#how-it-works" class="nav-link" id="navHow">How It Works</a>
                 <a href="/#faq" class="nav-link" id="navFaq">FAQ</a>
                 <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
@@ -275,6 +276,7 @@
             var SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
             var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
             var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
+            var navRoot = document.getElementById("navRoot");
 
             var pricingLink = document.getElementById("navPricing");
             var signupBtn = document.getElementById("navSignup");
@@ -398,7 +400,11 @@
                 } else {
                     setNavLoggedOut();
                 }
-            }).catch(function () { setNavLoggedOut(); });
+                if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
+            }).catch(function () {
+                setNavLoggedOut();
+                if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
+            });
         })();
     </script>
 </body>
