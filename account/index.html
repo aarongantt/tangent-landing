@@ -41,7 +41,7 @@
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 16px;
-      padding: 12px 22px;
+      padding: 18px 26px;
       width: 100%;
       max-width: 1040px;
       box-shadow: 0 18px 40px rgba(0,0,0,0.35);
@@ -56,7 +56,7 @@
       inset: 0;
       background: url("/images/tangent_t_logo.png") center center no-repeat;
       background-size: 240px;
-      opacity: 0.25;
+      opacity: 1;
       pointer-events: none;
     }
     .account-actions {
@@ -585,7 +585,7 @@
       ];
 
       container.innerHTML = `
-        <div class="section-block" style="margin-top:10px;">
+        <div class="section-block" style="margin-top:10px;margin-bottom:24px;">
           <div class="content-narrow">
             <h3>Additional Tokens</h3>
             <p class="subhead">Running low? Purchase a one-time token pack and add extra tokens to your balance.</p>
@@ -647,7 +647,7 @@
       }
       planStatus.textContent = "Starting checkout…";
       try {
-        const res = await fetch("/api/create-checkout-session", {
+        const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ priceId, checkoutKind: "addon" })
@@ -666,7 +666,7 @@
       if (!priceId) return;
       planStatus.textContent = "Starting checkout…";
       try {
-        const res = await fetch("/api/create-checkout-session", {
+        const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ priceId })
