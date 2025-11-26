@@ -56,7 +56,7 @@
       inset: 0;
       background: url("/images/tangent_t_logo.png") center center no-repeat;
       background-size: 240px;
-      opacity: 1;
+      opacity: 0.25;
       pointer-events: none;
     }
     .account-actions {
@@ -81,7 +81,7 @@
 
     /* Plan + packs */
     .section-block {
-      margin-top: 18px;
+      margin-top: 12px;
     }
     .section-block .content-narrow {
       max-width: 1040px;
@@ -89,7 +89,7 @@
     }
     .section-block h3 {
       margin: 0 0 6px;
-      font-size: 18px;
+      font-size: 24px;
       font-weight: 700;
       color: #e5e7eb;
     }
@@ -610,11 +610,17 @@
           <div class="content-narrow">
             <h3>Tangent Plans</h3>
             <div class="plans-grid">
-              ${plans.map(pl => `
-                <div class="plan-card ${pl.code === activePlanCode ? "active" : ""}">
-                    ${pl.code === activePlanCode
+              ${plans.map(pl => {
+                const monthlyId = PLAN_PRICE_IDS[pl.code]?.monthly || "";
+                const annualId = PLAN_PRICE_IDS[pl.code]?.annual || "";
+                const annualCode = pl.code.replace("_monthly", "_annual");
+                const monthlyDisabled = activePlanCode === pl.code;
+                const annualDisabled = activePlanCode === annualCode;
+                return `
+                <div class="plan-card ${monthlyDisabled || annualDisabled ? "active" : ""}">
+                  ${monthlyDisabled || annualDisabled
                     ? '<div class="pill pill-tag">Current Plan</div>'
-                    : `<div class="pill pill-tag upgrade upgrade-pill" data-price="${PLAN_PRICE_IDS[pl.code]?.monthly || ""}">Upgrade</div>`}
+                    : `<div class="pill pill-tag upgrade upgrade-pill" data-price="${monthlyId}">Upgrade</div>`}
                   <h4>${pl.title}</h4>
                   <div class="plan-price">${pl.price} <small>${pl.suffix}</small></div>
                   <p class="plan-desc">${pl.desc}</p>
@@ -622,12 +628,11 @@
                     ${pl.bullets.map(b => `<li>${b}</li>`).join("")}
                   </ul>
                   <div class="plan-actions">
-                    <span class="plan-pill">${pl.altPrice}</span>
-                    <button class="plan-cta" data-price="${PLAN_PRICE_IDS[pl.code]?.monthly || ""}" ${pl.code === activePlanCode ? "disabled" : ""}>${pl.price} ${pl.suffix}</button>
-                    <button class="plan-cta" data-price="${PLAN_PRICE_IDS[pl.code]?.annual || ""}" ${pl.code === activePlanCode ? "disabled" : ""}>${pl.altPrice}</button>
+                    <button class="plan-cta" data-price="${monthlyId}" ${monthlyDisabled ? "disabled" : ""}>${pl.price} ${pl.suffix}</button>
+                    <button class="plan-cta" data-price="${annualId}" ${annualDisabled ? "disabled" : ""}>${pl.altPrice}</button>
                   </div>
-                </div>
-              `).join("")}
+                </div>`;
+              }).join("")}
             </div>
           </div>
         </div>
