@@ -45,6 +45,10 @@
     .section-block {
       margin-top: 28px;
     }
+    .section-block .content-narrow {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
     .section-block h3 {
       margin: 0 0 6px;
       font-size: 18px;
@@ -439,34 +443,42 @@
 
       container.innerHTML = `
         <div class="section-block">
-          <h3>Additional Tokens</h3>
-          <p class="subhead">Running low? Purchase a one-time token pack and add extra tokens to your balance.</p>
-          <div class="packs-grid">
-            ${packs.map(p => `
-              <div class="pack-card">
-                <h4>${p.name.toUpperCase()}</h4>
-                <p class="pack-meta">${p.detail} · ${p.price}</p>
-              </div>
-            `).join("")}
+          <div class="content-narrow">
+            <h3>Additional Tokens</h3>
+            <p class="subhead">Running low? Purchase a one-time token pack and add extra tokens to your balance.</p>
+            <div class="packs-grid">
+              ${packs.map(p => `
+                <div class="pack-card">
+                  <h4>${p.name.toUpperCase()}</h4>
+                  <p class="pack-meta">${p.detail} · ${p.price}</p>
+                  <div style="margin-top:10px;">
+                    <button class="cta-button secondary" style="width:140px;">Purchase</button>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
           </div>
         </div>
         <div class="section-block">
-          <h3>Plans</h3>
-          <div class="plans-grid">
-            ${plans.map(pl => `
-              <div class="plan-card ${pl.code === activePlanCode ? "active" : ""}">
-                ${pl.code === activePlanCode ? '<div class="pill" style="position:absolute;top:10px;right:10px;">Current Plan</div>' : ""}
-                <h4>${pl.title}</h4>
-                <div class="plan-price">${pl.price} <small>${pl.suffix}</small></div>
-                <p class="plan-desc">${pl.desc}</p>
-                <ul class="plan-list">
-                  ${pl.bullets.map(b => `<li>${b}</li>`).join("")}
-                </ul>
-                <div class="plan-actions">
-                  <span class="pill">${pl.altPrice}</span>
+          <div class="content-narrow">
+            <h3>Plans</h3>
+            <div class="plans-grid">
+              ${plans.map(pl => `
+                <div class="plan-card ${pl.code === activePlanCode ? "active" : ""}">
+                  ${pl.code === activePlanCode ? '<div class="pill" style="position:absolute;top:10px;right:10px;">Current Plan</div>' : ""}
+                  <h4>${pl.title}</h4>
+                  <div class="plan-price">${pl.price} <small>${pl.suffix}</small></div>
+                  <p class="plan-desc">${pl.desc}</p>
+                  <ul class="plan-list">
+                    ${pl.bullets.map(b => `<li>${b}</li>`).join("")}
+                  </ul>
+                  <div class="plan-actions">
+                    <span class="pill">${pl.altPrice}</span>
+                    ${pl.code === activePlanCode ? "" : '<button class="cta-button secondary" style="flex:1;max-width:160px;">Upgrade</button>'}
+                  </div>
                 </div>
-              </div>
-            `).join("")}
+              `).join("")}
+            </div>
           </div>
         </div>
       `;
