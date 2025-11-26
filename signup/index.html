@@ -260,15 +260,25 @@
                     // Remember the plan either way
                     pendingPlanCode = planCode;
 
+                    const supa = window.tgSupabase || window.supabaseClient || null;
+                    if (!supa || !supa.auth) {
+                        alert("Auth is not ready. Please refresh and try again.");
+                        return;
+                    }
+
                     let sessionData = null;
                     try {
-                        const res = await client.auth.getSession();
+                        const res = await supa.auth.getSession();
                         sessionData = res?.data || null;
                     } catch (_) { sessionData = null; }
 
                     // Require login: if not signed in, show modal and bail
                     if (!sessionData?.session?.access_token) {
-                        openLoginModal();
+                        if (window.tgOpenLogin) {
+                            window.tgOpenLogin();
+                        } else {
+                            alert("Please log in to continue.");
+                        }
                         return;
                     }
 
@@ -326,6 +336,7 @@
             var SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
             var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
             var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
+            window.tgSupabase = client;
             var navRoot = document.getElementById("navRoot");
 
             var pricingLink = document.getElementById("navPricing");
@@ -436,6 +447,7 @@
                 if (emailInput) emailInput.focus();
             }
             function closeLoginModal() { if (modal) modal.style.display = "none"; }
+            window.tgOpenLogin = openLoginModal;
 
             async function handleAuth(mode) {
                 ensureModal();
