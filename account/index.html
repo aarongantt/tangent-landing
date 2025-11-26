@@ -258,6 +258,7 @@
         <a href="/" class="nav-link">Home</a>
         <a href="/#how-it-works" class="nav-link" id="navHow">How It Works</a>
         <a href="/#faq" class="nav-link" id="navFaq">FAQ</a>
+        <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
         <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
         <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
         <a href="/signup" class="nav-link nav-link-cta" id="navSignup">Sign Up</a>
@@ -317,19 +318,24 @@
     const signOutBtn = document.getElementById("sign-out");
     const cancelBtn = document.getElementById("cancel-plan");
     const pricingLink = document.getElementById("navPricing");
+    const navSignOut = document.getElementById("navSignOut");
     const loginLink = document.getElementById("navLogin");
     const signupBtn = document.getElementById("navSignup");
     const accountLink = document.getElementById("navAccount");
     const navRoot = document.getElementById("navRoot");
     const plansContainer = document.getElementById("plans-container");
 
-   function setNavLoggedIn() {
-     if (pricingLink) pricingLink.style.display = "none";
+    function setNavLoggedIn() {
+      if (pricingLink) pricingLink.style.display = "none";
+      if (navSignOut) {
+        navSignOut.style.display = "inline-flex";
+        navSignOut.onclick = (e) => { e.preventDefault(); handleSignOut(); };
+      }
       if (loginLink) loginLink.style.display = "none";
-     if (signupBtn) signupBtn.style.display = "none";
-     if (accountLink) {
-       accountLink.style.display = "inline-flex";
-       accountLink.onclick = null;
+      if (signupBtn) signupBtn.style.display = "none";
+      if (accountLink) {
+        accountLink.style.display = "inline-flex";
+        accountLink.onclick = null;
      }
       if (signOutBtn) {
         signOutBtn.textContent = "Sign Out";
@@ -337,16 +343,20 @@
       }
     }
 
-  function setNavLoggedOut() {
-    if (pricingLink) {
-      pricingLink.style.display = "inline-flex";
-      pricingLink.href = "/signup";
-    }
-    if (loginLink) {
-      loginLink.style.display = "inline-flex";
-      loginLink.href = "javascript:void(0)";
-      loginLink.onclick = (e) => { e.preventDefault(); openLoginModal(); };
-    }
+    function setNavLoggedOut() {
+      if (pricingLink) {
+        pricingLink.style.display = "inline-flex";
+        pricingLink.href = "/signup";
+      }
+      if (navSignOut) {
+        navSignOut.style.display = "none";
+        navSignOut.onclick = null;
+      }
+      if (loginLink) {
+        loginLink.style.display = "inline-flex";
+        loginLink.href = "javascript:void(0)";
+        loginLink.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+      }
     if (signupBtn) {
       signupBtn.style.display = "inline-flex";
       signupBtn.href = "/signup";

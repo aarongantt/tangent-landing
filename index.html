@@ -41,6 +41,7 @@
             <nav class="nav nav-guard" id="navRoot">
                 <a href="#how-it-works" class="nav-link" id="navHow">How It Works</a>
                 <a href="#faq" class="nav-link" id="navFaq">FAQ</a>
+                <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
                 <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
                 <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
                 <a href="/signup" class="nav-link nav-link-cta" id="navSignup">Sign Up</a>
@@ -258,6 +259,7 @@
             const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
 
             const pricingLink = document.getElementById("navPricing");
+            const signOutLink = document.getElementById("navSignOut");
             const loginLink = document.getElementById("navLogin");
             const signupBtn = document.getElementById("navSignup");
             const accountLink = document.getElementById("navAccount");
@@ -266,6 +268,14 @@
                 if (pricingLink) pricingLink.style.display = "none";
                 if (loginLink) loginLink.style.display = "none";
                 if (signupBtn) signupBtn.style.display = "none";
+                if (signOutLink) {
+                    signOutLink.style.display = "inline-flex";
+                    signOutLink.onclick = async (e) => {
+                        e.preventDefault();
+                        await client.auth.signOut().catch(() => {});
+                        setNavLoggedOut();
+                    };
+                }
                 if (accountLink) {
                     accountLink.style.display = "inline-flex";
                     accountLink.onclick = null;
@@ -276,6 +286,10 @@
                 if (pricingLink) {
                     pricingLink.style.display = "inline-flex";
                     pricingLink.href = "/signup";
+                }
+                if (signOutLink) {
+                    signOutLink.style.display = "none";
+                    signOutLink.onclick = null;
                 }
                 if (loginLink) {
                     loginLink.style.display = "inline-flex";

@@ -38,6 +38,7 @@
             <nav class="nav nav-guard" id="navRoot">
                 <a href="/#how-it-works" class="nav-link" id="navHow">How It Works</a>
                 <a href="/#faq" class="nav-link" id="navFaq">FAQ</a>
+                <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
                 <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
                 <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
                 <a href="/signup" class="nav-link nav-link-cta nav-link-cta-active" id="navSignup">Sign Up</a>
@@ -280,12 +281,21 @@
             var navRoot = document.getElementById("navRoot");
 
             var pricingLink = document.getElementById("navPricing");
+            var signOutLink = document.getElementById("navSignOut");
             var loginLink = document.getElementById("navLogin");
             var signupBtn = document.getElementById("navSignup");
             var accountLink = document.getElementById("navAccount");
 
             function setNavLoggedIn() {
                 if (pricingLink) pricingLink.style.display = "none";
+                if (signOutLink) {
+                    signOutLink.style.display = "inline-flex";
+                    signOutLink.onclick = function (e) {
+                        e.preventDefault();
+                        client.auth.signOut().catch(function () {});
+                        setNavLoggedOut();
+                    };
+                }
                 if (loginLink) loginLink.style.display = "none";
                 if (signupBtn) signupBtn.style.display = "none";
                 if (accountLink) {
@@ -298,6 +308,10 @@
                 if (pricingLink) {
                     pricingLink.style.display = "inline-flex";
                     pricingLink.href = "/signup";
+                }
+                if (signOutLink) {
+                    signOutLink.style.display = "none";
+                    signOutLink.onclick = null;
                 }
                 if (loginLink) {
                     loginLink.style.display = "inline-flex";
