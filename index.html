@@ -45,6 +45,20 @@
 </head>
 
 <body>
+    <script>
+        (function () {
+            const KEY = "tg_preview_ok";
+            const PASS = "tangent-preview"; // change this if needed
+            if (sessionStorage.getItem(KEY) !== "1") {
+                const provided = window.prompt("Enter preview password");
+                if (provided !== PASS) {
+                    document.documentElement.innerHTML = "Unauthorized";
+                    return;
+                }
+                sessionStorage.setItem(KEY, "1");
+            }
+        })();
+    </script>
     <!-- Site header -->
     <header class="site-header">
         <div class="container header-inner">
