@@ -41,12 +41,23 @@
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 16px;
-      padding: 16px 18px;
+      padding: 12px 22px;
       width: 100%;
       max-width: 1040px;
       box-shadow: 0 18px 40px rgba(0,0,0,0.35);
       color: #e5e7eb;
       margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+    .account-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("/images/tangent_t_logo.png") center center no-repeat;
+      background-size: 160px;
+      opacity: 0.5;
+      pointer-events: none;
     }
     .account-actions {
       display: flex;
@@ -485,6 +496,26 @@
       return val ?? "—";
     }
 
+    const PACK_PRICE_IDS = {
+      Small: "price_1SWwxjFYbfjZcbAUanyCL3BF",
+      Medium: "price_1SWwyKFYbfjZcbAUqxxgoL8m",
+      Large: "price_1SWwyaFYbfjZcbAUSK3KRxRC"
+    };
+    const PLAN_PRICE_IDS = {
+      tangent_pro_monthly: {
+        monthly: "price_1SUFFhFYbfjZcbAUKs2AroSG",
+        annual: "price_1SWtj8FYbfjZcbAUByySQeK7"
+      },
+      tangent_business_solo_monthly: {
+        monthly: "price_1SWtkiFYbfjZcbAUv0QsKWy6",
+        annual: "price_1SWtl8FYbfjZcbAU4JzU5pTK"
+      },
+      tangent_business_teams_monthly: {
+        monthly: "price_1SWtlcFYbfjZcbAUnebgB9UU",
+        annual: "price_1SWtm2FYbfjZcbAU8pWGPFYr"
+      }
+    };
+
     function renderTokensAndPlans(activePlanCode) {
       const container = document.getElementById("plans-container");
       if (!container) return;
@@ -560,7 +591,7 @@
                   <p class="pack-meta"><strong>Standard Tokens:</strong> ${p.standard}</p>
                   <p class="pack-meta"><strong>Deep Tokens:</strong> ${p.deep}</p>
                   <div style="margin-top:8px;">
-                    <button class="cta-button green" style="width:100%;">Purchase</button>
+                    <button class="cta-button green purchase-btn" data-pack="${p.name}" style="width:100%;">Purchase</button>
                   </div>
                 </div>
               `).join("")}
@@ -573,7 +604,9 @@
             <div class="plans-grid">
               ${plans.map(pl => `
                 <div class="plan-card ${pl.code === activePlanCode ? "active" : ""}">
-                  ${pl.code === activePlanCode ? '<div class="pill pill-tag">Current Plan</div>' : '<div class="pill pill-tag upgrade">Upgrade</div>'}
+                  ${pl.code === activePlanCode
+                    ? '<div class="pill pill-tag">Current Plan</div>'
+                    : `<div class="pill pill-tag upgrade upgrade-pill" data-price="${PLAN_PRICE_IDS[pl.code]?.monthly || ""}">Upgrade</div>`}
                   <h4>${pl.title}</h4>
                   <div class="plan-price">${pl.price} <small>${pl.suffix}</small></div>
                   <p class="plan-desc">${pl.desc}</p>
@@ -582,7 +615,8 @@
                   </ul>
                   <div class="plan-actions">
                     <span class="plan-pill">${pl.altPrice}</span>
-                    ${pl.code === activePlanCode ? "" : '<button class="plan-cta">Upgrade</button>'}
+                    <button class="plan-cta" data-price="${PLAN_PRICE_IDS[pl.code]?.monthly || ""}" ${pl.code === activePlanCode ? "disabled" : ""}>${pl.price} ${pl.suffix}</button>
+                    <button class="plan-cta" data-price="${PLAN_PRICE_IDS[pl.code]?.annual || ""}" ${pl.code === activePlanCode ? "disabled" : ""}>${pl.altPrice}</button>
                   </div>
                 </div>
               `).join("")}
@@ -590,6 +624,48 @@
           </div>
         </div>
       `;
+    }
+
+    async function startAddonCheckout(packName) {
+      const priceId = PACK_PRICE_IDS[packName];
+      if (!priceId) {
+        planStatus.textContent = "Unknown token pack.";
+        return;
+      }
+      planStatus.textContent = "Starting checkout…";
+      try {
+        const res = await fetch("/api/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ priceId, checkoutKind: "addon" })
+        });
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok || !body.url) {
+          throw new Error(body.error || `HTTP ${res.status}`);
+        }
+        window.location.href = body.url;
+      } catch (e) {
+        planStatus.textContent = e.message || "Failed to start checkout.";
+      }
+    }
+
+    async function startPlanCheckout(priceId) {
+      if (!priceId) return;
+      planStatus.textContent = "Starting checkout…";
+      try {
+        const res = await fetch("/api/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ priceId })
+        });
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok || !body.url) {
+          throw new Error(body.error || `HTTP ${res.status}`);
+        }
+        window.open(body.url, "_blank", "noopener");
+      } catch (e) {
+        planStatus.textContent = e.message || "Failed to start checkout.";
+      }
     }
 
     async function renderPlan() {
@@ -615,6 +691,27 @@
           <p><strong>Deep Tokens Remaining:</strong> ${remainingDeep}</p>
         `;
         renderTokensAndPlans(plan);
+        // Wire purchase buttons
+        document.querySelectorAll(".purchase-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const pack = btn.getAttribute("data-pack");
+            startAddonCheckout(pack);
+          });
+        });
+        document.querySelectorAll(".plan-cta[data-price]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const priceId = btn.getAttribute("data-price");
+            if (!priceId || btn.disabled) return;
+            startPlanCheckout(priceId);
+          });
+        });
+        document.querySelectorAll(".upgrade-pill[data-price]").forEach((pill) => {
+          pill.style.cursor = "pointer";
+          pill.addEventListener("click", () => {
+            const priceId = pill.getAttribute("data-price");
+            if (priceId) startPlanCheckout(priceId);
+          });
+        });
         planStatus.textContent = "";
         billingBtn.disabled = false;
         billingBtn.onclick = () => openBillingPortal(token).catch(err => {
