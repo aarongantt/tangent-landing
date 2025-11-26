@@ -317,19 +317,20 @@
       }
     }
 
-   function setNavLoggedOut() {
-     if (pricingLink) {
-       pricingLink.style.display = "inline-flex";
-       pricingLink.href = "/signup";
-     }
-      if (loginLink) {
-        loginLink.style.display = "inline-flex";
-        loginLink.href = "/account/login/";
-      }
-     if (signupBtn) {
-       signupBtn.style.display = "inline-flex";
-       signupBtn.href = "/signup";
-       signupBtn.classList.add("nav-link-cta");
+  function setNavLoggedOut() {
+    if (pricingLink) {
+      pricingLink.style.display = "inline-flex";
+      pricingLink.href = "/signup";
+    }
+    if (loginLink) {
+      loginLink.style.display = "inline-flex";
+      loginLink.href = "javascript:void(0)";
+      loginLink.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+    }
+    if (signupBtn) {
+      signupBtn.style.display = "inline-flex";
+      signupBtn.href = "/signup";
+      signupBtn.classList.add("nav-link-cta");
      }
       if (accountLink) {
         accountLink.style.display = "none";

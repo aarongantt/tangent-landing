@@ -301,7 +301,8 @@
                 }
                 if (loginLink) {
                     loginLink.style.display = "inline-flex";
-                    loginLink.href = "/account/login/";
+                    loginLink.href = "javascript:void(0)";
+                    loginLink.onclick = function (e) { e.preventDefault(); openLoginModal(); };
                 }
                 if (signupBtn) {
                     signupBtn.style.display = "inline-flex";
