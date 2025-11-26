@@ -24,6 +24,10 @@
     .cta-button.secondary {
       background: #64748b;
     }
+    .cta-button.green {
+      background: #22c55e;
+      color: #0b1729;
+    }
     .cta-button:hover {
       opacity: 0.9;
     }
@@ -32,6 +36,17 @@
       cursor: not-allowed;
     }
     .nav-guard { opacity: 0; visibility: hidden; }
+    .account-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 16px 18px;
+      width: 100%;
+      max-width: 1040px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+      color: #e5e7eb;
+      margin: 0 auto;
+    }
     .account-actions {
       display: flex;
       flex-direction: column;
@@ -54,7 +69,7 @@
 
     /* Plan + packs */
     .section-block {
-      margin-top: 28px;
+      margin-top: 18px;
     }
     .section-block .content-narrow {
       max-width: 1040px;
@@ -101,10 +116,12 @@
       justify-content: space-between;
       gap: 10px;
       margin-top: 8px;
+      font-size: 13px;
     }
     .pack-price {
       color: #e5e7eb;
-      font-weight: 700;
+      font-weight: 800;
+      font-size: 16px;
     }
     .plans-grid {
       display: grid;
@@ -119,6 +136,8 @@
       color: #e5e7eb;
       box-shadow: 0 12px 28px rgba(0,0,0,0.35);
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
     .plan-card.active {
       border-color: #3b82f6;
@@ -155,8 +174,11 @@
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-top: 10px;
+      margin-top: auto;
+      align-items: center;
+      width: 100%;
     }
+    .plan-actions .cta-button { width: 100%; }
     .pill {
       display: inline-block;
       padding: 8px 12px;
@@ -165,6 +187,16 @@
       font-size: 13px;
       color: #e5e7eb;
       background: rgba(255,255,255,0.05);
+    }
+    .pill-tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .pill.upgrade {
+      background: #22c55e;
+      color: #0b1729;
+      border-color: #22c55e;
     }
     @media (max-width: 640px) {
       .account-actions .cta-button { width: 100%; }
@@ -481,32 +513,34 @@
       ];
 
       container.innerHTML = `
-        <div class="section-block">
+        <div class="section-block" style="margin-top:18px;">
           <div class="content-narrow">
             <h3>Additional Tokens</h3>
             <p class="subhead">Running low? Purchase a one-time token pack and add extra tokens to your balance.</p>
             <div class="packs-grid">
               ${packs.map(p => `
                 <div class="pack-card">
-                  <h4>${p.name.toUpperCase()}</h4>
-                  <p class="pack-meta"><strong>Standard:</strong> ${p.standard} tokens</p>
-                  <p class="pack-meta"><strong>Deep:</strong> ${p.deep} tokens</p>
                   <div class="pack-row">
+                    <h4 style="margin:0;">${p.name.toUpperCase()}</h4>
                     <div class="pack-price">${p.price}</div>
-                    <button class="cta-button secondary" style="width:140px;">Purchase</button>
+                  </div>
+                  <p class="pack-meta"><strong>Standard Tokens:</strong> ${p.standard}</p>
+                  <p class="pack-meta"><strong>Deep Tokens:</strong> ${p.deep}</p>
+                  <div style="margin-top:8px;">
+                    <button class="cta-button green" style="width:100%;">Purchase</button>
                   </div>
                 </div>
               `).join("")}
             </div>
           </div>
         </div>
-        <div class="section-block">
+        <div class="section-block" style="margin-top:24px;">
           <div class="content-narrow">
-            <h3>Plans</h3>
+            <h3>Tangent Plans</h3>
             <div class="plans-grid">
               ${plans.map(pl => `
                 <div class="plan-card ${pl.code === activePlanCode ? "active" : ""}">
-                  ${pl.code === activePlanCode ? '<div class="pill" style="position:absolute;top:10px;right:10px;">Current Plan</div>' : ""}
+                  ${pl.code === activePlanCode ? '<div class="pill pill-tag">Current Plan</div>' : '<div class="pill pill-tag upgrade">Upgrade</div>'}
                   <h4>${pl.title}</h4>
                   <div class="plan-price">${pl.price} <small>${pl.suffix}</small></div>
                   <p class="plan-desc">${pl.desc}</p>
@@ -515,7 +549,7 @@
                   </ul>
                   <div class="plan-actions">
                     <span class="pill">${pl.altPrice}</span>
-                    ${pl.code === activePlanCode ? "" : '<button class="cta-button secondary" style="flex:1;max-width:160px;">Upgrade</button>'}
+                    ${pl.code === activePlanCode ? "" : '<button class="cta-button green">Upgrade</button>'}
                   </div>
                 </div>
               `).join("")}
@@ -544,8 +578,8 @@
         planDetails.innerHTML = `
           <p><strong>Plan:</strong> ${formatPlan(plan)}</p>
           <p><strong>Email:</strong> ${info.email || info.user_email || "—"}</p>
-          <p><strong>Standard remaining:</strong> ${remainingStd ?? "—"}</p>
-          <p><strong>Deep remaining:</strong> ${remainingDeep}</p>
+          <p><strong>Standard Tokens Remaining:</strong> ${remainingStd ?? "—"}</p>
+          <p><strong>Deep Tokens Remaining:</strong> ${remainingDeep}</p>
         `;
         renderTokensAndPlans(plan);
         planStatus.textContent = "";
