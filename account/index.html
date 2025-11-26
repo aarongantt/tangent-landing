@@ -42,6 +42,15 @@
     .account-actions .cta-button {
       width: 180px;
     }
+    .account-summary {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .account-summary .account-details {
+      flex: 1 1 320px;
+    }
 
     /* Plan + packs */
     .section-block {
@@ -184,13 +193,15 @@
       <div class="container account-grid">
         <div class="account-card">
           <h1>Account</h1>
-          <div id="plan-details" class="plan-details">
-            <p>Loading…</p>
-          </div>
-          <div class="account-actions">
-            <button id="sign-out" class="cta-button">Sign Out</button>
-            <button id="billing-portal" class="cta-button secondary" disabled>Billing Portal</button>
-            <button id="cancel-plan" class="cta-button secondary" disabled>Cancel Plan</button>
+          <div class="account-summary">
+            <div id="plan-details" class="plan-details account-details">
+              <p>Loading…</p>
+            </div>
+            <div class="account-actions">
+              <button id="sign-out" class="cta-button">Sign Out</button>
+              <button id="billing-portal" class="cta-button secondary" disabled>Billing Portal</button>
+              <button id="cancel-plan" class="cta-button secondary" disabled>Cancel Plan</button>
+            </div>
           </div>
           <p id="plan-status" class="status"></p>
         </div>
@@ -403,6 +414,11 @@
       };
       return map[planCode] || planCode || "Unknown";
     }
+    function formatNumber(val) {
+      const n = Number(val);
+      if (Number.isFinite(n)) return n.toLocaleString("en-US");
+      return val ?? "—";
+    }
 
     function renderTokensAndPlans(activePlanCode) {
       const container = document.getElementById("plans-container");
@@ -523,8 +539,8 @@
         }
         const info = await fetchPlan(token);
         const plan = info.plan_code || "Unknown plan";
-        const remainingStd = info.remaining_tokens ?? info.remaining_standard_tokens;
-        const remainingDeep = info.remaining_deep_tokens ?? 0;
+        const remainingStd = formatNumber(info.remaining_tokens ?? info.remaining_standard_tokens);
+        const remainingDeep = formatNumber(info.remaining_deep_tokens ?? 0);
         planDetails.innerHTML = `
           <p><strong>Plan:</strong> ${formatPlan(plan)}</p>
           <p><strong>Email:</strong> ${info.email || info.user_email || "—"}</p>
