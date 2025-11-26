@@ -40,6 +40,108 @@
     .account-actions .cta-button {
       width: 180px;
     }
+
+    /* Plan + packs */
+    .section-block {
+      margin-top: 28px;
+    }
+    .section-block h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #e5e7eb;
+    }
+    .section-block p.subhead {
+      margin: 0 0 12px;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+    .packs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .pack-card {
+      background: #0a0f1c;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 14px;
+      color: #e5e7eb;
+    }
+    .pack-card h4 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .pack-card .pack-meta {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .plan-card {
+      background: #0a0f1c;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 18px;
+      color: #e5e7eb;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+      position: relative;
+    }
+    .plan-card.active {
+      border-color: #3b82f6;
+      box-shadow: 0 16px 32px rgba(59,130,246,0.25);
+    }
+    .plan-card h4 {
+      margin: 0 0 6px;
+      font-size: 18px;
+    }
+    .plan-price {
+      font-size: 26px;
+      font-weight: 800;
+      margin: 4px 0 8px;
+    }
+    .plan-price small {
+      font-size: 14px;
+      font-weight: 500;
+      color: #cbd5e1;
+    }
+    .plan-desc {
+      margin: 0 0 10px;
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .plan-list {
+      margin: 0 0 12px 16px;
+      padding: 0;
+      color: #cbd5e1;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .plan-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .pill {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      font-size: 13px;
+      color: #e5e7eb;
+      background: rgba(255,255,255,0.05);
+    }
+    @media (max-width: 640px) {
+      .account-actions .cta-button { width: 100%; }
+    }
   </style>
 </head>
 <body class="account-body">
@@ -272,6 +374,101 @@
       return map[planCode] || planCode || "Unknown";
     }
 
+    function renderTokensAndPlans(activePlanCode) {
+      const container = document.getElementById("plans-container");
+      if (!container) return;
+
+      const packs = [
+        { name: "Small", detail: "1,000,000 Standard + 250,000 Deep tokens", price: "$7.99" },
+        { name: "Medium", detail: "5,000,000 Standard + 1,250,000 Deep tokens", price: "$29.99" },
+        { name: "Large", detail: "20,000,000 Standard + 5,000,000 Deep tokens", price: "$69.99" },
+      ];
+
+      const plans = [
+        {
+          code: "tangent_pro_monthly",
+          title: "Pro",
+          price: "$10",
+          suffix: "/ month",
+          desc: "For people who live in their browser and rely on AI every day.",
+          bullets: [
+            "12M Standard tokens / month",
+            "750k Deep tokens / month",
+            "All core Tangent chips (Explain, Summarize, Translate, Teach Me, etc.)",
+            "Context-aware responses that automatically understand the page",
+            "Support for long articles and docs",
+            "Ability to create and save custom chips",
+            "Priority access to new features and improvements"
+          ],
+          altPrice: "$8.75 / mo ($105 billed annually)"
+        },
+        {
+          code: "tangent_business_solo_monthly",
+          title: "Business (Solo)",
+          price: "$29",
+          suffix: "/ month",
+          desc: "For creators, freelancers, and power users who need more headroom.",
+          bullets: [
+            "20M Standard tokens / month",
+            "2M Deep tokens / month",
+            "Great for research, scripting, and batch work",
+            "All Pro features included",
+            "Email support"
+          ],
+          altPrice: "$24.17 / mo ($290 billed annually)"
+        },
+        {
+          code: "tangent_business_teams_monthly",
+          title: "Business (Team)",
+          price: "$49",
+          suffix: "/ month (per Seat)",
+          desc: "For teams, studios, and agencies. Seat-based, with shared billing.",
+          bullets: [
+            "35M Standard tokens / seat / month",
+            "3M Deep tokens / seat / month",
+            "Seat-based limits for clear budgeting",
+            "All Pro features included for each seat",
+            "Priority support"
+          ],
+          altPrice: "$40.83 / mo ($490 billed annually)"
+        }
+      ];
+
+      container.innerHTML = `
+        <div class="section-block">
+          <h3>Additional Tokens</h3>
+          <p class="subhead">Running low? Purchase a one-time token pack and add extra tokens to your balance.</p>
+          <div class="packs-grid">
+            ${packs.map(p => `
+              <div class="pack-card">
+                <h4>${p.name.toUpperCase()}</h4>
+                <p class="pack-meta">${p.detail} · ${p.price}</p>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+        <div class="section-block">
+          <h3>Plans</h3>
+          <div class="plans-grid">
+            ${plans.map(pl => `
+              <div class="plan-card ${pl.code === activePlanCode ? "active" : ""}">
+                ${pl.code === activePlanCode ? '<div class="pill" style="position:absolute;top:10px;right:10px;">Current Plan</div>' : ""}
+                <h4>${pl.title}</h4>
+                <div class="plan-price">${pl.price} <small>${pl.suffix}</small></div>
+                <p class="plan-desc">${pl.desc}</p>
+                <ul class="plan-list">
+                  ${pl.bullets.map(b => `<li>${b}</li>`).join("")}
+                </ul>
+                <div class="plan-actions">
+                  <span class="pill">${pl.altPrice}</span>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    }
+
     async function renderPlan() {
       try {
         const { data: session } = await supabaseClient.auth.getSession();
@@ -292,6 +489,7 @@
           <p><strong>Standard remaining:</strong> ${remainingStd ?? "—"}</p>
           <p><strong>Deep remaining:</strong> ${remainingDeep}</p>
         `;
+        renderTokensAndPlans(plan);
         planStatus.textContent = "";
         billingBtn.disabled = false;
         billingBtn.onclick = () => openBillingPortal(token).catch(err => {
