@@ -6,8 +6,30 @@
     <title>Tangent Pro – Signup & Pricing</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Signup for Tangent Pro – the AI assistant that lives on every page you open." />
-    <link rel="stylesheet" href="/styles.css" />
-    <link rel="icon" type="image/png" href="/images/tangent_t_logo.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" type="image/png" href="/images/tangent_t_logo.png" />
+  <style>
+    .pricing-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .free-trial-btn {
+      background: #3b82f6;
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(59,130,246,0.25);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .free-trial-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(59,130,246,0.3); }
+    .free-trial-btn:active { transform: translateY(0); box-shadow: 0 6px 16px rgba(59,130,246,0.22); }
+  </style>
     <style>
         /* Shared CTA/button styling for login modal */
         .cta-button {
@@ -83,7 +105,7 @@
                 <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
                 <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
                 <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
-                <a href="/signup" class="nav-link nav-link-cta nav-link-cta-active" id="navSignup">Sign Up</a>
+                <a href="javascript:void(0)" class="nav-link nav-link-cta nav-link-cta-active" id="navSignup">Sign Up</a>
                 <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
             </nav>
         </div>
@@ -93,7 +115,10 @@
         <section class="section section-alt">
             <div class="container pricing-layout">
                 <div class="pricing-intro">
-                    <h1>Subscription Plans</h1>
+                    <div class="pricing-header-row">
+                        <h1>Subscription Plans</h1>
+                        <button id="freeTrialBtn" class="free-trial-btn" style="display:none;">Start Free Trial</button>
+                    </div>
                     <p class="section-intro">
                         Choose the plan that fits how you work. All plans use the same on-page Tangent experience, with
                         different monthly AI budgets for Standard and Deep usage.
@@ -360,6 +385,7 @@
             var loginLink = document.getElementById("navLogin");
             var signupBtn = document.getElementById("navSignup");
             var accountLink = document.getElementById("navAccount");
+            var freeTrialBtn = document.getElementById("freeTrialBtn");
 
             function setNavLoggedIn() {
                 if (pricingLink) pricingLink.style.display = "none";
@@ -377,6 +403,7 @@
                     accountLink.style.display = "inline-flex";
                     accountLink.onclick = null;
                 }
+                if (freeTrialBtn) freeTrialBtn.style.display = "none";
             }
 
             function setNavLoggedOut() {
@@ -395,11 +422,16 @@
                 }
                 if (signupBtn) {
                     signupBtn.style.display = "inline-flex";
-                    signupBtn.href = "/signup";
+                    signupBtn.href = "javascript:void(0)";
+                    signupBtn.onclick = function (e) { e.preventDefault(); openLoginModal(); };
                     signupBtn.classList.add("nav-link-cta", "nav-link-cta-active");
                 }
                 if (accountLink) {
                     accountLink.style.display = "none";
+                }
+                if (freeTrialBtn) {
+                    freeTrialBtn.style.display = "inline-flex";
+                    freeTrialBtn.onclick = function (e) { e.preventDefault(); openLoginModal(); };
                 }
             }
 
@@ -511,6 +543,13 @@
                 setNavLoggedOut();
                 if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
             });
+
+            if (freeTrialBtn) {
+                freeTrialBtn.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    openLoginModal();
+                });
+            }
         })();
     </script>
 </body>
