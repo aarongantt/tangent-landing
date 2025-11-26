@@ -42,6 +42,7 @@
                 <a href="#how-it-works" class="nav-link" id="navHow">How It Works</a>
                 <a href="#faq" class="nav-link" id="navFaq">FAQ</a>
                 <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
+                <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
                 <a href="/signup" class="nav-link nav-link-cta" id="navSignup">Sign Up</a>
                 <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
             </nav>
@@ -257,11 +258,13 @@
             const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
 
             const pricingLink = document.getElementById("navPricing");
+            const loginLink = document.getElementById("navLogin");
             const signupBtn = document.getElementById("navSignup");
             const accountLink = document.getElementById("navAccount");
 
             function setNavLoggedIn() {
                 if (pricingLink) pricingLink.style.display = "none";
+                if (loginLink) loginLink.style.display = "none";
                 if (signupBtn) signupBtn.style.display = "none";
                 if (accountLink) {
                     accountLink.style.display = "inline-flex";
@@ -273,6 +276,10 @@
                 if (pricingLink) {
                     pricingLink.style.display = "inline-flex";
                     pricingLink.href = "/signup";
+                }
+                if (loginLink) {
+                    loginLink.style.display = "inline-flex";
+                    loginLink.href = "/account/login/";
                 }
                 if (signupBtn) {
                     signupBtn.style.display = "inline-flex";

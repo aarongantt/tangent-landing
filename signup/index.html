@@ -39,6 +39,7 @@
                 <a href="/#how-it-works" class="nav-link" id="navHow">How It Works</a>
                 <a href="/#faq" class="nav-link" id="navFaq">FAQ</a>
                 <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
+                <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
                 <a href="/signup" class="nav-link nav-link-cta nav-link-cta-active" id="navSignup">Sign Up</a>
                 <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
             </nav>
@@ -279,11 +280,13 @@
             var navRoot = document.getElementById("navRoot");
 
             var pricingLink = document.getElementById("navPricing");
+            var loginLink = document.getElementById("navLogin");
             var signupBtn = document.getElementById("navSignup");
             var accountLink = document.getElementById("navAccount");
 
             function setNavLoggedIn() {
                 if (pricingLink) pricingLink.style.display = "none";
+                if (loginLink) loginLink.style.display = "none";
                 if (signupBtn) signupBtn.style.display = "none";
                 if (accountLink) {
                     accountLink.style.display = "inline-flex";
@@ -295,6 +298,10 @@
                 if (pricingLink) {
                     pricingLink.style.display = "inline-flex";
                     pricingLink.href = "/signup";
+                }
+                if (loginLink) {
+                    loginLink.style.display = "inline-flex";
+                    loginLink.href = "/account/login/";
                 }
                 if (signupBtn) {
                     signupBtn.style.display = "inline-flex";
