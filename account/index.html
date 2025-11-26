@@ -175,6 +175,8 @@
         </div>
       </div>
     </section>
+
+    <section id="plans-container" class="section"></section>
   </main>
 
   <footer class="site-footer">
@@ -205,6 +207,7 @@
     const signOutBtn = document.getElementById("sign-out");
     const loginLink = document.getElementById("loginNavLink");
     const signupBtn = document.getElementById("signupNavButton");
+    const plansContainer = document.getElementById("plans-container");
 
     function setNavLoggedIn() {
       if (loginLink) {
@@ -477,6 +480,7 @@
           planDetails.innerHTML = "<p>Please sign in to view your plan.</p>";
           billingBtn.disabled = true;
           setNavLoggedOut();
+          if (plansContainer) plansContainer.innerHTML = "";
           return;
         }
         const info = await fetchPlan(token);
