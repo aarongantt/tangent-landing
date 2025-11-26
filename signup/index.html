@@ -253,12 +253,12 @@
                 business_team_annual: "price_1SWtm2FYbfjZcbAU8pWGPFYr"
             };
 
-            let pendingPlanCode = null;
+            window.tgPendingPlanCode = null;
 
             async function startCheckout(planCode) {
                 try {
                     // Remember the plan either way
-                    pendingPlanCode = planCode;
+                    window.tgPendingPlanCode = planCode;
 
                     const supa = window.tgSupabase || window.supabaseClient || null;
                     if (!supa || !supa.auth) {
@@ -464,9 +464,9 @@
                         if (signRes.error) throw signRes.error;
                         setStatus("Signed in. Redirecting…", false);
                         setNavLoggedIn();
-                        if (pendingPlanCode) {
-                            var plan = pendingPlanCode;
-                            pendingPlanCode = null;
+                        if (window.tgPendingPlanCode) {
+                            var plan = window.tgPendingPlanCode;
+                            window.tgPendingPlanCode = null;
                             startCheckout(plan);
                         } else {
                             setTimeout(function () { window.location.href = "/account"; }, 300);
