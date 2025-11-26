@@ -414,7 +414,7 @@
                         if (error) throw error;
                         setStatus("Signed in. Redirecting…", false);
                         setNavLoggedIn();
-                        setTimeout(() => { window.location.href = "/account"; }, 300);
+                        window.location.href = "/account";
                     } else {
                         const { error } = await client.auth.signUp({ email, password });
                         if (error) throw error;

@@ -513,7 +513,7 @@
           if (error) throw error;
           setStatus("Signed in. Redirecting…", false);
           setNavLoggedIn();
-          setTimeout(() => { renderPlan(); closeLoginModal(); }, 200);
+          window.location.href = "/account";
         } else {
           const { error } = await supabaseClient.auth.signUp({ email, password });
           if (error) throw error;
