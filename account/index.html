@@ -156,9 +156,11 @@
       </a>
       <nav class="nav">
         <a href="/" class="nav-link">Home</a>
-        <a href="/signup" class="nav-link">Pricing</a>
-        <a href="/account/login/" class="nav-link" id="loginNavLink">Log in</a>
-        <a href="/signup" class="nav-link nav-link-cta" id="signupNavButton">Sign Up</a>
+        <a href="/#how-it-works" class="nav-link" id="navHow">How It Works</a>
+        <a href="/#faq" class="nav-link" id="navFaq">FAQ</a>
+        <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
+        <a href="/signup" class="nav-link nav-link-cta" id="navSignup">Sign Up</a>
+        <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
       </nav>
     </div>
   </header>
@@ -209,18 +211,18 @@
     const planStatus = document.getElementById("plan-status");
     const billingBtn = document.getElementById("billing-portal");
     const signOutBtn = document.getElementById("sign-out");
-    const loginLink = document.getElementById("loginNavLink");
-    const signupBtn = document.getElementById("signupNavButton");
+    const pricingLink = document.getElementById("navPricing");
+    const signupBtn = document.getElementById("navSignup");
+    const accountLink = document.getElementById("navAccount");
     const plansContainer = document.getElementById("plans-container");
 
     function setNavLoggedIn() {
-      if (loginLink) {
-        loginLink.textContent = "Account";
-        loginLink.href = "/account";
-        loginLink.classList.add("nav-link-cta", "nav-link-cta-active");
-        loginLink.onclick = null;
-      }
+      if (pricingLink) pricingLink.style.display = "none";
       if (signupBtn) signupBtn.style.display = "none";
+      if (accountLink) {
+        accountLink.style.display = "inline-flex";
+        accountLink.onclick = null;
+      }
       if (signOutBtn) {
         signOutBtn.textContent = "Sign Out";
         signOutBtn.onclick = handleSignOut;
@@ -228,16 +230,17 @@
     }
 
     function setNavLoggedOut() {
-      if (loginLink) {
-        loginLink.textContent = "Log In";
-        loginLink.href = "javascript:void(0)";
-        loginLink.classList.remove("nav-link-cta", "nav-link-cta-active");
-        loginLink.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+      if (pricingLink) {
+        pricingLink.style.display = "inline-flex";
+        pricingLink.href = "/signup";
       }
       if (signupBtn) {
         signupBtn.style.display = "inline-flex";
         signupBtn.href = "/signup";
         signupBtn.classList.add("nav-link-cta");
+      }
+      if (accountLink) {
+        accountLink.style.display = "none";
       }
       if (signOutBtn) {
         signOutBtn.textContent = "Log In";

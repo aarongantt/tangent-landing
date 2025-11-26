@@ -35,11 +35,11 @@
                 <img src="/images/tangent_logo.png" alt="Tangent" class="logo-wordmark" />
             </a>
             <nav class="nav">
-                <a href="/#how-it-works" class="nav-link">How it works</a>
-                <a href="/#pricing" class="nav-link">Pricing</a>
-                <a href="/#faq" class="nav-link">FAQ</a>
-                <a href="/account/login/" class="nav-link" id="loginNavLink">Log in</a>
-                <a href="/signup" class="nav-link nav-link-cta nav-link-cta-active" id="signupNavButton">Signup</a>
+                <a href="/#how-it-works" class="nav-link" id="navHow">How It Works</a>
+                <a href="/#faq" class="nav-link" id="navFaq">FAQ</a>
+                <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
+                <a href="/signup" class="nav-link nav-link-cta nav-link-cta-active" id="navSignup">Sign Up</a>
+                <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
             </nav>
         </div>
     </header>
@@ -276,30 +276,31 @@
             var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
             var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
 
-            var loginLink = document.getElementById("loginNavLink");
-            var signupBtn = document.getElementById("signupNavButton");
+            var pricingLink = document.getElementById("navPricing");
+            var signupBtn = document.getElementById("navSignup");
+            var accountLink = document.getElementById("navAccount");
 
             function setNavLoggedIn() {
-                if (loginLink) {
-                    loginLink.textContent = "Account";
-                    loginLink.href = "/account";
-                    loginLink.classList.add("nav-link-cta", "nav-link-cta-active");
-                    loginLink.onclick = null;
-                }
+                if (pricingLink) pricingLink.style.display = "none";
                 if (signupBtn) signupBtn.style.display = "none";
+                if (accountLink) {
+                    accountLink.style.display = "inline-flex";
+                    accountLink.onclick = null;
+                }
             }
 
             function setNavLoggedOut() {
-                if (loginLink) {
-                    loginLink.textContent = "Log In";
-                    loginLink.href = "javascript:void(0)";
-                    loginLink.classList.remove("nav-link-cta", "nav-link-cta-active");
-                    loginLink.onclick = function (e) { e.preventDefault(); openLoginModal(); };
+                if (pricingLink) {
+                    pricingLink.style.display = "inline-flex";
+                    pricingLink.href = "/signup";
                 }
                 if (signupBtn) {
                     signupBtn.style.display = "inline-flex";
                     signupBtn.href = "/signup";
                     signupBtn.classList.add("nav-link-cta", "nav-link-cta-active");
+                }
+                if (accountLink) {
+                    accountLink.style.display = "none";
                 }
             }
 
