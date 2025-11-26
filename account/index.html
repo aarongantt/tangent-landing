@@ -718,8 +718,14 @@
         }
         const info = await fetchPlan(token);
         const plan = info.plan_code || "Unknown plan";
-        const remainingStd = formatNumber(info.remaining_tokens ?? info.remaining_standard_tokens);
-        const remainingDeep = formatNumber(info.remaining_deep_tokens ?? 0);
+        const remainingStd = formatNumber(info.remaining_standard_tokens ?? info.remaining_tokens);
+        const remainingDeep = formatNumber(
+          info.remaining_deep_tokens ??
+          // fallback: if total + standard present, derive deep
+          ((info.remaining_tokens != null && info.remaining_standard_tokens != null)
+            ? (info.remaining_tokens - info.remaining_standard_tokens)
+            : 0)
+        );
         planDetails.innerHTML = `
           <p><strong>Plan:</strong> ${formatPlan(plan)}</p>
           <p><strong>Email:</strong> ${info.email || info.user_email || "—"}</p>
