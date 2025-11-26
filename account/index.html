@@ -25,7 +25,7 @@
       background: #64748b;
     }
     .cta-button.green {
-      background: #1ea34f;
+      background: #3b82f6;
       color: #ffffff;
       font-weight: 700;
     }
@@ -55,8 +55,8 @@
       position: absolute;
       inset: 0;
       background: url("/images/tangent_t_logo.png") center center no-repeat;
-      background-size: 160px;
-      opacity: 0.5;
+      background-size: 240px;
+      opacity: 1;
       pointer-events: none;
     }
     .account-actions {
@@ -205,14 +205,21 @@
     }
     .plan-cta {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       border-radius: 999px;
-      border: none;
-      background: linear-gradient(180deg, #6aa3ff 0%, #4f7fd8 100%);
-      color: #0b1729;
+      border: 1px solid #ffffff;
+      background: #3b82f6;
+      color: #ffffff;
       font-weight: 800;
-      font-size: 15px;
+      font-size: 14px;
       cursor: pointer;
+    }
+    .plan-cta:disabled {
+      background: #4b5563;
+      border-color: #9ca3af;
+      color: #e5e7eb;
+      cursor: not-allowed;
+      opacity: 0.8;
     }
     .pill {
       display: inline-block;
@@ -229,10 +236,11 @@
       right: 10px;
     }
     .pill.upgrade {
-      background: #1ea34f;
+      background: #3b82f6;
       color: #ffffff;
-      border-color: #ffffff;
+      border: 1px solid #ffffff;
       font-weight: 700;
+      cursor: pointer;
     }
     @media (max-width: 640px) {
       .account-actions .cta-button { width: 100%; }
@@ -577,7 +585,7 @@
       ];
 
       container.innerHTML = `
-        <div class="section-block" style="margin-top:18px;">
+        <div class="section-block" style="margin-top:10px;">
           <div class="content-narrow">
             <h3>Additional Tokens</h3>
             <p class="subhead">Running low? Purchase a one-time token pack and add extra tokens to your balance.</p>
@@ -604,7 +612,7 @@
             <div class="plans-grid">
               ${plans.map(pl => `
                 <div class="plan-card ${pl.code === activePlanCode ? "active" : ""}">
-                  ${pl.code === activePlanCode
+                    ${pl.code === activePlanCode
                     ? '<div class="pill pill-tag">Current Plan</div>'
                     : `<div class="pill pill-tag upgrade upgrade-pill" data-price="${PLAN_PRICE_IDS[pl.code]?.monthly || ""}">Upgrade</div>`}
                   <h4>${pl.title}</h4>
