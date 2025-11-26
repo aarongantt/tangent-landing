@@ -282,7 +282,7 @@
         <img src="/images/tangent_logo.png" alt="Tangent" class="logo-wordmark" />
       </a>
       <nav class="nav nav-guard" id="navRoot">
-        <a href="/" class="nav-link">Home</a>
+        <a href="/download" class="nav-link">Download</a>
         <a href="/#how-it-works" class="nav-link" id="navHow">How It Works</a>
         <a href="/#faq" class="nav-link" id="navFaq">FAQ</a>
         <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
@@ -299,16 +299,29 @@
       <div class="container account-grid">
         <div class="account-card">
           <h1>Account</h1>
-          <div class="account-summary">
-            <div id="plan-details" class="plan-details account-details">
-              <p>Loading…</p>
+            <div class="account-summary">
+              <div id="plan-details" class="plan-details account-details">
+                <p>Loading…</p>
+              </div>
+              <div class="account-actions">
+                <a id="download-btn" href="/download" class="cta-button" style="
+                  width: 100%;
+                  padding: 14px 18px;
+                  font-size: 16px;
+                  font-weight: 800;
+                  background: linear-gradient(135deg, #2a8fd5, #1d6ba0);
+                  border: 1px solid #ffffff;
+                  color: #ffffff;
+                  margin-bottom: 12px;
+                  text-align: center;
+                  text-decoration: none;
+                  display: inline-block;
+                ">Download Tangent</a>
+                <button id="sign-out" class="cta-button">Sign Out</button>
+                <button id="billing-portal" class="cta-button secondary" disabled>Billing Portal</button>
+                <button id="cancel-plan" class="cta-button secondary" disabled>Cancel Plan</button>
+              </div>
             </div>
-            <div class="account-actions">
-              <button id="sign-out" class="cta-button">Sign Out</button>
-              <button id="billing-portal" class="cta-button secondary" disabled>Billing Portal</button>
-              <button id="cancel-plan" class="cta-button secondary" disabled>Cancel Plan</button>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -566,11 +579,8 @@
       const container = document.getElementById("plans-container");
       if (!container) return;
 
-      const packs = [
-        { name: "Small", standard: "1,000,000", deep: "250,000", price: "$7.99" },
-        { name: "Medium", standard: "5,000,000", deep: "1,250,000", price: "$29.99" },
-        { name: "Large", standard: "20,000,000", deep: "5,000,000", price: "$69.99" },
-      ];
+      const planLower = (activePlanCode || "").toLowerCase();
+      const packsDisabled = planLower === "free_trial";
 
       const plans = [
         {
@@ -623,12 +633,17 @@
       ];
 
       container.innerHTML = `
+        ${packsDisabled ? '' : `
         <div class="section-block" style="margin-top:10px;margin-bottom:24px;">
           <div class="content-narrow">
             <h3>Additional Tokens</h3>
             <p class="subhead">Running low? Purchase a one-time token pack and add extra tokens to your balance.</p>
             <div class="packs-grid">
-              ${packs.map(p => `
+              ${[
+                { name: "Small", standard: "1,000,000", deep: "250,000", price: "$7.99" },
+                { name: "Medium", standard: "5,000,000", deep: "1,250,000", price: "$29.99" },
+                { name: "Large", standard: "20,000,000", deep: "5,000,000", price: "$69.99" }
+              ].map(p => `
                 <div class="pack-card">
                   <div class="pack-row">
                     <h4 style="margin:0;">${p.name.toUpperCase()}</h4>
@@ -643,7 +658,7 @@
               `).join("")}
             </div>
           </div>
-        </div>
+        </div>`}
         <div class="section-block" style="margin-top:24px;">
           <div class="content-narrow">
             <h3>Subscription Plans</h3>
@@ -763,13 +778,6 @@
           <p><strong>Deep Tokens Remaining:</strong> ${remainingDeep}</p>
         `;
         renderTokensAndPlans(plan);
-        // Wire purchase buttons
-        document.querySelectorAll(".purchase-btn").forEach((btn) => {
-          btn.addEventListener("click", () => {
-            const pack = btn.getAttribute("data-pack");
-            startAddonCheckout(pack);
-          });
-        });
         document.querySelectorAll(".plan-cta[data-price]").forEach((btn) => {
           btn.addEventListener("click", () => {
             const priceId = btn.getAttribute("data-price");
