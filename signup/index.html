@@ -254,6 +254,13 @@
             };
 
             async function startCheckout(planCode) {
+                // Require auth first; if not signed in, show modal and bail
+                const { data: sessionData } = await client.auth.getSession();
+                if (!sessionData?.session?.access_token) {
+                    openLoginModal();
+                    return;
+                }
+
                 var priceId = PRICE_IDS[planCode];
                 if (!priceId) {
                     console.error("Unknown plan selected:", planCode);
