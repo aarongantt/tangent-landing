@@ -31,8 +31,8 @@
             <p>Loading…</p>
           </div>
           <div class="account-actions">
-            <button id="billing-portal" class="btn-secondary" disabled>Billing Portal</button>
-            <button id="sign-out" class="btn-secondary">Sign Out</button>
+            <button id="billing-portal" class="btn-secondary cta-button" disabled>Billing Portal</button>
+            <button id="sign-out" class="btn-secondary cta-button">Sign Out</button>
           </div>
           <p id="plan-status" class="status"></p>
         </div>
@@ -77,11 +77,15 @@
         loginLink.onclick = null;
       }
       if (signupBtn) signupBtn.style.display = "none";
+      if (signOutBtn) {
+        signOutBtn.textContent = "Sign Out";
+        signOutBtn.onclick = handleSignOut;
+      }
     }
 
     function setNavLoggedOut() {
       if (loginLink) {
-        loginLink.textContent = "Log in";
+        loginLink.textContent = "Log In";
         loginLink.href = "javascript:void(0)";
         loginLink.classList.remove("nav-link-cta", "nav-link-cta-active");
         loginLink.onclick = (e) => { e.preventDefault(); openLoginModal(); };
@@ -90,6 +94,10 @@
         signupBtn.style.display = "inline-flex";
         signupBtn.href = "/signup";
         signupBtn.classList.add("nav-link-cta");
+      }
+      if (signOutBtn) {
+        signOutBtn.textContent = "Log In";
+        signOutBtn.onclick = (e) => { e.preventDefault(); openLoginModal(); };
       }
     }
 
@@ -248,7 +256,8 @@
       }
     }
 
-    signOutBtn?.addEventListener("click", async () => {
+    async function handleSignOut(e) {
+      if (e) e.preventDefault();
       try {
         await supabaseClient.auth.signOut();
         planDetails.innerHTML = "<p>You have been signed out.</p>";
@@ -257,7 +266,9 @@
       } catch (e) {
         planStatus.textContent = e.message || "Failed to sign out.";
       }
-    });
+    }
+
+    signOutBtn?.addEventListener("click", handleSignOut);
 
     // On load, ensure session or redirect to login, then show plan
     renderPlan();
