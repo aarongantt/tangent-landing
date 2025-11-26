@@ -309,7 +309,6 @@
               <button id="cancel-plan" class="cta-button secondary" disabled>Cancel Plan</button>
             </div>
           </div>
-          <p id="plan-status" class="status"></p>
         </div>
       </div>
     </section>
@@ -340,7 +339,7 @@
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
     const planDetails = document.getElementById("plan-details");
-    const planStatus = document.getElementById("plan-status");
+    const planStatus = null;
     const billingBtn = document.getElementById("billing-portal");
     const signOutBtn = document.getElementById("sign-out");
     const cancelBtn = document.getElementById("cancel-plan");
@@ -413,7 +412,7 @@
     }
 
     async function fetchPlan(token) {
-      planStatus.textContent = "Loading plan…";
+      // no visible status line
       const res = await fetch(`${API_BASE}/api/user-plan`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` }
@@ -680,7 +679,6 @@
     async function startAddonCheckout(packName) {
       const priceId = PACK_PRICE_IDS[packName];
       if (!priceId) {
-        planStatus.textContent = "Unknown token pack.";
         return;
       }
       try {
@@ -695,13 +693,13 @@
         }
         window.open(body.url, "_blank", "noopener");
       } catch (e) {
-        planStatus.textContent = e.message || "Failed to start checkout.";
+        // no status line
       }
     }
 
     async function startPlanCheckout(priceId) {
       if (!priceId) return;
-      planStatus.textContent = "Starting checkout…";
+      // no status line
       try {
         const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
           method: "POST",
@@ -714,7 +712,7 @@
         }
         window.open(body.url, "_blank", "noopener");
       } catch (e) {
-        planStatus.textContent = e.message || "Failed to start checkout.";
+        // no status line
       }
     }
 
@@ -732,21 +730,31 @@
         }
         const info = await fetchPlan(token);
         const plan = info.plan_code || "Unknown plan";
-        const remainingStd = formatNumber(
+        const quota = info.quota || {};
+        const remainingStdRaw =
           info.remaining_standard_tokens ??
+          quota.remaining_standard_tokens ??
           info.monthly_standard_tokens ??
-          info.remaining_tokens
-        );
-        const remainingDeep = formatNumber(
+          quota.monthly_standard_tokens ??
+          info.remaining_tokens ??
+          quota.remaining_tokens;
+        const remainingDeepRaw =
           info.remaining_deep_tokens ??
+          quota.remaining_deep_tokens ??
           info.monthly_deep_tokens ??
+          quota.monthly_deep_tokens ??
           (
-            (info.remaining_tokens != null && info.remaining_standard_tokens != null)
-              ? (info.remaining_tokens - info.remaining_standard_tokens)
+            (info.remaining_tokens != null && (info.remaining_standard_tokens ?? quota.remaining_standard_tokens) != null)
+              ? (info.remaining_tokens - (info.remaining_standard_tokens ?? quota.remaining_standard_tokens))
               : null
           ) ??
-          0
-        );
+          (
+            (quota.remaining_tokens != null && (info.remaining_standard_tokens ?? quota.remaining_standard_tokens) != null)
+              ? (quota.remaining_tokens - (info.remaining_standard_tokens ?? quota.remaining_standard_tokens))
+              : null
+          );
+        const remainingStd = formatNumber(remainingStdRaw ?? 0);
+        const remainingDeep = formatNumber(remainingDeepRaw ?? 0);
         planDetails.innerHTML = `
           <p><strong>Plan:</strong> ${formatPlan(plan)}</p>
           <p><strong>Email:</strong> ${info.email || info.user_email || "—"}</p>
@@ -775,19 +783,15 @@
             if (priceId) startPlanCheckout(priceId);
           });
         });
-        planStatus.textContent = "";
+        // no status line
         billingBtn.disabled = false;
-        billingBtn.onclick = () => openBillingPortal(token).catch(err => {
-          planStatus.textContent = err.message || "Failed to open billing portal.";
-        });
+        billingBtn.onclick = () => openBillingPortal(token).catch(() => {});
         cancelBtn.disabled = false;
-        cancelBtn.onclick = () => openBillingPortal(token).catch(err => {
-          planStatus.textContent = err.message || "Failed to open billing portal.";
-        });
+        cancelBtn.onclick = () => openBillingPortal(token).catch(() => {});
         setNavLoggedIn();
         if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
       } catch (e) {
-        planStatus.textContent = e.message || "Failed to load plan.";
+        // no status line
         billingBtn.disabled = true;
         cancelBtn.disabled = true;
         setNavLoggedOut();
@@ -804,7 +808,7 @@
         cancelBtn.disabled = true;
         setNavLoggedOut();
       } catch (e) {
-        planStatus.textContent = e.message || "Failed to sign out.";
+        // no status line
       }
     }
 
