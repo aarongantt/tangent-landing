@@ -34,8 +34,9 @@
     .nav-guard { opacity: 0; visibility: hidden; }
     .account-actions {
       display: flex;
-      gap: 10px;
-      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
       margin-top: 12px;
     }
     .account-actions .cta-button {
@@ -175,8 +176,9 @@
             <p>Loading…</p>
           </div>
           <div class="account-actions">
-            <button id="billing-portal" class="btn-secondary cta-button" disabled>Billing Portal</button>
-            <button id="sign-out" class="btn-secondary cta-button">Sign Out</button>
+            <button id="sign-out" class="cta-button">Sign Out</button>
+            <button id="billing-portal" class="cta-button secondary" disabled>Billing Portal</button>
+            <button id="cancel-plan" class="cta-button secondary" disabled>Cancel Plan</button>
           </div>
           <p id="plan-status" class="status"></p>
         </div>
@@ -212,6 +214,7 @@
     const planStatus = document.getElementById("plan-status");
     const billingBtn = document.getElementById("billing-portal");
     const signOutBtn = document.getElementById("sign-out");
+    const cancelBtn = document.getElementById("cancel-plan");
     const pricingLink = document.getElementById("navPricing");
     const signupBtn = document.getElementById("navSignup");
     const accountLink = document.getElementById("navAccount");
@@ -247,6 +250,9 @@
       if (signOutBtn) {
         signOutBtn.textContent = "Log In";
         signOutBtn.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+      }
+      if (cancelBtn) {
+        cancelBtn.disabled = true;
       }
     }
 
@@ -517,11 +523,16 @@
         billingBtn.onclick = () => openBillingPortal(token).catch(err => {
           planStatus.textContent = err.message || "Failed to open billing portal.";
         });
+        cancelBtn.disabled = false;
+        cancelBtn.onclick = () => openBillingPortal(token).catch(err => {
+          planStatus.textContent = err.message || "Failed to open billing portal.";
+        });
         setNavLoggedIn();
         if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
       } catch (e) {
         planStatus.textContent = e.message || "Failed to load plan.";
         billingBtn.disabled = true;
+        cancelBtn.disabled = true;
         setNavLoggedOut();
         if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
       }
@@ -533,6 +544,7 @@
         await supabaseClient.auth.signOut();
         planDetails.innerHTML = "<p>You have been signed out.</p>";
         billingBtn.disabled = true;
+        cancelBtn.disabled = true;
         setNavLoggedOut();
       } catch (e) {
         planStatus.textContent = e.message || "Failed to sign out.";
