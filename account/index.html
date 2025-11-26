@@ -84,6 +84,18 @@
       margin: 0;
       color: #cbd5e1;
       font-size: 13px;
+      line-height: 1.4;
+    }
+    .pack-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .pack-price {
+      color: #e5e7eb;
+      font-weight: 700;
     }
     .plans-grid {
       display: grid;
@@ -397,9 +409,9 @@
       if (!container) return;
 
       const packs = [
-        { name: "Small", detail: "1,000,000 Standard + 250,000 Deep tokens", price: "$7.99" },
-        { name: "Medium", detail: "5,000,000 Standard + 1,250,000 Deep tokens", price: "$29.99" },
-        { name: "Large", detail: "20,000,000 Standard + 5,000,000 Deep tokens", price: "$69.99" },
+        { name: "Small", standard: "1,000,000", deep: "250,000", price: "$7.99" },
+        { name: "Medium", standard: "5,000,000", deep: "1,250,000", price: "$29.99" },
+        { name: "Large", standard: "20,000,000", deep: "5,000,000", price: "$69.99" },
       ];
 
       const plans = [
@@ -461,8 +473,10 @@
               ${packs.map(p => `
                 <div class="pack-card">
                   <h4>${p.name.toUpperCase()}</h4>
-                  <p class="pack-meta">${p.detail} · ${p.price}</p>
-                  <div style="margin-top:10px;">
+                  <p class="pack-meta"><strong>Standard:</strong> ${p.standard} tokens</p>
+                  <p class="pack-meta"><strong>Deep:</strong> ${p.deep} tokens</p>
+                  <div class="pack-row">
+                    <div class="pack-price">${p.price}</div>
                     <button class="cta-button secondary" style="width:140px;">Purchase</button>
                   </div>
                 </div>
