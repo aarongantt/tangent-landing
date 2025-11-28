@@ -120,12 +120,10 @@
     <img class="logo" src="/images/tangent_logo.png" alt="Tangent" />
     <h1>Sign In</h1>
     <form id="tgLoginForm" autocomplete="off" data-1p-ignore="true" data-lpignore="true">
-      <input type="text" style="position:absolute;left:-9999px;top:-9999px;" name="tangent-username-dummy" autocomplete="username" data-1p-ignore="true" data-lpignore="true" aria-hidden="true" tabindex="-1" />
-      <input type="password" style="position:absolute;left:-9999px;top:-9999px;" name="tangent-password-dummy" autocomplete="new-password" data-1p-ignore="true" data-lpignore="true" aria-hidden="true" tabindex="-1" />
       <label for="tgEmail">Email</label>
       <input id="tgEmail" name="tangent-email" type="email" inputmode="email" autocomplete="username" autocapitalize="none" spellcheck="false" data-1p-ignore="true" data-lpignore="true" required />
       <label for="tgPassword">Password</label>
-      <input id="tgPassword" name="tangent-password" type="password" autocomplete="new-password" data-1p-ignore="true" data-lpignore="true" required />
+      <input id="tgPassword" name="tangent-password" type="password" autocomplete="current-password" data-1p-ignore="true" data-lpignore="true" required />
       <div id="tgStatus" class="status"></div>
       <button type="submit" class="btn">Sign In</button>
       <div class="signup-row">
