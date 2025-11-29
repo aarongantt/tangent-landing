@@ -336,6 +336,15 @@
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       auth: { persistSession: true }
     });
+    const STRIPE_URL_PATTERN = /^https:\/\/(?:checkout|billing|buy|pay)\.stripe\.com\/?/i;
+
+    function openSecureStripeUrl(url) {
+      const safeUrl = typeof url === "string" ? url.trim() : "";
+      if (!STRIPE_URL_PATTERN.test(safeUrl)) {
+        throw new Error("Unexpected checkout URL.");
+      }
+      window.open(safeUrl, "_blank", "noopener");
+    }
 
     const yearEl = document.getElementById("year");
     if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -425,7 +434,7 @@
       if (!res.ok || !body.url) {
         throw new Error(body.error || `HTTP ${res.status}`);
       }
-      window.open(body.url, "_blank", "noopener");
+      openSecureStripeUrl(body.url);
     }
 
     let loginModal;
@@ -696,7 +705,7 @@
         if (!res.ok || !body.url) {
           throw new Error(body.error || `HTTP ${res.status}`);
         }
-        window.open(body.url, "_blank", "noopener");
+        openSecureStripeUrl(body.url);
       } catch (e) {
         // no status line
       }
@@ -720,7 +729,7 @@
         if (!res.ok || !body.url) {
           throw new Error(body.error || `HTTP ${res.status}`);
         }
-        window.open(body.url, "_blank", "noopener");
+        openSecureStripeUrl(body.url);
       } catch (e) {
         // no status line
       }

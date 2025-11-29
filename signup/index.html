@@ -280,6 +280,15 @@
             };
 
             window.tgPendingPlanCode = null;
+            const STRIPE_URL_PATTERN = /^https:\/\/(?:checkout|billing|buy|pay)\.stripe\.com\/?/i;
+
+            function openStripeCheckoutUrl(url) {
+                const safeUrl = typeof url === "string" ? url.trim() : "";
+                if (!STRIPE_URL_PATTERN.test(safeUrl)) {
+                    throw new Error("Unexpected checkout URL.");
+                }
+                window.open(safeUrl, "_blank", "noopener");
+            }
 
             async function startCheckout(planCode) {
                 try {
@@ -339,7 +348,7 @@
                         throw new Error(data.error || ("HTTP " + res.status));
                     }
 
-                    window.open(data.url, "_blank", "noopener");
+                    openStripeCheckoutUrl(data.url);
                 } catch (err) {
                     console.error(err);
                     alert("Error starting checkout. Please try again in a moment.");
