@@ -187,12 +187,24 @@
           const { data, error } = await client.auth.signInWithPassword({ email, password });
           if (error) throw error;
           const token = data?.session?.access_token;
+          const refreshToken =
+            data?.session?.refresh_token ||
+            data?.refresh_token ||
+            '';
           if (!token) throw new Error('No access token returned.');
           setStatus('Signed in! Closing…', false);
           try {
             const targetOrigin = resolveTargetOrigin();
             if (window.opener && targetOrigin) {
-              window.opener.postMessage({ type: 'TANGENT_SUPABASE_TOKEN', token, state: loginState }, targetOrigin);
+              window.opener.postMessage(
+                {
+                  type: 'TANGENT_SUPABASE_TOKEN',
+                  token,
+                  refreshToken,
+                  state: loginState
+                },
+                targetOrigin
+              );
             }
           } catch (_) {}
           setTimeout(() => window.close(), 500);
