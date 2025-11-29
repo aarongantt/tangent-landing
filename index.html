@@ -45,20 +45,6 @@
 </head>
 
 <body>
-    <script>
-        (function () {
-            const KEY = "tg_preview_ok";
-            const PASS = "buttmunch420"; // change this if needed
-            if (sessionStorage.getItem(KEY) !== "1") {
-                const provided = window.prompt("Enter preview password");
-                if (provided !== PASS) {
-                    document.documentElement.innerHTML = "Unauthorized";
-                    return;
-                }
-                sessionStorage.setItem(KEY, "1");
-            }
-        })();
-    </script>
     <!-- Site header -->
     <header class="site-header">
         <div class="container header-inner">
@@ -286,6 +272,7 @@
             const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
             const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
 
+            const navRoot = document.getElementById("navRoot");
             const pricingLink = document.getElementById("navPricing");
             const signOutLink = document.getElementById("navSignOut");
             const loginLink = document.getElementById("navLogin");

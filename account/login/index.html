@@ -45,6 +45,23 @@
       margin-top: 16px;
     }
     .login-actions button { flex: 1; }
+    .btn-primary,
+    .btn-secondary {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.18);
+      font-weight: 700;
+      cursor: pointer;
+      background: #3b82f6;
+      color: #f8fafc;
+      transition: opacity 120ms ease, transform 120ms ease;
+    }
+    .btn-primary:hover,
+    .btn-secondary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: #e5e7eb;
+    }
     .status { min-height: 18px; font-size: 13px; margin-top: 10px; color: #f8fafc; }
     .status.error { color: #f87171; }
     .status.ok { color: #34d399; }

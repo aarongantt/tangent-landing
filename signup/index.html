@@ -80,20 +80,6 @@
 </head>
 
 <body>
-    <script>
-        (function () {
-            const KEY = "tg_preview_ok";
-            const PASS = "buttmunch420"; // change this if needed
-            if (sessionStorage.getItem(KEY) !== "1") {
-                const provided = window.prompt("Enter preview password");
-                if (provided !== PASS) {
-                    document.documentElement.innerHTML = "Unauthorized";
-                    return;
-                }
-                sessionStorage.setItem(KEY, "1");
-            }
-        })();
-    </script>
     <header class="site-header">
         <div class="container header-inner">
             <a href="/" class="logo-link">

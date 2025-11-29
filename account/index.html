@@ -262,20 +262,6 @@
   </style>
 </head>
 <body class="account-body">
-  <script>
-    (function () {
-      const KEY = "tg_preview_ok";
-      const PASS = "buttmunch420"; // change this if needed
-      if (sessionStorage.getItem(KEY) !== "1") {
-        const provided = window.prompt("Enter preview password");
-        if (provided !== PASS) {
-          document.documentElement.innerHTML = "Unauthorized";
-          return;
-        }
-        sessionStorage.setItem(KEY, "1");
-      }
-    })();
-  </script>
   <header class="site-header">
     <div class="container header-inner">
       <a href="/" class="logo-link">
@@ -415,17 +401,6 @@
       if (cancelBtn) {
         cancelBtn.disabled = true;
       }
-    }
-
-    async function signIn(email, password) {
-      loginStatus.textContent = "Signing in…";
-      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-      if (error) {
-        loginStatus.textContent = error.message || "Login failed.";
-        throw error;
-      }
-      loginStatus.textContent = "Signed in.";
-      return data.session?.access_token || null;
     }
 
     async function fetchPlan(token) {
@@ -693,6 +668,12 @@
           </div>
         </div>
       `;
+      container.querySelectorAll(".purchase-btn[data-pack]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const packName = btn.getAttribute("data-pack");
+          if (packName) startAddonCheckout(packName);
+        });
+      });
     }
 
     async function startAddonCheckout(packName) {

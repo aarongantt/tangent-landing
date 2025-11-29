@@ -177,7 +177,12 @@
           if (!token) throw new Error('No access token returned.');
           setStatus('Signed in! Closing…', false);
           try {
-            window.opener?.postMessage({ type: 'TANGENT_SUPABASE_TOKEN', token }, '*');
+            const referrerOrigin = (() => {
+              try { return document.referrer ? new URL(document.referrer).origin : ""; }
+              catch (_) { return ""; }
+            })();
+            const targetOrigin = referrerOrigin || "https://www.tangentapp.co";
+            window.opener?.postMessage({ type: 'TANGENT_SUPABASE_TOKEN', token }, targetOrigin);
           } catch (_) {}
           setTimeout(() => window.close(), 500);
         } catch (err) {
