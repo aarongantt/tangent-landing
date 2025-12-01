@@ -151,6 +151,7 @@
       const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
       const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false } });
       const loginState = params.get('state') || "";
+      const loginKey = params.get('k') || "";
 
       function resolveTargetOrigin() {
         let refOrigin = "";
@@ -174,6 +175,61 @@
         statusEl.style.color = isError ? '#f87171' : 'inherit';
       }
 
+      function base64ToBytes(b64) {
+        const str = atob(b64);
+        const out = new Uint8Array(str.length);
+        for (let i = 0; i < str.length; i++) {
+          out[i] = str.charCodeAt(i);
+        }
+        return out;
+      }
+
+      function bytesToBase64(bytes) {
+        let str = '';
+        bytes.forEach((b) => { str += String.fromCharCode(b); });
+        return btoa(str);
+      }
+
+      async function encryptAuthPayload(payload, secretB64) {
+        if (!secretB64) throw new Error('Missing Tangent login secret.');
+        const keyBytes = base64ToBytes(secretB64);
+        if (keyBytes.length !== 32) throw new Error('Invalid Tangent login secret.');
+        const key = await crypto.subtle.importKey('raw', keyBytes, { name: 'AES-GCM' }, false, ['encrypt']);
+        const iv = crypto.getRandomValues(new Uint8Array(12));
+        const encoded = new TextEncoder().encode(JSON.stringify(payload));
+        const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, encoded);
+        return {
+          iv: bytesToBase64(iv),
+          data: bytesToBase64(new Uint8Array(cipher)),
+          v: 1
+        };
+      }
+
+      async function sendTokenToExtension(accessToken, refreshToken) {
+        if (!window.opener) return;
+        if (!loginKey) {
+          throw new Error('Missing Tangent handshake. Please relaunch the login from the extension.');
+        }
+        const targetOrigin = resolveTargetOrigin();
+        if (!targetOrigin) return;
+        const encryptedAuth = await encryptAuthPayload(
+          { token: accessToken, refreshToken },
+          loginKey
+        );
+        window.opener.postMessage(
+          {
+            type: 'TANGENT_SUPABASE_TOKEN',
+            state: loginState,
+            encryptedAuth
+          },
+          targetOrigin
+        );
+      }
+
+      if (!loginKey) {
+        setStatus('Open this page from the Tangent extension to sign in securely.', true);
+      }
+
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = (emailEl.value || '').trim();
@@ -192,21 +248,8 @@
             data?.refresh_token ||
             '';
           if (!token) throw new Error('No access token returned.');
+          await sendTokenToExtension(token, refreshToken);
           setStatus('Signed in! Closing…', false);
-          try {
-            const targetOrigin = resolveTargetOrigin();
-            if (window.opener && targetOrigin) {
-              window.opener.postMessage(
-                {
-                  type: 'TANGENT_SUPABASE_TOKEN',
-                  token,
-                  refreshToken,
-                  state: loginState
-                },
-                targetOrigin
-              );
-            }
-          } catch (_) {}
           setTimeout(() => window.close(), 500);
         } catch (err) {
           setStatus(err.message || 'Sign-in failed.', true);
