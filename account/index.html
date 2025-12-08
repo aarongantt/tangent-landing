@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tangent Account</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" type="image/png" href="/images/tangent_t_logo.png" />
+  <style>
+    /* Align button feel with Options page */
+    /* Buttons styled like extension login */
+    .cta-button {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 120ms ease;
+      background: #3b82f6;
+      color: #fff;
+    }
+    .cta-button.secondary {
+      background: #64748b;
+    }
+    .cta-button.green {
+      background: #3b82f6;
+      color: #ffffff;
+      font-weight: 700;
+      border: 1px solid #ffffff;
+    }
+    .cta-button:hover {
+      opacity: 0.9;
+    }
+    .cta-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .nav-guard { opacity: 0; visibility: hidden; }
+    .account-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 18px 26px;
+      width: 100%;
+      max-width: 1040px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+      color: #e5e7eb;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+    .account-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("/images/tangent_t_logo.png") center center no-repeat;
+      background-size: 240px;
+      opacity: 1;
+      pointer-events: none;
+    }
+    .account-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      margin-top: 12px;
+    }
+    .account-actions .cta-button {
+      width: 180px;
+    }
+    .account-summary {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .account-summary .account-details {
+      flex: 1 1 320px;
+    }
+
+    /* Plan + packs */
+    .section-block {
+      margin-top: 12px;
+    }
+    .section-block .content-narrow {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+    .section-block h3 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      font-weight: 700;
+      color: #e5e7eb;
+    }
+    .section-block p.subhead {
+      margin: 0 0 12px;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+    .packs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .pack-card {
+      background: #0a0f1c;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 14px;
+      color: #e5e7eb;
+    }
+    .pack-card h4 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .pack-card .pack-meta {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    .pack-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+    .pack-price {
+      color: #e5e7eb;
+      font-weight: 800;
+      font-size: 16px;
+    }
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .plan-card {
+      background: #0a0f1c;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 18px;
+      color: #e5e7eb;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .plan-card.active {
+      border-color: rgba(255,255,255,0.15);
+      box-shadow: none;
+      opacity: 0.75;
+    }
+    .plan-card h4 {
+      margin: 0 0 6px;
+      font-size: 18px;
+    }
+    .plan-price {
+      font-size: 26px;
+      font-weight: 800;
+      margin: 4px 0 8px;
+    }
+    .plan-price small {
+      font-size: 14px;
+      font-weight: 500;
+      color: #cbd5e1;
+    }
+    .plan-desc {
+      margin: 0 0 10px;
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .plan-list {
+      margin: 0 0 12px 16px;
+      padding: 0;
+      color: #cbd5e1;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .plan-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: auto;
+      align-items: stretch;
+      width: 100%;
+    }
+    .plan-pill {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.04);
+      color: #e5e7eb;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .plan-cta {
+      width: 100%;
+      padding: 10px;
+      border-radius: 999px;
+      border: 1px solid #ffffff;
+      background: #3b82f6;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .plan-cta:disabled {
+      background: #4b5563;
+      border-color: #9ca3af;
+      color: #e5e7eb;
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+    /* Keep login modal inputs dark even on autofill */
+    #tgLoginEmail, #tgLoginPassword {
+      background: #0b1220 !important;
+      color: #e5e7eb !important;
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    #tgLoginEmail:-webkit-autofill,
+    #tgLoginPassword:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 1000px #0b1220 inset !important;
+      -webkit-text-fill-color: #e5e7eb !important;
+      caret-color: #e5e7eb;
+    }
+    .pill {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      font-size: 13px;
+      color: #e5e7eb;
+      background: rgba(255,255,255,0.05);
+    }
+    .pill-tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .pill.upgrade {
+      background: #3b82f6;
+      color: #ffffff;
+      border: 1px solid #ffffff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    @media (max-width: 640px) {
+      .account-actions .cta-button { width: 100%; }
+    }
+  </style>
+</head>
+<body class="account-body">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo-link">
+        <img src="/images/tangent_logo.png" alt="Tangent" class="logo-wordmark" />
+      </a>
+      <nav class="nav nav-guard" id="navRoot">
+        <a href="/download" class="nav-link">Download Tangent</a>
+        <a href="/#how-it-works" class="nav-link" id="navHow">How It Works</a>
+        <a href="/#faq" class="nav-link" id="navFaq">FAQ</a>
+        <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
+        <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
+        <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
+        <a href="/signup" class="nav-link nav-link-cta" id="navSignup">Sign Up</a>
+        <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="account-main">
+    <section class="section section-alt">
+      <div class="container account-grid">
+        <div class="account-card">
+          <div class="account-header-row" style="display:flex; align-items:center; gap:12px; justify-content:space-between;">
+            <h1 style="margin:0;">Account</h1>
+            <a id="download-btn" href="/download" class="cta-button" style="
+              padding: 10px 14px;
+              font-size: 14px;
+              font-weight: 800;
+              background: linear-gradient(135deg, #2a8fd5, #3b82f6);
+              border: 1px solid #ffffff;
+              color: #ffffff;
+              text-decoration: none;
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              width: 178px;
+              height: 50px;
+            ">Download Tangent</a>
+          </div>
+          <div class="account-summary" style="margin-top:12px;">
+            <div id="plan-details" class="plan-details account-details">
+              <p>Loading…</p>
+            </div>
+            <div class="account-actions">
+              <button id="sign-out" class="cta-button">Sign Out</button>
+              <button id="billing-portal" class="cta-button secondary" disabled>Billing Portal</button>
+              <button id="cancel-plan" class="cta-button secondary" disabled>Cancel Plan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="plans-container" class="section"></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Tangent.</span>
+      <span>Manage your plan securely.</span>
+    </div>
+  </footer>
+
+  <!-- Supabase client -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script>
+    // Public anon key only (same project used by the extension)
+        const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
+        const API_BASE = "https://api.tangentapp.co";
+
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: true }
+    });
+    const STRIPE_URL_PATTERN = /^https:\/\/(?:checkout|billing|buy|pay)\.stripe\.com\/?/i;
+
+    function openSecureStripeUrl(url) {
+      const safeUrl = typeof url === "string" ? url.trim() : "";
+      if (!STRIPE_URL_PATTERN.test(safeUrl)) {
+        throw new Error("Unexpected checkout URL.");
+      }
+      window.open(safeUrl, "_blank", "noopener");
+    }
+
+    const yearEl = document.getElementById("year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    const planDetails = document.getElementById("plan-details");
+    const planStatus = null;
+    const billingBtn = document.getElementById("billing-portal");
+    const signOutBtn = document.getElementById("sign-out");
+    const cancelBtn = document.getElementById("cancel-plan");
+    const pricingLink = document.getElementById("navPricing");
+    const navSignOut = document.getElementById("navSignOut");
+    const loginLink = document.getElementById("navLogin");
+    const signupBtn = document.getElementById("navSignup");
+    const accountLink = document.getElementById("navAccount");
+    const navRoot = document.getElementById("navRoot");
+    const plansContainer = document.getElementById("plans-container");
+
+    function setNavLoggedIn() {
+      if (pricingLink) pricingLink.style.display = "none";
+      if (navSignOut) {
+        navSignOut.style.display = "inline-flex";
+        navSignOut.onclick = (e) => { e.preventDefault(); handleSignOut(); };
+      }
+      if (loginLink) loginLink.style.display = "none";
+      if (signupBtn) signupBtn.style.display = "none";
+      if (accountLink) {
+        accountLink.style.display = "inline-flex";
+        accountLink.onclick = null;
+     }
+      if (signOutBtn) {
+        signOutBtn.textContent = "Sign Out";
+        signOutBtn.onclick = handleSignOut;
+      }
+    }
+
+    function setNavLoggedOut() {
+      if (pricingLink) {
+        pricingLink.style.display = "inline-flex";
+        pricingLink.href = "/signup";
+      }
+      if (navSignOut) {
+        navSignOut.style.display = "none";
+        navSignOut.onclick = null;
+      }
+      if (loginLink) {
+        loginLink.style.display = "inline-flex";
+        loginLink.href = "javascript:void(0)";
+        loginLink.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+      }
+    if (signupBtn) {
+      signupBtn.style.display = "inline-flex";
+      signupBtn.href = "/signup";
+      signupBtn.onclick = null;
+      signupBtn.classList.add("nav-link-cta");
+    }
+      if (accountLink) {
+        accountLink.style.display = "none";
+      }
+      if (signOutBtn) {
+        signOutBtn.textContent = "Log In";
+        signOutBtn.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+      }
+      if (cancelBtn) {
+        cancelBtn.disabled = true;
+      }
+    }
+
+    async function fetchPlan(token) {
+      // no visible status line
+      const res = await fetch(`${API_BASE}/api/user-plan`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) {
+        const msg = await res.text();
+        throw new Error(msg || `HTTP ${res.status}`);
+      }
+      return res.json();
+    }
+
+    async function openBillingPortal(token) {
+      const res = await fetch(`${API_BASE}/api/billing-portal`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok || !body.url) {
+        throw new Error(body.error || `HTTP ${res.status}`);
+      }
+      openSecureStripeUrl(body.url);
+    }
+
+    let loginModal;
+    function ensureModal() {
+      if (loginModal) return loginModal;
+      loginModal = document.createElement("div");
+      loginModal.id = "tg-login-modal";
+      loginModal.style.position = "fixed";
+      loginModal.style.inset = "0";
+      loginModal.style.background = "rgba(15,23,42,0.55)";
+      loginModal.style.backdropFilter = "blur(8px)";
+      loginModal.style.display = "none";
+      loginModal.style.alignItems = "center";
+      loginModal.style.justifyContent = "center";
+      loginModal.style.zIndex = "9999";
+      loginModal.innerHTML = `
+        <div style="background:#050915;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:22px;width:100%;max-width:420px;box-shadow:0 14px 36px rgba(0,0,0,0.45);color:#e5e7eb;position:relative;">
+          <button id="tgLoginClose" style="position:absolute;top:10px;right:10px;background:transparent;border:0;color:#cbd5e1;font-size:18px;cursor:pointer;">×</button>
+          <div style="display:flex;justify-content:center;margin-bottom:12px;">
+            <img src="/images/tangent_logo.png" alt="Tangent" style="height:28px;" />
+          </div>
+          <h3 style="margin:0 0 14px 0;font-weight:700;">Sign In:</h3>
+          <label style="display:block;margin-bottom:10px;font-weight:600;font-size:13px;">Email
+            <input id="tgLoginEmail" type="email" autocomplete="email" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(5,6,10,0.7);color:#e5e7eb;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);" />
+          </label>
+          <label style="display:block;margin-bottom:14px;font-weight:600;font-size:13px;">Password
+            <input id="tgLoginPassword" type="password" autocomplete="current-password" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(5,6,10,0.7);color:#e5e7eb;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);" />
+          </label>
+          <div style="display:flex;gap:10px;margin-top:12px;">
+            <button id="tgLoginSignIn" class="cta-button secondary" style="flex:1;">Sign In</button>
+            <button id="tgLoginSignUp" class="cta-button secondary" style="flex:1;">Sign Up</button>
+          </div>
+          <p id="tgLoginStatus" style="min-height:18px;font-size:13px;margin-top:10px;"></p>
+        </div>
+      `;
+      document.body.appendChild(loginModal);
+      loginModal.addEventListener("click", (e) => { if (e.target === loginModal) closeLoginModal(); });
+      loginModal.querySelector("#tgLoginClose").addEventListener("click", closeLoginModal);
+      loginModal.querySelector("#tgLoginSignIn").addEventListener("click", () => handleAuth("signin"));
+      loginModal.querySelector("#tgLoginSignUp").addEventListener("click", () => handleAuth("signup"));
+      const emailInput = loginModal.querySelector("#tgLoginEmail");
+      const pwdInput = loginModal.querySelector("#tgLoginPassword");
+      const onKey = (e) => { if (e.key === "Enter") { e.preventDefault(); handleAuth("signin"); } };
+      emailInput.addEventListener("keydown", onKey);
+      pwdInput.addEventListener("keydown", onKey);
+      return loginModal;
+    }
+
+    function setStatus(msg, isError) {
+      const el = loginModal?.querySelector("#tgLoginStatus");
+      if (!el) return;
+      el.textContent = msg || "";
+      el.style.color = isError ? "#f87171" : "#cbd5e1";
+    }
+
+    function openLoginModal() {
+      ensureModal();
+      loginModal.style.display = "flex";
+      const emailInput = loginModal.querySelector("#tgLoginEmail");
+      if (emailInput) emailInput.focus();
+    }
+    function closeLoginModal() { if (loginModal) loginModal.style.display = "none"; }
+
+    async function handleAuth(mode) {
+      ensureModal();
+      const email = loginModal.querySelector("#tgLoginEmail").value.trim();
+      const password = loginModal.querySelector("#tgLoginPassword").value;
+      if (!email || !password) {
+        setStatus("Enter email and password.", true);
+        return;
+      }
+      setStatus(mode === "signin" ? "Signing in…" : "Creating account…", false);
+      try {
+        if (mode === "signin") {
+          const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+          setStatus("Signed in. Redirecting…", false);
+          setNavLoggedIn();
+          window.location.href = "/account";
+        } else {
+          const { error } = await supabaseClient.auth.signUp({ email, password });
+          if (error) throw error;
+          setStatus("Account created. Check email to confirm, then sign in.", false);
+        }
+      } catch (e) {
+        setStatus(e.message || "Authentication failed.", true);
+      }
+    }
+
+    function formatPlan(planCode = "") {
+      const map = {
+        tangent_pro_monthly: "Tangent Pro (Monthly)",
+        tangent_pro_annual: "Tangent Pro (Annual)",
+        tangent_business_solo_monthly: "Tangent Business Solo (Monthly)",
+        tangent_business_solo_annual: "Tangent Business Solo (Annual)",
+        tangent_business_teams_monthly: "Tangent Business Teams (Monthly)",
+        tangent_business_teams_annual: "Tangent Business Teams (Annual)",
+        free_trial: "Free Trial"
+      };
+      return map[planCode] || planCode || "Unknown";
+    }
+    function formatNumber(val) {
+      const n = Number(val);
+      if (Number.isFinite(n)) return n.toLocaleString("en-US");
+      return val ?? "—";
+    }
+
+    const PACK_PRICE_IDS = {
+      Small: "price_1SWwxjFYbfjZcbAUanyCL3BF",
+      Medium: "price_1SWwyKFYbfjZcbAUqxxgoL8m",
+      Large: "price_1SWwyaFYbfjZcbAUSK3KRxRC"
+    };
+    const PLAN_PRICE_IDS = {
+      tangent_pro_monthly: {
+        monthly: "price_1SUFFhFYbfjZcbAUKs2AroSG",
+        annual: "price_1SWtj8FYbfjZcbAUByySQeK7"
+      },
+      tangent_business_solo_monthly: {
+        monthly: "price_1SWtkiFYbfjZcbAUv0QsKWy6",
+        annual: "price_1SWtl8FYbfjZcbAU4JzU5pTK"
+      },
+      tangent_business_teams_monthly: {
+        monthly: "price_1SWtlcFYbfjZcbAUnebgB9UU",
+        annual: "price_1SWtm2FYbfjZcbAU8pWGPFYr"
+      }
+    };
+
+    function renderTokensAndPlans(activePlanCode) {
+      const container = document.getElementById("plans-container");
+      if (!container) return;
+
+      const planLower = (activePlanCode || "").toLowerCase();
+      const packsDisabled = planLower === "free_trial";
+
+      const plans = [
+        {
+          code: "tangent_pro_monthly",
+          title: "Pro",
+          price: "$10",
+          suffix: "/ month",
+          desc: "For people who live in their browser and rely on AI every day.",
+          bullets: [
+            "12M Standard tokens / month",
+            "750k Deep tokens / month",
+            "All core Tangent chips (Explain, Summarize, Translate, Teach Me, etc.)",
+            "Context-aware responses that automatically understand the page",
+            "Support for long articles and docs",
+            "Ability to create and save custom chips",
+            "Priority access to new features and improvements"
+          ],
+          altPrice: "$8.75 / mo ($105 billed annually)"
+        },
+        {
+          code: "tangent_business_solo_monthly",
+          title: "Business (Solo)",
+          price: "$29",
+          suffix: "/ month",
+          desc: "For creators, freelancers, and power users who need more headroom.",
+          bullets: [
+            "20M Standard tokens / month",
+            "2M Deep tokens / month",
+            "Great for research, scripting, and batch work",
+            "All Pro features included",
+            "Email support"
+          ],
+          altPrice: "$24.17 / mo ($290 billed annually)"
+        },
+        {
+          code: "tangent_business_teams_monthly",
+          title: "Business (Team)",
+          price: "$49",
+          suffix: "/ month (per Seat)",
+          desc: "For teams, studios, and agencies. Seat-based, with shared billing.",
+          bullets: [
+            "35M Standard tokens / seat / month",
+            "3M Deep tokens / seat / month",
+            "Seat-based limits for clear budgeting",
+            "All Pro features included for each seat",
+            "Priority support"
+          ],
+          altPrice: "$40.83 / mo ($490 billed annually)"
+        }
+      ];
+
+      container.innerHTML = `
+        ${packsDisabled ? '' : `
+        <div class="section-block" style="margin-top:10px;margin-bottom:24px;">
+          <div class="content-narrow">
+            <h3>Additional Tokens</h3>
+            <p class="subhead">Running low? Purchase a one-time token pack and add extra tokens to your balance.</p>
+            <div class="packs-grid">
+              ${[
+                { name: "Small", standard: "1,000,000", deep: "250,000", price: "$7.99" },
+                { name: "Medium", standard: "5,000,000", deep: "1,250,000", price: "$29.99" },
+                { name: "Large", standard: "20,000,000", deep: "5,000,000", price: "$69.99" }
+              ].map(p => `
+                <div class="pack-card">
+                  <div class="pack-row">
+                    <h4 style="margin:0;">${p.name.toUpperCase()}</h4>
+                    <div class="pack-price">${p.price}</div>
+                  </div>
+                  <p class="pack-meta"><strong>Standard Tokens:</strong> ${p.standard}</p>
+                  <p class="pack-meta"><strong>Deep Tokens:</strong> ${p.deep}</p>
+                  <div style="margin-top:8px;">
+                    <button class="cta-button green purchase-btn" data-pack="${p.name}" style="width:100%;">Purchase</button>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        </div>`}
+        <div class="section-block" style="margin-top:24px;">
+          <div class="content-narrow">
+            <h3 style="margin-bottom:14px;">Subscription Plans</h3>
+            <div class="plans-grid">
+              ${plans.map(pl => {
+                const monthlyId = PLAN_PRICE_IDS[pl.code]?.monthly || "";
+                const annualId = PLAN_PRICE_IDS[pl.code]?.annual || "";
+                const annualCode = pl.code.replace("_monthly", "_annual");
+                const monthlyDisabled = activePlanCode === pl.code;
+                const annualDisabled = activePlanCode === annualCode;
+                return `
+                <div class="plan-card ${monthlyDisabled || annualDisabled ? "active" : ""}">
+                  ${monthlyDisabled || annualDisabled
+                    ? '<div class="pill pill-tag">Current Plan</div>'
+                    : `<div class="pill pill-tag upgrade upgrade-pill" data-price="${monthlyId}">Upgrade</div>`}
+                  <h4>${pl.title}</h4>
+                  <div class="plan-price">${pl.price} <small>${pl.suffix}</small></div>
+                  <p class="plan-desc">${pl.desc}</p>
+                  <ul class="plan-list">
+                    ${pl.bullets.map(b => `<li>${b}</li>`).join("")}
+                  </ul>
+                  <div class="plan-actions">
+                    <button class="plan-cta" data-price="${monthlyId}" ${monthlyDisabled ? "disabled" : ""}>${pl.price} ${pl.suffix}</button>
+                    <button class="plan-cta" data-price="${annualId}" ${annualDisabled ? "disabled" : ""}>${pl.altPrice}</button>
+                  </div>
+                </div>`;
+              }).join("")}
+            </div>
+          </div>
+        </div>
+      `;
+      container.querySelectorAll(".purchase-btn[data-pack]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const packName = btn.getAttribute("data-pack");
+          if (packName) startAddonCheckout(packName);
+        });
+      });
+    }
+
+    async function startAddonCheckout(packName) {
+      const priceId = PACK_PRICE_IDS[packName];
+      if (!priceId) {
+        return;
+      }
+      try {
+        const { data: session } = await supabaseClient.auth.getSession();
+        const token = session?.session?.access_token || null;
+        const headers = { "Content-Type": "application/json" };
+        if (token) headers.Authorization = `Bearer ${token}`;
+
+        const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ priceId, checkoutKind: "addon" })
+        });
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok || !body.url) {
+          throw new Error(body.error || `HTTP ${res.status}`);
+        }
+        openSecureStripeUrl(body.url);
+      } catch (e) {
+        // no status line
+      }
+    }
+
+    async function startPlanCheckout(priceId) {
+      if (!priceId) return;
+      // no status line
+      try {
+        const { data: session } = await supabaseClient.auth.getSession();
+        const token = session?.session?.access_token || null;
+        const headers = { "Content-Type": "application/json" };
+        if (token) headers.Authorization = `Bearer ${token}`;
+
+        const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ priceId })
+        });
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok || !body.url) {
+          throw new Error(body.error || `HTTP ${res.status}`);
+        }
+        openSecureStripeUrl(body.url);
+      } catch (e) {
+        // no status line
+      }
+    }
+
+    async function renderPlan() {
+      try {
+        const { data: session } = await supabaseClient.auth.getSession();
+        const token = session?.session?.access_token;
+        if (!token) {
+          planDetails.innerHTML = "<p>Please sign in to view your plan.</p>";
+          billingBtn.disabled = true;
+          setNavLoggedOut();
+          if (plansContainer) plansContainer.innerHTML = "";
+          if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
+          return;
+        }
+        const info = await fetchPlan(token);
+        const plan = info.plan_code || "Unknown plan";
+        const quota = info.quota || {};
+        const remainingStdRaw =
+          info.remaining_standard_tokens ??
+          quota.remaining_standard_tokens ??
+          info.monthly_standard_tokens ??
+          quota.monthly_standard_tokens ??
+          info.remaining_tokens ??
+          quota.remaining_tokens;
+        const remainingDeepRaw =
+          info.remaining_deep_tokens ??
+          quota.remaining_deep_tokens ??
+          info.monthly_deep_tokens ??
+          quota.monthly_deep_tokens ??
+          (
+            (info.remaining_tokens != null && (info.remaining_standard_tokens ?? quota.remaining_standard_tokens) != null)
+              ? (info.remaining_tokens - (info.remaining_standard_tokens ?? quota.remaining_standard_tokens))
+              : null
+          ) ??
+          (
+            (quota.remaining_tokens != null && (info.remaining_standard_tokens ?? quota.remaining_standard_tokens) != null)
+              ? (quota.remaining_tokens - (info.remaining_standard_tokens ?? quota.remaining_standard_tokens))
+              : null
+          );
+        const remainingStd = formatNumber(remainingStdRaw ?? 0);
+        const remainingDeep = formatNumber(remainingDeepRaw ?? 0);
+        planDetails.innerHTML = `
+          <p><strong>Plan:</strong> ${formatPlan(plan)}</p>
+          <p><strong>Email:</strong> ${info.email || info.user_email || "—"}</p>
+          <p><strong>Standard Tokens Remaining:</strong> ${remainingStd ?? "—"}</p>
+          <p><strong>Deep Tokens Remaining:</strong> ${remainingDeep}</p>
+        `;
+        renderTokensAndPlans(plan);
+        document.querySelectorAll(".plan-cta[data-price]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const priceId = btn.getAttribute("data-price");
+            if (!priceId || btn.disabled) return;
+            startPlanCheckout(priceId);
+          });
+        });
+        document.querySelectorAll(".upgrade-pill[data-price]").forEach((pill) => {
+          pill.style.cursor = "pointer";
+          pill.addEventListener("click", () => {
+            const priceId = pill.getAttribute("data-price");
+            if (priceId) startPlanCheckout(priceId);
+          });
+        });
+        // no status line
+        billingBtn.disabled = false;
+        billingBtn.onclick = () => openBillingPortal(token).catch(() => {});
+        cancelBtn.disabled = false;
+        cancelBtn.onclick = () => openBillingPortal(token).catch(() => {});
+        setNavLoggedIn();
+        if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
+      } catch (e) {
+        // no status line
+        billingBtn.disabled = true;
+        cancelBtn.disabled = true;
+        setNavLoggedOut();
+        if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
+      }
+    }
+
+    async function handleSignOut(e) {
+      if (e) e.preventDefault();
+      try {
+        await supabaseClient.auth.signOut();
+        planDetails.innerHTML = "<p>You have been signed out.</p>";
+        billingBtn.disabled = true;
+        cancelBtn.disabled = true;
+        setNavLoggedOut();
+      } catch (e) {
+        // no status line
+      }
+    }
+
+    signOutBtn?.addEventListener("click", handleSignOut);
+
+    // On load, ensure session or redirect to login, then show plan
+    renderPlan();
+  </script>
+</body>
+</html>

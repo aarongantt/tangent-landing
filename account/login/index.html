@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tangent – Sign In</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" type="image/png" href="/images/tangent_t_logo.png" />
+  <style>
+    .login-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: radial-gradient(circle at 20% 20%, rgba(59,130,246,0.08), transparent 35%),
+                  radial-gradient(circle at 80% 0%, rgba(236,72,153,0.08), transparent 30%),
+                  #0f172a;
+    }
+    .login-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+      color: #e5e7eb;
+    }
+    .login-card h1 { margin-top: 0; margin-bottom: 12px; }
+    .login-card p { margin-top: 0; margin-bottom: 16px; color: #cbd5e1; }
+    .form-label { display: block; margin-bottom: 10px; color: #cbd5e1; }
+    .form-label input {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 4px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      color: #f8fafc;
+    }
+    .login-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .login-actions button { flex: 1; }
+    .btn-primary,
+    .btn-secondary {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.18);
+      font-weight: 700;
+      cursor: pointer;
+      background: #3b82f6;
+      color: #f8fafc;
+      transition: opacity 120ms ease, transform 120ms ease;
+    }
+    .btn-primary:hover,
+    .btn-secondary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: #e5e7eb;
+    }
+    .status { min-height: 18px; font-size: 13px; margin-top: 10px; color: #f8fafc; }
+    .status.error { color: #f87171; }
+    .status.ok { color: #34d399; }
+    .footer-link { margin-top: 16px; font-size: 14px; text-align: center; color: #cbd5e1; }
+    .footer-link a { color: #93c5fd; }
+  </style>
+</head>
+<body>
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h1>Sign in to Tangent</h1>
+      <p>Use the same email and password you use in the Tangent extension.</p>
+
+      <label class="form-label">
+        Email
+        <input id="email" type="email" autocomplete="email" placeholder="you@example.com" />
+      </label>
+      <label class="form-label">
+        Password
+        <input id="password" type="password" autocomplete="current-password" placeholder="••••••••" />
+      </label>
+
+      <div class="login-actions">
+        <button id="signinBtn" type="button" class="btn-primary">Sign in</button>
+        <button id="signupBtn" type="button" class="btn-secondary">Sign up</button>
+      </div>
+
+      <p id="status" class="status"></p>
+      <div class="footer-link">
+        Need to view your plan? <a href="/account">Go to account</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script>
+    const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: true }
+    });
+
+    const $ = (id) => document.getElementById(id);
+    const statusEl = $('status');
+
+    function setStatus(msg, type = "") {
+      if (!statusEl) return;
+      statusEl.textContent = msg || "";
+      statusEl.classList.toggle("error", type === "error");
+      statusEl.classList.toggle("ok", type === "ok");
+    }
+
+    async function doSignIn(email, password) {
+      setStatus("Signing in…");
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) throw new Error(error.message || "Sign-in failed.");
+      setStatus("Signed in. Redirecting…", "ok");
+      setTimeout(() => { window.location.href = "/account"; }, 300);
+    }
+
+    async function doSignUp(email, password) {
+      setStatus("Creating account…");
+      const { error } = await supabaseClient.auth.signUp({ email, password });
+      if (error) throw new Error(error.message || "Sign-up failed.");
+      setStatus("Account created. Check email to confirm, then sign in.", "ok");
+    }
+
+    async function requireLoggedOut() {
+      const { data } = await supabaseClient.auth.getSession();
+      if (data?.session?.access_token) {
+        window.location.href = "/account";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      requireLoggedOut().catch(() => {});
+      const emailInput = $('email');
+      const passwordInput = $('password');
+      $('signinBtn')?.addEventListener("click", async () => {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        if (!email || !password) {
+          setStatus("Enter email and password.", "error");
+          return;
+        }
+        try {
+          await doSignIn(email, password);
+        } catch (e) {
+          setStatus(e.message || "Sign-in failed.", "error");
+        }
+      });
+
+      $('signupBtn')?.addEventListener("click", async () => {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        if (!email || !password) {
+          setStatus("Enter email and password.", "error");
+          return;
+        }
+        try {
+          await doSignUp(email, password);
+        } catch (e) {
+          setStatus(e.message || "Sign-up failed.", "error");
+        }
+      });
+
+      const onKey = (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          $('signinBtn')?.click();
+        }
+      };
+      emailInput?.addEventListener("keydown", onKey);
+      passwordInput?.addEventListener("keydown", onKey);
+      emailInput?.focus();
+    });
+  </script>
+</body>
+</html>
