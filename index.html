@@ -48,9 +48,21 @@
     <!-- Site header -->
     <header class="site-header">
         <div class="container header-inner">
+            <!-- Mobile hamburger menu (hidden on desktop) -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
             <a href="/" class="logo-link">
                 <img src="images/tangent_logo.png" alt="Tangent" class="logo-wordmark" />
             </a>
+
+            <!-- Mobile Sign Up button (hidden on desktop) -->
+            <a href="/signup" class="mobile-signup-btn" id="mobileSignup">Sign Up</a>
+
+            <!-- Desktop navigation (hidden on mobile) -->
             <nav class="nav nav-guard" id="navRoot">
                 <a href="/download" class="nav-link">Download Tangent</a>
                 <a href="#how-it-works" class="nav-link" id="navHow">How It Works</a>
@@ -61,6 +73,20 @@
                 <a href="/signup" class="nav-link nav-link-cta" id="navSignup">Sign Up</a>
                 <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
             </nav>
+
+            <!-- Mobile slide-out menu (hidden by default) -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="mobile-menu-content">
+                    <a href="/download" class="mobile-menu-link">Download Tangent</a>
+                    <a href="#how-it-works" class="mobile-menu-link" id="mobileNavHow">How It Works</a>
+                    <a href="/faq.html" class="mobile-menu-link" id="mobileNavFaq">FAQ</a>
+                    <a href="/signup" class="mobile-menu-link" id="mobileNavPricing">Pricing</a>
+                    <a href="/account/login/" class="mobile-menu-link" id="mobileNavLogin">Log In</a>
+                    <a href="javascript:void(0)" class="mobile-menu-link" id="mobileNavSignOut" style="display:none;">Sign Out</a>
+                    <a href="/account" class="mobile-menu-link mobile-menu-link-highlight" id="mobileNavAccount" style="display:none;">Account</a>
+                </div>
+            </div>
+            <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
         </div>
     </header>
 
@@ -998,8 +1024,161 @@
    MOBILE RESPONSIVE STYLES
    ═══════════════════════════════════════════════════════════════════════════ */
 
+/* Mobile Navigation Elements - Hidden on Desktop */
+.mobile-menu-toggle,
+.mobile-signup-btn,
+.mobile-menu,
+.mobile-menu-overlay {
+    display: none;
+}
+
 /* Tablet and below (portrait iPad, landscape phones) */
 @media (max-width: 968px) {
+    /* Hide desktop navigation, show mobile controls */
+    .nav {
+        display: none !important;
+    }
+
+    .mobile-menu-toggle,
+    .mobile-signup-btn {
+        display: block;
+    }
+
+    /* Hamburger menu button (top left) */
+    .mobile-menu-toggle {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 32px;
+        height: 32px;
+        background: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .hamburger-line {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: #e5e7eb;
+        margin: 5px auto;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+    }
+
+    /* Hamburger animation when menu is open */
+    .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Center logo */
+    .logo-link {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .logo-wordmark {
+        height: 32px !important; /* Larger on mobile */
+    }
+
+    /* Sign Up button (top right) */
+    .mobile-signup-btn {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 8px 16px;
+        background: #669fc3;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background 0.2s ease;
+    }
+
+    .mobile-signup-btn:hover {
+        background: #5a8fb0;
+    }
+
+    /* Slide-out menu overlay */
+    .mobile-menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .mobile-menu-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Slide-out menu */
+    .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: -280px; /* Hidden off-screen */
+        width: 280px;
+        height: 100%;
+        background: #1a1f2e;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .mobile-menu.active {
+        left: 0; /* Slide in */
+    }
+
+    .mobile-menu-content {
+        padding: 80px 0 40px; /* Top padding to clear header */
+    }
+
+    .mobile-menu-link {
+        display: block;
+        padding: 16px 24px;
+        color: #e5e7eb;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 400;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: background 0.2s ease, padding-left 0.2s ease;
+    }
+
+    .mobile-menu-link:hover {
+        background: rgba(255, 255, 255, 0.05);
+        padding-left: 32px;
+    }
+
+    .mobile-menu-link-highlight {
+        background: rgba(102, 159, 195, 0.2);
+        font-weight: 500;
+        color: #669fc3;
+    }
+
+    .mobile-menu-link-highlight:hover {
+        background: rgba(102, 159, 195, 0.3);
+    }
     .hero-demo {
         padding: 40px 20px 20px;
         min-height: auto;
@@ -1321,17 +1500,17 @@
         const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
 
         if (isSmallMobile()) {
-            // Small phones: center horizontally, position near top
+            // Small phones: center horizontally, position lower to avoid covering chip bar
             return {
                 left: '50%',
-                top: '60px',
+                top: '140px', // Increased from 60px to avoid chip bar overlap
                 transform: 'translateX(-50%)'
             };
         } else if (isMobile()) {
-            // Regular mobile: center horizontally, slightly lower
+            // Regular mobile: center horizontally, positioned below chip bar
             return {
                 left: '50%',
-                top: '80px',
+                top: '160px', // Increased from 80px to avoid chip bar overlap
                 transform: 'translateX(-50%)'
             };
         } else {
@@ -1913,6 +2092,56 @@
     <script>
         // Simple current-year setter
         document.getElementById("year").textContent = new Date().getFullYear();
+
+        // Mobile menu toggle functionality
+        (function() {
+            const menuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuOverlay = document.getElementById('mobileMenuOverlay');
+            const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+            if (!menuToggle || !mobileMenu || !menuOverlay) return;
+
+            // Toggle menu open/closed
+            function toggleMenu() {
+                const isActive = mobileMenu.classList.contains('active');
+
+                if (isActive) {
+                    // Close menu
+                    menuToggle.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                    document.body.style.overflow = ''; // Re-enable scrolling
+                } else {
+                    // Open menu
+                    menuToggle.classList.add('active');
+                    mobileMenu.classList.add('active');
+                    menuOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                }
+            }
+
+            // Click hamburger to toggle
+            menuToggle.addEventListener('click', toggleMenu);
+
+            // Click overlay to close
+            menuOverlay.addEventListener('click', toggleMenu);
+
+            // Click any menu link to close menu
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    // Small delay to let navigation start before closing
+                    setTimeout(toggleMenu, 100);
+                });
+            });
+
+            // Close menu on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        })();
     </script>
 
     <!-- Shared auth/nav logic with modal overlay -->
