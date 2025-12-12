@@ -369,22 +369,24 @@
                 0 24px 96px rgba(0, 0, 0, 0.4);
 }
 
-/* Light Mode Panel - EXACT SPECIFICATIONS with Frosted Glass */
+/* Light Mode Panel - EXACT MATCH TO REAL EXTENSION (lines 2684-2700) */
 .tg-demo-panel.tg-theme-light {
-    --tg-panel-opacity: 0.85;
-    --tg-panel-grad-start: rgba(255, 255, 255, 0.85);
-    --tg-panel-grad-end: rgba(245, 247, 250, 0.85);
+    --tg-panel-opacity: 1.0; /* Fully opaque! */
+    --tg-panel-grad-start: rgba(255, 255, 255, 1.0);
+    --tg-panel-grad-end: rgba(245, 247, 250, 1.0);
+    /* Layered background for liquid glass depth */
     background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
         linear-gradient(180deg, var(--tg-panel-grad-start), var(--tg-panel-grad-end)) !important;
+    /* Bevel effect: light from top-left, dark from bottom-right */
     border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
     border-left: 1px solid rgba(255, 255, 255, 0.6) !important;
     border-right: 1px solid rgba(0, 0, 0, 0.25) !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.25) !important;
     color: #0f141a;
-    /* Enhanced frosted glass effect - DO NOT set opacity on entire panel, only in background */
-    backdrop-filter: blur(24px) saturate(180%) brightness(1.2) contrast(1.1);
-    -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.2) contrast(1.1);
+    /* Liquid glass effect: stronger blur with high saturation and brightness */
+    backdrop-filter: blur(20px) saturate(180%) brightness(1.25) contrast(1.08);
+    -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.25) contrast(1.08);
 }
 
 .tg-demo-panel.tg-demo-dragging {
@@ -431,16 +433,15 @@
     height: 15px; /* 12px * 1.25 */
     object-fit: contain;
     display: block;
+    /* Light mode gray - lines 853-857 */
+    filter: brightness(0) saturate(100%) invert(44%) sepia(0%) saturate(0%)
+            hue-rotate(133deg) brightness(95%) contrast(90%);
 }
 
+/* Pin button hover - EXACT from lines 775-780 */
 .tg-demo-pin:hover {
-    filter: brightness(1.15);
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.05); /* NOT brightness filter! */
     color: #357fd0 !important;
-}
-
-.tg-demo-pin:hover .tg-demo-pin-icon {
-    filter: invert(56%) sepia(48%) saturate(423%) hue-rotate(166deg) brightness(92%) contrast(87%) !important;
 }
 
 /* Title / Logo */
@@ -491,9 +492,9 @@
     transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 
+/* Minimize button hover - EXACT from lines 775-780 */
 .tg-demo-panel__btns > button:hover {
-    filter: brightness(1.15);
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.05); /* NOT brightness filter! */
     color: #357fd0 !important;
 }
 
@@ -502,7 +503,15 @@
     font-size: 26.25px !important; /* 21px * 1.25 */
     line-height: 1;
     font-weight: 300;
-    color: inherit !important;
+    color: #727272 !important;
+}
+
+/* Close button hover - EXACT from lines 798-802 - NO background! */
+.tg-demo-panel__close:hover {
+    background: transparent !important;
+    filter: none !important;
+    color: #357fd0 !important;
+    box-shadow: none;
 }
 
 /* Minimize button icons */
