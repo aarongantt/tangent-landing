@@ -89,10 +89,21 @@
 
                             <!-- Chip Bank (initially hidden) -->
                             <div id="demo-chips" class="tg-demo-chips" style="display: none;">
-                                <button class="tg-demo-chip" data-chip="what">Context</button>
-                                <button class="tg-demo-chip" data-chip="eli5">What is...</button>
-                                <button class="tg-demo-chip" data-chip="faq">Summarize</button>
-                                <button class="tg-demo-chip" data-chip="code">Translate</button>
+                                <!-- T logo chip (far left) -->
+                                <button class="tg-demo-chip tg-demo-chip--icon" data-chip="newchat" title="New TANGENT chat">
+                                    <img src="/images/tangent_t_logo.png" alt="TANGENT" style="width: 18px; height: 18px; display: block;" />
+                                </button>
+                                <!-- User chips -->
+                                <button class="tg-demo-chip" data-chip="what">What is...</button>
+                                <button class="tg-demo-chip" data-chip="faq">FAQ</button>
+                                <button class="tg-demo-chip" data-chip="howto">How-To</button>
+                                <button class="tg-demo-chip" data-chip="pricing">Pricing</button>
+                                <!-- Down arrow (far right) -->
+                                <button class="tg-demo-chip tg-demo-chip--icon tg-demo-chip--caret" aria-expanded="false" title="More chips">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                                        <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
                             </div>
 
                             <!-- Tangent Panel (initially hidden) - EXACT REPLICA FROM EXTENSION -->
@@ -322,6 +333,21 @@
 
 .tg-demo-chip:active {
     transform: translateY(1px);
+}
+
+/* Icon chips (T logo and down arrow) */
+.tg-demo-chip--icon {
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    border-radius: 6px; /* Rounded square instead of pill shape */
+}
+
+/* Caret chip (down arrow) */
+.tg-demo-chip--caret svg {
+    display: block;
 }
 
 /* Tangent Panel Shell - EXACT SPECIFICATIONS FROM REAL TANGENT */
