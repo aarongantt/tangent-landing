@@ -221,16 +221,16 @@
 
 /* Article */
 #demo-article {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 17px;
-    line-height: 1.8;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 22px;
+    line-height: 1.7;
     color: #ffffff; /* White text */
     height: 100%;
     overflow-y: auto;
     scroll-behavior: smooth;
-    padding: 100px 0;
+    padding: 40px 0;
     scrollbar-width: none; /* Hide scrollbar in Firefox */
-    max-width: 650px; /* Constrain text width to left side */
+    max-width: 700px; /* Constrain text width to left side */
 }
 
 #demo-article::-webkit-scrollbar {
@@ -651,7 +651,18 @@
         panelShell.classList.remove('tg-demo-visible');
         stream.innerHTML = '';
 
-        await wait(600);
+        // Reset scroll to top
+        article.scrollTop = 0;
+
+        await wait(400);
+
+        // 0. Initial scroll down to show reading motion
+        article.scrollTo({
+            top: 180,
+            behavior: 'smooth'
+        });
+
+        await wait(1200);
 
         // 1. Scroll anchor into view (center)
         const articleRect = article.getBoundingClientRect();
