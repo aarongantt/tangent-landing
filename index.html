@@ -1037,15 +1037,15 @@
         }
     };
 
-    // ═══ FAQ ANSWERS DATA ═══
+    // ═══ FAQ ANSWERS DATA (from actual FAQ page) ═══
     const FAQ_ANSWERS = {
-        'what-is': 'TANGENT is a Chrome browser extension that brings AI assistance directly to any webpage. Select text, choose an action chip, and get instant AI-powered responses without leaving your page.',
-        'how-works': 'TANGENT analyzes the text you select along with the surrounding page context, then uses AI to provide relevant, contextual responses. It works on any website through a floating, draggable chat panel.',
-        'prompt-chips': 'Prompt Chips are quick-action buttons that appear when you select text. Each chip represents a different AI task (like "What is...", "Summarize", or "Translate"). Click a chip to instantly apply that action to your selected text.',
-        'custom-chips': 'Yes! You can create custom chips with your own prompts in the TANGENT settings. This lets you build personalized shortcuts for tasks you do frequently.',
-        'pricing': 'TANGENT offers a free trial with 70,000 tokens (about 50-100 queries). Paid plans start at $12/month for Pro, with higher tiers for power users and teams. Visit the Pricing page for full details.',
-        'privacy': 'Your data is encrypted in transit and we never train AI models on your queries. TANGENT is blocked on banking and financial sites by default. You control what text is sent to the AI.',
-        'browsers': 'TANGENT currently supports Chrome (Manifest V3). Firefox and Safari support are planned for future releases.'
+        'what-is': 'Tangent is a floating, on-page AI assistant built to support the natural way people think. It helps you stay immersed in the subject in front of you while giving you the freedom to explore any question, tangent, or idea that arises along the way. Instead of switching tabs or copy-pasting text into a chatbot, Tangent appears directly on the webpages you\'re working on and responds with context-aware intelligence. It becomes part of your workflow—an unobtrusive companion that moves at the speed of your curiosity.',
+        'how-works': 'Tangent listens only when you interact with it. When you ask a question or click a prompt chip, it gathers the text you highlighted, the surrounding paragraph, and anything you typed. It sends this structured context to Tangent\'s secure backend, where your subscription is checked, the right model is selected, and a clean prompt is built for the AI. The backend returns the result, and Tangent displays it directly in the floating mini-chat. Heavy lifting happens in the cloud; the smooth, responsive experience happens in your browser. All data transmission uses end-to-end encryption, and Tangent\'s backend does not store your conversations or page content after processing your request.',
+        'prompt-chips': 'Prompt Chips are Tangent\'s one-click action buttons that appear when you select text. Each chip contains a pre-written, optimized prompt designed to perform a specific task—for example, summarizing a passage, explaining a concept in simple terms, rewriting text more clearly, comparing ideas, or extracting key points. Instead of crafting a prompt manually, you click a chip and Tangent knows exactly what to do.',
+        'custom-chips': 'Yes. If you frequently perform a certain type of analysis or transformation, you can create your own custom chip with your preferred wording or structure. Your chip then appears in your chip bar just like the built-in ones.',
+        'pricing': 'Tangent offers two subscription tiers: Pro ($10/month or $105/year) with 12M standard tokens and 750K deep tokens per month, and Business Solo ($29/month or $290/year) with 20M standard tokens and 2M deep tokens per month. A 7-day free trial with 70,000 standard tokens is available—enough for approximately 150-200 typical interactions. One-time token packs are also available if you need more.',
+        'privacy': 'Yes. Tangent uses a security-first design. Your browser never stores or sends OpenAI API keys—only Tangent\'s backend communicates with the model. All communication is encrypted, Supabase enforces strong row-level security, and sensitive information is automatically redacted on your device before leaving your browser. Tangent automatically turns itself off on banking, medical, tax, or government websites.',
+        'browsers': 'Tangent works on Chrome and most Chromium browsers such as Brave, Edge, Opera, and Arc. A Safari version is planned for the future.'
     };
 
     // ═══ STATE ═══
@@ -1327,10 +1327,24 @@
             const faqId = item.getAttribute('data-faq');
             const answer = FAQ_ANSWERS[faqId];
 
-            if (!answer) return;
+            if (!answer) {
+                console.log('[FAQ] No answer found for:', faqId);
+                return;
+            }
 
             // Extract question text from <strong> element
             const questionText = item.querySelector('strong')?.textContent || item.textContent;
+            console.log('[FAQ] Clicked:', questionText, 'Answer:', answer);
+
+            // Ensure panel is visible
+            if (panelShell.style.display === 'none') {
+                panelShell.style.display = 'block';
+                panelShell.style.left = '600px';
+                panelShell.style.top = '80px';
+                await wait(50);
+                panelShell.classList.add('tg-demo-visible');
+                await wait(350);
+            }
 
             // Hide dropdown
             faqDropdown.classList.remove('tg-demo-visible');
@@ -1352,13 +1366,32 @@
 
             await wait(300);
 
-            // Show AI response
-            const aiDiv = document.createElement('div');
-            aiDiv.className = 'tg-demo-msg';
-            stream.appendChild(aiDiv);
+            // Show AI response with typewriter effect
+            state.mode = 'typing';
+            const msgEl = document.createElement('div');
+            msgEl.className = 'tg-demo-msg';
+            stream.appendChild(msgEl);
 
-            // Typewriter effect
-            await typeMessage(aiDiv, answer);
+            const contentSpan = document.createElement('span');
+            msgEl.appendChild(contentSpan);
+
+            const chunkSize = 3;
+            const chunks = [];
+            for (let i = 0; i < answer.length; i += chunkSize) {
+                chunks.push(answer.slice(i, i + chunkSize));
+            }
+
+            for (let i = 0; i < chunks.length; i++) {
+                if (state.mode !== 'typing') break;
+
+                contentSpan.textContent += chunks[i];
+                stream.scrollTop = stream.scrollHeight;
+
+                await wait(20);
+            }
+
+            contentSpan.textContent = answer;
+            stream.scrollTop = stream.scrollHeight;
         });
     });
 
