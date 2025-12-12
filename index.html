@@ -68,37 +68,10 @@
     <main>
         <section class="hero-demo">
             <div class="container hero-demo-grid">
-                <!-- Left Column: Heading + Email Form -->
-                <div class="hero-demo-text">
-                    <h1>AI that lives on every page you open.</h1>
-                    <p class="hero-subtitle">
-                        Tangent is your on-page research assistant, explainer, and coding helper.
-                        Highlight anything, tap a chip, and get answers without ever leaving the tab.
-                    </p>
-
-                    <form class="waitlist-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-                        <label for="email" class="visually-hidden">Email address</label>
-                        <input id="email" name="email" type="email" required
-                            placeholder="Enter your email to join the waitlist" />
-                        <button type="submit">Join the waitlist</button>
-                    </form>
-
-                    <p class="waitlist-note">
-                        No spam. Just early access, launch updates, and a few behind-the-scenes demos.
-                    </p>
-                </div>
-
-                <!-- Right Column: Interactive Demo -->
+                <!-- Left Column: Interactive Demo (Larger) -->
                 <div class="hero-demo-visual">
                     <div class="demo-window">
-                        <!-- Browser Chrome (3 dots) -->
-                        <div class="demo-window-header">
-                            <span class="demo-dot"></span>
-                            <span class="demo-dot"></span>
-                            <span class="demo-dot"></span>
-                        </div>
-
-                        <!-- Demo Stage Container -->
+                        <!-- Demo Stage Container (No Browser Chrome) -->
                         <div id="demo-stage-container">
                             <!-- Fade masks (top and bottom) -->
                             <div class="demo-fade-top"></div>
@@ -152,10 +125,25 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Caption below demo -->
-                    <p class="demo-caption">
-                        This is a mockup of Tangent's overlay. The real thing plugs directly into your browser.
+                <!-- Right Column: Heading + Email Form (Smaller) -->
+                <div class="hero-demo-text">
+                    <h1>AI that lives on every page you open.</h1>
+                    <p class="hero-subtitle">
+                        Tangent is your on-page research assistant, explainer, and coding helper.
+                        Highlight anything, tap a chip, and get answers without ever leaving the tab.
+                    </p>
+
+                    <form class="waitlist-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                        <label for="email" class="visually-hidden">Email address</label>
+                        <input id="email" name="email" type="email" required
+                            placeholder="Enter your email to join the waitlist" />
+                        <button type="submit">Join the waitlist</button>
+                    </form>
+
+                    <p class="waitlist-note">
+                        No spam. Just early access, launch updates, and a few behind-the-scenes demos.
                     </p>
                 </div>
             </div>
@@ -214,8 +202,8 @@
 
 .hero-demo-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 80px;
     align-items: center;
 }
 
@@ -279,35 +267,14 @@
 
 /* Demo Window */
 .demo-window {
-    background: #1f2937;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    background: transparent;
+    overflow: visible;
 }
-
-.demo-window-header {
-    background: #111827;
-    padding: 12px 16px;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.demo-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #374151;
-}
-
-.demo-dot:nth-child(1) { background: #ef4444; }
-.demo-dot:nth-child(2) { background: #f59e0b; }
-.demo-dot:nth-child(3) { background: #10b981; }
 
 #demo-stage-container {
     position: relative;
-    background: #ffffff;
-    height: 480px;
+    background: transparent;
+    height: 580px;
     overflow: hidden;
 }
 
@@ -317,7 +284,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    height: 80px;
+    height: 100px;
     z-index: 50;
     pointer-events: none;
 }
@@ -325,29 +292,29 @@
 .demo-fade-top {
     top: 0;
     background: linear-gradient(to bottom,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(255, 255, 255, 0.8) 40%,
-        rgba(255, 255, 255, 0) 100%);
+        rgba(10, 14, 20, 1) 0%,
+        rgba(10, 14, 20, 0.7) 30%,
+        rgba(10, 14, 20, 0) 100%);
 }
 
 .demo-fade-bottom {
     bottom: 0;
     background: linear-gradient(to top,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(255, 255, 255, 0.8) 40%,
-        rgba(255, 255, 255, 0) 100%);
+        rgba(10, 14, 20, 1) 0%,
+        rgba(10, 14, 20, 0.7) 30%,
+        rgba(10, 14, 20, 0) 100%);
 }
 
 /* Article */
 #demo-article {
     font-family: Georgia, 'Times New Roman', serif;
-    font-size: 16px;
-    line-height: 1.7;
-    color: #9ca3af; /* Light grey text */
+    font-size: 17px;
+    line-height: 1.8;
+    color: #ffffff; /* White text */
     height: 100%;
     overflow-y: auto;
     scroll-behavior: smooth;
-    padding: 80px 48px;
+    padding: 100px 0;
     scrollbar-width: none; /* Hide scrollbar in Firefox */
 }
 
@@ -362,7 +329,7 @@
 /* Anchor word (Tangent) */
 #tangent-anchor {
     position: relative;
-    color: #1f2937; /* Darker when not highlighted */
+    color: #ffffff; /* White when not highlighted */
     transition: all 0.3s ease;
 }
 
@@ -381,12 +348,19 @@
     50% { box-shadow: 0 0 0 6px rgba(42, 143, 213, 0.15); }
 }
 
-/* Chip Bank */
+/* Chip Bank - EXACT SPECIFICATIONS FROM REAL TANGENT */
 .tg-demo-chips {
     position: absolute;
     z-index: 100;
     display: flex;
-    gap: 8px;
+    gap: 6px;
+    padding: 6px 10px;
+    background: rgba(22, 24, 28, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
     opacity: 0;
     transform: translateY(-4px);
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -400,35 +374,39 @@
 .tg-demo-chip {
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
     font-weight: 600;
-    font-size: 13px;
-    padding: 7px 13px;
+    font-size: 1em;
+    line-height: 1.2;
+    padding: 6px 10px;
+    border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    background: rgba(22, 24, 28, 0.95);
-    color: #ffffff;
+    background: rgba(22, 24, 28, 0.92);
+    color: #fff;
     cursor: pointer;
     user-select: none;
-    transition: all 0.15s ease;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .tg-demo-chip:hover {
     filter: brightness(1.15);
-    transform: translateY(-1px);
 }
 
 .tg-demo-chip:active {
-    transform: translateY(0);
+    transform: translateY(1px);
 }
 
-/* Tangent Panel Shell */
+/* Tangent Panel Shell - EXACT SPECIFICATIONS FROM REAL TANGENT */
 .tg-demo-panel-shell {
     position: absolute;
     z-index: 200;
+    pointer-events: none;
+    overflow: visible;
+    display: inline-block;
     opacity: 0;
     transform: scale(0.95);
     transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tg-demo-panel-shell * {
+    pointer-events: auto;
 }
 
 .tg-demo-panel-shell.tg-demo-visible {
@@ -436,35 +414,45 @@
     transform: scale(1);
 }
 
-/* Tangent Panel */
+/* Tangent Panel - EXACT SPECIFICATIONS FROM REAL TANGENT */
 .tg-demo-panel {
-    width: 320px;
-    min-height: 180px;
-    max-height: 320px;
-    background: #18191d;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 10px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 2;
+    cursor: default;
+    width: 380px;
+    height: 420px;
     display: flex;
     flex-direction: column;
+    overflow: visible;
+    opacity: 1;
+    background: linear-gradient(180deg,
+        rgba(36, 40, 49, 1),
+        rgba(14, 16, 19, 1)) !important;
+    border: 1px solid #777777 !important;
+    border-radius: 12px;
+    box-shadow: 0 12px 64px rgba(0, 0, 0, 0.6),
+                0 24px 96px rgba(0, 0, 0, 0.4);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
     color: #e9eef5;
-    cursor: move;
-    user-select: none;
 }
 
 .tg-demo-panel.tg-demo-dragging {
-    cursor: grabbing;
+    cursor: move;
 }
 
-/* Panel Header */
+/* Panel Header - EXACT SPECIFICATIONS FROM REAL TANGENT */
 .tg-demo-panel__header {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    gap: 8px;
+    padding: 10px 10px 8px;
     position: relative;
+    cursor: move;
+    user-select: none;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: none;
+    z-index: 10;
 }
 
 .tg-demo-panel__title {
@@ -502,41 +490,79 @@
     font-weight: 300;
 }
 
-/* Panel Body / Stream */
+/* Panel Body / Stream - EXACT SPECIFICATIONS FROM REAL TANGENT */
 .tg-demo-panel__body {
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    position: relative;
 }
 
 .tg-demo-panel__stream {
     height: 100%;
-    overflow-y: auto;
-    padding: 14px;
+    overflow: auto !important;
     background: transparent;
     scrollbar-width: thin;
     scrollbar-color: rgba(150, 150, 150, 0.4) transparent;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    padding-left: 14px;
+    padding-right: 14px;
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0,
+        black 50px,
+        black calc(100% - 28px),
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0,
+        black 50px,
+        black calc(100% - 28px),
+        transparent 100%
+    );
+}
+
+.tg-demo-panel__stream::after {
+    content: '';
+    display: block;
+    height: 6px;
 }
 
 .tg-demo-panel__stream::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
+    background: transparent !important;
+    overflow: auto;
+}
+
+.tg-demo-panel__stream::-webkit-scrollbar-track {
+    background: transparent !important;
 }
 
 .tg-demo-panel__stream::-webkit-scrollbar-thumb {
     background-color: rgba(180, 180, 180, 0.5);
-    border-radius: 3px;
+    border-radius: 4px;
+    border: none;
+    background-clip: border-box;
+    transition: background-color 0.25s ease;
 }
 
-/* Message */
+.tg-demo-panel__stream:hover::-webkit-scrollbar-thumb,
+.tg-demo-panel__stream:active::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Message - MATCHES REAL TANGENT STYLING */
 .tg-demo-msg {
-    margin-bottom: 10px;
-    padding: 10px 12px;
-    border-radius: 7px;
-    font-size: 13px;
+    margin-bottom: 14px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
     line-height: 1.6;
     background: rgba(255, 255, 255, 0.06);
-    color: #e5e7eb;
+    color: #e9eef5;
     opacity: 0;
     transform: translateY(4px);
     animation: tg-demo-msg-in 0.3s ease forwards;
@@ -549,11 +575,11 @@
     }
 }
 
-/* User message style */
+/* User message style - matches real Tangent user bubble */
 .tg-demo-msg.tg-user {
-    background: rgba(59, 130, 246, 0.15);
-    color: #dbeafe;
-    font-style: italic;
+    background: rgba(71, 96, 128, 0.35);
+    color: #e9eef5;
+    font-style: normal;
 }
 
 /* Thinking Indicator */
@@ -579,13 +605,6 @@
     40% { transform: scale(1.2); opacity: 1; }
 }
 
-/* Caption */
-.demo-caption {
-    margin-top: 16px;
-    font-size: 13px;
-    color: #6b7280;
-    text-align: center;
-}
 
 /* Responsive */
 @media (max-width: 968px) {
