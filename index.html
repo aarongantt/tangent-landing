@@ -1563,16 +1563,20 @@
 
         if (isSmallMobile()) {
             // Small phones: center horizontally, position lower to avoid covering chip bar
+            // Add 2 lines worth of space: 16px font × 1.6 line-height × 2 = ~51px
+            const twoLinesOffset = 16 * 1.6 * 2; // ~51px
             return {
                 left: '50%',
-                top: '180px', // Moved down further to clear chip bar completely
+                top: `${180 + twoLinesOffset}px`, // ~231px - two lines lower
                 transform: 'translateX(-50%)'
             };
         } else if (isMobile()) {
             // Regular mobile: center horizontally, positioned below chip bar
+            // Add 2 lines worth of space: 18px font × 1.6 line-height × 2 = ~58px
+            const twoLinesOffset = 18 * 1.6 * 2; // ~58px
             return {
                 left: '50%',
-                top: '200px', // Moved down further to clear chip bar completely
+                top: `${200 + twoLinesOffset}px`, // ~258px - two lines lower
                 transform: 'translateX(-50%)'
             };
         } else {
@@ -1623,8 +1627,16 @@
         // 1. Scroll down until "Tangent" is at top third of the page - SLOW & GENTLE
         const articleRect = article.getBoundingClientRect();
         const anchorRect = anchor.getBoundingClientRect();
-        const twoLinesHeight = 26 * 1.6 * 2; // font-size * line-height * 2 lines = ~83px
-        const targetPosition = anchorRect.top - articleRect.top - (articleRect.height / 3) + twoLinesHeight;
+
+        // Mobile: reduce scroll by one line (subtract one line height)
+        const fontSize = isMobile() ? (isSmallMobile() ? 16 : 18) : 26;
+        const lineHeight = 1.6;
+        const oneLineHeight = fontSize * lineHeight;
+        const twoLinesHeight = fontSize * lineHeight * 2;
+
+        // On mobile, reduce scroll distance by one line
+        const scrollAdjustment = isMobile() ? oneLineHeight : 0;
+        const targetPosition = anchorRect.top - articleRect.top - (articleRect.height / 3) + twoLinesHeight - scrollAdjustment;
 
         // Smooth, slow scroll using custom animation
         const startScroll = article.scrollTop;
