@@ -530,8 +530,9 @@
         tangent_pro_annual: "Tangent Pro (Annual)",
         tangent_business_solo_monthly: "Tangent Business Solo (Monthly)",
         tangent_business_solo_annual: "Tangent Business Solo (Annual)",
-        tangent_business_teams_monthly: "Tangent Business Teams (Monthly)",
-        tangent_business_teams_annual: "Tangent Business Teams (Annual)",
+        // TEMPORARILY HIDDEN: Business Teams plan
+        // tangent_business_teams_monthly: "Tangent Business Teams (Monthly)",
+        // tangent_business_teams_annual: "Tangent Business Teams (Annual)",
         free_trial: "Free Trial"
       };
       return map[planCode] || planCode || "Unknown";
@@ -555,11 +556,12 @@
       tangent_business_solo_monthly: {
         monthly: "price_1SWtkiFYbfjZcbAUv0QsKWy6",
         annual: "price_1SWtl8FYbfjZcbAU4JzU5pTK"
-      },
-      tangent_business_teams_monthly: {
-        monthly: "price_1SWtlcFYbfjZcbAUnebgB9UU",
-        annual: "price_1SWtm2FYbfjZcbAU8pWGPFYr"
       }
+      // TEMPORARILY HIDDEN: Business Teams plan
+      // tangent_business_teams_monthly: {
+      //   monthly: "price_1SWtlcFYbfjZcbAUnebgB9UU",
+      //   annual: "price_1SWtm2FYbfjZcbAU8pWGPFYr"
+      // }
     };
 
     function renderTokensAndPlans(activePlanCode) {
@@ -601,8 +603,9 @@
             "Email support"
           ],
           altPrice: "$24.17 / mo ($290 billed annually)"
-        },
-        {
+        }
+        /* TEMPORARILY HIDDEN: Business Teams plan
+        ,{
           code: "tangent_business_teams_monthly",
           title: "Business (Team)",
           price: "$49",
@@ -617,6 +620,7 @@
           ],
           altPrice: "$40.83 / mo ($490 billed annually)"
         }
+        */
       ];
 
       container.innerHTML = `
