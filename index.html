@@ -994,11 +994,243 @@
 }
 
 
-/* Responsive */
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Tablet and below (portrait iPad, landscape phones) */
 @media (max-width: 968px) {
+    .hero-demo {
+        padding: 40px 20px 20px;
+        min-height: auto;
+    }
+
     #demo-stage-container {
         height: 60vh;
         max-height: 600px;
+        min-width: auto;
+        width: 100%;
+    }
+
+    #demo-article {
+        font-size: 20px;
+        max-width: 100%;
+        padding: 20px 15px;
+    }
+
+    /* Scale down panel for tablets */
+    .tg-demo-panel {
+        width: 380px;  /* 380px * 1.0 (100% scale) */
+        height: 420px;
+        font-size: 14px;
+    }
+
+    .tg-demo-panel__header {
+        padding: 10px 10px 8px;
+    }
+
+    .tg-demo-header-logo {
+        height: 22px;
+    }
+
+    .tg-demo-pin,
+    .tg-demo-panel__btns > button {
+        width: 30px;
+        height: 25px;
+    }
+
+    .tg-demo-input {
+        height: 40px;
+        min-height: 40px;
+        font-size: 14px;
+        padding: 12px 42px 12px 12px;
+    }
+
+    .tg-demo-send {
+        width: 28px;
+        height: 28px;
+        right: 12px;
+    }
+
+    .tg-demo-send-icon {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+/* Mobile phones (portrait) */
+@media (max-width: 768px) {
+    .hero-demo {
+        padding: 20px 10px 10px;
+    }
+
+    #demo-stage-container {
+        height: 70vh;
+        max-height: 700px;
+    }
+
+    #demo-article {
+        font-size: 18px;
+        line-height: 1.5;
+        padding: 15px 10px;
+    }
+
+    /* Position panel and chips for mobile */
+    .tg-demo-panel-shell {
+        /* Panel will be positioned via JavaScript for mobile */
+    }
+
+    /* Smaller panel for mobile */
+    .tg-demo-panel {
+        width: 320px;  /* Narrower for phones */
+        height: 400px; /* Shorter for phones */
+        font-size: 13px;
+    }
+
+    /* Adjust chip bar for mobile */
+    .tg-demo-chips {
+        padding: 8px 10px;
+        gap: 4px;
+        font-size: 13px;
+    }
+
+    .tg-demo-chip {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .tg-demo-chip--icon {
+        padding: 5px;
+        min-width: 28px;
+    }
+
+    /* Tighter spacing in panel */
+    .tg-demo-panel__footer {
+        padding: 6px 8px;
+    }
+
+    .tg-demo-compose {
+        padding: 10px 8px;
+    }
+
+    .tg-demo-input {
+        height: 38px;
+        min-height: 38px;
+        font-size: 13px;
+    }
+
+    .tg-demo-faq-dropdown {
+        font-size: 13px;
+    }
+
+    .tg-demo-faq-item {
+        font-size: 13px;
+        padding: 6px 0;
+    }
+
+    .tg-demo-faq-scroll {
+        max-height: 140px;
+    }
+}
+
+/* Small phones (iPhone SE, older Androids) */
+@media (max-width: 480px) {
+    .hero-demo {
+        padding: 10px 5px 5px;
+    }
+
+    #demo-stage-container {
+        height: 75vh;
+        max-height: 750px;
+    }
+
+    #demo-article {
+        font-size: 16px;
+        padding: 10px 8px;
+    }
+
+    /* Even smaller panel for tiny screens */
+    .tg-demo-panel {
+        width: 280px;  /* Fit on small phones */
+        height: 360px;
+        font-size: 12px;
+    }
+
+    .tg-demo-panel__header {
+        padding: 8px 8px 6px;
+    }
+
+    .tg-demo-header-logo {
+        height: 18px;
+    }
+
+    .tg-demo-pin,
+    .tg-demo-panel__btns > button {
+        width: 26px;
+        height: 22px;
+    }
+
+    .tg-demo-panel__close {
+        font-size: 18px !important;
+    }
+
+    /* Smaller chips */
+    .tg-demo-chips {
+        padding: 6px 8px;
+        gap: 3px;
+    }
+
+    .tg-demo-chip {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+
+    .tg-demo-chip--icon {
+        padding: 4px;
+        min-width: 24px;
+    }
+
+    .tg-demo-chip--icon img {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .tg-demo-input {
+        height: 36px;
+        min-height: 36px;
+        font-size: 12px;
+        padding: 10px 38px 10px 10px;
+    }
+
+    .tg-demo-send {
+        width: 24px;
+        height: 24px;
+        right: 10px;
+    }
+
+    .tg-demo-send-icon {
+        width: 10px;
+        height: 10px;
+    }
+
+    .tg-demo-menu-toggle {
+        width: 24px;
+        height: 34px;
+        margin-right: 6px;
+    }
+
+    .tg-demo-faq-dropdown {
+        font-size: 12px;
+    }
+
+    .tg-demo-faq-item {
+        font-size: 12px;
+        padding: 5px 0;
+    }
+
+    .tg-demo-faq-scroll {
+        max-height: 120px;
+        padding: 6px 12px 10px 12px;
     }
 }
 </style>
@@ -1073,6 +1305,43 @@
     // ═══ UTILITY: WAIT ═══
     function wait(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // ═══ UTILITY: DETECT MOBILE ═══
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+
+    function isSmallMobile() {
+        return window.innerWidth <= 480;
+    }
+
+    // ═══ UTILITY: GET RESPONSIVE PANEL POSITION ═══
+    function getResponsivePanelPosition() {
+        const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
+
+        if (isSmallMobile()) {
+            // Small phones: center horizontally, position near top
+            return {
+                left: '50%',
+                top: '60px',
+                transform: 'translateX(-50%)'
+            };
+        } else if (isMobile()) {
+            // Regular mobile: center horizontally, slightly lower
+            return {
+                left: '50%',
+                top: '80px',
+                transform: 'translateX(-50%)'
+            };
+        } else {
+            // Desktop: original positioning
+            return {
+                left: '600px',
+                top: '105px',
+                transform: 'none'
+            };
+        }
     }
 
     // ═══ UTILITY: POSITION ELEMENT BELOW ANCHOR ═══
@@ -1194,9 +1463,11 @@
 
             const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
 
-            // Position panel closer to the demo text (moved farther left)
-            panelShell.style.left = '600px';
-            panelShell.style.top = '105px';
+            // Position panel responsively based on screen size
+            const position = getResponsivePanelPosition();
+            panelShell.style.left = position.left;
+            panelShell.style.top = position.top;
+            panelShell.style.transform = position.transform;
 
             await wait(50);
             panelShell.classList.add('tg-demo-visible');
@@ -1393,8 +1664,13 @@
             // Ensure panel is visible
             if (panelShell.style.display === 'none') {
                 panelShell.style.display = 'block';
-                panelShell.style.left = '600px';
-                panelShell.style.top = '105px';
+
+                // Position panel responsively based on screen size
+                const position = getResponsivePanelPosition();
+                panelShell.style.left = position.left;
+                panelShell.style.top = position.top;
+                panelShell.style.transform = position.transform;
+
                 await wait(50);
                 panelShell.classList.add('tg-demo-visible');
                 await wait(350);
@@ -1457,6 +1733,26 @@
         if (chipBarPinned && chips.style.display === 'flex') {
             positionBelowAnchor(chips, anchor, 12);
         }
+    });
+
+    // ═══ RESPONSIVE: REPOSITION ON WINDOW RESIZE ═══
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            // Reposition panel if visible
+            if (panelShell.style.display !== 'none') {
+                const position = getResponsivePanelPosition();
+                panelShell.style.left = position.left;
+                panelShell.style.top = position.top;
+                panelShell.style.transform = position.transform;
+            }
+
+            // Reposition chips if visible
+            if (chipBarPinned && chips.style.display === 'flex') {
+                positionBelowAnchor(chips, anchor, 12);
+            }
+        }, 150); // Debounce resize events
     });
 
     // ═══ CHIP CLICK LISTENERS ═══
