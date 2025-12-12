@@ -1565,14 +1565,14 @@
             // Small phones: center horizontally, position lower to avoid covering chip bar
             return {
                 left: '50%',
-                top: '140px', // Increased from 60px to avoid chip bar overlap
+                top: '180px', // Moved down further to clear chip bar completely
                 transform: 'translateX(-50%)'
             };
         } else if (isMobile()) {
             // Regular mobile: center horizontally, positioned below chip bar
             return {
                 left: '50%',
-                top: '160px', // Increased from 80px to avoid chip bar overlap
+                top: '200px', // Moved down further to clear chip bar completely
                 transform: 'translateX(-50%)'
             };
         } else {
