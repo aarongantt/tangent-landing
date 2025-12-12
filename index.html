@@ -67,18 +67,17 @@
     <!-- Hero + Interactive Demo Section -->
     <main>
         <section class="hero-demo">
-            <div class="container hero-demo-grid">
-                <!-- Left Column: Interactive Demo (Larger) -->
-                <div class="hero-demo-visual">
-                    <div class="demo-window">
-                        <!-- Demo Stage Container (No Browser Chrome) -->
-                        <div id="demo-stage-container">
-                            <!-- Fade masks (top and bottom) -->
-                            <div class="demo-fade-top"></div>
-                            <div class="demo-fade-bottom"></div>
+            <div class="container">
+                <!-- Full-width Demo -->
+                <div class="demo-window">
+                    <!-- Demo Stage Container (No Browser Chrome) -->
+                    <div id="demo-stage-container">
+                        <!-- Fade masks (top and bottom) -->
+                        <div class="demo-fade-top"></div>
+                        <div class="demo-fade-bottom"></div>
 
-                            <!-- Fake Article with scroll -->
-                            <div id="demo-article">
+                        <!-- Fake Article with scroll -->
+                        <div id="demo-article">
                                 <p>Technology only matters when it unlocks something you couldn't do before. The best tools don't demand attention—they dissolve into the background until the exact moment you need them.</p>
 
                                 <p>Artificial intelligence is one of the most powerful tools we've ever built, but most of the time it lives in a separate tab, a different app, a conversation you have to start from scratch every single time. It's good at answering questions, but terrible at staying close to the work you're actually doing.</p>
@@ -122,14 +121,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Right Column: Empty space for visual balance -->
-                <div class="hero-demo-text">
-                    <!-- Intentionally empty - demo takes center stage -->
                 </div>
             </div>
         </section>
@@ -179,75 +172,10 @@
 .hero-demo {
     background: #0a0e14;
     color: #e5e7eb;
-    padding: 80px 0 100px;
-    min-height: 90vh;
+    padding: 60px 0;
+    min-height: 100vh;
     display: flex;
     align-items: center;
-}
-
-.hero-demo-grid {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 80px;
-    align-items: center;
-}
-
-.hero-demo-text h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 1.2rem;
-    color: #ffffff;
-}
-
-.hero-subtitle {
-    font-size: 1.15rem;
-    line-height: 1.6;
-    color: #9ca3af;
-    margin-bottom: 2rem;
-}
-
-.waitlist-form {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 14px;
-}
-
-.waitlist-form input {
-    flex: 1;
-    padding: 14px 18px;
-    border: 1px solid #374151;
-    border-radius: 8px;
-    background: #1f2937;
-    color: #e5e7eb;
-    font-size: 15px;
-}
-
-.waitlist-form input::placeholder {
-    color: #6b7280;
-}
-
-.waitlist-form button {
-    padding: 14px 28px;
-    background: #3b82f6;
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.waitlist-form button:hover {
-    background: #2563eb;
-    transform: translateY(-1px);
-}
-
-.waitlist-note {
-    font-size: 13px;
-    color: #6b7280;
-    margin: 0;
 }
 
 /* Demo Window */
@@ -259,7 +187,8 @@
 #demo-stage-container {
     position: relative;
     background: transparent;
-    height: 580px;
+    height: 80vh;
+    max-height: 900px;
     overflow: hidden;
 }
 
@@ -593,17 +522,9 @@
 
 /* Responsive */
 @media (max-width: 968px) {
-    .hero-demo-grid {
-        grid-template-columns: 1fr;
-        gap: 48px;
-    }
-
-    .hero-demo-text h1 {
-        font-size: 2.2rem;
-    }
-
     #demo-stage-container {
-        height: 400px;
+        height: 60vh;
+        max-height: 600px;
     }
 }
 </style>
