@@ -107,7 +107,7 @@
                                     <!-- Header -->
                                     <div class="tg-demo-panel__header">
                                         <div class="tg-demo-panel__title">
-                                            <span style="font-weight: 600; font-size: 13px; letter-spacing: 0.03em;">TANGENT</span>
+                                            <img src="src/assets/tangent_logo.png" alt="TANGENT" class="tg-demo-logo" style="height: 28px; object-fit: contain;">
                                         </div>
                                         <div class="tg-demo-panel__btns">
                                             <button class="tg-demo-btn tg-demo-close" aria-label="Close">×</button>
@@ -330,13 +330,13 @@
     transform: scale(1);
 }
 
-/* Tangent Panel - EXACT SPECIFICATIONS FROM REAL TANGENT */
+/* Tangent Panel - LARGER VERSION FOR DEMO */
 .tg-demo-panel {
     position: relative;
     z-index: 2;
     cursor: default;
-    width: 380px;
-    height: 420px;
+    width: 520px;
+    height: 600px;
     display: flex;
     flex-direction: column;
     overflow: visible;
@@ -718,11 +718,11 @@
         if (panelShell.style.display === 'none') {
             panelShell.style.display = 'block';
 
-            const anchorRect = anchor.getBoundingClientRect();
             const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
 
-            panelShell.style.left = (anchorRect.right - containerRect.left + 16) + 'px';
-            panelShell.style.top = (anchorRect.top - containerRect.top) + 'px';
+            // Position panel on right side of screen
+            panelShell.style.left = (containerRect.width - 560) + 'px';
+            panelShell.style.top = '80px';
 
             await wait(50);
             panelShell.classList.add('tg-demo-visible');
