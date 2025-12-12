@@ -101,49 +101,43 @@
                                 <button class="tg-demo-chip" data-chip="code">Code help</button>
                             </div>
 
-                            <!-- Tangent Panel (initially hidden) -->
+                            <!-- Tangent Panel (initially hidden) - EXACT REPLICA FROM EXTENSION -->
                             <div id="demo-panel-shell" class="tg-demo-panel-shell" style="display: none;">
                                 <div id="demo-panel" class="tg-demo-panel tg-theme-light">
-                                    <!-- Header -->
-                                    <div class="tg-demo-panel__header">
-                                        <div class="tg-demo-panel__title">
-                                            <img src="/images/tangent_logo.png" alt="TANGENT" class="tg-demo-logo">
+                                    <!-- Header - EXACT STRUCTURE -->
+                                    <div class="tg-demo-panel__header" role="toolbar" aria-label="Tangent">
+                                        <button class="tg-demo-pin" data-tooltip="Pin Window" aria-pressed="false">
+                                            <img src="/images/pin_anchor.svg" class="tg-demo-pin-icon" alt="Pin" aria-hidden="true" />
+                                        </button>
+                                        <div class="tg-demo-title" aria-label="TANGENT">
+                                            <img class="tg-demo-header-logo" src="/images/tangent_logo.png" alt="TANGENT" />
                                         </div>
                                         <div class="tg-demo-panel__btns">
-                                            <button class="tg-demo-btn tg-demo-minimize" aria-label="Minimize">−</button>
-                                            <button class="tg-demo-btn tg-demo-close" aria-label="Close">×</button>
+                                            <button class="tg-demo-panel__min" data-tooltip="Minimize" aria-label="Minimize">
+                                                <span class="tg-demo-panel__icon-dash" aria-hidden="true">–</span>
+                                                <span class="tg-demo-panel__icon-square" aria-hidden="true"></span>
+                                            </button>
+                                            <button class="tg-demo-panel__close" data-tooltip="Close" aria-label="Close">×</button>
                                         </div>
                                     </div>
 
-                                    <!-- Body / Stream -->
+                                    <!-- Body / Stream - EXACT STRUCTURE -->
                                     <div class="tg-demo-panel__body">
-                                        <div id="demo-stream" class="tg-demo-panel__stream">
-                                            <!-- Messages appear here -->
-                                        </div>
+                                        <div id="demo-stream" class="tg-demo-panel__stream"></div>
                                     </div>
 
-                                    <!-- Footer -->
+                                    <!-- Footer - EXACT STRUCTURE -->
                                     <div class="tg-demo-panel__footer">
                                         <div class="tg-demo-compose-row">
                                             <div class="tg-demo-compose">
-                                                <textarea class="tg-demo-input" placeholder="Go on a Tangent…" rows="1"></textarea>
+                                                <textarea class="tg-demo-input" placeholder="Go on a Tangent…"></textarea>
                                                 <button class="tg-demo-send" aria-label="Send">
-                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                                                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                                                    </svg>
+                                                    <img src="/images/tangent_enter_button.svg" class="tg-demo-send-icon" alt="Send" />
                                                 </button>
                                             </div>
-                                            <!-- Settings icon -->
-                                            <button class="tg-demo-footer-icon" aria-label="Settings">
-                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <circle cx="12" cy="12" r="3"></circle>
-                                                    <path d="M12 1v6m0 6v6m5.2-10.2l-4.2 4.2m-2 2l-4.2 4.2m10.2 0l-4.2-4.2m-2-2L6.8 3.8"></path>
-                                                </svg>
-                                            </button>
-                                            <!-- Three-dot menu -->
+                                            <!-- Three-dot menu (always last) -->
                                             <button class="tg-demo-menu-toggle" aria-label="Menu">
-                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" class="tg-demo-menu-toggle-icon">
                                                     <circle cx="10" cy="4" r="1.5"></circle>
                                                     <circle cx="10" cy="10" r="1.5"></circle>
                                                     <circle cx="10" cy="16" r="1.5"></circle>
@@ -401,13 +395,13 @@
     cursor: move;
 }
 
-/* Panel Header - EXACT SPECIFICATIONS (125% scale) */
+/* Panel Header - EXACT REPLICA (125% scale) */
 .tg-demo-panel__header {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px; /* 8px * 1.25 */
-    padding: 12.5px 12.5px 10px; /* 10px * 1.25, 8px * 1.25 */
+    padding: 12.5px 12.5px 10px; /* 10px * 1.25, 10px * 1.25, 8px * 1.25 */
     position: relative;
     cursor: move;
     user-select: none;
@@ -416,60 +410,121 @@
     z-index: 10;
 }
 
-.tg-demo-panel__title {
+/* Pin button - EXACT REPLICA (125% scale) */
+.tg-demo-pin {
+    position: absolute !important;
+    left: 10px !important; /* 8px * 1.25 */
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    background: transparent;
+    color: #727272;
+    border: 1px solid rgba(109, 109, 109, 0.494);
+    border-radius: 7.5px; /* 6px * 1.25 */
+    width: 37.5px; /* 30px * 1.25 */
+    height: 31.25px; /* 25px * 1.25 */
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.tg-demo-pin-icon {
+    width: 15px; /* 12px * 1.25 */
+    height: 15px; /* 12px * 1.25 */
+    object-fit: contain;
+    display: block;
+}
+
+.tg-demo-pin:hover {
+    filter: brightness(1.15);
+    background: rgba(255, 255, 255, 0.08);
+    color: #357fd0 !important;
+}
+
+.tg-demo-pin:hover .tg-demo-pin-icon {
+    filter: invert(56%) sepia(48%) saturate(423%) hue-rotate(166deg) brightness(92%) contrast(87%) !important;
+}
+
+/* Title / Logo */
+.tg-demo-title {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.tg-demo-panel__title img {
-    height: 35px; /* 28px * 1.25 */
+.tg-demo-header-logo {
+    height: 27.5px; /* 22px * 1.25 */
     object-fit: contain;
+    display: block;
 }
 
-.tg-theme-light .tg-demo-panel__title {
+.tg-theme-light .tg-demo-title {
     color: #0f141a;
 }
 
-.tg-theme-dark .tg-demo-panel__title {
+.tg-theme-dark .tg-demo-title {
     color: #cbd5e1;
 }
 
+/* Minimize/Close buttons container */
 .tg-demo-panel__btns {
     position: absolute;
     right: 12.5px; /* 10px * 1.25 */
     top: 50%;
     transform: translateY(-50%);
-    display: flex;
-    gap: 2px;
+    display: inline-flex;
+    gap: 7.5px; /* 6px * 1.25 */
+    align-items: center;
 }
 
-.tg-demo-btn {
+/* Minimize and Close buttons - EXACT REPLICA (125% scale) */
+.tg-demo-panel__btns > button {
     background: transparent;
-    color: #9ca3af;
-    border: none;
-    padding: 5px 10px; /* 4px * 1.25, 8px * 1.25 */
+    color: #727272;
+    border: 1px solid rgba(109, 109, 109, 0.494);
+    border-radius: 7.5px; /* 6px * 1.25 */
+    width: 37.5px; /* 30px * 1.25 */
+    height: 31.25px; /* 25px * 1.25 */
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    font-size: 25px; /* 20px * 1.25 */
-    line-height: 1;
-    border-radius: 5px; /* 4px * 1.25 */
-    transition: all 0.15s ease;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 
-.tg-demo-btn:hover {
+.tg-demo-panel__btns > button:hover {
+    filter: brightness(1.15);
     background: rgba(255, 255, 255, 0.08);
-    color: #669fc3; /* Tangent blue */
+    color: #357fd0 !important;
 }
 
-.tg-demo-close {
+/* Close button specific */
+.tg-demo-panel__close {
+    font-size: 26.25px !important; /* 21px * 1.25 */
+    line-height: 1;
     font-weight: 300;
+    color: inherit !important;
 }
 
-.tg-demo-minimize {
-    font-size: 30px; /* 24px * 1.25 */
-    line-height: 0.8;
-    font-weight: 300;
-    padding: 5px 12.5px; /* 4px * 1.25, 10px * 1.25 */
+/* Minimize button icons */
+.tg-demo-panel__icon-dash {
+    font-size: 22.5px; /* 18px * 1.25 */
+    line-height: 1;
+    display: block;
+    transform: translateY(1.25px); /* 1px * 1.25 */
+}
+
+.tg-demo-panel__icon-square {
+    width: 7.5px; /* 6px * 1.25 */
+    height: 7.5px; /* 6px * 1.25 */
+    border: 2.5px solid currentColor; /* 2px * 1.25 */
+    border-top-width: 3.75px; /* 3px * 1.25 */
+    border-radius: 2.5px; /* 2px * 1.25 */
+    display: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
 }
 
 /* Panel Body / Stream - EXACT SPECIFICATIONS FROM REAL TANGENT */
@@ -659,6 +714,7 @@
     color: #9ca3af;
 }
 
+/* Send button - EXACT REPLICA (125% scale) */
 .tg-demo-send {
     position: absolute;
     right: 23.75px; /* 19px * 1.25 */
@@ -679,64 +735,34 @@
 
 .tg-demo-send:hover {
     box-shadow: 0 2.5px 5px rgba(0, 0, 0, .22); /* 2px * 1.25, 4px * 1.25 */
-    border-color: #669fc3;
+    border-color: #669fc3 !important;
 }
 
 .tg-demo-send:active {
     box-shadow: 0 0.625px 1.25px rgba(0, 0, 0, .15); /* 0.5px * 1.25, 1px * 1.25 */
     transform: translateY(-50%) translateY(1.25px); /* 1px * 1.25 */
-    border-color: #669fc3;
+    border-color: #669fc3 !important;
 }
 
-.tg-demo-send svg {
+/* Send button icon - EXACT REPLICA (125% scale) */
+.tg-demo-send-icon {
     width: 15px; /* 12px * 1.25 */
     height: 15px; /* 12px * 1.25 */
-    /* Gray filter matching real extension */
-    filter: invert(43%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(85%);
-}
-
-.tg-demo-send:hover svg {
-    filter: none; /* Blue on hover */
-}
-
-/* Unified icon system (125% scale) */
-.tg-demo-footer-icon {
-    width: 42.5px; /* 34px * 1.25 */
-    height: 42.5px; /* 34px * 1.25 */
-    margin-right: 7.5px; /* 6px * 1.25 */
-    padding: 0;
-    border-radius: 50%;
-    border: 1px solid #777777;
-    background: #ffffff;
-    box-sizing: border-box;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-    box-shadow: 0 1.25px 2.5px rgba(0, 0, 0, .18); /* 1px * 1.25, 2px * 1.25 */
-    transition: background 0.15s ease, border-color 0.15s ease,
-                box-shadow 0.12s ease, transform 0.08s ease;
-}
-
-.tg-demo-footer-icon:hover {
-    border-color: #4a9eff;
-    box-shadow: 0 2.5px 5px rgba(74, 158, 255, 0.3); /* 2px * 1.25, 4px * 1.25 */
-    transform: translateY(-1.25px); /* 1px * 1.25 */
-}
-
-.tg-demo-footer-icon svg {
-    width: 22.5px; /* 18px * 1.25 */
-    height: 22.5px; /* 18px * 1.25 */
     object-fit: contain;
-    pointer-events: none;
-    /* Gray filter matching real extension */
+    display: block;
+    transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+/* Light Mode idle color — EXACT match to real extension */
+.tg-theme-light .tg-demo-send-icon {
     filter: invert(43%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(85%);
 }
 
-.tg-demo-footer-icon:hover svg {
-    filter: none; /* Blue on hover */
+/* Hover = Tangent Blue */
+.tg-demo-send:hover .tg-demo-send-icon {
+    filter: none !important;
 }
+
 
 /* Three-dot menu toggle (125% scale) */
 .tg-demo-menu-toggle {
