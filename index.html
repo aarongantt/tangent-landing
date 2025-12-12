@@ -202,7 +202,7 @@
 .hero-demo {
     background: #0a0e14;
     color: #e5e7eb;
-    padding: 60px 0;
+    padding: 20px 0 60px; /* Decreased top padding from 60px to 20px */
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -255,15 +255,20 @@
 /* Article */
 #demo-article {
     font-family: Helvetica, Arial, sans-serif;
-    font-size: 24px;
+    font-size: 26px; /* Decreased by 1px from 27px */
     line-height: 1.6;
-    color: #ffffff; /* White text */
+    color: #d1d5db; /* Light grey text */
     height: 100%;
     overflow-y: auto;
     scroll-behavior: smooth;
     padding: 40px 0;
     scrollbar-width: none; /* Hide scrollbar in Firefox */
-    max-width: 700px;
+    max-width: 900px; /* Increased from 700px to extend farther right */
+}
+
+/* Slow, gentle scroll animation */
+#demo-article {
+    scroll-padding-top: 100px;
 }
 
 #demo-article::-webkit-scrollbar {
@@ -272,6 +277,8 @@
 
 #demo-article p {
     margin-bottom: 1.6em;
+    opacity: 0;
+    transition: opacity 1.2s ease-out; /* Smooth fade-in transition */
 }
 
 /* Anchor word (Tangent) */
@@ -929,19 +936,48 @@
         // Start scroll at the very top
         article.scrollTop = 0;
 
+        // Reset paragraph opacity
+        const paragraphs = article.querySelectorAll('p');
+        paragraphs.forEach(p => p.style.opacity = '0');
+
         await wait(400);
 
-        // 1. Scroll down until "Tangent" is at top third of the page
+        // 1. Scroll down until "Tangent" is at top third of the page - SLOW & GENTLE
         const articleRect = article.getBoundingClientRect();
         const anchorRect = anchor.getBoundingClientRect();
         const targetPosition = anchorRect.top - articleRect.top - (articleRect.height / 3);
 
-        article.scrollTo({
-            top: article.scrollTop + targetPosition,
-            behavior: 'smooth'
-        });
+        // Smooth, slow scroll using custom animation
+        const startScroll = article.scrollTop;
+        const scrollDistance = targetPosition;
+        const scrollDuration = 2500; // Increased from ~1000ms to 2500ms for slower, gentler scroll
+        const startTime = performance.now();
 
-        await wait(1000);
+        // Fade in paragraphs with staggered timing during scroll
+        setTimeout(() => paragraphs[0].style.opacity = '1', 0);
+        setTimeout(() => paragraphs[1].style.opacity = '1', 300);
+        setTimeout(() => paragraphs[2].style.opacity = '1', 600);
+        setTimeout(() => paragraphs[3].style.opacity = '1', 900);
+
+        function animateScroll(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / scrollDuration, 1);
+
+            // Ease-in-out function for smooth acceleration and deceleration
+            const easeProgress = progress < 0.5
+                ? 2 * progress * progress
+                : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+            article.scrollTop = startScroll + (scrollDistance * easeProgress);
+
+            if (progress < 1) {
+                requestAnimationFrame(animateScroll);
+            }
+        }
+
+        requestAnimationFrame(animateScroll);
+
+        await wait(2700); // Wait for scroll to complete + small buffer
 
         // 2. Highlight the word
         anchor.classList.add('tg-demo-highlighted');
@@ -987,8 +1023,8 @@
 
             const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
 
-            // Position panel closer to the demo text (moved left from far right)
-            panelShell.style.left = '780px';
+            // Position panel closer to the demo text (moved farther left)
+            panelShell.style.left = '600px';
             panelShell.style.top = '80px';
 
             await wait(50);
