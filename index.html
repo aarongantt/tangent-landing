@@ -94,16 +94,9 @@
                                     <img src="/images/tangent_t_logo.png" alt="TANGENT" style="width: 18px; height: 18px; display: block;" />
                                 </button>
                                 <!-- User chips -->
-                                <button class="tg-demo-chip" data-chip="what">What is...</button>
-                                <button class="tg-demo-chip" data-chip="faq">FAQ</button>
-                                <button class="tg-demo-chip" data-chip="howto">How-To</button>
+                                <button class="tg-demo-chip" data-chip="what">What Is...</button>
+                                <button class="tg-demo-chip" data-chip="faq">Prompt Chips</button>
                                 <button class="tg-demo-chip" data-chip="pricing">Pricing</button>
-                                <!-- Down arrow (far right) -->
-                                <button class="tg-demo-chip tg-demo-chip--icon tg-demo-chip--caret" aria-expanded="false" title="More chips">
-                                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                                        <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                </button>
                             </div>
 
                             <!-- Tangent Panel (initially hidden) - EXACT REPLICA FROM EXTENSION -->
@@ -135,10 +128,43 @@
                                     <div class="tg-demo-panel__footer">
                                         <div class="tg-demo-compose-row">
                                             <div class="tg-demo-compose">
-                                                <textarea class="tg-demo-input" placeholder="Go on a Tangent…"></textarea>
+                                                <textarea id="demo-input" class="tg-demo-input" placeholder="Go on a Tangent…"></textarea>
                                                 <button class="tg-demo-send" aria-label="Send">
                                                     <img src="/images/tangent_enter_button.svg" class="tg-demo-send-icon" alt="Send" />
                                                 </button>
+                                                <!-- FAQ Dropdown (hidden by default) -->
+                                                <div id="demo-faq-dropdown" class="tg-demo-faq-dropdown" style="display: none;">
+                                                    <div class="tg-demo-faq-scroll">
+                                                        <button class="tg-demo-faq-item" data-faq="what-is">
+                                                            <strong>What is TANGENT?</strong>
+                                                            <span>A Chrome extension that brings AI assistance directly to any webpage you're reading.</span>
+                                                        </button>
+                                                        <button class="tg-demo-faq-item" data-faq="how-works">
+                                                            <strong>How does TANGENT work?</strong>
+                                                            <span>Select text, click a prompt chip, and get instant AI-powered responses in a floating chat panel.</span>
+                                                        </button>
+                                                        <button class="tg-demo-faq-item" data-faq="prompt-chips">
+                                                            <strong>What are Prompt Chips?</strong>
+                                                            <span>Quick-action buttons that apply different AI tasks to your selected text instantly.</span>
+                                                        </button>
+                                                        <button class="tg-demo-faq-item" data-faq="custom-chips">
+                                                            <strong>Can I create custom chips?</strong>
+                                                            <span>Yes! Build personalized shortcuts for tasks you do frequently in TANGENT settings.</span>
+                                                        </button>
+                                                        <button class="tg-demo-faq-item" data-faq="pricing">
+                                                            <strong>How much does TANGENT cost?</strong>
+                                                            <span>Free trial with 70K tokens. Paid plans start at $12/month for Pro users.</span>
+                                                        </button>
+                                                        <button class="tg-demo-faq-item" data-faq="privacy">
+                                                            <strong>Is my data private?</strong>
+                                                            <span>Your data is encrypted in transit and we never train AI models on your queries.</span>
+                                                        </button>
+                                                        <button class="tg-demo-faq-item" data-faq="browsers">
+                                                            <strong>Which browsers are supported?</strong>
+                                                            <span>Chrome (Manifest V3). Firefox and Safari support coming soon.</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <!-- Three-dot menu (always last) -->
                                             <button class="tg-demo-menu-toggle" aria-label="Menu">
@@ -258,6 +284,7 @@
     font-size: 26px; /* Decreased by 1px from 27px */
     line-height: 1.6;
     color: #d1d5db; /* Light grey text */
+    opacity: 0.75; /* Reduced by 25% from full opacity */
     height: 100%;
     overflow-y: auto;
     scroll-behavior: smooth;
@@ -702,12 +729,14 @@
     padding: 7.5px 10px; /* 6px * 1.25, 8px * 1.25 */
     display: flex;
     flex-direction: column;
+    overflow: visible; /* Allow FAQ dropdown to extend beyond footer */
 }
 
 .tg-demo-compose-row {
     display: flex;
     align-items: center;
     gap: 7.5px; /* 6px * 1.25 */
+    overflow: visible; /* Allow FAQ dropdown to extend beyond row */
 }
 
 .tg-demo-compose {
@@ -718,6 +747,7 @@
     align-items: center;
     width: 100%;
     min-width: 0;
+    overflow: visible; /* CRITICAL: Allow FAQ dropdown to extend beyond compose container */
 }
 
 .tg-demo-input {
@@ -756,6 +786,99 @@
     outline: none;
     border: 2.5px solid #669fc3; /* 2px * 1.25 */
     box-shadow: 0 0 0 2.5px #669fc3; /* 2px * 1.25 */
+}
+
+/* FAQ Dropdown - Translucent with gradient fade */
+.tg-demo-faq-dropdown {
+    position: absolute;
+    top: calc(100% + 8px); /* Position BELOW the input field */
+    left: 12.5px; /* Match compose padding */
+    right: 70px; /* Account for send button + menu */
+    max-height: 300px;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 255, 255, 0.9) 70%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    backdrop-filter: blur(16px) saturate(1.4) brightness(1.1);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4) brightness(1.1);
+    border: none; /* No hard edges */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15),
+                0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 10000; /* Very high z-index to appear above everything */
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-8px); /* Slide down animation */
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+}
+
+.tg-demo-faq-dropdown.tg-demo-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.tg-demo-faq-scroll {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 12px;
+    scrollbar-width: none; /* Hide scrollbar for clean fade effect */
+}
+
+.tg-demo-faq-scroll::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for clean fade effect */
+}
+
+.tg-demo-faq-item {
+    display: block;
+    width: 100%;
+    padding: 14px 16px;
+    text-align: left;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #1f2937;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    margin-bottom: 8px;
+}
+
+.tg-demo-faq-item:last-child {
+    margin-bottom: 0;
+}
+
+.tg-demo-faq-item strong {
+    display: block;
+    font-weight: 600;
+    color: #0f141a;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+.tg-demo-faq-item span {
+    display: block;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.tg-demo-faq-item:hover {
+    background: rgba(102, 159, 195, 0.08);
+}
+
+.tg-demo-faq-item:hover strong {
+    color: #357fd0;
+}
+
+.tg-demo-faq-item:active {
+    background: rgba(102, 159, 195, 0.15);
+    transform: scale(0.98);
 }
 
 /* Send button - EXACT REPLICA (125% scale) */
@@ -864,8 +987,10 @@
     const panelShell = document.getElementById('demo-panel-shell');
     const panel = document.getElementById('demo-panel');
     const stream = document.getElementById('demo-stream');
+    const demoInput = document.getElementById('demo-input');
+    const faqDropdown = document.getElementById('demo-faq-dropdown');
 
-    if (!article || !anchor || !chips || !panelShell || !panel || !stream) {
+    if (!article || !anchor || !chips || !panelShell || !panel || !stream || !demoInput || !faqDropdown) {
         console.error('[TANGENT DEMO] Missing required DOM elements');
         return;
     }
@@ -892,6 +1017,17 @@
             title: '"Help me understand this code."',
             content: 'This code implements a real-time AI assistant that integrates with browser pages using Shadow DOM and event listeners.'
         }
+    };
+
+    // ═══ FAQ ANSWERS DATA ═══
+    const FAQ_ANSWERS = {
+        'what-is': 'TANGENT is a Chrome browser extension that brings AI assistance directly to any webpage. Select text, choose an action chip, and get instant AI-powered responses without leaving your page.',
+        'how-works': 'TANGENT analyzes the text you select along with the surrounding page context, then uses AI to provide relevant, contextual responses. It works on any website through a floating, draggable chat panel.',
+        'prompt-chips': 'Prompt Chips are quick-action buttons that appear when you select text. Each chip represents a different AI task (like "What is...", "Summarize", or "Translate"). Click a chip to instantly apply that action to your selected text.',
+        'custom-chips': 'Yes! You can create custom chips with your own prompts in the TANGENT settings. This lets you build personalized shortcuts for tasks you do frequently.',
+        'pricing': 'TANGENT offers a free trial with 70,000 tokens (about 50-100 queries). Paid plans start at $12/month for Pro, with higher tiers for power users and teams. Visit the Pricing page for full details.',
+        'privacy': 'Your data is encrypted in transit and we never train AI models on your queries. TANGENT is blocked on banking and financial sites by default. You control what text is sent to the AI.',
+        'browsers': 'TANGENT currently supports Chrome (Manifest V3). Firefox and Safari support are planned for future releases.'
     };
 
     // ═══ STATE ═══
@@ -982,7 +1118,7 @@
         // 2. Highlight the word
         anchor.classList.add('tg-demo-highlighted');
 
-        await wait(700);
+        await wait(350);
 
         // 3. Show chips
         chips.style.display = 'flex';
@@ -1139,6 +1275,71 @@
         if (state.mode === 'dragging') {
             state.mode = 'interactive';
         }
+    });
+
+    // ═══ FAQ DROPDOWN SYSTEM ═══
+
+    // Show dropdown when input is focused
+    demoInput.addEventListener('focus', () => {
+        faqDropdown.style.display = 'block';
+        setTimeout(() => {
+            faqDropdown.classList.add('tg-demo-visible');
+        }, 10);
+    });
+
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!demoInput.contains(e.target) && !faqDropdown.contains(e.target)) {
+            faqDropdown.classList.remove('tg-demo-visible');
+            setTimeout(() => {
+                if (!faqDropdown.classList.contains('tg-demo-visible')) {
+                    faqDropdown.style.display = 'none';
+                }
+            }, 200);
+        }
+    });
+
+    // Handle FAQ item clicks
+    faqDropdown.querySelectorAll('.tg-demo-faq-item').forEach(item => {
+        item.addEventListener('click', async (e) => {
+            e.stopPropagation();
+
+            const faqId = item.getAttribute('data-faq');
+            const answer = FAQ_ANSWERS[faqId];
+
+            if (!answer) return;
+
+            // Extract question text from <strong> element
+            const questionText = item.querySelector('strong')?.textContent || item.textContent;
+
+            // Hide dropdown
+            faqDropdown.classList.remove('tg-demo-visible');
+            setTimeout(() => {
+                faqDropdown.style.display = 'none';
+            }, 200);
+
+            // Blur input
+            demoInput.blur();
+
+            // Clear stream and show answer
+            stream.innerHTML = '';
+
+            // Show user question (just the bold question text)
+            const userDiv = document.createElement('div');
+            userDiv.className = 'tg-demo-msg tg-user';
+            userDiv.textContent = questionText;
+            stream.appendChild(userDiv);
+
+            await wait(300);
+
+            // Show AI response
+            const aiDiv = document.createElement('div');
+            aiDiv.className = 'tg-demo-msg';
+            stream.appendChild(aiDiv);
+
+            // Typewriter effect
+            await typeMessage(aiDiv, answer);
+        });
     });
 
     // ═══ CHIP CLICK LISTENERS ═══
