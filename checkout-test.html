@@ -111,7 +111,6 @@
         );
 
         const rawText = await res.text();
-        console.log("create-checkout-session raw response:", rawText);
 
         let data
         try {
@@ -131,7 +130,6 @@
           'Checkout URL received. <br><a href="' +
           data.url +
           '" target="_blank" rel="noopener noreferrer">Open Stripe Checkout in a new tab</a>';
-        console.log("Stripe Checkout URL:", data.url);
 
         // Optional: auto-redirect as well
         window.location.href = data.url;

@@ -1898,13 +1898,11 @@
             const answer = FAQ_ANSWERS[faqId];
 
             if (!answer) {
-                console.log('[FAQ] No answer found for:', faqId);
                 return;
             }
 
             // Extract question text from <strong> element
             const questionText = item.querySelector('strong')?.textContent || item.textContent;
-            console.log('[FAQ] Clicked:', questionText, 'Answer:', answer);
 
             // Ensure panel is visible
             if (panelShell.style.display === 'none') {
