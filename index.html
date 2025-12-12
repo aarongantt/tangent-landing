@@ -107,7 +107,7 @@
                                     <!-- Header -->
                                     <div class="tg-demo-panel__header">
                                         <div class="tg-demo-panel__title">
-                                            <img src="src/assets/tangent_logo.png" alt="TANGENT" class="tg-demo-logo">
+                                            <img src="/src/assets/tangent_logo.png" alt="TANGENT" class="tg-demo-logo">
                                         </div>
                                         <div class="tg-demo-panel__btns">
                                             <button class="tg-demo-btn tg-demo-minimize" aria-label="Minimize">−</button>
@@ -379,21 +379,23 @@
                 0 24px 96px rgba(0, 0, 0, 0.4);
 }
 
-/* Light Mode Panel - EXACT SPECIFICATIONS */
+/* Light Mode Panel - EXACT SPECIFICATIONS with Frosted Glass */
 .tg-demo-panel.tg-theme-light {
-    --tg-panel-opacity: 1.0;
-    --tg-panel-grad-start: rgba(255, 255, 255, 1.0);
-    --tg-panel-grad-end: rgba(245, 247, 250, 1.0);
+    --tg-panel-opacity: 0.75;
+    --tg-panel-grad-start: rgba(255, 255, 255, 0.75);
+    --tg-panel-grad-end: rgba(245, 247, 250, 0.75);
     background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
         linear-gradient(180deg, var(--tg-panel-grad-start), var(--tg-panel-grad-end)) !important;
     border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
     border-left: 1px solid rgba(255, 255, 255, 0.6) !important;
     border-right: 1px solid rgba(0, 0, 0, 0.25) !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.25) !important;
     color: #0f141a;
-    backdrop-filter: blur(16px) saturate(160%) brightness(1.15) contrast(1.05);
-    -webkit-backdrop-filter: blur(16px) saturate(160%) brightness(1.15) contrast(1.05);
+    /* Enhanced frosted glass effect */
+    backdrop-filter: blur(24px) saturate(180%) brightness(1.2) contrast(1.1);
+    -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.2) contrast(1.1);
+    opacity: 0.75;
 }
 
 .tg-demo-panel.tg-demo-dragging {
