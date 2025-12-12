@@ -107,7 +107,7 @@
                                     <!-- Header -->
                                     <div class="tg-demo-panel__header">
                                         <div class="tg-demo-panel__title">
-                                            <img src="src/assets/tangent_logo.png" alt="TANGENT" class="tg-demo-logo" style="height: 28px; object-fit: contain;">
+                                            <img src="src/assets/tangent_logo.png" alt="TANGENT" class="tg-demo-logo">
                                         </div>
                                         <div class="tg-demo-panel__btns">
                                             <button class="tg-demo-btn tg-demo-minimize" aria-label="Minimize">−</button>
@@ -361,19 +361,20 @@
     transform: scale(1);
 }
 
-/* Tangent Panel - LARGER VERSION FOR DEMO */
+/* Tangent Panel - EXACT REPLICA (125% scale) */
 .tg-demo-panel {
     position: relative;
     z-index: 2;
     cursor: default;
-    width: 520px;
-    height: 600px;
+    width: 475px;  /* 380px * 1.25 */
+    height: 525px; /* 420px * 1.25 */
     display: flex;
     flex-direction: column;
     overflow: visible;
     opacity: 1;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
-    border-radius: 12px;
+    font-size: 17.5px; /* 14px * 1.25 */
+    border-radius: 15px; /* 12px * 1.25 */
     box-shadow: 0 12px 64px rgba(0, 0, 0, 0.6),
                 0 24px 96px rgba(0, 0, 0, 0.4);
 }
@@ -399,13 +400,13 @@
     cursor: move;
 }
 
-/* Panel Header - EXACT SPECIFICATIONS FROM REAL TANGENT */
+/* Panel Header - EXACT SPECIFICATIONS (125% scale) */
 .tg-demo-panel__header {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 10px 10px 8px;
+    gap: 10px; /* 8px * 1.25 */
+    padding: 12.5px 12.5px 10px; /* 10px * 1.25, 8px * 1.25 */
     position: relative;
     cursor: move;
     user-select: none;
@@ -420,6 +421,11 @@
     justify-content: center;
 }
 
+.tg-demo-panel__title img {
+    height: 35px; /* 28px * 1.25 */
+    object-fit: contain;
+}
+
 .tg-theme-light .tg-demo-panel__title {
     color: #0f141a;
 }
@@ -430,30 +436,39 @@
 
 .tg-demo-panel__btns {
     position: absolute;
-    right: 10px;
+    right: 12.5px; /* 10px * 1.25 */
     top: 50%;
     transform: translateY(-50%);
+    display: flex;
+    gap: 2px;
 }
 
 .tg-demo-btn {
     background: transparent;
     color: #9ca3af;
     border: none;
-    padding: 4px 8px;
+    padding: 5px 10px; /* 4px * 1.25, 8px * 1.25 */
     cursor: pointer;
-    font-size: 20px;
+    font-size: 25px; /* 20px * 1.25 */
     line-height: 1;
-    border-radius: 4px;
+    border-radius: 5px; /* 4px * 1.25 */
     transition: all 0.15s ease;
 }
 
 .tg-demo-btn:hover {
     background: rgba(255, 255, 255, 0.08);
-    color: #3b82f6;
+    color: #669fc3; /* Tangent blue */
 }
 
 .tg-demo-close {
     font-weight: 300;
+}
+
+.tg-demo-minimize {
+    font-size: 30px; /* 24px * 1.25 */
+    line-height: 0.8;
+    font-weight: 300;
+    padding: 5px 12.5px; /* 4px * 1.25, 10px * 1.25 */
 }
 
 /* Panel Body / Stream - EXACT SPECIFICATIONS FROM REAL TANGENT */
@@ -520,15 +535,15 @@
     background-color: rgba(255, 255, 255, 0.25);
 }
 
-/* Message - MATCHES REAL TANGENT STYLING */
+/* Message - MATCHES REAL TANGENT STYLING (125% scale) */
 .tg-demo-msg {
-    margin-bottom: 14px;
-    padding: 12px 14px;
-    border-radius: 8px;
-    font-size: 14px;
+    margin-bottom: 17.5px; /* 14px * 1.25 */
+    padding: 15px 17.5px; /* 12px * 1.25, 14px * 1.25 */
+    border-radius: 10px; /* 8px * 1.25 */
+    font-size: 17.5px; /* 14px * 1.25 */
     line-height: 1.6;
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(5px); /* 4px * 1.25 */
     animation: tg-demo-msg-in 0.3s ease forwards;
 }
 
@@ -588,12 +603,12 @@
     40% { transform: scale(1.2); opacity: 1; }
 }
 
-/* Panel Footer - EXACT SPECIFICATIONS FROM REAL TANGENT */
+/* Panel Footer - EXACT SPECIFICATIONS (125% scale) */
 .tg-demo-panel__footer {
     flex-shrink: 0;
-    padding: 6px 8px;
+    padding: 7.5px 10px; /* 6px * 1.25, 8px * 1.25 */
     background: rgba(0, 0, 0, 0);
-    backdrop-filter: var(--tg-footer-blur, blur(8px));
+    backdrop-filter: blur(10px); /* 8px * 1.25 */
     display: flex;
     flex-direction: column;
 }
@@ -601,32 +616,42 @@
 .tg-demo-compose-row {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 7.5px; /* 6px * 1.25 */
 }
 
 .tg-demo-compose {
+    position: relative;
     flex: 1;
+    padding: 12.5px 10px 10px; /* 10px * 1.25, 8px * 1.25 */
     display: flex;
     align-items: center;
-    gap: 6px;
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(109, 109, 109, 0.3);
-    border-radius: 8px;
-    padding: 6px 8px;
+    width: 100%;
+    min-width: 0;
 }
 
 .tg-demo-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+    height: 32.5px; /* 26px * 1.25 */
+    min-height: 32.5px;
+    line-height: 20px; /* 16px * 1.25 */
+    padding: 16.25px 55px 0px 15px; /* 13px * 1.25, 44px * 1.25, 0px, 12px * 1.25 */
+    border-radius: 27.5px; /* 22px * 1.25 */
+    border: 1px solid #777777;
+    background: rgba(255, 255, 255, 1);
+    color: #1f2937;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
-    font-size: 14px;
-    color: #0f141a;
+    font-size: 17.5px; /* 14px * 1.25 */
     resize: none;
-    min-height: 24px;
-    max-height: 120px;
-    line-height: 1.5;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    scrollbar-width: none;
+}
+
+.tg-demo-input::-webkit-scrollbar {
+    display: none;
 }
 
 .tg-demo-input::placeholder {
@@ -634,51 +659,113 @@
 }
 
 .tg-demo-send {
-    background: transparent;
-    border: none;
-    padding: 4px;
-    cursor: pointer;
-    color: #6b7280;
-    display: flex;
+    position: absolute;
+    right: 23.75px; /* 19px * 1.25 */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35px; /* 28px * 1.25 */
+    height: 35px; /* 28px * 1.25 */
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid #777777;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: color 0.15s ease;
+    cursor: pointer;
+    box-shadow: 0 1.25px 2.5px rgba(0, 0, 0, .18); /* 1px * 1.25, 2px * 1.25 */
+    transition: box-shadow .12s ease, background .12s ease, border-color .15s ease, transform .08s ease;
 }
 
 .tg-demo-send:hover {
-    color: #3b82f6;
+    box-shadow: 0 2.5px 5px rgba(0, 0, 0, .22); /* 2px * 1.25, 4px * 1.25 */
+    border-color: #669fc3;
+}
+
+.tg-demo-send:active {
+    box-shadow: 0 0.625px 1.25px rgba(0, 0, 0, .15); /* 0.5px * 1.25, 1px * 1.25 */
+    transform: translateY(-50%) translateY(1.25px); /* 1px * 1.25 */
+    border-color: #669fc3;
 }
 
 .tg-demo-send svg {
-    width: 18px;
-    height: 18px;
+    width: 15px; /* 12px * 1.25 */
+    height: 15px; /* 12px * 1.25 */
+    /* Gray filter matching real extension */
+    filter: invert(43%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(85%);
 }
 
-.tg-demo-footer-icon,
-.tg-demo-menu-toggle {
-    background: transparent;
-    border: none;
-    padding: 6px;
-    cursor: pointer;
-    color: #6b7280;
-    display: flex;
+.tg-demo-send:hover svg {
+    filter: none; /* Blue on hover */
+}
+
+/* Unified icon system (125% scale) */
+.tg-demo-footer-icon {
+    width: 42.5px; /* 34px * 1.25 */
+    height: 42.5px; /* 34px * 1.25 */
+    margin-right: 7.5px; /* 6px * 1.25 */
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid #777777;
+    background: #ffffff;
+    box-sizing: border-box;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 6px;
-    transition: all 0.15s ease;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 0 1.25px 2.5px rgba(0, 0, 0, .18); /* 1px * 1.25, 2px * 1.25 */
+    transition: background 0.15s ease, border-color 0.15s ease,
+                box-shadow 0.12s ease, transform 0.08s ease;
 }
 
-.tg-demo-footer-icon:hover,
+.tg-demo-footer-icon:hover {
+    border-color: #4a9eff;
+    box-shadow: 0 2.5px 5px rgba(74, 158, 255, 0.3); /* 2px * 1.25, 4px * 1.25 */
+    transform: translateY(-1.25px); /* 1px * 1.25 */
+}
+
+.tg-demo-footer-icon svg {
+    width: 22.5px; /* 18px * 1.25 */
+    height: 22.5px; /* 18px * 1.25 */
+    object-fit: contain;
+    pointer-events: none;
+    /* Gray filter matching real extension */
+    filter: invert(43%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(85%);
+}
+
+.tg-demo-footer-icon:hover svg {
+    filter: none; /* Blue on hover */
+}
+
+/* Three-dot menu toggle (125% scale) */
+.tg-demo-menu-toggle {
+    width: 30px; /* 24px * 1.25 */
+    height: 42.5px; /* 34px * 1.25 */
+    margin-right: 7.5px; /* 6px * 1.25 */
+    padding: 0;
+    border-radius: 21.25px; /* 17px * 1.25 (half of height) */
+    border: none;
+    background: transparent;
+    box-sizing: border-box;
+    line-height: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s ease, box-shadow 0.12s ease, transform 0.08s ease;
+    color: #9ca3af;
+}
+
 .tg-demo-menu-toggle:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: #3b82f6;
+    background: rgba(156, 163, 175, 0.15);
+    color: #669fc3;
 }
 
-.tg-demo-minimize {
-    font-size: 24px;
-    line-height: 0.8;
-    font-weight: 300;
-    padding: 4px 10px;
+.tg-demo-menu-toggle svg {
+    width: 25px; /* 20px * 1.25 */
+    height: 25px; /* 20px * 1.25 */
 }
 
 
@@ -844,8 +931,8 @@
 
             const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
 
-            // Position panel on right side of screen
-            panelShell.style.left = (containerRect.width - 560) + 'px';
+            // Position panel on right side of screen (account for 475px width)
+            panelShell.style.left = (containerRect.width - 515) + 'px';
             panelShell.style.top = '80px';
 
             await wait(50);
