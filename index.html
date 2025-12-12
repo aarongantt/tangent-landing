@@ -208,7 +208,7 @@
     background: transparent;
     height: 80vh;
     max-height: 900px;
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to visible to allow chip bar to extend beyond bounds */
     /* Extend width to give more space for panel movement */
     width: 100%;
     min-width: 1400px;
@@ -218,7 +218,7 @@
 .demo-fade-top,
 .demo-fade-bottom {
     position: absolute;
-    left: 0;
+    left: -200px; /* Extended left boundary to prevent chip bar cutoff */
     right: 0;
     height: 100px;
     z-index: 50;
@@ -354,23 +354,27 @@
     height: 525px; /* 420px * 1.25 */
     display: flex;
     flex-direction: column;
-    overflow: visible;
+    overflow: hidden; /* CHANGED from visible to hidden to enforce rounded corners */
     opacity: 1;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
     font-size: 17.5px; /* 14px * 1.25 */
-    border-radius: 15px; /* 12px * 1.25 */
+    border-radius: 15px; /* 12px * 1.25 - enforced by overflow: hidden */
     box-shadow: 0 12px 64px rgba(0, 0, 0, 0.6),
                 0 24px 96px rgba(0, 0, 0, 0.4);
 }
 
-/* Light Mode Panel - EXACT MATCH TO REAL EXTENSION (lines 2684-2700) */
+/* Light Mode Panel - EXACT MATCH TO REAL EXTENSION */
 .tg-demo-panel.tg-theme-light {
-    --tg-panel-opacity: 1.0; /* Fully opaque! */
-    --tg-panel-grad-start: rgba(255, 255, 255, 1.0);
-    --tg-panel-grad-end: rgba(245, 247, 250, 1.0);
+    /* CSS Variables - exact match to lines 9-45 */
+    --tg-border: #777777;
+    --tg-frame-border: #777777;
+    --tg-input-border: #777777;
+    --tg-panel-opacity: 0.75; /* 75% opacity for better background visibility */
+    --tg-panel-grad-start: rgba(255, 255, 255, var(--tg-panel-opacity));
+    --tg-panel-grad-end: rgba(245, 247, 250, var(--tg-panel-opacity));
     /* Layered background for liquid glass depth */
     background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
         linear-gradient(180deg, var(--tg-panel-grad-start), var(--tg-panel-grad-end)) !important;
     /* Bevel effect: light from top-left, dark from bottom-right */
     border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
@@ -378,9 +382,14 @@
     border-right: 1px solid rgba(0, 0, 0, 0.25) !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.25) !important;
     color: #0f141a;
-    /* Liquid glass effect: stronger blur with high saturation and brightness */
-    backdrop-filter: blur(20px) saturate(180%) brightness(1.25) contrast(1.08);
-    -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.25) contrast(1.08);
+    /* EXACT values from DevTools - enhanced for 75% opacity */
+    backdrop-filter: blur(20px) saturate(1.6) brightness(1.15) contrast(1.05);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6) brightness(1.15) contrast(1.05);
+    /* EXACT box-shadow from DevTools */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12),
+                0 4px 8px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(255, 255, 255, 0.8),
+                inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
 }
 
 .tg-demo-panel.tg-demo-dragging {
@@ -410,7 +419,7 @@
     transform: translateY(-50%) !important;
     background: transparent;
     color: #727272;
-    border: 1px solid rgba(109, 109, 109, 0.494);
+    border: none; /* NO BORDER */
     border-radius: 6px;
     width: 37.5px; /* 30px * 1.25 */
     height: 31.25px; /* 25px * 1.25 */
@@ -438,7 +447,7 @@
     color: #357fd0 !important;
 }
 
-/* Title / Logo */
+/* Title / Logo - EXACT MATCH TO REAL EXTENSION */
 .tg-demo-title {
     display: flex;
     align-items: center;
@@ -446,7 +455,7 @@
 }
 
 .tg-demo-header-logo {
-    height: 27.5px; /* 22px * 1.25 */
+    height: 27.5px; /* 22px * 1.25 - exact match to lines 865-869 */
     object-fit: contain;
     display: block;
 }
@@ -474,7 +483,7 @@
 .tg-demo-panel__btns > button {
     background: transparent;
     color: #727272;
-    border: 1px solid rgba(109, 109, 109, 0.494);
+    border: none; /* NO BORDER */
     border-radius: 6px;
     width: 37.5px; /* 30px * 1.25 */
     height: 31.25px; /* 25px * 1.25 */
@@ -604,13 +613,11 @@
 
 /* Light Mode AI message */
 .tg-theme-light .tg-demo-msg {
-    background: #f6f7fb;
     color: #0f141a;
 }
 
 /* Dark Mode AI message */
 .tg-theme-dark .tg-demo-msg {
-    background: rgba(255, 255, 255, 0.06);
     color: #e9eef5;
 }
 
@@ -623,14 +630,12 @@
 
 /* User message style - Light Mode */
 .tg-theme-light .tg-demo-msg.tg-user {
-    background: #ffffff;
     color: #0f141a;
     font-style: normal;
 }
 
 /* User message style - Dark Mode */
 .tg-theme-dark .tg-demo-msg.tg-user {
-    background: rgba(71, 96, 128, 0.35);
     color: #e9eef5;
     font-style: normal;
 }
@@ -662,8 +667,6 @@
 .tg-demo-panel__footer {
     flex-shrink: 0;
     padding: 7.5px 10px; /* 6px * 1.25, 8px * 1.25 */
-    background: rgba(0, 0, 0, 0);
-    backdrop-filter: blur(10px); /* 8px * 1.25 */
     display: flex;
     flex-direction: column;
 }
@@ -688,21 +691,21 @@
     flex: 1 1 auto;
     min-width: 0;
     width: auto;
-    height: 32.5px; /* 26px * 1.25 */
-    min-height: 32.5px;
-    line-height: 16px;
-    padding: 16.25px 55px 0px 15px; /* 13px * 1.25, 44px * 1.25, 12px * 1.25 */
-    border-radius: 22px;
-    border: 1px solid #777777;
-    background: rgba(255, 255, 255, 1);
-    color: #1f2937;
+    height: 50px; /* INCREASED for better visibility */
+    min-height: 50px;
+    line-height: 22px; /* Increased for better vertical centering */
+    padding: 14px 55px 14px 15px; /* Balanced top/bottom padding for vertical centering */
+    border-radius: 27.5px; /* 22px * 1.25 - exact match to line 1112 */
+    border: 1.5px solid #777777; /* THICKER border for better definition */
+    background: rgba(255, 255, 255, 1); /* exact match to line 1137 */
+    color: #1f2937; /* exact match to line 1138 */
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
     font-size: 17.5px; /* 14px * 1.25 */
     resize: none;
     overflow-y: auto;
     overflow-x: hidden;
     box-sizing: border-box;
-    scrollbar-width: none;
+    scrollbar-width: none; /* exact match to line 1120 */
 }
 
 .tg-demo-input::-webkit-scrollbar {
@@ -711,6 +714,15 @@
 
 .tg-demo-input::placeholder {
     color: #9ca3af;
+    line-height: 22px; /* Match input line-height for vertical centering */
+    font-style: italic;
+}
+
+/* Input focus - EXACT MATCH TO REAL EXTENSION (lines 1160-1165) */
+.tg-demo-input:focus {
+    outline: none;
+    border: 2.5px solid #669fc3; /* 2px * 1.25 */
+    box-shadow: 0 0 0 2.5px #669fc3; /* 2px * 1.25 */
 }
 
 /* Send button - EXACT REPLICA (125% scale) */
@@ -1011,7 +1023,7 @@
         stream.scrollTop = stream.scrollHeight;
     }
 
-    // ═══ DRAGGING SYSTEM ═══
+    // ═══ DRAGGING SYSTEM (Header Only) ═══
     let dragState = {
         isDragging: false,
         startX: 0,
@@ -1020,8 +1032,15 @@
         initialTop: 0
     };
 
-    panel.addEventListener('mousedown', (e) => {
-        if (e.target.closest('.tg-demo-btn')) return;
+    const header = panel.querySelector('.tg-demo-panel__header');
+
+    header.addEventListener('mousedown', (e) => {
+        // Don't drag if clicking buttons
+        if (e.target.closest('.tg-demo-pin') ||
+            e.target.closest('.tg-demo-panel__min') ||
+            e.target.closest('.tg-demo-panel__close')) {
+            return;
+        }
 
         dragState.isDragging = true;
         dragState.startX = e.clientX;
@@ -1035,6 +1054,8 @@
 
         panel.classList.add('tg-demo-dragging');
         state.mode = 'dragging';
+
+        e.preventDefault(); // Prevent text selection while dragging
     });
 
     document.addEventListener('mousemove', (e) => {
