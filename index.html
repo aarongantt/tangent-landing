@@ -64,11 +64,12 @@
         </div>
     </header>
 
-    <!-- Hero section -->
+    <!-- Hero + Interactive Demo Section -->
     <main>
-        <section class="hero">
-            <div class="container hero-grid">
-                <div class="hero-text">
+        <section class="hero-demo">
+            <div class="container hero-demo-grid">
+                <!-- Left Column: Heading + Email Form -->
+                <div class="hero-demo-text">
                     <h1>AI that lives on every page you open.</h1>
                     <p class="hero-subtitle">
                         Tangent is your on-page research assistant, explainer, and coding helper.
@@ -76,7 +77,6 @@
                     </p>
 
                     <form class="waitlist-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-                        <!-- Replace YOUR_FORM_ID with your Formspree or backend endpoint later -->
                         <label for="email" class="visually-hidden">Email address</label>
                         <input id="email" name="email" type="email" required
                             placeholder="Enter your email to join the waitlist" />
@@ -88,53 +88,86 @@
                     </p>
                 </div>
 
-                <div class="hero-visual">
-                    <div class="hero-card">
-                        <div class="hero-card-header">
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
+                <!-- Right Column: Interactive Demo -->
+                <div class="hero-demo-visual">
+                    <div class="demo-window">
+                        <!-- Browser Chrome (3 dots) -->
+                        <div class="demo-window-header">
+                            <span class="demo-dot"></span>
+                            <span class="demo-dot"></span>
+                            <span class="demo-dot"></span>
                         </div>
-                        <div class="hero-card-body">
-                            <div class="mock-page">
-                                <div class="mock-lines"></div>
-                                <div class="mock-lines"></div>
-                                <div class="mock-lines"></div>
-                                <div class="mock-lines wide"></div>
-                                <div class="mock-lines"></div>
+
+                        <!-- Demo Stage Container -->
+                        <div id="demo-stage-container">
+                            <!-- Fade masks (top and bottom) -->
+                            <div class="demo-fade-top"></div>
+                            <div class="demo-fade-bottom"></div>
+
+                            <!-- Fake Article with scroll -->
+                            <div id="demo-article">
+                                <p>Technology only matters when it unlocks something you couldn't do before. The best tools don't demand attention—they dissolve into the background until the exact moment you need them.</p>
+
+                                <p>Artificial intelligence is one of the most powerful tools we've ever built, but most of the time it lives in a separate tab, a different app, a conversation you have to start from scratch every single time. It's good at answering questions, but terrible at staying close to the work you're actually doing.</p>
+
+                                <p>Midway through using it, something clicks: <span id="tangent-anchor" data-tg-anchor="tangent-word">Tangent</span> takes raw AI capability and anchors it directly to the page you're reading. Not floating in some sidebar. Not buried in a menu. Right there, next to the sentence you highlighted, with full context about what you're looking at.</p>
+
+                                <p>When technology works this way, expectations change. You stop thinking about "opening the AI tool." You just… ask. Select a word, tap a chip, get an answer. The entire interaction collapses into a single gesture.</p>
+
+                                <p>That's what Tangent does. It doesn't change how AI works. It changes where AI lives.</p>
+
+                                <p>Most software treats you like you're working in isolation. You read an article, copy a paragraph, switch tabs, paste it into a chatbot, wait for context to load, then get a response that's already disconnected from what you were doing.</p>
+
+                                <p>Tangent eliminates that loop. The AI is already there, on the page, reading what you're reading. It sees the same context you do. When you highlight a sentence, it knows what came before and what comes after. When you ask a question, it doesn't need a preamble.</p>
                             </div>
-                            <div class="chip-bar">
-                                <span class="chip chip-primary">Explain</span>
-                                <span class="chip">Summarize</span>
-                                <span class="chip">Translate</span>
-                                <span class="chip">Code help</span>
+
+                            <!-- Chip Bank (initially hidden) -->
+                            <div id="demo-chips" class="tg-demo-chips" style="display: none;">
+                                <button class="tg-demo-chip" data-chip="what">Explain</button>
+                                <button class="tg-demo-chip" data-chip="eli5">Summarize</button>
+                                <button class="tg-demo-chip" data-chip="faq">Translate</button>
+                                <button class="tg-demo-chip" data-chip="code">Code help</button>
                             </div>
-                            <div class="mock-chat">
-                                <div class="mock-chat-heading">Tangent</div>
-                                <div class="mock-chat-line user">“Explain this section in plain English.”</div>
-                                <div class="mock-chat-line ai">
-                                    Tangent:
-                                    <span>
-                                        Here’s a simple breakdown of what this paragraph is actually saying…
-                                    </span>
+
+                            <!-- Tangent Panel (initially hidden) -->
+                            <div id="demo-panel-shell" class="tg-demo-panel-shell" style="display: none;">
+                                <div id="demo-panel" class="tg-demo-panel tg-theme-dark">
+                                    <!-- Header -->
+                                    <div class="tg-demo-panel__header">
+                                        <div class="tg-demo-panel__title">
+                                            <span style="font-weight: 600; font-size: 13px; letter-spacing: 0.03em;">TANGENT</span>
+                                        </div>
+                                        <div class="tg-demo-panel__btns">
+                                            <button class="tg-demo-btn tg-demo-close" aria-label="Close">×</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Body / Stream -->
+                                    <div class="tg-demo-panel__body">
+                                        <div id="demo-stream" class="tg-demo-panel__stream">
+                                            <!-- Messages appear here -->
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <p class="hero-caption">
-                        This is a mockup of Tangent’s overlay. The real thing plugs directly into your browser.
+
+                    <!-- Caption below demo -->
+                    <p class="demo-caption">
+                        This is a mockup of Tangent's overlay. The real thing plugs directly into your browser.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- How it works -->
+        <!-- How Tangent Works (3-step explanation) -->
         <section id="how-it-works" class="section section-alt">
             <div class="container">
                 <h2>How Tangent works</h2>
                 <p class="section-intro">
-                    Tangent lives in your browser. It understands the page you’re on and responds
-                    in context so you don’t have to copy, paste, and re-explain everything.
+                    Tangent lives in your browser. It understands the page you're on and responds
+                    in context so you don't have to copy, paste, and re-explain everything.
                 </p>
 
                 <div class="features-grid">
@@ -164,6 +197,701 @@
                 </div>
             </div>
         </section>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════════════
+   HERO DEMO SECTION STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.hero-demo {
+    background: #0a0e14;
+    color: #e5e7eb;
+    padding: 80px 0 100px;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero-demo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+}
+
+.hero-demo-text h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+    color: #ffffff;
+}
+
+.hero-subtitle {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #9ca3af;
+    margin-bottom: 2rem;
+}
+
+.waitlist-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.waitlist-form input {
+    flex: 1;
+    padding: 14px 18px;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    background: #1f2937;
+    color: #e5e7eb;
+    font-size: 15px;
+}
+
+.waitlist-form input::placeholder {
+    color: #6b7280;
+}
+
+.waitlist-form button {
+    padding: 14px 28px;
+    background: #3b82f6;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.waitlist-form button:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+}
+
+.waitlist-note {
+    font-size: 13px;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* Demo Window */
+.demo-window {
+    background: #1f2937;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.demo-window-header {
+    background: #111827;
+    padding: 12px 16px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.demo-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #374151;
+}
+
+.demo-dot:nth-child(1) { background: #ef4444; }
+.demo-dot:nth-child(2) { background: #f59e0b; }
+.demo-dot:nth-child(3) { background: #10b981; }
+
+#demo-stage-container {
+    position: relative;
+    background: #ffffff;
+    height: 480px;
+    overflow: hidden;
+}
+
+/* Gradient fade masks */
+.demo-fade-top,
+.demo-fade-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 80px;
+    z-index: 50;
+    pointer-events: none;
+}
+
+.demo-fade-top {
+    top: 0;
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 0.8) 40%,
+        rgba(255, 255, 255, 0) 100%);
+}
+
+.demo-fade-bottom {
+    bottom: 0;
+    background: linear-gradient(to top,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 0.8) 40%,
+        rgba(255, 255, 255, 0) 100%);
+}
+
+/* Article */
+#demo-article {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #9ca3af; /* Light grey text */
+    height: 100%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    padding: 80px 48px;
+    scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+#demo-article::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in Webkit */
+}
+
+#demo-article p {
+    margin-bottom: 1.6em;
+}
+
+/* Anchor word (Tangent) */
+#tangent-anchor {
+    position: relative;
+    color: #1f2937; /* Darker when not highlighted */
+    transition: all 0.3s ease;
+}
+
+#tangent-anchor.tg-demo-highlighted {
+    background: rgba(42, 143, 213, 0.15);
+    color: #0f141a;
+    border-radius: 3px;
+    padding: 2px 4px;
+    margin: -2px -4px;
+    box-shadow: 0 0 0 2px rgba(42, 143, 213, 0.3);
+    animation: tg-demo-pulse 0.8s ease-out;
+}
+
+@keyframes tg-demo-pulse {
+    0%, 100% { box-shadow: 0 0 0 2px rgba(42, 143, 213, 0.3); }
+    50% { box-shadow: 0 0 0 6px rgba(42, 143, 213, 0.15); }
+}
+
+/* Chip Bank */
+.tg-demo-chips {
+    position: absolute;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tg-demo-chips.tg-demo-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tg-demo-chip {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 7px 13px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    background: rgba(22, 24, 28, 0.95);
+    color: #ffffff;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.tg-demo-chip:hover {
+    filter: brightness(1.15);
+    transform: translateY(-1px);
+}
+
+.tg-demo-chip:active {
+    transform: translateY(0);
+}
+
+/* Tangent Panel Shell */
+.tg-demo-panel-shell {
+    position: absolute;
+    z-index: 200;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tg-demo-panel-shell.tg-demo-visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Tangent Panel */
+.tg-demo-panel {
+    width: 320px;
+    min-height: 180px;
+    max-height: 320px;
+    background: #18191d;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+    color: #e9eef5;
+    cursor: move;
+    user-select: none;
+}
+
+.tg-demo-panel.tg-demo-dragging {
+    cursor: grabbing;
+}
+
+/* Panel Header */
+.tg-demo-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+}
+
+.tg-demo-panel__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cbd5e1;
+}
+
+.tg-demo-panel__btns {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.tg-demo-btn {
+    background: transparent;
+    color: #9ca3af;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+}
+
+.tg-demo-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #3b82f6;
+}
+
+.tg-demo-close {
+    font-weight: 300;
+}
+
+/* Panel Body / Stream */
+.tg-demo-panel__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.tg-demo-panel__stream {
+    height: 100%;
+    overflow-y: auto;
+    padding: 14px;
+    background: transparent;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(150, 150, 150, 0.4) transparent;
+}
+
+.tg-demo-panel__stream::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tg-demo-panel__stream::-webkit-scrollbar-thumb {
+    background-color: rgba(180, 180, 180, 0.5);
+    border-radius: 3px;
+}
+
+/* Message */
+.tg-demo-msg {
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border-radius: 7px;
+    font-size: 13px;
+    line-height: 1.6;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e5e7eb;
+    opacity: 0;
+    transform: translateY(4px);
+    animation: tg-demo-msg-in 0.3s ease forwards;
+}
+
+@keyframes tg-demo-msg-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* User message style */
+.tg-demo-msg.tg-user {
+    background: rgba(59, 130, 246, 0.15);
+    color: #dbeafe;
+    font-style: italic;
+}
+
+/* Thinking Indicator */
+.tg-demo-thinking {
+    display: inline-flex;
+    gap: 4px;
+    padding: 8px 0;
+}
+
+.tg-demo-thinking span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #6b7280;
+    animation: tg-demo-dot-bounce 1.4s infinite ease-in-out both;
+}
+
+.tg-demo-thinking span:nth-child(1) { animation-delay: -0.32s; }
+.tg-demo-thinking span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes tg-demo-dot-bounce {
+    0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+    40% { transform: scale(1.2); opacity: 1; }
+}
+
+/* Caption */
+.demo-caption {
+    margin-top: 16px;
+    font-size: 13px;
+    color: #6b7280;
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .hero-demo-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+
+    .hero-demo-text h1 {
+        font-size: 2.2rem;
+    }
+
+    #demo-stage-container {
+        height: 400px;
+    }
+}
+</style>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   TANGENT HERO DEMO - DIRECTOR
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+(function() {
+    'use strict';
+
+    // ═══ ELEMENT REFERENCES ═══
+    const article = document.getElementById('demo-article');
+    const anchor = document.getElementById('tangent-anchor');
+    const chips = document.getElementById('demo-chips');
+    const panelShell = document.getElementById('demo-panel-shell');
+    const panel = document.getElementById('demo-panel');
+    const stream = document.getElementById('demo-stream');
+
+    if (!article || !anchor || !chips || !panelShell || !panel || !stream) {
+        console.error('[TANGENT DEMO] Missing required DOM elements');
+        return;
+    }
+
+    // ═══ ELEMENT INDEX ═══
+    const DEMO_ELEMENT_INDEX = new Map();
+    DEMO_ELEMENT_INDEX.set('tangent-word', anchor);
+
+    // ═══ CHIP RESPONSE DATA ═══
+    const CHIP_RESPONSES = {
+        'what': {
+            title: '"Explain this section in plain English."',
+            content: 'Here\'s a simple breakdown of what this paragraph is actually saying...'
+        },
+        'eli5': {
+            title: '"Summarize the key points."',
+            content: 'The main ideas are: Tangent brings AI directly to the page you\'re reading, eliminating tab-switching and context loss.'
+        },
+        'faq': {
+            title: '"Translate to Spanish."',
+            content: 'A medio camino de usarlo, algo hace clic: Tangent toma la capacidad de IA sin procesar y la ancla directamente a la página que estás leyendo.'
+        },
+        'code': {
+            title: '"Help me understand this code."',
+            content: 'This code implements a real-time AI assistant that integrates with browser pages using Shadow DOM and event listeners.'
+        }
+    };
+
+    // ═══ STATE ═══
+    let state = {
+        mode: 'idle',
+        currentChip: null,
+        typewriterTimeout: null,
+        dragData: null,
+        isPinned: false
+    };
+
+    // ═══ UTILITY: WAIT ═══
+    function wait(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // ═══ UTILITY: POSITION ELEMENT BELOW ANCHOR ═══
+    function positionBelowAnchor(element, anchorEl, offsetY = 8) {
+        const rect = anchorEl.getBoundingClientRect();
+        const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
+
+        const left = rect.left - containerRect.left + (rect.width / 2) - (element.offsetWidth / 2);
+        const top = rect.bottom - containerRect.top + offsetY;
+
+        element.style.left = left + 'px';
+        element.style.top = top + 'px';
+    }
+
+    // ═══ DIRECTOR: INTRO SEQUENCE ═══
+    async function playIntro() {
+        if (state.mode === 'playing') return;
+        state.mode = 'playing';
+
+        // Reset everything
+        anchor.classList.remove('tg-demo-highlighted');
+        chips.style.display = 'none';
+        chips.classList.remove('tg-demo-visible');
+        panelShell.style.display = 'none';
+        panelShell.classList.remove('tg-demo-visible');
+        stream.innerHTML = '';
+
+        await wait(600);
+
+        // 1. Scroll anchor into view (center)
+        const articleRect = article.getBoundingClientRect();
+        const anchorRect = anchor.getBoundingClientRect();
+        const scrollTop = anchorRect.top - articleRect.top - (articleRect.height / 2) + (anchorRect.height / 2);
+
+        article.scrollTo({
+            top: article.scrollTop + scrollTop,
+            behavior: 'smooth'
+        });
+
+        await wait(1000);
+
+        // 2. Highlight the word
+        anchor.classList.add('tg-demo-highlighted');
+
+        await wait(700);
+
+        // 3. Show chips
+        chips.style.display = 'flex';
+        positionBelowAnchor(chips, anchor, 12);
+        await wait(50);
+        chips.classList.add('tg-demo-visible');
+
+        await wait(900);
+
+        // 4. Auto-click first chip
+        const firstChip = document.querySelector('[data-chip="what"]');
+        if (firstChip) {
+            firstChip.style.transform = 'scale(0.95)';
+            await wait(150);
+            firstChip.style.transform = '';
+
+            await handleChipClick('what', true);
+        }
+
+        state.mode = 'interactive';
+    }
+
+    // ═══ CHIP CLICK HANDLER ═══
+    async function handleChipClick(chipId, fromIntro = false) {
+        const response = CHIP_RESPONSES[chipId];
+        if (!response) return;
+
+        if (state.typewriterTimeout) {
+            clearTimeout(state.typewriterTimeout);
+        }
+
+        state.currentChip = chipId;
+        state.mode = 'typing';
+
+        // Show panel if first time
+        if (panelShell.style.display === 'none') {
+            panelShell.style.display = 'block';
+
+            const anchorRect = anchor.getBoundingClientRect();
+            const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
+
+            panelShell.style.left = (anchorRect.right - containerRect.left + 16) + 'px';
+            panelShell.style.top = (anchorRect.top - containerRect.top) + 'px';
+
+            await wait(50);
+            panelShell.classList.add('tg-demo-visible');
+            await wait(350);
+        }
+
+        // Show user message
+        stream.innerHTML = `<div class="tg-demo-msg tg-user">${response.title}</div>`;
+
+        await wait(400);
+
+        // Show thinking
+        const thinkingEl = document.createElement('div');
+        thinkingEl.className = 'tg-demo-thinking';
+        thinkingEl.innerHTML = '<span></span><span></span><span></span>';
+        stream.appendChild(thinkingEl);
+
+        await wait(fromIntro ? 800 : 500);
+
+        // Remove thinking
+        thinkingEl.remove();
+
+        // Typewrite AI response
+        await typewriteMessage(response.content);
+
+        if (state.mode === 'typing') {
+            state.mode = 'interactive';
+        }
+    }
+
+    // ═══ TYPEWRITER ═══
+    async function typewriteMessage(text) {
+        const msgEl = document.createElement('div');
+        msgEl.className = 'tg-demo-msg';
+        msgEl.innerHTML = '<strong>Tangent:</strong><br>';
+        stream.appendChild(msgEl);
+
+        const contentSpan = document.createElement('span');
+        msgEl.appendChild(contentSpan);
+
+        const chunkSize = 3;
+        const chunks = [];
+        for (let i = 0; i < text.length; i += chunkSize) {
+            chunks.push(text.slice(i, i + chunkSize));
+        }
+
+        for (let i = 0; i < chunks.length; i++) {
+            if (state.mode !== 'typing') break;
+
+            contentSpan.textContent += chunks[i];
+            stream.scrollTop = stream.scrollHeight;
+
+            await wait(20);
+        }
+
+        contentSpan.textContent = text;
+        stream.scrollTop = stream.scrollHeight;
+    }
+
+    // ═══ DRAGGING SYSTEM ═══
+    let dragState = {
+        isDragging: false,
+        startX: 0,
+        startY: 0,
+        initialLeft: 0,
+        initialTop: 0
+    };
+
+    panel.addEventListener('mousedown', (e) => {
+        if (e.target.closest('.tg-demo-btn')) return;
+
+        dragState.isDragging = true;
+        dragState.startX = e.clientX;
+        dragState.startY = e.clientY;
+
+        const rect = panelShell.getBoundingClientRect();
+        const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
+
+        dragState.initialLeft = rect.left - containerRect.left;
+        dragState.initialTop = rect.top - containerRect.top;
+
+        panel.classList.add('tg-demo-dragging');
+        state.mode = 'dragging';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!dragState.isDragging) return;
+
+        const dx = e.clientX - dragState.startX;
+        const dy = e.clientY - dragState.startY;
+
+        panelShell.style.left = (dragState.initialLeft + dx) + 'px';
+        panelShell.style.top = (dragState.initialTop + dy) + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (!dragState.isDragging) return;
+
+        dragState.isDragging = false;
+        panel.classList.remove('tg-demo-dragging');
+
+        if (state.mode === 'dragging') {
+            state.mode = 'interactive';
+        }
+    });
+
+    // ═══ CHIP CLICK LISTENERS ═══
+    document.querySelectorAll('.tg-demo-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            if (state.mode === 'playing') return;
+
+            const chipId = chip.dataset.chip;
+            handleChipClick(chipId, false);
+        });
+    });
+
+    // ═══ PANEL BUTTON HANDLERS ═══
+    document.querySelector('.tg-demo-close')?.addEventListener('click', () => {
+        panelShell.classList.remove('tg-demo-visible');
+        setTimeout(() => {
+            panelShell.style.display = 'none';
+            stream.innerHTML = '';
+        }, 300);
+    });
+
+    // ═══ AUTO-START ON SCROLL INTO VIEW ═══
+    let hasPlayed = false;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasPlayed) {
+                hasPlayed = true;
+                setTimeout(() => playIntro(), 800);
+            }
+        });
+    }, { threshold: 0.4 });
+
+    const demoSection = document.querySelector('.hero-demo');
+    if (demoSection) {
+        observer.observe(demoSection);
+    }
+})();
+</script>
 
         <!-- Who it's for / value props -->
         <section class="section">
