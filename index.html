@@ -277,18 +277,11 @@
 }
 
 #tangent-anchor.tg-demo-highlighted {
-    background: rgba(42, 143, 213, 0.15);
-    color: #0f141a;
-    border-radius: 3px;
+    background: #669fc3; /* Lighter blue background */
+    color: #ffffff; /* White text */
+    border-radius: 0px; /* 90-degree corners */
     padding: 2px 4px;
     margin: -2px -4px;
-    box-shadow: 0 0 0 2px rgba(42, 143, 213, 0.3);
-    animation: tg-demo-pulse 0.8s ease-out;
-}
-
-@keyframes tg-demo-pulse {
-    0%, 100% { box-shadow: 0 0 0 2px rgba(42, 143, 213, 0.3); }
-    50% { box-shadow: 0 0 0 6px rgba(42, 143, 213, 0.15); }
 }
 
 /* Chip Bank - EXACT SPECIFICATIONS FROM REAL TANGENT - LIGHT MODE */
@@ -892,26 +885,18 @@
         panelShell.classList.remove('tg-demo-visible');
         stream.innerHTML = '';
 
-        // Reset scroll to top
+        // Start scroll at the very top
         article.scrollTop = 0;
 
         await wait(400);
 
-        // 0. Initial scroll down to show reading motion
-        article.scrollTo({
-            top: 180,
-            behavior: 'smooth'
-        });
-
-        await wait(1200);
-
-        // 1. Scroll anchor into view (center)
+        // 1. Scroll down until "Tangent" is at top third of the page
         const articleRect = article.getBoundingClientRect();
         const anchorRect = anchor.getBoundingClientRect();
-        const scrollTop = anchorRect.top - articleRect.top - (articleRect.height / 2) + (anchorRect.height / 2);
+        const targetPosition = anchorRect.top - articleRect.top - (articleRect.height / 3);
 
         article.scrollTo({
-            top: article.scrollTop + scrollTop,
+            top: article.scrollTop + targetPosition,
             behavior: 'smooth'
         });
 
@@ -961,8 +946,8 @@
 
             const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
 
-            // Position panel on right side of screen (account for 475px width)
-            panelShell.style.left = (containerRect.width - 515) + 'px';
+            // Position panel closer to the demo text (moved left from far right)
+            panelShell.style.left = '780px';
             panelShell.style.top = '80px';
 
             await wait(50);
