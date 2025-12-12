@@ -103,7 +103,7 @@
 
                             <!-- Tangent Panel (initially hidden) -->
                             <div id="demo-panel-shell" class="tg-demo-panel-shell" style="display: none;">
-                                <div id="demo-panel" class="tg-demo-panel tg-theme-dark">
+                                <div id="demo-panel" class="tg-demo-panel tg-theme-light">
                                     <!-- Header -->
                                     <div class="tg-demo-panel__header">
                                         <div class="tg-demo-panel__title">
@@ -263,15 +263,15 @@
     50% { box-shadow: 0 0 0 6px rgba(42, 143, 213, 0.15); }
 }
 
-/* Chip Bank - EXACT SPECIFICATIONS FROM REAL TANGENT */
+/* Chip Bank - EXACT SPECIFICATIONS FROM REAL TANGENT - LIGHT MODE */
 .tg-demo-chips {
     position: absolute;
     z-index: 100;
     display: flex;
     gap: 6px;
     padding: 6px 10px;
-    background: rgba(22, 24, 28, 0.92);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.743);
+    border: 1px solid rgba(109, 109, 109, 0.494);
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(10px) saturate(120%);
@@ -293,15 +293,16 @@
     line-height: 1.2;
     padding: 6px 10px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(22, 24, 28, 0.92);
-    color: #fff;
+    border: 1px solid rgba(109, 109, 109, 0.494);
+    background: rgba(255, 255, 255, 0.743);
+    color: #111;
     cursor: pointer;
     user-select: none;
 }
 
 .tg-demo-chip:hover {
-    filter: brightness(1.15);
+    filter: none;
+    background: rgba(255, 255, 255, 0.96);
 }
 
 .tg-demo-chip:active {
@@ -340,15 +341,27 @@
     flex-direction: column;
     overflow: visible;
     opacity: 1;
-    background: linear-gradient(180deg,
-        rgba(36, 40, 49, 1),
-        rgba(14, 16, 19, 1)) !important;
-    border: 1px solid #777777 !important;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
     border-radius: 12px;
     box-shadow: 0 12px 64px rgba(0, 0, 0, 0.6),
                 0 24px 96px rgba(0, 0, 0, 0.4);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
-    color: #e9eef5;
+}
+
+/* Light Mode Panel - EXACT SPECIFICATIONS */
+.tg-demo-panel.tg-theme-light {
+    --tg-panel-opacity: 1.0;
+    --tg-panel-grad-start: rgba(255, 255, 255, 1.0);
+    --tg-panel-grad-end: rgba(245, 247, 250, 1.0);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+        linear-gradient(180deg, var(--tg-panel-grad-start), var(--tg-panel-grad-end)) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.6) !important;
+    border-right: 1px solid rgba(0, 0, 0, 0.25) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25) !important;
+    color: #0f141a;
+    backdrop-filter: blur(16px) saturate(160%) brightness(1.15) contrast(1.05);
+    -webkit-backdrop-filter: blur(16px) saturate(160%) brightness(1.15) contrast(1.05);
 }
 
 .tg-demo-panel.tg-demo-dragging {
@@ -374,6 +387,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.tg-theme-light .tg-demo-panel__title {
+    color: #0f141a;
+}
+
+.tg-theme-dark .tg-demo-panel__title {
     color: #cbd5e1;
 }
 
@@ -476,11 +496,21 @@
     border-radius: 8px;
     font-size: 14px;
     line-height: 1.6;
-    background: rgba(255, 255, 255, 0.06);
-    color: #e9eef5;
     opacity: 0;
     transform: translateY(4px);
     animation: tg-demo-msg-in 0.3s ease forwards;
+}
+
+/* Light Mode AI message */
+.tg-theme-light .tg-demo-msg {
+    background: #f6f7fb;
+    color: #0f141a;
+}
+
+/* Dark Mode AI message */
+.tg-theme-dark .tg-demo-msg {
+    background: rgba(255, 255, 255, 0.06);
+    color: #e9eef5;
 }
 
 @keyframes tg-demo-msg-in {
@@ -490,8 +520,15 @@
     }
 }
 
-/* User message style - matches real Tangent user bubble */
-.tg-demo-msg.tg-user {
+/* User message style - Light Mode */
+.tg-theme-light .tg-demo-msg.tg-user {
+    background: #ffffff;
+    color: #0f141a;
+    font-style: normal;
+}
+
+/* User message style - Dark Mode */
+.tg-theme-dark .tg-demo-msg.tg-user {
     background: rgba(71, 96, 128, 0.35);
     color: #e9eef5;
     font-style: normal;
