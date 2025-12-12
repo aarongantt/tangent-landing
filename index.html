@@ -223,7 +223,8 @@
 .hero-demo {
     background: #0a0e14;
     color: #e5e7eb;
-    padding: 20px 0 60px; /* Decreased top padding from 60px to 20px */
+    padding: 0 0 20px; /* Reduced bottom padding from 60px to 20px */
+    margin-top: -40px; /* Pull demo section up closer to navigation */
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -252,7 +253,7 @@
     position: absolute;
     left: -200px; /* Extended left boundary to prevent chip bar cutoff */
     right: 0;
-    height: 100px;
+    height: 200px; /* Increased from 150px for even more gradual fade */
     z-index: 50;
     pointer-events: none;
 }
@@ -261,7 +262,12 @@
     top: 0;
     background: linear-gradient(to bottom,
         rgba(10, 14, 20, 1) 0%,
-        rgba(10, 14, 20, 0.7) 30%,
+        rgba(10, 14, 20, 0.95) 15%,
+        rgba(10, 14, 20, 0.85) 30%,
+        rgba(10, 14, 20, 0.7) 45%,
+        rgba(10, 14, 20, 0.5) 60%,
+        rgba(10, 14, 20, 0.3) 75%,
+        rgba(10, 14, 20, 0.15) 87%,
         rgba(10, 14, 20, 0) 100%);
 }
 
@@ -269,7 +275,12 @@
     bottom: 0;
     background: linear-gradient(to top,
         rgba(10, 14, 20, 1) 0%,
-        rgba(10, 14, 20, 0.7) 30%,
+        rgba(10, 14, 20, 0.95) 15%,
+        rgba(10, 14, 20, 0.85) 30%,
+        rgba(10, 14, 20, 0.7) 45%,
+        rgba(10, 14, 20, 0.5) 60%,
+        rgba(10, 14, 20, 0.3) 75%,
+        rgba(10, 14, 20, 0.15) 87%,
         rgba(10, 14, 20, 0) 100%);
 }
 
@@ -1100,7 +1111,8 @@
         // 1. Scroll down until "Tangent" is at top third of the page - SLOW & GENTLE
         const articleRect = article.getBoundingClientRect();
         const anchorRect = anchor.getBoundingClientRect();
-        const targetPosition = anchorRect.top - articleRect.top - (articleRect.height / 3);
+        const twoLinesHeight = 26 * 1.6 * 2; // font-size * line-height * 2 lines = ~83px
+        const targetPosition = anchorRect.top - articleRect.top - (articleRect.height / 3) + twoLinesHeight;
 
         // Smooth, slow scroll using custom animation
         const startScroll = article.scrollTop;
@@ -1174,7 +1186,8 @@
         state.mode = 'typing';
 
         // Show panel if first time
-        if (panelShell.style.display === 'none') {
+        const isFirstOpen = panelShell.style.display === 'none';
+        if (isFirstOpen) {
             panelShell.style.display = 'block';
 
             const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
@@ -1186,9 +1199,48 @@
             await wait(50);
             panelShell.classList.add('tg-demo-visible');
             await wait(350);
+
+            // Show intro message with typewriter effect
+            const introMsg = document.createElement('div');
+            introMsg.className = 'tg-demo-msg';
+            stream.appendChild(introMsg);
+
+            const introContent = document.createElement('span');
+            introMsg.appendChild(introContent);
+
+            // Typewrite the intro message
+            const introText = 'Welcome to TANGENT.\n\nAccess the full knowledge of AI without breaking your train of thought. Go on tangents, explore ideas, and get instant answers—all without ever opening another tab.';
+            const chunkSize = 3;
+            const chunks = [];
+            for (let i = 0; i < introText.length; i += chunkSize) {
+                chunks.push(introText.slice(i, i + chunkSize));
+            }
+
+            for (let i = 0; i < chunks.length; i++) {
+                if (state.mode !== 'typing') break;
+
+                let chunk = chunks[i];
+                // Convert newlines to <br> tags for display
+                chunk = chunk.replace(/\n/g, '<br>');
+
+                introContent.innerHTML += chunk;
+                stream.scrollTop = stream.scrollHeight;
+
+                await wait(20);
+            }
+
+            // Ensure final formatted text with bold and italic
+            introContent.innerHTML = `<strong>Welcome to TANGENT.</strong><br><br>Access the full knowledge of AI <em>without breaking your train of thought</em>. Go on tangents, explore ideas, and get instant answers—all without ever opening another tab.`;
+            stream.scrollTop = stream.scrollHeight;
+
+            // Return early - don't show user message or AI response on first open
+            if (state.mode === 'typing') {
+                state.mode = 'interactive';
+            }
+            return;
         }
 
-        // Show user message
+        // Show user message (only on subsequent interactions)
         stream.innerHTML = `<div class="tg-demo-msg tg-user">${response.title}</div>`;
 
         await wait(400);
@@ -1361,7 +1413,7 @@
             // Show user question (just the bold question text)
             const userDiv = document.createElement('div');
             userDiv.className = 'tg-demo-msg tg-user';
-            userDiv.textContent = questionText;
+            userDiv.innerHTML = `<strong>${questionText}</strong>`;
             stream.appendChild(userDiv);
 
             await wait(300);
