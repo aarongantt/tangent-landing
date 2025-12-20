@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>How It Works | Tangent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="See how Tangent works: page-aware AI that understands context and responds without leaving your browser." />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="images/tangent_t_logo.png" />
+    <style>
+        /* How It Works page specific styles */
+        .hiw-hero {
+            padding: 80px 0 40px;
+            text-align: center;
+            background: radial-gradient(circle at top, #171b2a 0, #05060a 55%);
+        }
+
+        .hiw-hero h1 {
+            font-size: clamp(2.4rem, 3vw + 1.4rem, 3.2rem);
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .hiw-hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .hiw-features {
+            padding: 60px 0;
+        }
+
+        .feature-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+            margin-bottom: 80px;
+            max-width: 1120px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+        }
+
+        .feature-detail.reverse {
+            direction: rtl;
+        }
+
+        .feature-detail.reverse > * {
+            direction: ltr;
+        }
+
+        .feature-visual {
+            background: radial-gradient(circle at top left, #202741 0, #080915 55%, #05060a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            padding: 60px 40px;
+            text-align: center;
+            color: #8b8fad;
+            font-size: 0.9rem;
+            min-height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-text h2 {
+            font-size: 1.9rem;
+            margin-bottom: 16px;
+        }
+
+        .feature-text p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .feature-text ul {
+            list-style: none;
+            padding: 0;
+            margin: 18px 0;
+        }
+
+        .feature-text ul li {
+            position: relative;
+            padding-left: 22px;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .feature-text ul li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-strong);
+            font-weight: 700;
+        }
+
+        .hiw-videos {
+            padding: 60px 0;
+            background: radial-gradient(circle at top, #131727 0, #05060a 55%);
+        }
+
+        .hiw-videos h2 {
+            text-align: center;
+            font-size: 1.9rem;
+            margin-bottom: 40px;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .video-card {
+            background: var(--bg-soft);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+        }
+
+        .video-placeholder {
+            background: radial-gradient(circle at center, #202741 0, #0a0d18 100%);
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b8fad;
+            font-size: 0.88rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .video-card h3 {
+            padding: 16px 18px;
+            margin: 0;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .hiw-cta {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .hiw-cta h2 {
+            font-size: 2rem;
+            margin-bottom: 24px;
+        }
+
+        .hiw-cta .cta-button {
+            padding: 14px 32px;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 1.05rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            color: #05060a;
+            border: none;
+            box-shadow: 0 14px 28px rgba(5, 122, 255, 0.45);
+            cursor: pointer;
+            transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, filter 0.12s ease-out;
+        }
+
+        .hiw-cta .cta-button:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.05);
+            box-shadow: 0 18px 34px rgba(5, 122, 255, 0.55);
+        }
+
+        @media (max-width: 900px) {
+            .feature-detail,
+            .feature-detail.reverse {
+                grid-template-columns: 1fr;
+                direction: ltr;
+            }
+
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Site header -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <!-- Mobile hamburger menu (hidden on desktop) -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
+            <a href="/" class="logo-link">
+                <img src="images/tangent_logo.png" alt="Tangent" class="logo-wordmark" />
+            </a>
+
+            <!-- Mobile Sign Up button (hidden on desktop) -->
+            <a href="/signup" class="mobile-signup-btn" id="mobileSignup">Sign Up</a>
+
+            <!-- Desktop navigation (hidden on mobile) -->
+            <nav class="nav nav-guard" id="navRoot">
+                <a href="/download" class="nav-link">Download</a>
+                <a href="/how-it-works.html" class="nav-link" id="navHow">How It Works</a>
+                <a href="/pricing.html" class="nav-link" id="navPricing">Pricing</a>
+                <a href="/faq.html" class="nav-link" id="navFaq">FAQ</a>
+                <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
+                <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
+                <a href="/signup" class="nav-link nav-link-cta" id="navSignup">Sign Up</a>
+                <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
+            </nav>
+
+            <!-- Mobile slide-out menu (hidden by default) -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="mobile-menu-content">
+                    <a href="/download" class="mobile-menu-link">Download</a>
+                    <a href="/how-it-works.html" class="mobile-menu-link" id="mobileNavHow">How It Works</a>
+                    <a href="/pricing.html" class="mobile-menu-link" id="mobileNavPricing">Pricing</a>
+                    <a href="/faq.html" class="mobile-menu-link" id="mobileNavFaq">FAQ</a>
+                    <a href="/account/login/" class="mobile-menu-link" id="mobileNavLogin">Log In</a>
+                    <a href="javascript:void(0)" class="mobile-menu-link" id="mobileNavSignOut" style="display:none;">Sign Out</a>
+                    <a href="/account" class="mobile-menu-link mobile-menu-link-highlight" id="mobileNavAccount" style="display:none;">Account</a>
+                </div>
+            </div>
+            <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hiw-hero">
+            <div class="container">
+                <h1>How Tangent Works</h1>
+                <p>See the full power of page-aware AI in action.</p>
+            </div>
+        </section>
+
+        <!-- Detailed Feature Breakdowns -->
+        <section class="hiw-features">
+            <div class="feature-detail">
+                <div class="feature-visual">
+                    [Video: Text selection + chip bar appearing]
+                </div>
+                <div class="feature-text">
+                    <h2>1. Select text on any webpage</h2>
+                    <p>Highlight anything—a paragraph, a sentence, a single word. Tangent's chip bar appears instantly, ready to help.</p>
+                    <ul>
+                        <li>Works on articles, documentation, social media, PDFs</li>
+                        <li>Understands full page context, not just selection</li>
+                        <li>No copy/paste required</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-detail reverse">
+                <div class="feature-visual">
+                    [Video: Clicking chip, chat panel opening]
+                </div>
+                <div class="feature-text">
+                    <h2>2. Choose an action or ask a question</h2>
+                    <p>Click a pre-built chip (Summarize, Explain, Translate) or type your own question in the chat panel.</p>
+                    <ul>
+                        <li>20+ built-in chips for common tasks</li>
+                        <li>Create custom chips for repeated workflows</li>
+                        <li>Freeform chat for open-ended exploration</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-detail">
+                <div class="feature-visual">
+                    [Video: AI response with reference highlights]
+                </div>
+                <div class="feature-text">
+                    <h2>3. Get intelligent, context-aware responses</h2>
+                    <p>Tangent analyzes the entire page and responds based on what you're looking at—with clickable references that scroll to specific sections.</p>
+                    <ul>
+                        <li>Reference detection highlights exact locations</li>
+                        <li>Context modes: full page, window, or paragraph</li>
+                        <li>Streaming responses for instant feedback</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Gallery (Placeholder for Future) -->
+        <section class="hiw-videos">
+            <div class="container">
+                <h2>See Tangent in Action</h2>
+                <div class="videos-grid">
+                    <div class="video-card">
+                        <div class="video-placeholder">[Video: Research workflow]</div>
+                        <h3>Research & summarization</h3>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-placeholder">[Video: Learning workflow]</div>
+                        <h3>Learning & explaining concepts</h3>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-placeholder">[Video: Comparison workflow]</div>
+                        <h3>Comparing sources</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="hiw-cta">
+            <div class="container">
+                <h2>Ready to try it?</h2>
+                <a href="/signup" class="cta-button">Start Free Trial</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-links">
+                <a href="/privacy.html">Privacy</a>
+                <a href="/privacy.html#security">Security</a>
+                <a href="/faq.html">FAQ</a>
+                <a href="mailto:support@tangentapp.co">Support</a>
+            </div>
+            <div class="footer-tagline">
+                <span>© <span id="year"></span> Tangent. Built for people who think in tabs.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple current-year setter
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // Mobile menu toggle functionality
+        (function() {
+            const menuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuOverlay = document.getElementById('mobileMenuOverlay');
+
+            if (!menuToggle || !mobileMenu || !menuOverlay) return;
+
+            function toggleMenu() {
+                const isActive = mobileMenu.classList.contains('active');
+
+                if (isActive) {
+                    menuToggle.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                } else {
+                    menuToggle.classList.add('active');
+                    mobileMenu.classList.add('active');
+                    menuOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+
+            menuToggle.addEventListener('click', toggleMenu);
+            menuOverlay.addEventListener('click', toggleMenu);
+
+            document.querySelectorAll('.mobile-menu-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (this.getAttribute('href') && this.getAttribute('href') !== 'javascript:void(0)') {
+                        toggleMenu();
+                    }
+                });
+            });
+        })();
+
+        // Auth state management
+        (async function showOrHideAuthLinks() {
+            const {createClient} = window.supabase || {};
+            if (!createClient) {
+                makeNavVisible();
+                return;
+            }
+
+            const supabase = createClient(
+                'https://kkufltyogoaoxacvhdab.supabase.co',
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtrdWZsdHlvZ29hb3hhY3ZoZGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI1OTUzOTQsImV4cCI6MjA0ODE3MTM5NH0.wOkUq0H1JR4lRUn_HkuT87cPPY0qyBG6JeCCkZ51-_Q'
+            );
+
+            const {data, error} = await supabase.auth.getSession();
+            const loggedIn = !error && data?.session;
+
+            function toggle(id, show) {
+                const el = document.getElementById(id);
+                if (el) el.style.display = show ? '' : 'none';
+            }
+
+            toggle('navSignup', !loggedIn);
+            toggle('navLogin', !loggedIn);
+            toggle('navAccount', loggedIn);
+            toggle('navSignOut', loggedIn);
+
+            toggle('mobileSignup', !loggedIn);
+            toggle('mobileNavLogin', !loggedIn);
+            toggle('mobileNavAccount', loggedIn);
+            toggle('mobileNavSignOut', loggedIn);
+
+            if (loggedIn) {
+                const signOut = async () => {
+                    await supabase.auth.signOut();
+                    window.location.href = '/';
+                };
+                document.getElementById('navSignOut')?.addEventListener('click', signOut);
+                document.getElementById('mobileNavSignOut')?.addEventListener('click', signOut);
+            }
+
+            makeNavVisible();
+        })();
+
+        function makeNavVisible() {
+            const nav = document.getElementById('navRoot');
+            if (nav) {
+                nav.style.opacity = '1';
+                nav.style.visibility = 'visible';
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</body>
+
+</html>

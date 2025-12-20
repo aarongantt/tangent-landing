@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>FAQ – Tangent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="Frequently asked questions about Tangent, the floating AI assistant that lives on every page you open." />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="images/tangent_t_logo.png" />
+    <style>
+        /* Shared CTA/button styling for login modal */
+        .cta-button {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 120ms ease;
+            background: #3b82f6;
+            color: #fff;
+        }
+        .cta-button.secondary { background: #64748b; }
+        .cta-button:hover { opacity: 0.9; }
+        .cta-button:disabled { opacity: 0.6; cursor: not-allowed; }
+        /* Hide nav until state is resolved to avoid flash */
+        .nav-guard { opacity: 0; visibility: hidden; }
+        /* Keep login modal inputs dark even on autofill */
+        #tgLoginEmail, #tgLoginPassword {
+            background: #0b1220 !important;
+            color: #e5e7eb !important;
+            border: 1px solid rgba(255,255,255,0.25);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        #tgLoginEmail:-webkit-autofill,
+        #tgLoginPassword:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 1000px #0b1220 inset !important;
+            -webkit-text-fill-color: #e5e7eb !important;
+            caret-color: #e5e7eb;
+        }
+
+        /* FAQ Dropdown Styles */
+        .faq-section {
+            margin-bottom: 50px;
+        }
+
+        .faq-section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-strong);
+            border-bottom: 2px solid rgba(74, 144, 226, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .faq-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-accordion-item {
+            border-radius: var(--radius-md);
+            background: rgba(9, 12, 24, 0.94);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            overflow: hidden;
+            transition: border-color 0.2s ease;
+        }
+
+        .faq-accordion-item.active {
+            border-color: rgba(74, 144, 226, 0.3);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 16px 18px;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.2s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--accent-strong);
+        }
+
+        .faq-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: var(--accent);
+            flex-shrink: 0;
+            margin-left: 12px;
+        }
+
+        .faq-accordion-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 18px;
+        }
+
+        .faq-accordion-item.active .faq-answer {
+            max-height: 1500px;
+            padding: 0 18px 16px 18px;
+        }
+
+        .faq-answer p {
+            margin: 0 0 12px 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .faq-answer p:last-child {
+            margin-bottom: 0;
+        }
+
+        .faq-answer ul {
+            margin: 8px 0;
+            padding-left: 24px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .faq-answer li {
+            margin-bottom: 6px;
+        }
+
+        .faq-answer a {
+            color: var(--accent-strong);
+            text-decoration: underline;
+        }
+
+        .faq-answer a:hover {
+            color: var(--accent);
+        }
+
+        .faq-page-intro {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Site header -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo-link">
+                <img src="images/tangent_logo.png" alt="Tangent" class="logo-wordmark" />
+            </a>
+            <nav class="nav nav-guard" id="navRoot">
+                <a href="/download" class="nav-link">Download Tangent</a>
+                <a href="/#how-it-works" class="nav-link" id="navHow">How It Works</a>
+                <a href="/faq.html" class="nav-link" id="navFaq">FAQ</a>
+                <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
+                <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
+                <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
+                <a href="/signup" class="nav-link nav-link-cta" id="navSignup">Sign Up</a>
+                <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main FAQ Content -->
+    <main>
+        <section class="section">
+            <div class="container">
+                <h1 style="text-align: center; font-size: 2.5rem; margin-bottom: 16px;">TANGENT - FAQ</h1>
+                <p class="faq-page-intro">
+                    Everything you need to know about Tangent, the floating AI assistant that lives directly on every page you open.
+                    Find answers about features, security, pricing, and more.
+                </p>
+
+                <!-- GENERAL OVERVIEW -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">GENERAL OVERVIEW</h2>
+                    <div class="faq-accordion">
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What is Tangent?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Tangent is a floating, on-page AI assistant built to support the natural way people think. It helps you stay immersed in the subject in front of you while giving you the freedom to explore any question, tangent, or idea that arises along the way. Instead of switching tabs or copy-pasting text into a chatbot, Tangent appears directly on the webpages you're working on and responds with context-aware intelligence. It becomes part of your workflow—an unobtrusive companion that moves at the speed of your curiosity.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Why is Tangent called "Tangent"?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Most great thinking doesn't happen in straight lines. You follow a thought, then suddenly another idea appears, and another. Tangent is designed to support both the deep-focus moments and the spontaneous detours—those creative sparks that turn simple questions into discoveries. It lets you explore those tangents without breaking your flow or losing your place.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                How does Tangent compare to a normal chatbot?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>A normal chatbot requires you to stop, switch tabs, provide context, and then return to what you were doing. Tangent eliminates all that friction. It understands what you're reading, what text you highlighted, and what problem you're trying to solve. It anchors your thinking directly to the page, making AI feel less like a separate tool and more like a natural extension of your working mind.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HOW TANGENT WORKS -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">HOW TANGENT WORKS</h2>
+                    <div class="faq-accordion">
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                How does Tangent actually work behind the scenes?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Tangent listens only when you interact with it. When you ask a question or click a prompt chip, it gathers the text you highlighted, the surrounding paragraph, and anything you typed. It sends this structured context to Tangent's secure backend, where your subscription is checked, the right model is selected, and a clean prompt is built for the AI. The backend returns the result, and Tangent displays it directly in the floating mini-chat. Heavy lifting happens in the cloud; the smooth, responsive experience happens in your browser.</p>
+                                <p>All data transmission uses end-to-end encryption, and Tangent's backend does not store your conversations or page content after processing your request.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What AI models does Tangent use?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Tangent currently partners with OpenAI and uses their ChatGPT models (GPT-4o for Deep Mode and GPT-4o-mini for Fast Mode). Our plan is to offer additional model options in the near future, giving you more choice and flexibility in how you work with AI.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Where does Tangent appear in my browser?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Anywhere you want it. When you highlight text, the chip bar appears nearby with smart one-click actions. When you want a deeper interaction, the mini-chat window opens—draggable, resizable, and always ready to help. It lives above the page, not inside it, so your original workflow stays untouched.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What is the mini-chat window and what is it used for?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>The mini-chat is your on-page conversational workspace. It's where you ask questions about what you're reading, workshop ideas, refine writing, compare concepts, or unravel complicated material. It keeps everything close to the source material, letting you explore without leaving the page. Think of it as a small companion that grows with your thought process.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What is Deep Dive?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Deep Dive is your way of saying, "Let's take this further." When you tap it, Tangent carries your entire conversation—your selection, context, instructions, and history—into a full-size ChatGPT window. That expanded space allows for longer, more detailed reasoning, creative development, or multi-step exploration.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GETTING STARTED -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">GETTING STARTED</h2>
+                    <div class="faq-accordion">
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                How do I install Tangent?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Installing Tangent is simple. Visit the <a href="/download">Download page</a>, click "Add to Chrome" (or your Chromium browser), and the extension will install automatically. Once installed, you'll see the Tangent icon in your browser toolbar. Click it to sign in or create an account, and you're ready to start.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Do I need an account to use Tangent?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Yes. Tangent requires an account to manage your subscription, token usage, and settings. You can sign up for a free 7-day trial with no credit card required. After the trial, you'll need to choose a paid plan to continue using Tangent.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                How do I set up my first Prompt Chip?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Tangent comes with several built-in Prompt Chips like "Explain," "Summarize," and "Translate." To create your own custom chip, open Tangent's settings (click the extension icon, then Settings), navigate to the "Prompts" tab, and click "Create Custom Chip." Enter your prompt text, give it a name, and it will appear in your chip bar when you select text.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What's the best way to get started with Tangent?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Start simple: visit any article or webpage, highlight a paragraph, and click "Explain" or "Summarize" from the chip bar. This will open the mini-chat window with Tangent's response. From there, you can ask follow-up questions, refine your understanding, or explore related ideas. The more you use it, the more natural it becomes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FEATURES & FUNCTIONALITY -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">FEATURES & FUNCTIONALITY</h2>
+                    <div class="faq-accordion">
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What is Fast Mode?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Fast Mode is Tangent at full speed—quick, responsive, great for summaries, clarifications, rewrites, definitions, or short answers. It uses a highly efficient model (GPT-4o-mini) so it feels instant and lightweight, perfect for the dozens of small interactions you have throughout your day.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What is Deep Mode?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Deep Mode is the more powerful side of Tangent. It allows longer, richer reasoning, handles complicated questions, and even supports advanced tasks like image understanding. It's ideal for moments when you need insight, not just information.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What are Prompt Chips?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Prompt Chips are Tangent's one-click action buttons that appear when you select text. Each chip contains a pre-written, optimized prompt designed to perform a specific task—for example, summarizing a passage, explaining a concept in simple terms, rewriting text more clearly, comparing ideas, or extracting key points. Instead of crafting a prompt manually, you click a chip and Tangent knows exactly what to do.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Can I create custom Prompt Chips?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Yes. If you frequently perform a certain type of analysis or transformation, you can create your own custom chip with your preferred wording or structure. Your chip then appears in your chip bar just like the built-in ones.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Can Tangent run inside Gmail, Notion, YouTube, or other apps?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Yes. Tangent is designed to work almost anywhere you browse. Whether you're inside Gmail reviewing an email, reading a Notion document, scrolling YouTube descriptions or comments, or using nearly any modern web app, Tangent can read the visible text and interact with it. If you can highlight it, Tangent can help you think about it.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Does Tangent work with images?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Yes. When you select an image—or drop one into Tangent—Deep Mode can analyze it. Tangent can interpret diagrams, charts, UI screenshots, photos, drawings, code screenshots, and more. It provides descriptions, insights, interpretations, and clarifications based on what the image contains.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Does Tangent work with PDFs?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>PDF support is coming soon to the Desktop version of Tangent. We're prioritizing security and privacy in our implementation, ensuring that your document content remains protected while giving you the same powerful on-page AI assistance you get in your browser.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                How does Tangent understand context so well?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Tangent blends information from your selection, the surrounding material, your typed question, and the structure of the page itself. This context is then assembled into a clean instruction package for the AI. The result is that Tangent answers your questions as if it were looking over your shoulder—not guessing in a vacuum.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOKEN SYSTEM & BILLING -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">TOKEN SYSTEM & BILLING</h2>
+                    <div class="faq-accordion">
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                How much does Tangent cost?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Tangent offers two subscription tiers to fit different usage levels. All prices and plans are available on our <a href="/signup">Pricing page</a>:</p>
+                                <ul>
+                                    <li><strong>Pro:</strong> $10/month or $105/year ($8.75/mo) — 12M standard tokens, 750K deep tokens per month</li>
+                                    <li><strong>Business Solo:</strong> $29/month or $290/year ($24.17/mo) — 20M standard tokens, 2M deep tokens per month</li>
+                                    <!-- TEMPORARILY HIDDEN: Business Teams plan
+                                    <li><strong>Business Teams:</strong> $49/month or $490/year ($40.83/mo) per seat — 35M standard tokens, 3M deep tokens per month per user</li>
+                                    -->
+                                </ul>
+                                <p>Need more tokens? One-time token packs are available:
+                                    <a href="https://buy.stripe.com/YOUR_SMALL_PACK_LINK" target="_blank">Small Pack</a> (1M standard, 250K deep),
+                                    <a href="https://buy.stripe.com/YOUR_MEDIUM_PACK_LINK" target="_blank">Medium Pack</a> (5M standard, 1.25M deep),
+                                    <a href="https://buy.stripe.com/YOUR_LARGE_PACK_LINK" target="_blank">Large Pack</a> (20M standard, 5M deep).
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                How do token quotas work?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Your plan includes two monthly token pools: standard tokens for everyday tasks and deep tokens for complex reasoning and image analysis. Each pool resets automatically every month. When a pool runs out, Tangent simply pauses the tasks that use that pool and lets you decide whether to upgrade or add more tokens.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Why does Tangent separate Standard Tokens and Deep Tokens?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Because not all thinking requires the same computational effort. Most tasks—summaries, explanations, small edits—are inexpensive and happen in Fast Mode. More demanding tasks—like big reasoning jumps or interpreting images—use Deep Mode. By separating the pools, Tangent gives you freedom in lightweight moments and control in heavyweight ones.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What happens if I run out of tokens?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Tangent never surprises you with overages. You'll receive notifications when you're approaching your limit (at 80% and 90%). When you hit your limit, you can:</p>
+                                <ul>
+                                    <li>Wait until your next monthly reset (date shown in your account dashboard)</li>
+                                    <li>Upgrade to a higher tier (prorated pricing applies automatically)</li>
+                                    <li>Purchase one-time token packs from your account page</li>
+                                </ul>
+                                <p>If standard tokens are exhausted, Fast Mode pauses. If deep tokens run out, Deep Mode and image analysis pause. It's entirely up to you how to proceed.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Can I try Tangent before I buy?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Yes! Tangent includes a 7-day free trial with 70,000 standard tokens—enough for approximately 150-200 typical interactions. This lets you explore everyday usage with Fast Mode and experience Tangent's core features. Deep Mode features are unlocked when you subscribe to a paid plan. No credit card required to start your trial.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Can I cancel my subscription anytime?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Absolutely. You can cancel your Tangent subscription at any time from your account dashboard or through the Stripe billing portal. There are no cancellation fees or penalties. Your access and token quota will continue until the end of your current billing period, then your subscription will not renew. You remain in control.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECURITY & PRIVACY -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">SECURITY & PRIVACY</h2>
+                    <div class="faq-accordion">
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Is Tangent secure?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Yes. Tangent uses a security-first design. Your browser never stores or sends OpenAI API keys—only Tangent's backend communicates with the model. All communication is encrypted, Supabase enforces strong row-level security, and sensitive information is automatically redacted on your device before leaving your browser.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Does Tangent send the entire webpage to the cloud?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>No. Tangent sends only what's necessary to answer your request: the text you highlighted, the message you typed, and a small portion of surrounding context. It does not send full pages, full HTML, unseen content, or background browsing data.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                How is my data used? Does Tangent train AI models on my conversations?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Tangent sends the text you process through our backend to OpenAI's API to generate responses. According to OpenAI's standard data usage policy, conversation data sent through the API may be used to improve their service. Tangent itself does not use your data to train models.</p>
+                                <p>Your chat conversations are stored locally in your browser only and are automatically cleared when your browser session ends. We log only usage metadata (tokens consumed, models used, timestamps) for billing purposes—not the actual content of your conversations.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What happens on banking, medical, tax, or government websites?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Tangent automatically turns itself off on sensitive sites. When you visit a banking portal, medical platform, tax filing site, or other page containing sensitive input fields, Tangent stays inactive unless you explicitly choose to allow it. This protects you from accidentally sending private information anywhere.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                How does Tangent detect sensitive websites?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Tangent uses a combination of a curated domain list and detection of sensitive form fields—like credit card numbers, SSNs, account numbers, patient info, or government IDs. If any of these signals appear, Tangent disables itself and alerts you.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Does Tangent redact sensitive information before sending anything?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Yes. Before any content leaves your browser, Tangent performs automatic redaction. It masks SSNs, credit card numbers, bank routing numbers, email addresses, phone numbers, and unique identifiers to safeguard your privacy.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Can Tangent read my passwords or saved credentials?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>No. Tangent does not access password fields or credential stores. If a page has password fields, Tangent disables itself and waits for your permission before doing anything.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What does Tangent's backend actually see?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Only the essentials: your question, your highlighted text, and a small, trimmed slice of nearby context—after redaction. Tangent does not capture or transmit full webpages, browsing history, or off-page information.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What happens to my data if I cancel my subscription?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>When you cancel your subscription, we immediately set your token quota to zero, preventing further API usage. Your account profile and historical usage data (metadata like tokens consumed and timestamps—not conversation content) are retained for compliance and business records purposes.</p>
+                                <p>Chat history stored locally in your browser is not affected by cancellation and remains under your control. If you want complete account deletion for GDPR or privacy reasons, please contact support and we'll process your request promptly.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COMPATIBILITY & PERFORMANCE -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">COMPATIBILITY & PERFORMANCE</h2>
+                    <div class="faq-accordion">
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Does Tangent work on every website?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Nearly every modern website supports Tangent. The only exceptions are pages that block script injections, run inside restrictive frames, or prevent content access for security reasons. Even on those pages, Tangent still works as a standalone chat—you can paste text into the mini-chat manually if needed.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What browsers does Tangent support?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Tangent works on Chrome and most Chromium browsers such as Brave, Edge, Opera, and Arc. A Safari version is planned for the future.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Does Tangent work on mobile devices?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Not yet, but mobile support is coming soon. Tangent will be available on Desktop and Mobile platforms in the near future, bringing the same powerful on-page AI experience to all your devices.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Does Tangent work when I'm offline?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>The current browser extension requires an internet connection to communicate with Tangent's backend and AI models. However, the future Desktop version of Tangent will offer offline functionality powered by local AI models, letting you work without an internet connection.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Does Tangent slow down my browser?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>No. Tangent is designed to stay light. It doesn't run heavy operations in the background and offloads complex work to the backend, keeping your browsing experience smooth.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Does Tangent track my browsing activity?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>No. Tangent activates only when you open the mini-chat or interact with the chip bar. It never scans pages silently or monitors what you do.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Can I resize Tangent's window?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Yes. You can drag the edges to resize it, use the global size slider, or fine-tune the height and width from settings. Tangent remembers your preferences automatically.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Does Tangent work in Incognito Mode?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Yes, if you enable the extension in Incognito through your browser's extension settings. In Chrome, right-click the Tangent extension icon, select "Manage extension," and toggle "Allow in Incognito."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACCOUNT & CONTROL -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">ACCOUNT & CONTROL</h2>
+                    <div class="faq-accordion">
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What control do I have as a user?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>You control where and how Tangent operates. You can disable it globally, disable it per site, allow it once or always on sensitive pages, clear local data, or uninstall the extension entirely. Tangent never overrides your choices.</p>
+                            </div>
+                        </div>
+
+                        <!-- TEMPORARILY HIDDEN: Business Teams FAQ
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Can teams share tokens?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Each Business Teams user has individual token pools to ensure fair usage and clear accountability. Team administrators can view usage analytics across the organization. Organizations can purchase additional token packs that can be distributed to team members as needed.</p>
+                            </div>
+                        </div>
+                        -->
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Does Tangent store my chat history?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Your chat history is stored locally in your browser during your session and persists until you close the browser or clear your data. Tangent does not upload or sync your conversation history to the cloud unless you manually save or export them. You can clear your local history at any time from the settings.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Can I export my chat history or saved conversations?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Not yet, but chat export functionality is coming soon! You'll be able to save and export your conversations for reference, archiving, or sharing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADDITIONAL QUESTIONS -->
+                <div class="faq-section">
+                    <h2 class="faq-section-title">ADDITIONAL QUESTIONS</h2>
+                    <div class="faq-accordion">
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Does Tangent require special permissions when installed?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Tangent only requests access to read page content when you interact with it. It does not request access to your history, downloads, saved passwords, or other private browser data.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Can Tangent help with long-form writing or creative work?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Absolutely. Tangent can brainstorm, refine passages, explore themes, expand outlines, suggest alternatives, or help you clarify your intent. Deep Dive is especially powerful for creative development.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What if a site update breaks Tangent's placement or behavior?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Occasionally a site may change its structure in a way that affects Tangent's UI. If it happens, simply report the issue through the extension, and updates are usually quick.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                Will Tangent ever support custom APIs or my own OpenAI key?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Yes. A "Bring Your Own Key" (BYOK) option is planned as an advanced feature for users who want full control over the model they run and direct billing through their own API accounts. This will support OpenAI, Anthropic, and other compatible API providers.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                How do I get support?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>You can contact support through the extension or the Tangent website. Documentation, troubleshooting, and personalized help are all available.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="section section-cta">
+            <div class="container cta-inner">
+                <div>
+                    <h2>Still have questions?</h2>
+                    <p>Join the waitlist and we'll help you get started with Tangent.</p>
+                </div>
+                <form class="waitlist-form waitlist-form-inline" action="https://formspree.io/f/YOUR_FORM_ID"
+                    method="POST">
+                    <label for="email-bottom" class="visually-hidden">Email address</label>
+                    <input id="email-bottom" name="email" type="email" required placeholder="Enter your email" />
+                    <button type="submit">Join the waitlist</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <span>© <span id="year"></span> Tangent.</span>
+            <span>Built for people who think in tabs.</span>
+        </div>
+    </footer>
+
+    <script>
+        // Simple current-year setter
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // FAQ Accordion functionality
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                const isActive = item.classList.contains('active');
+
+                // Close all items
+                document.querySelectorAll('.faq-accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+
+                // If this item wasn't active, open it
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+    <!-- Shared auth/nav logic with modal overlay -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script>
+        (function () {
+            const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
+            const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
+            const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
+
+            const navRoot = document.getElementById("navRoot");
+            const pricingLink = document.getElementById("navPricing");
+            const signOutLink = document.getElementById("navSignOut");
+            const loginLink = document.getElementById("navLogin");
+            const signupBtn = document.getElementById("navSignup");
+            const accountLink = document.getElementById("navAccount");
+
+            function setNavLoggedIn() {
+                if (pricingLink) pricingLink.style.display = "none";
+                if (loginLink) loginLink.style.display = "none";
+                if (signupBtn) signupBtn.style.display = "none";
+                if (signOutLink) {
+                    signOutLink.style.display = "inline-flex";
+                    signOutLink.onclick = async (e) => {
+                        e.preventDefault();
+                        await client.auth.signOut().catch(() => {});
+                        setNavLoggedOut();
+                    };
+                }
+                if (accountLink) {
+                    accountLink.style.display = "inline-flex";
+                    accountLink.onclick = null;
+                }
+            }
+
+            function setNavLoggedOut() {
+                if (pricingLink) {
+                    pricingLink.style.display = "inline-flex";
+                    pricingLink.href = "/signup";
+                }
+                if (signOutLink) {
+                    signOutLink.style.display = "none";
+                    signOutLink.onclick = null;
+                }
+                if (loginLink) {
+                    loginLink.style.display = "inline-flex";
+                    loginLink.href = "javascript:void(0)";
+                    loginLink.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+                }
+                if (signupBtn) {
+                    signupBtn.style.display = "inline-flex";
+                    signupBtn.href = "/signup";
+                    signupBtn.onclick = null;
+                    signupBtn.classList.add("nav-link-cta");
+                }
+                if (accountLink) {
+                    accountLink.style.display = "none";
+                }
+            }
+
+            let modal;
+            function ensureModal() {
+                if (modal) return modal;
+                modal = document.createElement("div");
+                modal.id = "tg-login-modal";
+                modal.style.position = "fixed";
+                modal.style.inset = "0";
+                modal.style.background = "rgba(15,23,42,0.55)";
+                modal.style.backdropFilter = "blur(8px)";
+                modal.style.display = "none";
+                modal.style.alignItems = "center";
+                modal.style.justifyContent = "center";
+                modal.style.zIndex = "9999";
+                modal.innerHTML = `
+                  <div style="background:#050915;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:22px;width:100%;max-width:420px;box-shadow:0 14px 36px rgba(0,0,0,0.45);color:#e5e7eb;position:relative;">
+                    <button id="tgLoginClose" style="position:absolute;top:10px;right:10px;background:transparent;border:0;color:#cbd5e1;font-size:18px;cursor:pointer;">×</button>
+                    <div style="display:flex;justify-content:center;margin-bottom:12px;">
+                      <img src="images/tangent_logo.png" alt="Tangent" style="height:28px;" />
+                    </div>
+                    <h3 style="margin:0 0 14px 0;font-weight:700;">Sign In:</h3>
+                    <label style="display:block;margin-bottom:10px;font-weight:600;font-size:13px;">Email
+                      <input id="tgLoginEmail" type="email" autocomplete="email" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(5,6,10,0.7);color:#e5e7eb;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);" />
+                    </label>
+                    <label style="display:block;margin-bottom:14px;font-weight:600;font-size:13px;">Password
+                      <input id="tgLoginPassword" type="password" autocomplete="current-password" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(5,6,10,0.7);color:#e5e7eb;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);" />
+                    </label>
+                    <div style="display:flex;gap:10px;margin-top:12px;">
+            <button id="tgLoginSignIn" class="cta-button secondary" style="flex:1;">Sign In</button>
+            <button id="tgLoginSignUp" class="cta-button secondary" style="flex:1;">Sign Up</button>
+                    </div>
+                    <p id="tgLoginStatus" style="min-height:18px;font-size:13px;margin-top:10px;"></p>
+                  </div>
+                `;
+                document.body.appendChild(modal);
+
+                modal.addEventListener("click", (e) => {
+                    if (e.target === modal) closeLoginModal();
+                });
+                modal.querySelector("#tgLoginClose").addEventListener("click", closeLoginModal);
+                modal.querySelector("#tgLoginSignIn").addEventListener("click", () => handleAuth("signin"));
+                modal.querySelector("#tgLoginSignUp").addEventListener("click", () => handleAuth("signup"));
+                const emailInput = modal.querySelector("#tgLoginEmail");
+                const pwdInput = modal.querySelector("#tgLoginPassword");
+                const onKey = (e) => { if (e.key === "Enter") { e.preventDefault(); handleAuth("signin"); } };
+                emailInput.addEventListener("keydown", onKey);
+                pwdInput.addEventListener("keydown", onKey);
+                return modal;
+            }
+
+            function setStatus(msg, isError) {
+                const el = modal?.querySelector("#tgLoginStatus");
+                if (!el) return;
+                el.textContent = msg || "";
+                el.style.color = isError ? "#f87171" : "#cbd5e1";
+            }
+
+            function openLoginModal() {
+                ensureModal();
+                modal.style.display = "flex";
+                const emailInput = modal.querySelector("#tgLoginEmail");
+                if (emailInput) emailInput.focus();
+            }
+            function closeLoginModal() {
+                if (modal) modal.style.display = "none";
+            }
+
+            async function handleAuth(mode) {
+                ensureModal();
+                const email = modal.querySelector("#tgLoginEmail").value.trim();
+                const password = modal.querySelector("#tgLoginPassword").value;
+                if (!email || !password) {
+                    setStatus("Enter email and password.", true);
+                    return;
+                }
+                setStatus(mode === "signin" ? "Signing in…" : "Creating account…", false);
+                try {
+                    if (mode === "signin") {
+                        const { error } = await client.auth.signInWithPassword({ email, password });
+                        if (error) throw error;
+                        setStatus("Signed in. Redirecting…", false);
+                        setNavLoggedIn();
+                        window.location.href = "/account";
+                    } else {
+                        const { error } = await client.auth.signUp({ email, password });
+                        if (error) throw error;
+                        setStatus("Account created. Check your email to confirm, then sign in.", false);
+                    }
+                } catch (e) {
+                    setStatus(e.message || "Authentication failed.", true);
+                }
+            }
+
+            client.auth.getSession().then(({ data }) => {
+                if (data?.session?.access_token) {
+                    setNavLoggedIn();
+                } else {
+                    setNavLoggedOut();
+                }
+                if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
+            }).catch(() => {
+                setNavLoggedOut();
+                if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
+            });
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,2794 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Tangent – AI that lives on every page you open</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="Tangent is an AI assistant that lives directly on every page you open – explain, summarize, translate, and explore without leaving your browser." />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="images/tangent_t_logo.png" />
+    <style>
+        /* Shared CTA/button styling for login modal */
+        .cta-button {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 120ms ease;
+            background: #3b82f6;
+            color: #fff;
+        }
+        .cta-button.secondary { background: #64748b; }
+        .cta-button:hover { opacity: 0.9; }
+        .cta-button:disabled { opacity: 0.6; cursor: not-allowed; }
+        /* Hide nav until state is resolved to avoid flash */
+        .nav-guard { opacity: 0; visibility: hidden; }
+        /* Keep login modal inputs dark even on autofill */
+        #tgLoginEmail, #tgLoginPassword {
+            background: #0b1220 !important;
+            color: #e5e7eb !important;
+            border: 1px solid rgba(255,255,255,0.25);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        #tgLoginEmail:-webkit-autofill,
+        #tgLoginPassword:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 1000px #0b1220 inset !important;
+            -webkit-text-fill-color: #e5e7eb !important;
+            caret-color: #e5e7eb;
+        }
+        /* Demo page specific header padding */
+        .site-header {
+            padding-top: 15px !important;
+        }
+        /* Demo article paragraph indentation */
+        #demo-article p {
+            text-indent: 2em;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Site header -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <!-- Mobile hamburger menu (hidden on desktop) -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
+            <a href="/" class="logo-link">
+                <img src="images/tangent_logo_light.png" alt="Tangent" class="logo-wordmark" />
+            </a>
+
+            <!-- Desktop navigation (hidden on mobile) -->
+            <nav class="nav nav-guard" id="navRoot">
+                <a href="/download" class="nav-link">Download</a>
+                <a href="/how-it-works.html" class="nav-link" id="navHow">How It Works</a>
+                <a href="/demo.html" class="nav-link" id="navDemo">Demo</a>
+                <a href="/faq.html" class="nav-link" id="navFaq">FAQ</a>
+                <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
+                <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
+                <a href="/signup" class="nav-link nav-link-cta" id="navSignup">Sign Up</a>
+                <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
+            </nav>
+
+            <!-- Mobile slide-out menu (hidden by default) -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="mobile-menu-content">
+                    <a href="/download" class="mobile-menu-link">Download</a>
+                    <a href="/how-it-works.html" class="mobile-menu-link" id="mobileNavHow">How It Works</a>
+                    <a href="/demo.html" class="mobile-menu-link" id="mobileNavDemo">Demo</a>
+                    <a href="/pricing.html" class="mobile-menu-link" id="mobileNavPricing">Pricing</a>
+                    <a href="/faq.html" class="mobile-menu-link" id="mobileNavFaq">FAQ</a>
+                    <a href="/account/login/" class="mobile-menu-link" id="mobileNavLogin">Log In</a>
+                    <a href="javascript:void(0)" class="mobile-menu-link" id="mobileNavSignOut" style="display:none;">Sign Out</a>
+                    <a href="/account" class="mobile-menu-link mobile-menu-link-highlight" id="mobileNavAccount" style="display:none;">Account</a>
+                </div>
+            </div>
+            <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+        </div>
+    </header>
+
+    <!-- Hero + Interactive Demo Section -->
+    <main>
+        <section class="hero-demo">
+            <div class="container">
+                <!-- Hero Overlay Text -->
+                <div class="hero-overlay">
+                    <div class="hero-text">
+                        <h1>Intelligence, in context.</h1>
+                        <p class="hero-tagline">The AI Assistant that's always with you.</p>
+                    </div>
+                    <div class="hero-ctas" id="heroCtas">
+                        <a href="javascript:void(0)" class="cta-button primary narrow" id="heroStartTrial">Start Free Trial</a>
+                        <a href="javascript:void(0)" class="cta-button secondary narrow" id="heroSignUp">Sign Up</a>
+                    </div>
+                </div>
+
+                <!-- Full-width Demo -->
+                <div class="demo-window">
+                    <!-- Demo Stage Container (No Browser Chrome) -->
+                    <div id="demo-stage-container">
+                        <!-- Fade masks (top and bottom) -->
+                        <div class="demo-fade-top"></div>
+                        <div class="demo-fade-bottom"></div>
+
+                        <!-- Fake Article with scroll -->
+                        <div id="demo-article">
+                                <p>Technology only matters when it unlocks something fundamentally new—when it removes a limitation people didn't even realize they were living with. Too much modern software adds complexity instead of dissolving it, power instead of clarity. Real innovation does the opposite. It takes something impossibly sophisticated and makes it feel obvious, even inevitable. The goal isn't to impress users with what technology can do, but to empower them to do things they simply couldn't do before.</p>
+
+                                <p>Artificial intelligence is one of the most powerful tools ever created, but raw power alone isn't the point. Power without intuition creates distance. Power without humanity creates friction. What people actually want is the feeling of momentum—ideas flowing without interruption, curiosity turning into understanding without effort. The best tools disappear into the background and let the user step forward, confident, capable, and focused on what matters.</p>
+
+                                <p>This is where <span id="tangent-anchor" data-tg-anchor="tangent-word">Tangent</span> exists, not as a feature or an overlay, but as a rethinking of how people interact with intelligence itself. Midway through using it, something clicks: Tangent takes raw AI capability and reshapes it into something personal, immediate, and almost invisible. It doesn't ask users to learn a new system or adapt their thinking. It adapts to them, meeting their curiosity exactly where it lives and turning moments of uncertainty into moments of discovery.</p>
+
+                                <p>When technology works this way, expectations change. People stop asking whether something is possible and start asking what else they can do. Work becomes more ambitious. Learning becomes more expansive. Creativity stretches beyond familiar boundaries. That's the real promise here—not faster answers, but new possibilities. When intelligence becomes intuitive, personal, and inspiring, people don't just move quicker. They move further.</p>
+                            </div>
+
+                            <!-- Animated Cursor -->
+                            <div id="demo-cursor" class="demo-cursor" style="display: none;">
+                                <img id="demo-cursor-img" src="/images/i_beam.png" alt="" />
+                            </div>
+
+                            <!-- Chip Bank (initially hidden) -->
+                            <div id="demo-chips" class="tg-demo-chips" style="display: none;">
+                                <!-- T logo chip (far left) -->
+                                <button class="tg-demo-chip tg-demo-chip--icon" data-chip="newchat" title="New TANGENT chat">
+                                    <img src="/images/tangent_t_logo.png" alt="TANGENT" style="width: 18px; height: 18px; display: block;" />
+                                </button>
+                                <!-- User chips -->
+                                <button class="tg-demo-chip" data-chip="what">What Is...</button>
+                                <button class="tg-demo-chip" data-chip="faq">Prompt Chips</button>
+                                <button class="tg-demo-chip" data-chip="pricing">Pricing</button>
+                            </div>
+
+                            <!-- Tangent Panel (initially hidden) - EXACT REPLICA FROM EXTENSION -->
+                            <div id="demo-panel-shell" class="tg-demo-panel-shell" style="display: none;">
+                                <div id="demo-panel" class="tg-demo-panel tg-theme-light">
+                                    <!-- Header - EXACT STRUCTURE -->
+                                    <div class="tg-demo-panel__header" role="toolbar" aria-label="Tangent">
+                                        <button class="tg-demo-pin" data-tooltip="Pin Window" aria-pressed="false">
+                                            <img src="/images/pin_anchor.svg" class="tg-demo-pin-icon" alt="Pin" aria-hidden="true" />
+                                        </button>
+                                        <div class="tg-demo-title" aria-label="TANGENT">
+                                            <img class="tg-demo-header-logo" src="/images/tangent_logo_light.png" alt="TANGENT" />
+                                        </div>
+                                        <div class="tg-demo-panel__btns">
+                                            <button class="tg-demo-panel__min" data-tooltip="Minimize" aria-label="Minimize">
+                                                <span class="tg-demo-panel__icon-dash" aria-hidden="true">–</span>
+                                                <span class="tg-demo-panel__icon-square" aria-hidden="true"></span>
+                                            </button>
+                                            <button class="tg-demo-panel__close" data-tooltip="Close" aria-label="Close">×</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Body / Stream - EXACT STRUCTURE -->
+                                    <div class="tg-demo-panel__body">
+                                        <div id="demo-stream" class="tg-demo-panel__stream"></div>
+                                    </div>
+
+                                    <!-- Footer - EXACT STRUCTURE -->
+                                    <div class="tg-demo-panel__footer">
+                                        <div class="tg-demo-compose-row">
+                                            <div class="tg-demo-compose">
+                                                <div class="tg-demo-input-wrapper">
+                                                    <textarea id="demo-input" class="tg-demo-input" placeholder="Go on a Tangent…"></textarea>
+                                                    <!-- FAQ Dropdown (hidden by default) -->
+                                                    <div id="demo-faq-dropdown" class="tg-demo-faq-dropdown" style="display: none;">
+                                                        <div class="tg-demo-faq-scroll">
+                                                            <button class="tg-demo-faq-item" data-faq="what-is">
+                                                                <strong>What is TANGENT?</strong>
+                                                            </button>
+                                                            <button class="tg-demo-faq-item" data-faq="how-works">
+                                                                <strong>How does TANGENT work?</strong>
+                                                            </button>
+                                                            <button class="tg-demo-faq-item" data-faq="prompt-chips">
+                                                                <strong>What are Prompt Chips?</strong>
+                                                            </button>
+                                                            <button class="tg-demo-faq-item" data-faq="custom-chips">
+                                                                <strong>Can I create custom chips?</strong>
+                                                            </button>
+                                                            <button class="tg-demo-faq-item" data-faq="pricing">
+                                                                <strong>How much does TANGENT cost?</strong>
+                                                            </button>
+                                                            <button class="tg-demo-faq-item" data-faq="privacy">
+                                                                <strong>Is my data private?</strong>
+                                                            </button>
+                                                            <button class="tg-demo-faq-item" data-faq="browsers">
+                                                                <strong>Which browsers are supported?</strong>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button class="tg-demo-send" aria-label="Send">
+                                                    <img src="/images/tangent_enter_button.svg" class="tg-demo-send-icon" alt="Send" />
+                                                </button>
+                                            </div>
+                                            <!-- Three-dot menu (always last) -->
+                                            <button class="tg-demo-menu-toggle" aria-label="Menu">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" class="tg-demo-menu-toggle-icon">
+                                                    <circle cx="10" cy="4" r="1.5"></circle>
+                                                    <circle cx="10" cy="10" r="1.5"></circle>
+                                                    <circle cx="10" cy="16" r="1.5"></circle>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Resize Handle -->
+                                    <div class="tg-demo-resize-handle"></div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How Tangent Works (3-step explanation) -->
+        <section id="how-it-works" class="section section-alt">
+            <div class="container">
+                <h2>How Tangent Works</h2>
+                <p class="section-intro">
+                    Tangent lives in your browser. It understands the page you're on and responds
+                    in context so you don't have to copy, paste, and re-explain everything.
+                </p>
+
+                <div class="how-it-works-container">
+                    <article class="how-it-works-step">
+                        <h3>1. Highlight anything</h3>
+                        <p>
+                            Select a sentence, paragraph, section of code, or anything else on the page.
+                            Tangent captures the relevant context from the page automatically.
+                        </p>
+                    </article>
+
+                    <article class="how-it-works-step">
+                        <h3>2. Tap a chip</h3>
+                        <p>
+                            Choose from smart chips like <strong>Explain</strong>, <strong>Summarize</strong>,
+                            <strong>Translate</strong>, <strong>Teach me</strong>, or custom chips you create.
+                        </p>
+                    </article>
+
+                    <article class="how-it-works-step">
+                        <h3>3. Get focused answers</h3>
+                        <p>
+                            Tangent responds in a small, anchored chat window, tailored to the page—
+                            no tab-switching, no losing your place, no context lost.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════════════
+   HERO DEMO SECTION STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.hero-demo {
+    background: #0a0e14;
+    color: #e5e7eb;
+    padding: 80px 0 0 0;
+    margin-top: -100px !important;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+}
+
+.hero-overlay {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+.container {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Demo Window */
+.demo-window {
+    background: transparent;
+    overflow: visible;
+}
+
+#demo-stage-container {
+    position: relative;
+    background: transparent;
+    height: 80vh;
+    max-height: 900px;
+    overflow: visible; /* Changed from hidden to visible to allow chip bar to extend beyond bounds */
+    /* Extend width to give more space for panel movement */
+    width: 100%;
+    min-width: 1400px;
+}
+
+/* Gradient fade masks */
+.demo-fade-top,
+.demo-fade-bottom {
+    position: absolute;
+    left: -200px; /* Extended left boundary to prevent chip bar cutoff */
+    right: 0;
+    height: 200px; /* Increased from 150px for even more gradual fade */
+    z-index: 50;
+    pointer-events: none;
+}
+
+.demo-fade-top {
+    top: 0;
+    background: linear-gradient(to bottom,
+        rgba(10, 14, 20, 1) 0%,
+        rgba(10, 14, 20, 0.95) 15%,
+        rgba(10, 14, 20, 0.85) 30%,
+        rgba(10, 14, 20, 0.7) 45%,
+        rgba(10, 14, 20, 0.5) 60%,
+        rgba(10, 14, 20, 0.3) 75%,
+        rgba(10, 14, 20, 0.15) 87%,
+        rgba(10, 14, 20, 0) 100%);
+}
+
+.demo-fade-bottom {
+    bottom: 0;
+    background: linear-gradient(to top,
+        rgba(10, 14, 20, 1) 0%,
+        rgba(10, 14, 20, 0.95) 15%,
+        rgba(10, 14, 20, 0.85) 30%,
+        rgba(10, 14, 20, 0.7) 45%,
+        rgba(10, 14, 20, 0.5) 60%,
+        rgba(10, 14, 20, 0.3) 75%,
+        rgba(10, 14, 20, 0.15) 87%,
+        rgba(10, 14, 20, 0) 100%);
+}
+
+/* Article */
+#demo-article {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 26px; /* Decreased by 1px from 27px */
+    line-height: 1.6;
+    color: #d1d5db; /* Light grey text */
+    opacity: 0.75; /* Reduced by 25% from full opacity */
+    height: 100%;
+    overflow-y: auto;
+    scroll-behavior: auto;
+    padding: 40px 0;
+    scrollbar-width: none; /* Hide scrollbar in Firefox */
+    max-width: 900px; /* Increased from 700px to extend farther right */
+}
+
+/* Slow, gentle scroll animation */
+#demo-article {
+    scroll-padding-top: 100px;
+}
+
+#demo-article::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in Webkit */
+}
+
+#demo-article p {
+    margin-bottom: 1.6em;
+    opacity: 0;
+    transition: opacity 1.2s ease-out; /* Smooth fade-in transition */
+    text-indent: 2em;
+    font-weight: 500;
+}
+
+/* Anchor word (Tangent) */
+#tangent-anchor {
+    position: relative;
+    color: #ffffff; /* White when not highlighted */
+    padding: 2px 4px;
+    margin: -2px -4px;
+}
+
+/* Sliding highlight effect - simulates left-to-right text selection */
+#tangent-anchor::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0%;
+    background: #4A9FDB; /* Even brighter blue background */
+    border-radius: 0px; /* 90-degree corners */
+    z-index: -1;
+    transition: width 0.5s ease-out;
+}
+
+#tangent-anchor.tg-demo-highlighted::before {
+    width: 100%;
+}
+
+/* Pure white text when highlighted */
+#tangent-anchor.tg-demo-highlighted {
+    color: #FFFFFF; /* Pure white (full RGB 255) */
+    opacity: 1; /* 100% opacity when highlighted */
+    text-shadow: none; /* No effects */
+}
+
+/* Chip Bank - EXACT SPECIFICATIONS FROM REAL TANGENT - LIGHT MODE */
+.tg-demo-chips {
+    position: absolute;
+    z-index: 100;
+    display: flex;
+    gap: 6px;
+    padding: 10px 14px; /* Increased from 6px 10px for larger background */
+    background: rgba(255, 255, 255, 0.743);
+    border: 1px solid rgba(109, 109, 109, 0.494);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tg-demo-chips.tg-demo-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tg-demo-chip {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+    font-weight: 600;
+    font-size: 1em;
+    line-height: 1.2;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(109, 109, 109, 0.494);
+    background: rgba(255, 255, 255, 0.743);
+    color: #111;
+    cursor: pointer;
+    user-select: none;
+}
+
+.tg-demo-chip:hover {
+    filter: none;
+    background: rgba(255, 255, 255, 0.96);
+}
+
+.tg-demo-chip:active {
+    transform: translateY(1px);
+}
+
+/* Animated Demo Cursor */
+.demo-cursor {
+    position: absolute;
+    pointer-events: none;
+    z-index: 300;
+    transition: left 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
+                top 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
+                opacity 0.3s ease-out;
+}
+
+.demo-cursor img {
+    width: 40px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    transition: filter 0.2s ease-out;
+}
+
+/* Icon chips (T logo and down arrow) */
+.tg-demo-chip--icon {
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    border-radius: 6px; /* Rounded square instead of pill shape */
+}
+
+/* Caret chip (down arrow) */
+.tg-demo-chip--caret svg {
+    display: block;
+}
+
+/* Tangent Panel Shell - EXACT SPECIFICATIONS FROM REAL TANGENT */
+.tg-demo-panel-shell {
+    position: absolute;
+    z-index: 200;
+    pointer-events: none;
+    overflow: visible;
+    display: inline-block;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tg-demo-panel-shell * {
+    pointer-events: auto;
+}
+
+.tg-demo-panel-shell.tg-demo-visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Tangent Panel - 151.2% scale (150% * 1.12 * 0.9) - reduced by 10% */
+.tg-demo-panel {
+    position: relative;
+    z-index: 100;
+    cursor: default;
+    width: 574px;  /* 638px * 0.9 */
+    height: 635px; /* 706px * 0.9 */
+    min-width: 529px; /* 588px * 0.9 */
+    min-height: 182px; /* 202px * 0.9 */
+    display: flex;
+    flex-direction: column;
+    overflow: visible; /* Allow FAQ dropdown to extend beyond panel */
+    opacity: 1;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+    font-size: 21.5px; /* 19.5px + 2pts */
+    border-radius: 15px; /* 12px * 1.25 */
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8),
+                0 40px 120px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+    resize: none; /* Disable browser default resize */
+}
+
+/* Light Mode Panel - EXACT MATCH TO REAL EXTENSION */
+.tg-demo-panel.tg-theme-light {
+    /* CSS Variables - exact match to lines 9-45 */
+    --tg-border: #777777;
+    --tg-frame-border: #777777;
+    --tg-input-border: #777777;
+    --tg-panel-opacity: 0.75; /* 75% opacity for better background visibility */
+    --tg-panel-grad-start: rgba(255, 255, 255, var(--tg-panel-opacity));
+    --tg-panel-grad-end: rgba(245, 247, 250, var(--tg-panel-opacity));
+    /* Layered background for liquid glass depth */
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+        linear-gradient(180deg, var(--tg-panel-grad-start), var(--tg-panel-grad-end)) !important;
+    /* Bevel effect: light from top-left, dark from bottom-right */
+    border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.6) !important;
+    border-right: 1px solid rgba(0, 0, 0, 0.25) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25) !important;
+    color: #0f141a;
+    /* EXACT values from DevTools - enhanced for 75% opacity */
+    backdrop-filter: blur(20px) saturate(1.6) brightness(1.15) contrast(1.05);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6) brightness(1.15) contrast(1.05);
+    /* EXACT box-shadow from DevTools */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12),
+                0 4px 8px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(255, 255, 255, 0.8),
+                inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+}
+
+.tg-demo-panel.tg-demo-dragging {
+    cursor: move;
+}
+
+/* Resize Handle - Bottom Right Corner */
+.tg-demo-resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    cursor: nwse-resize;
+    z-index: 100;
+    background: transparent;
+    border-bottom-right-radius: 15px; /* Match panel border-radius */
+}
+
+.tg-demo-resize-handle::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 12px;
+    height: 12px;
+    background-image: linear-gradient(135deg,
+        transparent 0%,
+        transparent 40%,
+        rgba(0, 0, 0, 0.15) 41%,
+        rgba(0, 0, 0, 0.15) 44%,
+        transparent 45%,
+        transparent 55%,
+        rgba(0, 0, 0, 0.15) 56%,
+        rgba(0, 0, 0, 0.15) 59%,
+        transparent 60%,
+        transparent 70%,
+        rgba(0, 0, 0, 0.15) 71%,
+        rgba(0, 0, 0, 0.15) 74%,
+        transparent 75%
+    );
+    pointer-events: none;
+}
+
+.tg-demo-panel.tg-demo-resizing {
+    cursor: nwse-resize;
+    user-select: none;
+}
+
+/* Panel Header - 125% scale */
+.tg-demo-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* 8px * 1.25 */
+    padding: 12.5px 12.5px 10px; /* 10px * 1.25 */
+    position: relative;
+    cursor: move;
+    user-select: none;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: none;
+    z-index: 10;
+    border-top-left-radius: 15px; /* Match panel border-radius */
+    border-top-right-radius: 15px;
+    overflow: hidden; /* Clip content to rounded corners */
+}
+
+/* Pin button - 125% scale */
+.tg-demo-pin {
+    position: absolute !important;
+    left: 8px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    background: transparent;
+    color: #727272;
+    border: none; /* NO BORDER */
+    border-radius: 6px;
+    width: 37.5px; /* 30px * 1.25 */
+    height: 31.25px; /* 25px * 1.25 */
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.tg-demo-pin-icon {
+    width: 15px; /* 12px * 1.25 */
+    height: 15px; /* 12px * 1.25 */
+    object-fit: contain;
+    display: block;
+    /* Light mode gray - lines 853-857 */
+    filter: brightness(0) saturate(100%) invert(44%) sepia(0%) saturate(0%)
+            hue-rotate(133deg) brightness(95%) contrast(90%);
+}
+
+/* Pin button hover - EXACT from lines 775-780 */
+.tg-demo-pin:hover {
+    background: rgba(0, 0, 0, 0.05); /* NOT brightness filter! */
+    color: #357fd0 !important;
+}
+
+/* Title / Logo - EXACT MATCH TO REAL EXTENSION */
+.tg-demo-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tg-demo-header-logo {
+    height: 27.5px; /* 22px * 1.25 - exact match to lines 865-869 */
+    object-fit: contain;
+    display: block;
+}
+
+.tg-theme-light .tg-demo-title {
+    color: #0f141a;
+}
+
+.tg-theme-dark .tg-demo-title {
+    color: #cbd5e1;
+}
+
+/* Minimize/Close buttons container */
+.tg-demo-panel__btns {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+}
+
+/* Reduce button gap when minimized */
+.tg-demo-minimized .tg-demo-panel__btns {
+    gap: 2px;
+}
+
+/* Minimize and Close buttons - 125% scale */
+.tg-demo-panel__btns > button {
+    background: transparent;
+    color: #727272;
+    border: none; /* NO BORDER */
+    border-radius: 6px;
+    width: 37.5px; /* 30px * 1.25 */
+    height: 31.25px; /* 25px * 1.25 */
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+/* Minimize button hover - EXACT from lines 775-780 */
+.tg-demo-panel__btns > button:hover {
+    background: rgba(0, 0, 0, 0.05); /* NOT brightness filter! */
+    color: #357fd0 !important;
+}
+
+/* Close button specific */
+.tg-demo-panel__close {
+    font-size: 21px !important;
+    line-height: 1;
+    font-weight: 300;
+    color: #727272 !important;
+}
+
+/* Close button hover - EXACT from lines 798-802 - NO background! */
+.tg-demo-panel__close:hover {
+    background: transparent !important;
+    filter: none !important;
+    color: #357fd0 !important;
+    box-shadow: none;
+}
+
+/* Minimize button icons */
+.tg-demo-panel__icon-dash {
+    font-size: 18px;
+    line-height: 1;
+    display: block;
+    transform: translateY(1px);
+}
+
+.tg-demo-panel__icon-square {
+    width: 10px;
+    height: 10px;
+    border: 2px solid currentColor;
+    border-top-width: 3px;
+    border-radius: 2px;
+    display: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
+}
+
+/* Panel Body / Stream - EXACT SPECIFICATIONS FROM REAL TANGENT */
+.tg-demo-panel__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.tg-demo-panel__stream {
+    height: 100%;
+    overflow: auto !important;
+    background: transparent;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(150, 150, 150, 0.4) transparent;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    padding-left: 14px;
+    padding-right: 14px;
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0,
+        black 50px,
+        black calc(100% - 28px),
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0,
+        black 50px,
+        black calc(100% - 28px),
+        transparent 100%
+    );
+}
+
+.tg-demo-panel__stream::after {
+    content: '';
+    display: block;
+    height: 6px;
+}
+
+.tg-demo-panel__stream::-webkit-scrollbar {
+    width: 8px;
+    background: transparent !important;
+    overflow: auto;
+}
+
+.tg-demo-panel__stream::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+.tg-demo-panel__stream::-webkit-scrollbar-thumb {
+    background-color: rgba(180, 180, 180, 0.5);
+    border-radius: 4px;
+    border: none;
+    background-clip: border-box;
+    transition: background-color 0.25s ease;
+}
+
+.tg-demo-panel__stream:hover::-webkit-scrollbar-thumb,
+.tg-demo-panel__stream:active::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Message - MATCHES REAL TANGENT STYLING (125% scale) */
+.tg-demo-msg {
+    margin-bottom: 17.5px; /* 14px * 1.25 */
+    padding: 15px 17.5px; /* 12px * 1.25, 14px * 1.25 */
+    border-radius: 10px; /* 8px * 1.25 */
+    font-size: 21.5px; /* 19.5px + 2pts */
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(5px); /* 4px * 1.25 */
+    animation: tg-demo-msg-in 0.3s ease forwards;
+}
+
+/* Light Mode AI message */
+.tg-theme-light .tg-demo-msg {
+    color: #0f141a;
+}
+
+/* Dark Mode AI message */
+.tg-theme-dark .tg-demo-msg {
+    color: #e9eef5;
+}
+
+@keyframes tg-demo-msg-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* User message style - Light Mode */
+.tg-theme-light .tg-demo-msg.tg-user {
+    color: #0f141a;
+    font-style: normal;
+}
+
+/* User message style - Dark Mode */
+.tg-theme-dark .tg-demo-msg.tg-user {
+    color: #e9eef5;
+    font-style: normal;
+}
+
+/* Thinking Indicator */
+.tg-demo-thinking {
+    display: inline-flex;
+    gap: 4px;
+    padding: 8px 0;
+}
+
+.tg-demo-thinking span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #6b7280;
+    animation: tg-demo-dot-bounce 1.4s infinite ease-in-out both;
+}
+
+.tg-demo-thinking span:nth-child(1) { animation-delay: -0.32s; }
+.tg-demo-thinking span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes tg-demo-dot-bounce {
+    0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+    40% { transform: scale(1.2); opacity: 1; }
+}
+
+/* Panel Footer - EXACT SPECIFICATIONS (125% scale) */
+.tg-demo-panel__footer {
+    flex-shrink: 0;
+    padding: 7.5px 10px; /* 6px * 1.25, 8px * 1.25 */
+    display: flex;
+    flex-direction: column;
+    overflow: visible; /* Allow FAQ dropdown to extend beyond footer */
+}
+
+.tg-demo-compose-row {
+    display: flex;
+    align-items: center;
+    gap: 7.5px; /* 6px * 1.25 */
+    overflow: visible; /* Allow FAQ dropdown to extend beyond row */
+}
+
+.tg-demo-compose {
+    position: relative;
+    flex: 1;
+    padding: 12.5px 10px; /* 10px * 1.25, 8px * 1.25 */
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    overflow: visible; /* CRITICAL: Allow FAQ dropdown to extend beyond compose container */
+}
+
+.tg-demo-input-wrapper {
+    position: relative; /* Positioning context for dropdown */
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: visible; /* Allow dropdown to extend beyond wrapper */
+}
+
+.tg-demo-input {
+    position: relative; /* Create stacking context */
+    width: 100%; /* Fill wrapper */
+    height: 50px; /* INCREASED for better visibility */
+    min-height: 50px;
+    line-height: 22px; /* Increased for better vertical centering */
+    padding: 14px 52px 14px 15px; /* Increased right padding to 52px for better button spacing */
+    border-radius: 27.5px; /* 22px * 1.25 - exact match to line 1112 */
+    border: 1.5px solid #777777; /* THICKER border for better definition */
+    background: rgba(255, 255, 255, 1); /* exact match to line 1137 */
+    color: #1f2937; /* exact match to line 1138 */
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+    font-size: 17.5px; /* 14px * 1.25 */
+    resize: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    scrollbar-width: none; /* exact match to line 1120 */
+    z-index: 10; /* Sits on top of dropdown */
+}
+
+.tg-demo-input::-webkit-scrollbar {
+    display: none;
+}
+
+.tg-demo-input::placeholder {
+    color: #9ca3af;
+    line-height: 22px; /* Match input line-height for vertical centering */
+    font-style: italic;
+}
+
+/* Input focus - EXACT MATCH TO REAL EXTENSION (lines 1160-1165) */
+.tg-demo-input:focus {
+    outline: none;
+    border: 2.5px solid #669fc3; /* 2px * 1.25 */
+    box-shadow: 0 0 0 2.5px #669fc3; /* 2px * 1.25 */
+}
+
+/* FAQ Dropdown - Looks like extended text entry bar */
+.tg-demo-faq-dropdown {
+    position: absolute;
+    top: calc(100% - 19px); /* Moved slightly higher (was -16px) */
+    left: 0; /* Align with input left edge */
+    right: 0; /* Align with input right edge */
+    background: rgba(255, 255, 255, 1); /* Solid white like text input */
+    border: 1.5px solid #777777; /* Same border as input */
+    border-top: none; /* Remove top border to merge with input */
+    border-radius: 0 0 27.5px 27.5px; /* Match input's rounded bottom */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    z-index: 5; /* Behind input border so it tucks underneath */
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-2px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    pointer-events: none;
+    padding-top: 23px; /* Increased to extend white background higher (was 20px) */
+}
+
+.tg-demo-faq-dropdown.tg-demo-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.tg-demo-faq-scroll {
+    position: relative;
+    max-height: 170px; /* Reduced from 220px (approximately 2 fewer lines) */
+    overflow-y: auto;
+    padding: 8px 15px 14px 15px; /* Compact padding */
+    scrollbar-width: none;
+}
+
+/* Bottom gradient fade effect */
+.tg-demo-faq-scroll::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px; /* Gradient fade height */
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+    pointer-events: none;
+    border-radius: 0 0 27.5px 27.5px; /* Match dropdown's rounded bottom */
+}
+
+.tg-demo-faq-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.tg-demo-faq-item {
+    display: block;
+    width: 100%;
+    padding: 8px 0; /* Tight vertical spacing */
+    text-align: left;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+    font-size: 15px; /* Slightly smaller for compactness */
+    line-height: 1.4;
+    color: #1f2937;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: color 0.12s ease;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06); /* Subtle separator between questions */
+}
+
+.tg-demo-faq-item:last-child {
+    border-bottom: none; /* No border on last item */
+}
+
+.tg-demo-faq-item strong {
+    display: block;
+    font-weight: 500; /* Less bold for subtlety */
+    color: #0f141a;
+    margin-bottom: 0;
+    font-size: 15px;
+}
+
+.tg-demo-faq-item:hover strong {
+    color: #357fd0; /* Tangent blue on hover */
+}
+
+.tg-demo-faq-item:active strong {
+    color: #2a6bb0; /* Darker blue on click */
+}
+
+/* Send button - EXACT REPLICA (125% scale) - positioned within input wrapper */
+.tg-demo-send {
+    position: absolute;
+    right: 16px; /* Split the difference between 12px and previous positions */
+    top: calc(50% - 3px); /* Moved up 2px (was -1px) */
+    transform: translateY(-50%);
+    width: 35px; /* 28px * 1.25 */
+    height: 35px; /* 28px * 1.25 */
+    border-radius: 50%;
+    z-index: 11; /* Above input to be visible */
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid #777777;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 1.25px 2.5px rgba(0, 0, 0, .18); /* 1px * 1.25, 2px * 1.25 */
+    transition: box-shadow .12s ease, background .12s ease, border-color .15s ease, transform .08s ease;
+}
+
+.tg-demo-send:hover {
+    box-shadow: 0 2.5px 5px rgba(0, 0, 0, .22); /* 2px * 1.25, 4px * 1.25 */
+    border-color: #669fc3 !important;
+}
+
+.tg-demo-send:active {
+    box-shadow: 0 0.625px 1.25px rgba(0, 0, 0, .15); /* 0.5px * 1.25, 1px * 1.25 */
+    transform: translateY(-50%) translateY(1.25px); /* 1px * 1.25 */
+    border-color: #669fc3 !important;
+}
+
+/* Send button icon - EXACT REPLICA (125% scale) */
+.tg-demo-send-icon {
+    width: 15px; /* 12px * 1.25 */
+    height: 15px; /* 12px * 1.25 */
+    object-fit: contain;
+    display: block;
+    transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+/* Light Mode idle color — EXACT match to real extension */
+.tg-theme-light .tg-demo-send-icon {
+    filter: invert(43%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(85%);
+}
+
+/* Hover = Tangent Blue */
+.tg-demo-send:hover .tg-demo-send-icon {
+    filter: none !important;
+}
+
+
+/* Three-dot menu toggle (125% scale) */
+.tg-demo-menu-toggle {
+    width: 30px; /* 24px * 1.25 */
+    height: 42.5px; /* 34px * 1.25 */
+    margin-right: 7.5px; /* 6px * 1.25 */
+    padding: 0;
+    border-radius: 21.25px; /* 17px * 1.25 (half of height) */
+    border: none;
+    background: transparent;
+    box-sizing: border-box;
+    line-height: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s ease, box-shadow 0.12s ease, transform 0.08s ease;
+    color: #9ca3af;
+}
+
+.tg-demo-menu-toggle:hover {
+    background: rgba(156, 163, 175, 0.15);
+    color: #669fc3;
+}
+
+.tg-demo-menu-toggle svg {
+    width: 25px; /* 20px * 1.25 */
+    height: 25px; /* 20px * 1.25 */
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Mobile Navigation Elements - Hidden on Desktop */
+.mobile-menu-toggle,
+.mobile-signup-btn,
+.mobile-menu,
+.mobile-menu-overlay {
+    display: none;
+}
+
+/* Tablet and below (portrait iPad, landscape phones) */
+@media (max-width: 968px) {
+    /* Fix header layout for mobile */
+    .site-header {
+        position: relative;
+        z-index: 1000;
+        background: #0a0e14;
+        padding: 10px 0;
+    }
+
+    .header-inner {
+        position: relative;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 15px;
+    }
+
+    /* Hide desktop navigation, show mobile controls */
+    .nav {
+        display: none !important;
+    }
+
+    .mobile-menu-toggle,
+    .mobile-signup-btn {
+        display: block !important;
+    }
+
+    /* Hamburger menu button (top left) */
+    .mobile-menu-toggle {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        border: none;
+        padding: 8px;
+        cursor: pointer;
+        z-index: 1001;
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .hamburger-line {
+        display: block;
+        width: 24px;
+        height: 2.5px;
+        background: #e5e7eb;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+    }
+
+    /* Hamburger animation when menu is open */
+    .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+        transform: translateY(7.5px) rotate(45deg);
+    }
+
+    .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+        transform: translateY(-7.5px) rotate(-45deg);
+    }
+
+    /* Center logo */
+    .logo-link {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+    }
+
+    .logo-wordmark {
+        height: 36px !important; /* Larger and visible on mobile */
+        width: auto;
+        display: block !important;
+    }
+
+    /* Sign Up button (top right) */
+    .mobile-signup-btn {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 10px 18px;
+        background: #669fc3;
+        color: #ffffff !important;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background 0.2s ease;
+        z-index: 10;
+        white-space: nowrap;
+    }
+
+    .mobile-signup-btn:hover {
+        background: #5a8fb0;
+    }
+
+    /* Slide-out menu overlay */
+    .mobile-menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .mobile-menu-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Slide-out menu */
+    .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: -280px; /* Hidden off-screen */
+        width: 280px;
+        height: 100%;
+        background: #1a1f2e;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .mobile-menu.active {
+        left: 0; /* Slide in */
+    }
+
+    .mobile-menu-content {
+        padding: 80px 0 40px; /* Top padding to clear header */
+    }
+
+    .mobile-menu-link {
+        display: block;
+        padding: 16px 24px;
+        color: #e5e7eb;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 400;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: background 0.2s ease, padding-left 0.2s ease;
+    }
+
+    .mobile-menu-link:hover {
+        background: rgba(255, 255, 255, 0.05);
+        padding-left: 32px;
+    }
+
+    .mobile-menu-link-highlight {
+        background: rgba(102, 159, 195, 0.2);
+        font-weight: 500;
+        color: #669fc3;
+    }
+
+    .mobile-menu-link-highlight:hover {
+        background: rgba(102, 159, 195, 0.3);
+    }
+    .hero-demo {
+        padding: 0px 20px 20px; /* REMOVED TOP PADDING */
+        min-height: auto;
+    }
+
+    #demo-stage-container {
+        height: 60vh;
+        max-height: 600px;
+        min-width: auto;
+        width: 100%;
+    }
+
+    #demo-article {
+        font-size: 20px;
+        max-width: 100%;
+        padding: 20px 15px;
+    }
+
+    /* Scale down panel for tablets */
+    .tg-demo-panel {
+        width: 380px;  /* 380px * 1.0 (100% scale) */
+        height: 420px;
+        font-size: 14px;
+    }
+
+    .tg-demo-panel__header {
+        padding: 10px 10px 8px;
+    }
+
+    .tg-demo-header-logo {
+        height: 22px;
+    }
+
+    .tg-demo-pin,
+    .tg-demo-panel__btns > button {
+        width: 30px;
+        height: 25px;
+    }
+
+    .tg-demo-input {
+        height: 40px;
+        min-height: 40px;
+        font-size: 14px;
+        padding: 12px 42px 12px 12px;
+    }
+
+    .tg-demo-send {
+        width: 28px;
+        height: 28px;
+        right: 12px;
+    }
+
+    .tg-demo-send-icon {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+/* Mobile phones (portrait) */
+@media (max-width: 768px) {
+    /* Adjust header for smaller screens */
+    .logo-wordmark {
+        height: 32px !important;
+    }
+
+    .mobile-signup-btn {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    .hero-demo {
+        padding: 20px 10px 10px;
+    }
+
+    #demo-stage-container {
+        height: 70vh;
+        max-height: 700px;
+    }
+
+    #demo-article {
+        font-size: 18px;
+        line-height: 1.5;
+        padding: 15px 10px;
+    }
+
+    /* Position panel and chips for mobile */
+    .tg-demo-panel-shell {
+        /* Panel will be positioned via JavaScript for mobile */
+    }
+
+    /* Smaller panel for mobile */
+    .tg-demo-panel {
+        width: 320px;  /* Narrower for phones */
+        height: 400px; /* Shorter for phones */
+        font-size: 13px;
+    }
+
+    /* Adjust chip bar for mobile */
+    .tg-demo-chips {
+        padding: 8px 10px;
+        gap: 4px;
+        font-size: 13px;
+    }
+
+    .tg-demo-chip {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .tg-demo-chip--icon {
+        padding: 5px;
+        min-width: 28px;
+    }
+
+    /* Tighter spacing in panel */
+    .tg-demo-panel__footer {
+        padding: 6px 8px;
+    }
+
+    .tg-demo-compose {
+        padding: 10px 8px;
+    }
+
+    .tg-demo-input {
+        height: 38px;
+        min-height: 38px;
+        font-size: 13px;
+    }
+
+    .tg-demo-faq-dropdown {
+        font-size: 13px;
+    }
+
+    .tg-demo-faq-item {
+        font-size: 13px;
+        padding: 6px 0;
+    }
+
+    .tg-demo-faq-scroll {
+        max-height: 140px;
+    }
+}
+
+/* Small phones (iPhone SE, older Androids) */
+@media (max-width: 480px) {
+    /* Compact header for small phones */
+    .header-inner {
+        height: 50px;
+    }
+
+    .mobile-menu-toggle {
+        width: 36px;
+        height: 36px;
+        left: 10px;
+    }
+
+    .hamburger-line {
+        width: 20px;
+    }
+
+    .logo-wordmark {
+        height: 28px !important;
+    }
+
+    .mobile-signup-btn {
+        padding: 7px 12px;
+        font-size: 12px;
+        right: 10px;
+    }
+
+    .hero-demo {
+        padding: 10px 5px 5px;
+    }
+
+    #demo-stage-container {
+        height: 75vh;
+        max-height: 750px;
+    }
+
+    #demo-article {
+        font-size: 16px;
+        padding: 10px 8px;
+    }
+
+    /* Even smaller panel for tiny screens */
+    .tg-demo-panel {
+        width: 280px;  /* Fit on small phones */
+        height: 360px;
+        font-size: 12px;
+    }
+
+    .tg-demo-panel__header {
+        padding: 8px 8px 6px;
+    }
+
+    .tg-demo-header-logo {
+        height: 18px;
+    }
+
+    .tg-demo-pin,
+    .tg-demo-panel__btns > button {
+        width: 26px;
+        height: 22px;
+    }
+
+    .tg-demo-panel__close {
+        font-size: 18px !important;
+    }
+
+    /* Smaller chips */
+    .tg-demo-chips {
+        padding: 6px 8px;
+        gap: 3px;
+    }
+
+    .tg-demo-chip {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+
+    .tg-demo-chip--icon {
+        padding: 4px;
+        min-width: 24px;
+    }
+
+    .tg-demo-chip--icon img {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    .tg-demo-input {
+        height: 36px;
+        min-height: 36px;
+        font-size: 12px;
+        padding: 10px 38px 10px 10px;
+    }
+
+    .tg-demo-send {
+        width: 24px;
+        height: 24px;
+        right: 10px;
+    }
+
+    .tg-demo-send-icon {
+        width: 10px;
+        height: 10px;
+    }
+
+    .tg-demo-menu-toggle {
+        width: 24px;
+        height: 34px;
+        margin-right: 6px;
+    }
+
+    .tg-demo-faq-dropdown {
+        font-size: 12px;
+    }
+
+    .tg-demo-faq-item {
+        font-size: 12px;
+        padding: 5px 0;
+    }
+
+    .tg-demo-faq-scroll {
+        max-height: 120px;
+        padding: 6px 12px 10px 12px;
+    }
+}
+</style>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   TANGENT HERO DEMO - DIRECTOR
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+(function() {
+    'use strict';
+
+    // ═══ ELEMENT REFERENCES ═══
+    const article = document.getElementById('demo-article');
+    const anchor = document.getElementById('tangent-anchor');
+    const chips = document.getElementById('demo-chips');
+    const panelShell = document.getElementById('demo-panel-shell');
+    const panel = document.getElementById('demo-panel');
+    const stream = document.getElementById('demo-stream');
+    const demoInput = document.getElementById('demo-input');
+    const faqDropdown = document.getElementById('demo-faq-dropdown');
+
+    // Verify critical elements exist
+    if (!article || !anchor || !chips || !panelShell || !panel || !stream) {
+        return;
+    }
+
+    // ═══ ELEMENT INDEX ═══
+    const DEMO_ELEMENT_INDEX = new Map();
+    DEMO_ELEMENT_INDEX.set('tangent-word', anchor);
+
+    // ═══ CHIP RESPONSE DATA ═══
+    const CHIP_RESPONSES = {
+        'what': {
+            title: '"What Is..."',
+            content: '[What Is]'
+        },
+        'faq': {
+            title: '"Prompt Chips"',
+            content: '[Prompt Chips]'
+        },
+        'pricing': {
+            title: '"Pricing"',
+            content: '[Pricing]'
+        }
+    };
+
+    // ═══ FAQ ANSWERS DATA (from actual FAQ page) ═══
+    const FAQ_ANSWERS = {
+        'what-is': 'Tangent is a floating, on-page AI assistant built to support the natural way people think. It helps you stay immersed in the subject in front of you while giving you the freedom to explore any question, tangent, or idea that arises along the way. Instead of switching tabs or copy-pasting text into a chatbot, Tangent appears directly on the webpages you\'re working on and responds with context-aware intelligence. It becomes part of your workflow—an unobtrusive companion that moves at the speed of your curiosity.',
+        'how-works': 'Tangent listens only when you interact with it. When you ask a question or click a prompt chip, it gathers the text you highlighted, the surrounding paragraph, and anything you typed. It sends this structured context to Tangent\'s secure backend, where your subscription is checked, the right model is selected, and a clean prompt is built for the AI. The backend returns the result, and Tangent displays it directly in the floating mini-chat. Heavy lifting happens in the cloud; the smooth, responsive experience happens in your browser. All data transmission uses end-to-end encryption, and Tangent\'s backend does not store your conversations or page content after processing your request.',
+        'prompt-chips': 'Prompt Chips are Tangent\'s one-click action buttons that appear when you select text. Each chip contains a pre-written, optimized prompt designed to perform a specific task—for example, summarizing a passage, explaining a concept in simple terms, rewriting text more clearly, comparing ideas, or extracting key points. Instead of crafting a prompt manually, you click a chip and Tangent knows exactly what to do.',
+        'custom-chips': 'Yes. If you frequently perform a certain type of analysis or transformation, you can create your own custom chip with your preferred wording or structure. Your chip then appears in your chip bar just like the built-in ones.',
+        'pricing': 'Tangent offers two subscription tiers: Pro ($10/month or $105/year) with 12M standard tokens and 500K deep tokens per month, and Business Solo ($29/month or $290/year) with 20M standard tokens and 1M deep tokens per month. A 7-day free trial with 70,000 standard tokens is available—enough for approximately 150-200 typical interactions. One-time token packs are also available if you need more.',
+        'privacy': 'Yes. Tangent uses a security-first design. Your browser never stores or sends OpenAI API keys—only Tangent\'s backend communicates with the model. All communication is encrypted, Supabase enforces strong row-level security, and sensitive information is automatically redacted on your device before leaving your browser. Tangent automatically turns itself off on banking, medical, tax, or government websites.',
+        'browsers': 'Tangent works on Chrome and most Chromium browsers such as Brave, Edge, Opera, and Arc. A Safari version is planned for the future.'
+    };
+
+    // ═══ STATE ═══
+    let state = {
+        mode: 'idle',
+        currentChip: null,
+        typewriterTimeout: null,
+        dragData: null,
+        isPinned: false
+    };
+
+    // ═══ UTILITY: WAIT ═══
+    function wait(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // ═══ UTILITY: DETECT MOBILE ═══
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+
+    function isSmallMobile() {
+        return window.innerWidth <= 480;
+    }
+
+    // ═══ UTILITY: GET RESPONSIVE PANEL POSITION ═══
+    function getResponsivePanelPosition() {
+        const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
+
+        if (isSmallMobile()) {
+            // Small phones: center horizontally, position lower to avoid covering chip bar
+            // Add 2 lines worth of space: 16px font × 1.6 line-height × 2 = ~51px
+            const twoLinesOffset = 16 * 1.6 * 2; // ~51px
+            return {
+                left: '50%',
+                top: `${180 + twoLinesOffset}px`, // ~231px - two lines lower
+                transform: 'translateX(-50%)'
+            };
+        } else if (isMobile()) {
+            // Regular mobile: center horizontally, positioned below chip bar
+            // Add 2 lines worth of space: 18px font × 1.6 line-height × 2 = ~58px
+            const twoLinesOffset = 18 * 1.6 * 2; // ~58px
+            return {
+                left: '50%',
+                top: `${200 + twoLinesOffset}px`, // ~258px - two lines lower
+                transform: 'translateX(-50%)'
+            };
+        } else {
+            // Desktop: original positioning
+            return {
+                left: '500px',
+                top: '60px',
+                transform: 'none'
+            };
+        }
+    }
+
+    // ═══ UTILITY: POSITION ELEMENT BELOW ANCHOR ═══
+    function positionBelowAnchor(element, anchorEl, offsetY = 8) {
+        const rect = anchorEl.getBoundingClientRect();
+        const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
+
+        const left = rect.left - containerRect.left + (rect.width / 2) - (element.offsetWidth / 2);
+        const top = rect.bottom - containerRect.top + offsetY;
+
+        element.style.left = left + 'px';
+        element.style.top = top + 'px';
+    }
+
+    // ═══ CURSOR ANIMATION HELPERS ═══
+    const demoCursor = document.getElementById('demo-cursor');
+    const demoCursorImg = document.getElementById('demo-cursor-img');
+    let cursorHidden = false;
+    let allowCursorHiding = false; // Flag to control when cursor can be hidden
+
+    function showCursor() {
+        if (!demoCursor) return;
+        demoCursor.style.display = 'block';
+        demoCursor.style.opacity = '0';
+        setTimeout(() => {
+            demoCursor.style.opacity = '1';
+        }, 50);
+    }
+
+    function hideCursor() {
+        if (!demoCursor) return;
+        demoCursor.style.opacity = '0';
+        setTimeout(() => {
+            demoCursor.style.display = 'none';
+        }, 300);
+    }
+
+    function moveCursor(x, y) {
+        if (!demoCursor) return;
+        demoCursor.style.left = x + 'px';
+        demoCursor.style.top = y + 'px';
+    }
+
+    function setCursorType(type) {
+        if (!demoCursorImg) return;
+        if (type === 'i_beam') {
+            demoCursorImg.src = '/images/i_beam.png';
+        } else {
+            demoCursorImg.src = '/images/cursor.png';
+        }
+    }
+
+    // Hide cursor on user mouseover (only when animation is not playing)
+    const demoStageContainer = document.getElementById('demo-stage-container');
+    if (demoStageContainer) {
+        demoStageContainer.addEventListener('mousemove', () => {
+            // Only hide cursor if:
+            // 1. Animation is not playing or typing
+            // 2. Cursor hiding is allowed (1 second grace period after animation ends)
+            // 3. Cursor is not already hidden
+            const animationActive = state.mode === 'playing' || state.mode === 'typing';
+            if (!animationActive && allowCursorHiding && !cursorHidden && demoCursor && demoCursor.style.display !== 'none') {
+                hideCursor();
+                cursorHidden = true;
+            }
+        });
+    }
+
+    // ═══ DIRECTOR: INTRO SEQUENCE ═══
+    async function playIntro() {
+        if (state.mode === 'playing') return;
+        state.mode = 'playing';
+
+        // Reset everything
+        anchor.classList.remove('tg-demo-highlighted');
+        chips.style.display = 'none';
+        chips.classList.remove('tg-demo-visible');
+        chipBarPinned = false; // Disable chip bar pinning
+        panelShell.style.display = 'none';
+        panelShell.classList.remove('tg-demo-visible');
+        stream.innerHTML = '';
+        cursorHidden = false; // Reset cursor state
+        allowCursorHiding = false; // Prevent cursor from hiding during animation
+
+        // Start scroll at the very top
+        article.scrollTop = 0;
+
+        // Reset paragraph opacity
+        const paragraphs = article.querySelectorAll('p');
+        paragraphs.forEach(p => p.style.opacity = '0');
+
+        // CURSOR: Show i_beam cursor immediately at starting position
+        setCursorType('i_beam');
+        const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
+        const anchorRect = anchor.getBoundingClientRect();
+
+        // Start cursor in center-right of viewport (not too high or low)
+        const cursorStartX = containerRect.width - 150; // Right side but not edge
+        const cursorStartY = containerRect.height / 2; // Center vertically
+        moveCursor(cursorStartX, cursorStartY);
+        showCursor();
+
+        await wait(255); // 340 * 0.75 = 255 (25% faster)
+
+        // 1. Scroll down until "Tangent" is at top third of the page - SLOW & GENTLE
+        const articleRect = article.getBoundingClientRect();
+        const twoLinesHeight = 26 * 1.6 * 2; // font-size * line-height * 2 lines = ~83px
+        const targetPosition = anchorRect.top - articleRect.top - (articleRect.height / 3) + twoLinesHeight;
+
+        // Smooth, constant-speed scroll with gentle final deceleration
+        const startScroll = article.scrollTop;
+        const scrollDistance = targetPosition;
+        const scrollDuration = 1400;
+        const startTime = performance.now();
+
+        // Fade in paragraphs with staggered timing during scroll
+        setTimeout(() => paragraphs[0].style.opacity = '1', 0);
+        setTimeout(() => paragraphs[1].style.opacity = '1', 180);
+        setTimeout(() => paragraphs[2].style.opacity = '1', 360);
+        setTimeout(() => paragraphs[3].style.opacity = '1', 540);
+
+        // CURSOR: Start moving cursor toward where "Tangent" will be (move earlier - right at scroll start)
+        setTimeout(() => {
+            // Calculate where "Tangent" will end up after scroll
+            const finalAnchorY = containerRect.height / 3 - twoLinesHeight;
+            // Re-query anchor to get its horizontal position
+            const anchorRectMid = anchor.getBoundingClientRect();
+            // Position to the left of where "Tangent" will be
+            const targetX = anchorRectMid.left - containerRect.left - 30;
+            const targetY = finalAnchorY + (anchorRect.height / 2);
+            moveCursor(targetX, targetY);
+        }, 100); // Move much earlier - 100ms into scroll (was 400ms)
+
+        function animateScroll(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / scrollDuration, 1);
+
+            // Completely linear scroll - no easing
+            article.scrollTop = startScroll + (scrollDistance * progress);
+
+            if (progress < 1) {
+                requestAnimationFrame(animateScroll);
+            }
+        }
+
+        requestAnimationFrame(animateScroll);
+
+        await wait(1400); // Wait for scroll to complete
+
+        // 2. Highlight the word
+        anchor.classList.add('tg-demo-highlighted');
+
+        // CURSOR: Follow the right border of the highlight as it forms (move immediately - no delay)
+        // Re-query anchor position after scroll
+        const anchorRectFinal = anchor.getBoundingClientRect();
+        const highlightEndX = anchorRectFinal.right - containerRect.left + 2;
+        const highlightY = anchorRectFinal.top - containerRect.top + (anchorRectFinal.height / 2);
+
+        // Move cursor immediately as highlight starts (no setTimeout)
+        moveCursor(highlightEndX, highlightY);
+
+        await wait(324); // Increased from 224 to give cursor more time (add 100ms delay before chips appear)
+
+        // 3. Show chips
+        chips.style.display = 'flex';
+        positionBelowAnchor(chips, anchor, 12);
+
+        // CURSOR: Start moving toward chip bar as soon as chips appear
+        const chipsRect = chips.getBoundingClientRect();
+        const chipsMidX = chipsRect.left - containerRect.left + (chipsRect.width / 2);
+        const chipsTopY = chipsRect.top - containerRect.top - 10;
+        moveCursor(chipsMidX, chipsTopY);
+
+        await wait(50);
+        chips.classList.add('tg-demo-visible');
+        chipBarPinned = true; // Enable chip bar pinning to highlighted text
+
+        await wait(150); // Increased from 100 to give cursor more time to reach chip bar
+
+        // CURSOR: Change to normal cursor when over chip bar
+        setCursorType('normal');
+
+        // CURSOR: Move to first chip immediately
+        const firstChip = document.querySelector('[data-chip="what"]');
+        if (firstChip) {
+            const firstChipRect = firstChip.getBoundingClientRect();
+            const chipCenterX = firstChipRect.left - containerRect.left + (firstChipRect.width / 2);
+            const chipCenterY = firstChipRect.top - containerRect.top + (firstChipRect.height / 2);
+            moveCursor(chipCenterX, chipCenterY);
+
+            await wait(500); // Wait for cursor to arrive at chip before starting click animation
+
+            // 4. Auto-click first chip
+            firstChip.style.transform = 'scale(0.95)';
+            await wait(96); // 128 * 0.75 = 96 (25% faster)
+            firstChip.style.transform = '';
+
+            await handleChipClick('what', true);
+        }
+
+        state.mode = 'interactive';
+
+        // Wait 1 second after animation ends before allowing cursor to be hidden
+        setTimeout(() => {
+            allowCursorHiding = true;
+        }, 1000);
+    }
+
+    // ═══ CHIP CLICK HANDLER ═══
+    async function handleChipClick(chipId, fromIntro = false) {
+        const response = CHIP_RESPONSES[chipId];
+        if (!response) return;
+
+        if (state.typewriterTimeout) {
+            clearTimeout(state.typewriterTimeout);
+        }
+
+        state.currentChip = chipId;
+        state.mode = 'typing';
+
+        // Restore panel if minimized
+        if (isMinimized) {
+            toggleMinimize();
+        }
+
+        // Show panel if closed
+        const isFirstOpen = panelShell.style.display === 'none';
+        if (isFirstOpen) {
+            panelShell.style.display = 'block';
+
+            const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
+
+            // Position panel responsively based on screen size
+            const position = getResponsivePanelPosition();
+            panelShell.style.left = position.left;
+            panelShell.style.top = position.top;
+            panelShell.style.transform = position.transform;
+
+            await wait(32); // 43 * 0.75 = 32.25 ≈ 32 (25% faster)
+            panelShell.classList.add('tg-demo-visible');
+            await wait(224); // 298 * 0.75 = 223.5 ≈ 224 (25% faster)
+
+            // Show intro message with typewriter effect
+            const introMsg = document.createElement('div');
+            introMsg.className = 'tg-demo-msg';
+            stream.appendChild(introMsg);
+
+            const introContent = document.createElement('div');
+            introMsg.appendChild(introContent);
+
+            // Typewrite the intro message with HTML formatting
+            const introTextFormatted = `<p style="text-indent: 2em; margin: 0 0 1em 0;">Artificial intelligence is changing how we work, learn, and create—on a scale not seen since the birth of the Internet. But its real power only emerges when it fits naturally into how people think. <strong>Tangent</strong> was built with that in mind.</p><p style="text-indent: 2em; margin: 0 0 1em 0;"><strong>Tangent</strong> is a page-aware AI assistant that brings intelligence directly into context, transforming any webpage into a living conversation. You can ask questions, explore ideas, or go off on a <strong>Tangent</strong> the moment curiosity strikes, all while staying grounded in what you're already doing.</p><p style="text-indent: 2em; margin: 0;">Analytical or creative, focused or exploratory, <strong>Tangent</strong> adapts to the way you think—delivering powerful AI exactly where and when you need it, <em>without ever opening another tab.</em></p>`;
+
+            // Typewrite HTML character-by-character
+            await typewriteHTML(introContent, introTextFormatted);
+            // Removed final scroll - let user control scrolling
+
+            // Return early - don't show user message or AI response on first open
+            if (state.mode === 'typing') {
+                state.mode = 'interactive';
+            }
+            return;
+        }
+
+        // Show user message (only on subsequent interactions)
+        stream.innerHTML = `<div class="tg-demo-msg tg-user">${response.title}</div>`;
+
+        await wait(255); // 340 * 0.75 = 255 (25% faster)
+
+        // Show thinking
+        const thinkingEl = document.createElement('div');
+        thinkingEl.className = 'tg-demo-thinking';
+        thinkingEl.innerHTML = '<span></span><span></span><span></span>';
+        stream.appendChild(thinkingEl);
+
+        await wait(fromIntro ? 510 : 319); // 680 * 0.75 = 510, 425 * 0.75 = 318.75 ≈ 319 (25% faster)
+
+        // Remove thinking
+        thinkingEl.remove();
+
+        // Typewrite AI response
+        await typewriteMessage(response.content);
+
+        if (state.mode === 'typing') {
+            state.mode = 'interactive';
+        }
+    }
+
+    // ═══ TYPEWRITER ═══
+    async function typewriteHTML(element, htmlString) {
+        // Typewrite HTML with larger chunks and faster speed for smooth animation
+        const chunkSize = 8; // Bigger chunks = faster, smoother
+        let currentHTML = '';
+
+        for (let i = 0; i < htmlString.length; i += chunkSize) {
+            if (state.mode !== 'typing') break;
+
+            currentHTML += htmlString.slice(i, i + chunkSize);
+            element.innerHTML = currentHTML;
+
+            await wait(10); // Faster delay
+        }
+
+        // Ensure complete HTML is set at the end
+        element.innerHTML = htmlString;
+    }
+
+    async function typewriteMessage(text) {
+        const msgEl = document.createElement('div');
+        msgEl.className = 'tg-demo-msg';
+        msgEl.innerHTML = '<strong>Tangent:</strong><br>';
+        stream.appendChild(msgEl);
+
+        const contentSpan = document.createElement('span');
+        msgEl.appendChild(contentSpan);
+
+        const chunkSize = 3;
+        const chunks = [];
+        for (let i = 0; i < text.length; i += chunkSize) {
+            chunks.push(text.slice(i, i + chunkSize));
+        }
+
+        for (let i = 0; i < chunks.length; i++) {
+            if (state.mode !== 'typing') break;
+
+            contentSpan.textContent += chunks[i];
+            // Removed auto-scroll - let user control scrolling
+
+            await wait(20);
+        }
+
+        contentSpan.textContent = text;
+        // Removed auto-scroll - let user control scrolling
+    }
+
+    // ═══ DRAGGING SYSTEM (Header Only) ═══
+    let dragState = {
+        isDragging: false,
+        startX: 0,
+        startY: 0,
+        initialLeft: 0,
+        initialTop: 0
+    };
+
+    const header = panel.querySelector('.tg-demo-panel__header');
+
+    header.addEventListener('mousedown', (e) => {
+        // Don't drag if clicking buttons
+        if (e.target.closest('.tg-demo-pin') ||
+            e.target.closest('.tg-demo-panel__min') ||
+            e.target.closest('.tg-demo-panel__close')) {
+            return;
+        }
+
+        dragState.isDragging = true;
+        dragState.startX = e.clientX;
+        dragState.startY = e.clientY;
+
+        const rect = panelShell.getBoundingClientRect();
+        const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
+
+        dragState.initialLeft = rect.left - containerRect.left;
+        dragState.initialTop = rect.top - containerRect.top;
+
+        panel.classList.add('tg-demo-dragging');
+        state.mode = 'dragging';
+
+        e.preventDefault(); // Prevent text selection while dragging
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!dragState.isDragging) return;
+
+        const dx = e.clientX - dragState.startX;
+        const dy = e.clientY - dragState.startY;
+
+        panelShell.style.left = (dragState.initialLeft + dx) + 'px';
+        panelShell.style.top = (dragState.initialTop + dy) + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (!dragState.isDragging) return;
+
+        dragState.isDragging = false;
+        panel.classList.remove('tg-demo-dragging');
+
+        if (state.mode === 'dragging') {
+            state.mode = 'interactive';
+        }
+    });
+
+    // ═══ RESIZE SYSTEM (Bottom-Right Corner) ═══
+    const MIN_W = 437.5; // 350px * 1.25 - matches actual TANGENT MIN_W
+    const MIN_H = 150;   // 120px * 1.25 - matches actual TANGENT MIN_H
+
+    let resizeState = {
+        isResizing: false,
+        startX: 0,
+        startY: 0,
+        startWidth: 0,
+        startHeight: 0
+    };
+
+    const resizeHandle = panel.querySelector('.tg-demo-resize-handle');
+
+    resizeHandle.addEventListener('mousedown', (e) => {
+        resizeState.isResizing = true;
+        resizeState.startX = e.clientX;
+        resizeState.startY = e.clientY;
+        resizeState.startWidth = panel.offsetWidth;
+        resizeState.startHeight = panel.offsetHeight;
+
+        panel.classList.add('tg-demo-resizing');
+        state.mode = 'resizing';
+
+        e.preventDefault();
+        e.stopPropagation(); // Prevent drag from triggering
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!resizeState.isResizing) return;
+
+        const dx = e.clientX - resizeState.startX;
+        const dy = e.clientY - resizeState.startY;
+
+        const newWidth = Math.max(MIN_W, resizeState.startWidth + dx);
+        const newHeight = Math.max(MIN_H, resizeState.startHeight + dy);
+
+        panel.style.width = newWidth + 'px';
+        panel.style.height = newHeight + 'px';
+
+        e.preventDefault();
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (!resizeState.isResizing) return;
+
+        resizeState.isResizing = false;
+        panel.classList.remove('tg-demo-resizing');
+
+        if (state.mode === 'resizing') {
+            state.mode = 'interactive';
+        }
+    });
+
+    // ═══ WINDOW CONTROLS ═══
+
+    // Close button - hides the panel
+    const closeBtn = panel.querySelector('.tg-demo-panel__close');
+    closeBtn.addEventListener('click', () => {
+        panelShell.classList.remove('tg-demo-visible');
+        setTimeout(() => {
+            panelShell.style.display = 'none';
+        }, 300); // Match transition duration
+    });
+
+    // Minimize button and double-click header to minimize
+    const minBtn = panel.querySelector('.tg-demo-panel__min');
+    let isMinimized = false;
+    let savedHeight = panel.style.height || '525px';
+    let savedWidth = panel.style.width || '475px';
+
+    function toggleMinimize() {
+        if (isMinimized) {
+            // Restore
+            panel.style.height = savedHeight;
+            panel.style.width = savedWidth;
+            panel.classList.remove('tg-demo-minimized');
+            panel.querySelector('.tg-demo-panel__body').style.display = 'flex';
+            panel.querySelector('.tg-demo-panel__footer').style.display = 'block';
+            minBtn.querySelector('.tg-demo-panel__icon-dash').style.display = 'inline';
+            minBtn.querySelector('.tg-demo-panel__icon-square').style.display = 'none';
+            isMinimized = false;
+        } else {
+            // Minimize
+            savedHeight = panel.style.height || getComputedStyle(panel).height;
+            savedWidth = panel.style.width || getComputedStyle(panel).width;
+            panel.style.height = 'auto';
+            panel.style.width = '300px'; // Split the difference between auto and full width
+            panel.classList.add('tg-demo-minimized');
+            panel.querySelector('.tg-demo-panel__body').style.display = 'none';
+            panel.querySelector('.tg-demo-panel__footer').style.display = 'none';
+            minBtn.querySelector('.tg-demo-panel__icon-dash').style.display = 'none';
+            minBtn.querySelector('.tg-demo-panel__icon-square').style.display = 'inline';
+            isMinimized = true;
+        }
+    }
+
+    minBtn.addEventListener('click', toggleMinimize);
+
+    // Double-click header to minimize/restore
+    let lastClickTime = 0;
+    header.addEventListener('click', (e) => {
+        // Don't trigger on button clicks or dragging
+        if (e.target.closest('.tg-demo-pin') ||
+            e.target.closest('.tg-demo-panel__min') ||
+            e.target.closest('.tg-demo-panel__close') ||
+            dragState.isDragging) {
+            return;
+        }
+
+        const now = Date.now();
+        if (now - lastClickTime < 300) {
+            // Double-click detected
+            toggleMinimize();
+            lastClickTime = 0; // Reset to prevent triple-click
+        } else {
+            lastClickTime = now;
+        }
+    });
+
+    // ═══ FAQ DROPDOWN SYSTEM ═══
+
+    // Show dropdown when input is focused
+    demoInput.addEventListener('focus', () => {
+        faqDropdown.style.display = 'block';
+        setTimeout(() => {
+            faqDropdown.classList.add('tg-demo-visible');
+        }, 10);
+    });
+
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!demoInput.contains(e.target) && !faqDropdown.contains(e.target)) {
+            faqDropdown.classList.remove('tg-demo-visible');
+            setTimeout(() => {
+                if (!faqDropdown.classList.contains('tg-demo-visible')) {
+                    faqDropdown.style.display = 'none';
+                }
+            }, 128); // 170 * 0.75 = 127.5 ≈ 128 (25% faster)
+        }
+    });
+
+    // Handle FAQ item clicks
+    faqDropdown.querySelectorAll('.tg-demo-faq-item').forEach(item => {
+        item.addEventListener('click', async (e) => {
+            e.stopPropagation();
+
+            const faqId = item.getAttribute('data-faq');
+            const answer = FAQ_ANSWERS[faqId];
+
+            if (!answer) {
+                return;
+            }
+
+            // Extract question text from <strong> element
+            const questionText = item.querySelector('strong')?.textContent || item.textContent;
+
+            // Ensure panel is visible
+            if (panelShell.style.display === 'none') {
+                panelShell.style.display = 'block';
+
+                // Position panel responsively based on screen size
+                const position = getResponsivePanelPosition();
+                panelShell.style.left = position.left;
+                panelShell.style.top = position.top;
+                panelShell.style.transform = position.transform;
+
+                await wait(32); // 43 * 0.75 = 32.25 ≈ 32 (25% faster)
+                panelShell.classList.add('tg-demo-visible');
+                await wait(224); // 298 * 0.75 = 223.5 ≈ 224 (25% faster)
+            }
+
+            // Hide dropdown
+            faqDropdown.classList.remove('tg-demo-visible');
+            setTimeout(() => {
+                faqDropdown.style.display = 'none';
+            }, 128); // 170 * 0.75 = 127.5 ≈ 128 (25% faster)
+
+            // Blur input
+            demoInput.blur();
+
+            // Clear stream and show answer
+            stream.innerHTML = '';
+
+            // Show user question (just the bold question text)
+            const userDiv = document.createElement('div');
+            userDiv.className = 'tg-demo-msg tg-user';
+            userDiv.innerHTML = `<strong>${questionText}</strong>`;
+            stream.appendChild(userDiv);
+
+            await wait(191); // 255 * 0.75 = 191.25 ≈ 191 (25% faster)
+
+            // Show AI response with typewriter effect
+            state.mode = 'typing';
+            const msgEl = document.createElement('div');
+            msgEl.className = 'tg-demo-msg';
+            stream.appendChild(msgEl);
+
+            const contentSpan = document.createElement('span');
+            msgEl.appendChild(contentSpan);
+
+            const chunkSize = 3;
+            const chunks = [];
+            for (let i = 0; i < answer.length; i += chunkSize) {
+                chunks.push(answer.slice(i, i + chunkSize));
+            }
+
+            for (let i = 0; i < chunks.length; i++) {
+                if (state.mode !== 'typing') break;
+
+                contentSpan.textContent += chunks[i];
+                // Removed auto-scroll - let user control scrolling
+
+                await wait(13); // 17 * 0.75 = 12.75 ≈ 13 (25% faster)
+            }
+
+            contentSpan.textContent = answer;
+            // Removed auto-scroll - let user control scrolling
+        });
+    });
+
+    // ═══ CHIP BAR PINNING SYSTEM ═══
+    // Keep chip bar pinned underneath highlighted "Tangent" text during scroll
+    let chipBarPinned = false;
+
+    article.addEventListener('scroll', () => {
+        if (chipBarPinned && chips.style.display === 'flex') {
+            positionBelowAnchor(chips, anchor, 12);
+        }
+    });
+
+    // ═══ RESPONSIVE: REPOSITION ON WINDOW RESIZE ═══
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            // Reposition panel if visible
+            if (panelShell.style.display !== 'none') {
+                const position = getResponsivePanelPosition();
+                panelShell.style.left = position.left;
+                panelShell.style.top = position.top;
+                panelShell.style.transform = position.transform;
+            }
+
+            // Reposition chips if visible
+            if (chipBarPinned && chips.style.display === 'flex') {
+                positionBelowAnchor(chips, anchor, 12);
+            }
+        }, 150); // Debounce resize events
+    });
+
+    // ═══ CHIP CLICK LISTENERS ═══
+    document.querySelectorAll('.tg-demo-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            if (state.mode === 'playing') return;
+
+            const chipId = chip.dataset.chip;
+            handleChipClick(chipId, false);
+        });
+    });
+
+    // ═══ PANEL BUTTON HANDLERS ═══
+    document.querySelector('.tg-demo-close')?.addEventListener('click', () => {
+        panelShell.classList.remove('tg-demo-visible');
+        setTimeout(() => {
+            panelShell.style.display = 'none';
+            stream.innerHTML = '';
+        }, 300);
+    });
+
+    // ═══ AUTO-START ON SCROLL INTO VIEW ═══
+    let hasPlayed = false;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasPlayed) {
+                hasPlayed = true;
+                setTimeout(() => {
+                    playIntro();
+                }, 800);
+            }
+        });
+    }, { threshold: 0.4 });
+
+    const demoSection = document.querySelector('.hero-demo');
+    if (demoSection) {
+        observer.observe(demoSection);
+    }
+})();
+</script>
+
+        <!-- Who it's for / value props -->
+        <!-- Why Tangent? Section -->
+        <section class="section" style="padding-top: 240px;">
+            <div class="container">
+                <h2>Why Tangent?</h2>
+                <p class="section-intro">
+                    Most AI tools pull you away from what you're doing. Tangent does the opposite.
+                </p>
+
+                <div class="features-grid">
+                    <div class="feature">
+                        <h3>Page-aware AI</h3>
+                        <p>Understands the content in front of you, not just what you type.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Reference detection</h3>
+                        <p>Get answers with clickable highlights that scroll to exact locations on the page.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Focused, not bloated</h3>
+                        <p>No 50-feature sidebar. Just intelligence exactly where and when it's needed.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Intelligence in context</h3>
+                        <p>Stay in flow. No tab-switching, no breaking focus.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Stays with your thoughts</h3>
+                        <p>The best technology doesn't interrupt thought—it stays with it.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Moves at your pace</h3>
+                        <p>AI where you want it when you need it. Not intrusive, not distracting.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases Section -->
+        <section class="section section-alt">
+            <div class="container">
+                <h2>Built for everyone who thinks in tabs</h2>
+
+                <div class="use-cases-grid">
+                    <div class="use-case">
+                        <h3>Researchers</h3>
+                        <p>Summarize articles, extract key points, compare sources—all without leaving the page.</p>
+                    </div>
+                    <div class="use-case">
+                        <h3>Students</h3>
+                        <p>Understand complex concepts, get definitions in context, create study outlines from lecture notes.</p>
+                    </div>
+                    <div class="use-case">
+                        <h3>Analysts</h3>
+                        <p>Digest reports, extract data, compare claims across documents—with intelligent reference detection.</p>
+                    </div>
+                    <div class="use-case">
+                        <h3>Every-day users</h3>
+                        <p>Translate pages, explain unfamiliar topics, explore ideas—turn any webpage into a conversation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="section section-alt">
+            <div class="container">
+                <h2>Frequently Asked Questions</h2>
+                <p class="section-intro" style="margin-bottom: 28px;">
+                    Quick answers to common questions. <a href="/faq.html" style="color: var(--accent-strong); text-decoration: underline;">View all FAQs →</a>
+                </p>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3>What is Tangent?</h3>
+                        <p>
+                            Tangent is a floating, on-page AI assistant that helps you stay immersed in the content you're reading. Instead of switching tabs or copy-pasting into a chatbot, Tangent appears directly on your webpage with context-aware intelligence.
+                        </p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>How does Tangent compare to a normal chatbot?</h3>
+                        <p>
+                            A normal chatbot requires you to stop, switch tabs, and provide context. Tangent eliminates that friction by understanding what you're reading, what you highlighted, and what problem you're solving—anchoring your thinking directly to the page.
+                        </p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>What are Prompt Chips?</h3>
+                        <p>
+                            Prompt Chips are one-click action buttons that appear when you select text. Each chip contains a pre-written prompt for tasks like summarizing, explaining, or rewriting—so you don't have to craft prompts manually.
+                        </p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Is Tangent secure?</h3>
+                        <p>
+                            Yes. Tangent uses a security-first design with encrypted communication, automatic redaction of sensitive information, and it automatically disables itself on banking, medical, and other sensitive websites.
+                        </p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>How much does Tangent cost?</h3>
+                        <p>
+                            Tangent offers two tiers: Pro ($10/mo) and Business Solo ($29/mo). All plans include a 7-day free trial with no credit card required.
+                        </p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Can I cancel my subscription anytime?</h3>
+                        <p>
+                            Absolutely. Cancel anytime from your account dashboard with no fees or penalties. Your access continues until the end of your current billing period.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="section section-cta">
+            <div class="container cta-inner">
+                <h2>Ready to get started?</h2>
+                <p>Start your free 7-day trial. No credit card required.</p>
+                <div class="cta-buttons">
+                    <a href="/signup" class="cta-button primary large">Start Free Trial</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-links">
+                <a href="/privacy.html">Privacy</a>
+                <a href="/privacy.html#security">Security</a>
+                <a href="/faq.html">FAQ</a>
+                <a href="mailto:support@tangentapp.co">Support</a>
+            </div>
+            <div class="footer-tagline">
+                <span>© <span id="year"></span> Tangent. Built for people who think in tabs.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple current-year setter
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // Mobile menu toggle functionality
+        (function() {
+            const menuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuOverlay = document.getElementById('mobileMenuOverlay');
+            const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+            if (!menuToggle || !mobileMenu || !menuOverlay) return;
+
+            // Toggle menu open/closed
+            function toggleMenu() {
+                const isActive = mobileMenu.classList.contains('active');
+
+                if (isActive) {
+                    // Close menu
+                    menuToggle.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                    document.body.style.overflow = ''; // Re-enable scrolling
+                } else {
+                    // Open menu
+                    menuToggle.classList.add('active');
+                    mobileMenu.classList.add('active');
+                    menuOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                }
+            }
+
+            // Click hamburger to toggle
+            menuToggle.addEventListener('click', toggleMenu);
+
+            // Click overlay to close
+            menuOverlay.addEventListener('click', toggleMenu);
+
+            // Click any menu link to close menu
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    // Small delay to let navigation start before closing
+                    setTimeout(toggleMenu, 100);
+                });
+            });
+
+            // Close menu on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        })();
+    </script>
+
+    <!-- Shared auth/nav logic with modal overlay -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script>
+        (function () {
+            const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
+            const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
+            const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
+
+            const navRoot = document.getElementById("navRoot");
+            const signOutLink = document.getElementById("navSignOut");
+            const loginLink = document.getElementById("navLogin");
+            const signupBtn = document.getElementById("navSignup");
+            const accountLink = document.getElementById("navAccount");
+
+            // Mobile elements
+            const mobileSignup = document.getElementById("mobileSignup");
+            const mobileNavLogin = document.getElementById("mobileNavLogin");
+            const mobileNavSignOut = document.getElementById("mobileNavSignOut");
+            const mobileNavAccount = document.getElementById("mobileNavAccount");
+
+            // Hero CTA elements
+            const heroCtas = document.getElementById("heroCtas");
+            const heroStartTrial = document.getElementById("heroStartTrial");
+            const heroSignUp = document.getElementById("heroSignUp");
+
+            function setNavLoggedIn() {
+                // Desktop nav
+                if (loginLink) loginLink.style.display = "none";
+                if (signupBtn) signupBtn.style.display = "none";
+                if (signOutLink) {
+                    signOutLink.style.display = "inline-flex";
+                    signOutLink.onclick = async (e) => {
+                        e.preventDefault();
+                        await client.auth.signOut().catch(() => {});
+                        setNavLoggedOut();
+                    };
+                }
+                if (accountLink) {
+                    accountLink.style.display = "inline-flex";
+                    accountLink.onclick = null;
+                }
+
+                // Mobile nav
+                if (mobileSignup) mobileSignup.style.display = "none";
+                if (mobileNavLogin) mobileNavLogin.style.display = "none";
+                if (mobileNavSignOut) {
+                    mobileNavSignOut.style.display = "block";
+                    mobileNavSignOut.onclick = async (e) => {
+                        e.preventDefault();
+                        await client.auth.signOut().catch(() => {});
+                        setNavLoggedOut();
+                    };
+                }
+                if (mobileNavAccount) mobileNavAccount.style.display = "block";
+
+                // Hero CTAs - hide when logged in
+                if (heroCtas) heroCtas.style.display = "none";
+            }
+
+            function setNavLoggedOut() {
+                // Desktop nav
+                if (signOutLink) {
+                    signOutLink.style.display = "none";
+                    signOutLink.onclick = null;
+                }
+                if (loginLink) {
+                    loginLink.style.display = "inline-flex";
+                    loginLink.href = "javascript:void(0)";
+                    loginLink.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+                }
+                if (signupBtn) {
+                    signupBtn.style.display = "inline-flex";
+                    signupBtn.href = "javascript:void(0)";
+                    signupBtn.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+                    signupBtn.classList.add("nav-link-cta");
+                }
+                if (accountLink) {
+                    accountLink.style.display = "none";
+                }
+
+                // Mobile nav
+                if (mobileSignup) {
+                    mobileSignup.style.display = "inline-flex";
+                    mobileSignup.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+                }
+                if (mobileNavLogin) {
+                    mobileNavLogin.style.display = "block";
+                    mobileNavLogin.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+                }
+                if (mobileNavSignOut) mobileNavSignOut.style.display = "none";
+                if (mobileNavAccount) mobileNavAccount.style.display = "none";
+
+                // Hero CTAs - show when logged out, wire up modal
+                if (heroCtas) heroCtas.style.display = "flex";
+                if (heroStartTrial) {
+                    heroStartTrial.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+                }
+                if (heroSignUp) {
+                    heroSignUp.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+                }
+            }
+
+            let modal;
+            function ensureModal() {
+                if (modal) return modal;
+                modal = document.createElement("div");
+                modal.id = "tg-login-modal";
+                modal.style.position = "fixed";
+                modal.style.inset = "0";
+                modal.style.background = "rgba(15,23,42,0.55)";
+                modal.style.backdropFilter = "blur(8px)";
+                modal.style.display = "none";
+                modal.style.alignItems = "center";
+                modal.style.justifyContent = "center";
+                modal.style.zIndex = "9999";
+                modal.innerHTML = `
+                  <div style="background:#050915;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:22px;width:100%;max-width:420px;box-shadow:0 14px 36px rgba(0,0,0,0.45);color:#e5e7eb;position:relative;">
+                    <button id="tgLoginClose" style="position:absolute;top:10px;right:10px;background:transparent;border:0;color:#cbd5e1;font-size:18px;cursor:pointer;">×</button>
+                    <div style="display:flex;justify-content:center;margin-bottom:12px;">
+                      <img src="images/tangent_logo.png" alt="Tangent" style="height:28px;" />
+                    </div>
+                    <h3 style="margin:0 0 14px 0;font-weight:700;">Sign In:</h3>
+                    <label style="display:block;margin-bottom:10px;font-weight:600;font-size:13px;">Email
+                      <input id="tgLoginEmail" type="email" autocomplete="email" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(5,6,10,0.7);color:#e5e7eb;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);" />
+                    </label>
+                    <label style="display:block;margin-bottom:14px;font-weight:600;font-size:13px;">Password
+                      <input id="tgLoginPassword" type="password" autocomplete="current-password" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(5,6,10,0.7);color:#e5e7eb;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);" />
+                    </label>
+                    <div style="display:flex;gap:10px;margin-top:12px;">
+            <button id="tgLoginSignIn" class="cta-button secondary" style="flex:1;">Sign In</button>
+            <button id="tgLoginSignUp" class="cta-button secondary" style="flex:1;">Sign Up</button>
+                    </div>
+                    <p id="tgLoginStatus" style="min-height:18px;font-size:13px;margin-top:10px;"></p>
+                  </div>
+                `;
+                document.body.appendChild(modal);
+
+                modal.addEventListener("click", (e) => {
+                    if (e.target === modal) closeLoginModal();
+                });
+                modal.querySelector("#tgLoginClose").addEventListener("click", closeLoginModal);
+                modal.querySelector("#tgLoginSignIn").addEventListener("click", () => handleAuth("signin"));
+                modal.querySelector("#tgLoginSignUp").addEventListener("click", () => handleAuth("signup"));
+                const emailInput = modal.querySelector("#tgLoginEmail");
+                const pwdInput = modal.querySelector("#tgLoginPassword");
+                const onKey = (e) => { if (e.key === "Enter") { e.preventDefault(); handleAuth("signin"); } };
+                emailInput.addEventListener("keydown", onKey);
+                pwdInput.addEventListener("keydown", onKey);
+                return modal;
+            }
+
+            function setStatus(msg, isError) {
+                const el = modal?.querySelector("#tgLoginStatus");
+                if (!el) return;
+                el.textContent = msg || "";
+                el.style.color = isError ? "#f87171" : "#cbd5e1";
+            }
+
+            function openLoginModal() {
+                ensureModal();
+                modal.style.display = "flex";
+                const emailInput = modal.querySelector("#tgLoginEmail");
+                if (emailInput) emailInput.focus();
+            }
+            function closeLoginModal() {
+                if (modal) modal.style.display = "none";
+            }
+
+            async function handleAuth(mode) {
+                ensureModal();
+                const email = modal.querySelector("#tgLoginEmail").value.trim();
+                const password = modal.querySelector("#tgLoginPassword").value;
+                if (!email || !password) {
+                    setStatus("Enter email and password.", true);
+                    return;
+                }
+                setStatus(mode === "signin" ? "Signing in…" : "Creating account…", false);
+                try {
+                    if (mode === "signin") {
+                        const { error } = await client.auth.signInWithPassword({ email, password });
+                        if (error) throw error;
+                        setStatus("Signed in. Redirecting…", false);
+                        setNavLoggedIn();
+                        window.location.href = "/account";
+                    } else {
+                        const { data, error } = await client.auth.signUp({ email, password });
+                        if (error) throw error;
+
+                        // Check if account was auto-confirmed (no email verification required)
+                        const isAutoConfirmed = data?.user?.confirmed_at || data?.session?.access_token;
+
+                        if (isAutoConfirmed) {
+                            // Auto-confirmed - redirect to account immediately
+                            setStatus("Account created. Redirecting…", false);
+                            setNavLoggedIn();
+                            setTimeout(() => {
+                                window.location.href = "/account";
+                            }, 500);
+                        } else {
+                            // Email confirmation required
+                            setStatus("Account created. Check your email to confirm, then sign in.", false);
+                        }
+                    }
+                } catch (e) {
+                    setStatus(e.message || "Authentication failed.", true);
+                }
+            }
+
+            client.auth.getSession().then(({ data }) => {
+                if (data?.session?.access_token) {
+                    setNavLoggedIn();
+                } else {
+                    setNavLoggedOut();
+                }
+                if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
+            }).catch(() => {
+                setNavLoggedOut();
+                if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
+            });
+        })();
+    </script>
+</body>
+
+</html>

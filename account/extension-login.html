@@ -1,0 +1,265 @@
+<!DOCTYPE html> 
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tangent – Sign In</title>
+  <style>
+    :root {
+      --tg-bg: #0a0f1c;
+      --tg-fg: #e9eef5;
+      --tg-card: rgba(12,14,20,0.96);
+      --tg-border: rgba(255,255,255,0.16);
+      --tg-link: #9ecbff;
+    }
+    :root[data-theme="light"] {
+      --tg-bg: #ffffff;
+      --tg-fg: #0f141a;
+      --tg-card: #ffffff;
+      --tg-border: rgba(0,0,0,0.08);
+      --tg-link: #2a8fd5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+      background: var(--tg-bg);
+      color: var(--tg-fg);
+      min-height: auto;
+      height: auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 6px 8px 6px;
+    }
+    .card {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 12px;
+      box-shadow: none;
+      position: relative;
+    }
+    h1 {
+      margin: 0 0 16px 0;
+      font-size: 20px;
+      text-align: left;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--tg-border);
+      background: #0b1220;
+      color: #e9eef5;
+      -webkit-text-fill-color: #e9eef5;
+      box-shadow: 0 0 0 1000px #0b1220 inset;
+      caret-color: #e9eef5;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+    :root[data-theme="light"] input[type="email"],
+    :root[data-theme="light"] input[type="password"] {
+      background: #ffffff;
+      color: #0f141a;
+      -webkit-text-fill-color: #0f141a;
+      box-shadow: 0 0 0 1000px #ffffff inset;
+      caret-color: #0f141a;
+    }
+    .btn {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      background: #2a8fd5;
+      color: #fff;
+      box-shadow: none;
+    }
+    .signup-row {
+      margin-top: 6px;
+      font-size: 13px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    a { color: var(--tg-link); text-decoration: none; }
+    .status { min-height: 18px; font-size: 13px; margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Sign In</h1>
+    <form id="tgLoginForm" autocomplete="off" data-1p-ignore="true" data-lpignore="true">
+      <label for="tgEmail">Email</label>
+      <input id="tgEmail" name="tangent-email" type="email" inputmode="email" autocomplete="username" autocapitalize="none" spellcheck="false" data-1p-ignore="true" data-lpignore="true" required />
+      <label for="tgPassword">Password</label>
+      <input id="tgPassword" name="tangent-password" type="password" autocomplete="current-password" data-1p-ignore="true" data-lpignore="true" required />
+      <div id="tgStatus" class="status"></div>
+      <button type="submit" class="btn">Sign In</button>
+    </form>
+    <div class="signup-row" style="justify-content: center; margin-top: 12px;">
+      <span>Don't have an account?</span>
+      <a href="https://www.tangentapp.co/signup?src=ext_auth_iframe" target="_blank" rel="noreferrer">Sign Up</a>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script>
+    (function() {
+      const params = new URLSearchParams(location.search);
+      const theme = (params.get('theme') || 'auto').toLowerCase();
+      if (theme === 'dark') document.documentElement.dataset.theme = 'dark';
+      else if (theme === 'light') document.documentElement.dataset.theme = 'light';
+      else {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = prefersDark ? 'dark' : 'light';
+      }
+
+      const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
+      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false } });
+      const loginState = params.get('state') || "";
+      const loginKey = params.get('k') || "";
+
+      function resolveTargetOrigin() {
+        let refOrigin = "";
+        if (document.referrer) {
+          try {
+            refOrigin = new URL(document.referrer).origin;
+          } catch (_) {
+            refOrigin = "";
+          }
+        }
+        return refOrigin || "*";
+      }
+
+      const form = document.getElementById('tgLoginForm');
+      const emailEl = document.getElementById('tgEmail');
+      const pwEl = document.getElementById('tgPassword');
+      const statusEl = document.getElementById('tgStatus');
+
+      function setStatus(msg, isError) {
+        statusEl.textContent = msg || '';
+        statusEl.style.color = isError ? '#f87171' : 'inherit';
+      }
+
+      function base64ToBytes(b64) {
+        const str = atob(b64);
+        const out = new Uint8Array(str.length);
+        for (let i = 0; i < str.length; i++) {
+          out[i] = str.charCodeAt(i);
+        }
+        return out;
+      }
+
+      function bytesToBase64(bytes) {
+        let str = '';
+        bytes.forEach((b) => { str += String.fromCharCode(b); });
+        return btoa(str);
+      }
+
+      async function encryptAuthPayload(payload, secretB64) {
+        if (!secretB64) throw new Error('Missing Tangent login secret.');
+        const keyBytes = base64ToBytes(secretB64);
+        if (keyBytes.length !== 32) throw new Error('Invalid Tangent login secret.');
+        const key = await crypto.subtle.importKey('raw', keyBytes, { name: 'AES-GCM' }, false, ['encrypt']);
+        const iv = crypto.getRandomValues(new Uint8Array(12));
+        const encoded = new TextEncoder().encode(JSON.stringify(payload));
+        const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, encoded);
+        return {
+          iv: bytesToBase64(iv),
+          data: bytesToBase64(new Uint8Array(cipher)),
+          v: 1
+        };
+      }
+
+      async function sendTokenToExtension(accessToken, refreshToken) {
+        // Support both popup (window.opener) and iframe (window.parent) modes
+        const target = window.opener || (window.parent !== window ? window.parent : null);
+        if (!target) return;
+
+        const targetOrigin = resolveTargetOrigin();
+
+        // Check if this is the options page iframe (no encryption needed for extension pages)
+        const src = params.get('src') || '';
+        if (src === 'ext_options') {
+          // Options page: send plain token (extension context is secure)
+          target.postMessage(
+            {
+              type: 'TANGENT_SUPABASE_TOKEN',
+              token: accessToken,
+              refreshToken: refreshToken
+            },
+            '*' // Extension pages use chrome-extension:// protocol
+          );
+          return;
+        }
+
+        // Content script iframe: use encrypted handshake
+        if (!loginKey) {
+          throw new Error('Missing Tangent handshake. Please relaunch the login from the extension.');
+        }
+        if (!targetOrigin) return;
+        const encryptedAuth = await encryptAuthPayload(
+          { token: accessToken, refreshToken },
+          loginKey
+        );
+        target.postMessage(
+          {
+            type: 'TANGENT_SUPABASE_TOKEN',
+            state: loginState,
+            encryptedAuth
+          },
+          targetOrigin
+        );
+      }
+
+      const src = params.get('src') || '';
+      if (!loginKey && src !== 'ext_options') {
+        setStatus('Open this page from the Tangent extension to sign in securely.', true);
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = (emailEl.value || '').trim();
+        const password = pwEl.value || '';
+        if (!email || !password) {
+          setStatus('Enter email and password.', true);
+          return;
+        }
+        setStatus('Signing in…', false);
+        try {
+          const { data, error } = await client.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+          const token = data?.session?.access_token;
+          const refreshToken =
+            data?.session?.refresh_token ||
+            data?.refresh_token ||
+            '';
+          if (!token) throw new Error('No access token returned.');
+          await sendTokenToExtension(token, refreshToken);
+          setStatus('Signed in! Closing…', false);
+          // In iframe mode, don't try to close (parent will handle it)
+          // In popup mode, close the window
+          if (window.opener) {
+            setTimeout(() => window.close(), 500);
+          }
+        } catch (err) {
+          setStatus(err.message || 'Sign-in failed.', true);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

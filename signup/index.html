@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Tangent Pro – Signup & Pricing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Signup for Tangent Pro – the AI assistant that lives on every page you open." />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" type="image/png" href="/images/tangent_t_logo.png" />
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    .pricing-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .free-trial-btn {
+      background: #3b82f6;
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(59,130,246,0.25);
+      transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+    }
+    .free-trial-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(59,130,246,0.3); }
+    .free-trial-btn:active { transform: translateY(0); box-shadow: 0 6px 16px rgba(59,130,246,0.22); }
+    .free-trial-btn:disabled,
+    .plan-button:disabled {
+      opacity: 0.5 !important;
+      cursor: not-allowed !important;
+      transform: none !important;
+      box-shadow: none !important;
+      pointer-events: auto !important;
+    }
+    .plan-button:disabled:hover {
+      opacity: 0.5 !important;
+      transform: none !important;
+    }
+  </style>
+    <style>
+        /* Shared CTA/button styling for login modal */
+        .cta-button {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 120ms ease;
+            background: #3b82f6;
+            color: #fff;
+        }
+        .cta-button.secondary { background: #64748b; }
+        .cta-button:hover { opacity: 0.9; }
+        .cta-button:disabled { opacity: 0.6; cursor: not-allowed; }
+        .nav-guard { opacity: 0; visibility: hidden; }
+        /* Keep login modal inputs dark even on autofill */
+        #tgLoginEmail, #tgLoginPassword {
+            background: #0b1220 !important;
+            color: #e5e7eb !important;
+            border: 1px solid rgba(255,255,255,0.25);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        #tgLoginEmail:-webkit-autofill,
+        #tgLoginPassword:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 1000px #0b1220 inset !important;
+            -webkit-text-fill-color: #e5e7eb !important;
+            caret-color: #e5e7eb;
+        }
+        /* Uniform plan buttons (remove glow) */
+        .plan-button,
+        .plan-button.plan-button-secondary {
+            background: #3b82f6;
+            color: #fff;
+            border: 1px solid #fff;
+            box-shadow: none;
+        }
+        .plan-button.plan-button-secondary {
+            background: #3b82f6;
+        }
+        .plan-button:hover,
+        .plan-button.plan-button-secondary:hover {
+            opacity: 0.9;
+        }
+
+        /* Payment Modal Styles */
+        #tangent-payment-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2147483647;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .tg-payment-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(8px);
+        }
+        .tg-payment-card {
+            position: relative;
+            background: #1a1b23;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            max-width: 480px;
+            width: 100%;
+            margin: 0 20px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .tg-payment-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            font-size: 28px;
+            line-height: 1;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: color 120ms ease;
+        }
+        .tg-payment-close:hover {
+            color: #ffffff;
+        }
+        .tg-payment-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .tg-payment-logo {
+            height: 32px;
+            margin-bottom: 16px;
+        }
+        .tg-payment-header h2 {
+            margin: 0 0 8px 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .tg-payment-header p {
+            margin: 0;
+            font-size: 16px;
+            color: #94a3b8;
+        }
+        #tg-payment-form-state label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #e5e7eb;
+        }
+        #tg-payment-email-wrapper {
+            margin-bottom: 20px;
+        }
+        #tg-payment-email {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            font-size: 15px;
+            transition: border-color 120ms ease;
+        }
+        #tg-payment-email:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        #tg-payment-email.error {
+            border-color: #ef4444;
+        }
+        #tg-payment-email-error {
+            display: none;
+            margin-top: 6px;
+            font-size: 13px;
+            color: #ef4444;
+        }
+        #payment-element {
+            margin-bottom: 24px;
+        }
+        .tg-payment-btn {
+            width: 100%;
+            padding: 14px 20px;
+            background: #3b82f6;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 120ms ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .tg-payment-btn:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+        .tg-payment-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        #tg-payment-error {
+            display: none;
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            color: #fca5a5;
+            font-size: 14px;
+        }
+        .tg-payment-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: tg-spin 0.6s linear infinite;
+        }
+        @keyframes tg-spin {
+            to { transform: rotate(360deg); }
+        }
+        #tg-payment-success-state {
+            text-align: center;
+        }
+        .tg-payment-success-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #ffffff;
+            font-weight: 700;
+        }
+        #tg-payment-success-state h3 {
+            margin: 0 0 12px 0;
+            font-size: 22px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        #tg-payment-success-state p {
+            margin: 0 0 24px 0;
+            font-size: 15px;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+        #tg-payment-success-btn {
+            padding: 12px 24px;
+            background: #3b82f6;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 120ms ease;
+        }
+        #tg-payment-success-btn:hover {
+            opacity: 0.9;
+        }
+        .tg-payment-footer {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 12px;
+            color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo-link">
+                <img src="/images/tangent_logo.png" alt="Tangent" class="logo-wordmark" />
+            </a>
+            <nav class="nav nav-guard" id="navRoot">
+                <a href="/download" class="nav-link">Download Tangent</a>
+                <a href="/#how-it-works" class="nav-link" id="navHow">How It Works</a>
+                <a href="/faq.html" class="nav-link" id="navFaq">FAQ</a>
+                <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
+                <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
+                <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
+                <a href="/signup" class="nav-link nav-link-cta nav-link-cta-active" id="navSignup">Sign Up</a>
+                <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="section section-alt" style="padding: 24px 0 32px 0;">
+            <div class="container pricing-layout">
+                <div class="pricing-intro" style="margin-bottom: 24px;">
+                    <div class="pricing-header-row">
+                        <h1 style="margin-bottom: 8px;">Subscription Plans</h1>
+                        <button id="freeTrialBtn" class="free-trial-btn" style="display:none;">Sign Up for Free Trial</button>
+                    </div>
+                    <p class="section-intro" style="margin-bottom: 0;">
+                        Choose the plan that fits your style.
+                    </p>
+                </div>
+
+                <div class="pricing-tier-grid">
+                    <!-- Free Trial -->
+                    <article class="pricing-card">
+                        <h2 class="pricing-name">Free Trial</h2>
+                        <p class="pricing-price">
+                            <span class="pricing-amount">$0</span>
+                            <span class="pricing-interval">/ 7 days</span>
+                        </p>
+                        <p class="pricing-tagline">
+                            Try it out for free and see where it takes you.
+                        </p>
+
+                        <ul class="pricing-features">
+                            <li>70K Standard tokens (150-200 interactions)</li>
+                            <li>0 Deep tokens</li>
+                            <li>All core Tangent chips (Explain, Summarize, Translate, Teach Me, etc.)</li>
+                            <li>Context-aware responses that automatically understand the page</li>
+                            <li>Support for long articles and docs</li>
+                            <li>7-day trial period</li>
+                        </ul>
+
+                        <div class="pricing-cta">
+                            <button type="button" class="plan-button" data-plan="free_trial">
+                                Sign Up for Free Trial
+                            </button>
+                            <p style="margin-top: 8px; font-size: 13px; color: #64748b; text-align: center;">No credit card required</p>
+                        </div>
+                    </article>
+
+                    <!-- Pro -->
+                    <article class="pricing-card">
+                        <h2 class="pricing-name">Pro</h2>
+                        <p class="pricing-price">
+                            <span class="pricing-amount">$10</span>
+                            <span class="pricing-interval">/ month</span>
+                        </p>
+                        <p class="pricing-tagline">
+                            For people who live in their browser and rely on AI every day.
+                        </p>
+
+                        <ul class="pricing-features">
+                            <li>12M Standard tokens / month</li>
+                            <li>750k Deep tokens / month</li>
+                            <li>All core Tangent chips (Explain, Summarize, Translate, Teach Me, etc.)</li>
+                            <li>Context-aware responses that automatically understand the page</li>
+                            <li>Support for long articles and docs</li>
+                            <li>Ability to create and save custom chips</li>
+                        </ul>
+
+                        <div class="pricing-cta">
+                            <button type="button" class="plan-button plan-button-secondary" data-plan="pro_annual">
+                                $8.75 / mo ($105 billed annually)
+                            </button>
+                            <button type="button" class="plan-button" data-plan="pro_monthly">
+                                $10 / mo
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Business (Solo) -->
+                    <article class="pricing-card">
+                        <h2 class="pricing-name">Business (Solo)</h2>
+                        <p class="pricing-price">
+                            <span class="pricing-amount">$29</span>
+                            <span class="pricing-interval">/ month</span>
+                        </p>
+                        <p class="pricing-tagline">
+                            For creators, freelancers, and power users who need more headroom.
+                        </p>
+
+                        <ul class="pricing-features">
+                            <li>20M Standard tokens / month</li>
+                            <li>2M Deep tokens / month</li>
+                            <li>All Pro features included</li>
+                            <li>Priority access to new features and improvements</li>
+                            <li>Email support</li>
+                        </ul>
+
+                        <div class="pricing-cta">
+                            <button type="button" class="plan-button plan-button-secondary"
+                                data-plan="business_solo_annual">
+                                $24.17 / mo ($290 billed annually)
+                            </button>
+                            <button type="button" class="plan-button" data-plan="business_solo_monthly">
+                                $29 / mo
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- BUSINESS TEAM TIER - TEMPORARILY HIDDEN
+                    <article class="pricing-card">
+                        <h2 class="pricing-name">Business (Team)</h2>
+                        <p class="pricing-price">
+                            <span class="pricing-amount">$49</span>
+                            <span class="pricing-interval">/ month (per Seat)</span>
+                        </p>
+                        <p class="pricing-tagline">
+                            For teams, studios, and agencies. Seat-based, with shared billing.
+                        </p>
+
+                        <ul class="pricing-features">
+                            <li>35M Standard tokens / seat / month</li>
+                            <li>3M Deep tokens / seat / month</li>
+                            <li>Seat-based limits for clear budgeting</li>
+                            <li>All Pro features included for each seat</li>
+                            <li>Priority support</li>
+                        </ul>
+
+                        <div class="pricing-cta">
+                            <p class="pricing-note" style="margin-bottom: 0; margin-top: 0;"><b>Per Seat:</b></p>
+
+                            <button type="button" class="plan-button plan-button-secondary"
+                                data-plan="business_team_annual">
+                                $40.83 / mo ($490 billed annually)
+                            </button>
+
+                            <button type="button" class="plan-button" data-plan="business_team_monthly">
+                                $49 / mo
+                            </button>
+                        </div>
+                    </article>
+                    -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <span>© <span id="year"></span> Tangent.</span>
+            <span>Made for people who think in tabs.</span>
+        </div>
+    </footer>
+
+    <!-- Payment Modal -->
+    <div id="tangent-payment-modal" style="display: none;">
+        <div class="tg-payment-overlay"></div>
+        <div class="tg-payment-card">
+            <button class="tg-payment-close" aria-label="Close">&times;</button>
+
+            <div class="tg-payment-header">
+                <img src="/images/tangent_logo.png" alt="Tangent" class="tg-payment-logo" />
+                <h2 id="tg-payment-title">Upgrade to Pro</h2>
+                <p id="tg-payment-subtitle">$10/month</p>
+            </div>
+
+            <div id="tg-payment-form-state">
+                <div id="tg-payment-email-wrapper" style="display: none;">
+                    <label for="tg-payment-email">Email</label>
+                    <input type="email" id="tg-payment-email" placeholder="your@email.com" autocomplete="email" />
+                    <div id="tg-payment-email-error"></div>
+                </div>
+
+                <div id="payment-element"></div>
+
+                <button id="tg-payment-submit" class="tg-payment-btn">
+                    <span id="tg-payment-btn-text">Subscribe Now</span>
+                    <span id="tg-payment-spinner" class="tg-payment-spinner" style="display: none;"></span>
+                </button>
+
+                <div id="tg-payment-error"></div>
+            </div>
+
+            <div id="tg-payment-success-state" style="display: none;">
+                <div class="tg-payment-success-icon">✓</div>
+                <h3>Payment Successful!</h3>
+                <p id="tg-payment-success-message">
+                    Check your email for a password setup link to access your account.
+                </p>
+                <button id="tg-payment-success-btn">Go to Account</button>
+            </div>
+
+            <div class="tg-payment-footer">
+                Powered by <strong>Stripe</strong>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            // Keep the footer year in sync
+            var yearEl = document.getElementById("year");
+            if (yearEl) {
+                yearEl.textContent = new Date().getFullYear();
+            }
+
+            var planButtons = document.querySelectorAll(".plan-button");
+            if (!planButtons.length) {
+                return;
+            }
+
+            var PRICE_IDS = {
+                pro_monthly: "price_1Se2NPFYbfjZcbAUPVqOlJkL",
+                pro_annual: "price_1Se2QsFYbfjZcbAUCOHKQDaP",
+                business_solo_monthly: "price_1Se2WDFYbfjZcbAU7MEqsfPe",
+                business_solo_annual: "price_1Se2X2FYbfjZcbAU4RBQw3LL",
+                business_team_monthly: "price_1SWtlcFYbfjZcbAUnebgB9UU",
+                business_team_annual: "price_1SWtm2FYbfjZcbAU8pWGPFYr"
+            };
+
+            window.tgPendingPlanCode = null;
+            const STRIPE_URL_PATTERN = /^https:\/\/(?:checkout|billing|buy|pay)\.stripe\.com\/?/i;
+
+            function openStripeCheckoutUrl(url) {
+                const safeUrl = typeof url === "string" ? url.trim() : "";
+                if (!STRIPE_URL_PATTERN.test(safeUrl)) {
+                    throw new Error("Unexpected checkout URL.");
+                }
+                window.open(safeUrl, "_blank", "noopener");
+            }
+
+            // ===== STRIPE PAYMENT ELEMENT INTEGRATION =====
+            const STRIPE_PUBLISHABLE_KEY = "pk_live_51SSu7dFYbfjZcbAUM0AOm5Gp46bwFIxa4ypSHGNuSmmJtijAqxPPHtKXjswuewj3ska3BTiFPFCNCKzSeJzybyRq005zzonyRd";
+            const API_BASE = "https://api.tangentapp.co";
+            const stripeInstance = Stripe(STRIPE_PUBLISHABLE_KEY);
+
+            let paymentElement = null;
+            let currentPriceId = null;
+            let currentCheckoutKind = "subscription";
+
+            // Modal elements
+            const paymentModal = document.getElementById("tangent-payment-modal");
+            const paymentOverlay = document.querySelector(".tg-payment-overlay");
+            const paymentClose = document.querySelector(".tg-payment-close");
+            const paymentTitle = document.getElementById("tg-payment-title");
+            const paymentSubtitle = document.getElementById("tg-payment-subtitle");
+            const paymentEmailWrapper = document.getElementById("tg-payment-email-wrapper");
+            const paymentEmailInput = document.getElementById("tg-payment-email");
+            const paymentEmailError = document.getElementById("tg-payment-email-error");
+            const paymentSubmitBtn = document.getElementById("tg-payment-submit");
+            const paymentBtnText = document.getElementById("tg-payment-btn-text");
+            const paymentSpinner = document.getElementById("tg-payment-spinner");
+            const paymentError = document.getElementById("tg-payment-error");
+            const paymentFormState = document.getElementById("tg-payment-form-state");
+            const paymentSuccessState = document.getElementById("tg-payment-success-state");
+            const paymentSuccessMessage = document.getElementById("tg-payment-success-message");
+            const paymentSuccessBtn = document.getElementById("tg-payment-success-btn");
+
+            // Open payment modal
+            async function openPaymentModal(priceId, planName, planPrice, checkoutKind = "subscription") {
+                currentPriceId = priceId;
+                currentCheckoutKind = checkoutKind;
+
+                // Update modal header
+                paymentTitle.textContent = `Upgrade to ${planName}`;
+                paymentSubtitle.textContent = planPrice;
+
+                // Check if user is logged in
+                const supa = window.tgSupabase || window.supabaseClient || null;
+                let isLoggedIn = false;
+
+                if (supa && supa.auth) {
+                    try {
+                        const { data } = await supa.auth.getSession();
+                        isLoggedIn = !!data?.session?.access_token;
+                    } catch (err) {
+                        console.error("Error checking session:", err);
+                    }
+                }
+
+                // Show/hide email field based on login status
+                if (!isLoggedIn) {
+                    paymentEmailWrapper.style.display = "block";
+                    paymentEmailInput.value = "";
+                    paymentEmailError.style.display = "none";
+                    paymentEmailInput.classList.remove("error");
+                } else {
+                    paymentEmailWrapper.style.display = "none";
+                }
+
+                // Reset states
+                paymentFormState.style.display = "block";
+                paymentSuccessState.style.display = "none";
+                paymentError.style.display = "none";
+                setPaymentLoading(false);
+
+                // Set button text based on checkout kind
+                if (paymentBtnText) {
+                    paymentBtnText.textContent = checkoutKind === "subscription" ? "Subscribe Now" : "Purchase";
+                }
+
+                // Hide TANGENT extension UI (Master T button) when modal opens
+                const tangentExtensionRoot = document.getElementById('tangent-extension-root');
+                if (tangentExtensionRoot) {
+                    tangentExtensionRoot.style.display = 'none';
+                }
+
+                // Show modal
+                paymentModal.style.display = "flex";
+
+                // Initialize Stripe Payment Element
+                await initializePaymentElement(priceId, checkoutKind);
+            }
+
+            // Initialize Stripe Payment Element
+            async function initializePaymentElement(priceId, checkoutKind) {
+                try {
+                    const supa = window.tgSupabase || window.supabaseClient || null;
+                    let token = null;
+                    let email = null;
+
+                    if (supa && supa.auth) {
+                        try {
+                            const { data } = await supa.auth.getSession();
+                            token = data?.session?.access_token || null;
+                        } catch (err) {
+                            console.error("Error getting session:", err);
+                        }
+                    }
+
+                    // If not logged in, get email from input
+                    if (!token) {
+                        email = paymentEmailInput.value.trim();
+                    }
+
+                    // Call backend to create payment intent
+                    const headers = {
+                        "Content-Type": "application/json"
+                    };
+                    if (token) {
+                        headers["Authorization"] = `Bearer ${token}`;
+                    }
+
+                    const body = { priceId, checkoutKind };
+                    if (!token && email) {
+                        body.email = email;
+                    }
+
+                    let clientSecret;
+
+                    if (checkoutKind === "subscription") {
+                        // For subscriptions, create the subscription first to get its payment intent client secret
+                        const subscriptionResponse = await fetch(`${API_BASE}/api/create-subscription`, {
+                            method: "POST",
+                            headers,
+                            body: JSON.stringify(body)
+                        });
+
+                        if (!subscriptionResponse.ok) {
+                            const errorData = await subscriptionResponse.json();
+                            throw new Error(errorData.error || "Failed to create subscription");
+                        }
+
+                        const { clientSecret: subClientSecret } = await subscriptionResponse.json();
+                        clientSecret = subClientSecret;
+                    } else {
+                        // For one-time payments, create payment intent
+                        const response = await fetch(`${API_BASE}/api/create-payment-intent`, {
+                            method: "POST",
+                            headers,
+                            body: JSON.stringify(body)
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            throw new Error(errorData.error || "Failed to initialize payment");
+                        }
+
+                        const { clientSecret: paymentClientSecret } = await response.json();
+                        clientSecret = paymentClientSecret;
+                    }
+
+                    // Create and mount Payment Element with dark mode appearance
+                    const elements = stripeInstance.elements({
+                        clientSecret,
+                        appearance: {
+                            theme: 'night',
+                            variables: {
+                                colorPrimary: '#3b82f6',
+                                colorBackground: '#1a1b23',
+                                colorText: '#ffffff',
+                                colorDanger: '#ef4444',
+                                fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+                                spacingUnit: '4px',
+                                borderRadius: '8px',
+                                fontSizeBase: '16px',
+                                colorTextPlaceholder: '#9ca3af'
+                            },
+                            rules: {
+                                '.Input': {
+                                    backgroundColor: '#0f1015',
+                                    border: '1px solid #2d2f3a',
+                                    boxShadow: 'none',
+                                    color: '#ffffff'
+                                },
+                                '.Input:focus': {
+                                    border: '1px solid #3b82f6',
+                                    boxShadow: '0 0 0 1px #3b82f6'
+                                },
+                                '.Label': {
+                                    color: '#e5e7eb',
+                                    fontWeight: '500',
+                                    marginBottom: '8px'
+                                },
+                                '.Tab': {
+                                    backgroundColor: '#0f1015',
+                                    border: '1px solid #2d2f3a',
+                                    color: '#e5e7eb'
+                                },
+                                '.Tab:hover': {
+                                    backgroundColor: '#1a1b23',
+                                    border: '1px solid #3b82f6'
+                                },
+                                '.Tab--selected': {
+                                    backgroundColor: '#1a1b23',
+                                    border: '1px solid #3b82f6',
+                                    color: '#ffffff'
+                                }
+                            }
+                        }
+                    });
+
+                    paymentElement = elements.create("payment", {
+                        layout: {
+                            type: "accordion",
+                            defaultCollapsed: false,
+                            radios: true,
+                            spacedAccordionItems: false
+                        }
+                    });
+
+                    // Clear previous element if exists
+                    const elementContainer = document.getElementById("payment-element");
+                    elementContainer.innerHTML = "";
+
+                    paymentElement.mount("#payment-element");
+
+                } catch (err) {
+                    console.error("Error initializing payment:", err);
+                    showPaymentError(err.message || "Failed to initialize payment form");
+                }
+            }
+
+            // Handle payment submission
+            paymentSubmitBtn.addEventListener("click", async (e) => {
+                e.preventDefault();
+
+                // Clear previous errors
+                paymentError.style.display = "none";
+                paymentEmailError.style.display = "none";
+                paymentEmailInput.classList.remove("error");
+
+                // Validate email if not logged in
+                const supa = window.tgSupabase || window.supabaseClient || null;
+                let isLoggedIn = false;
+
+                if (supa && supa.auth) {
+                    try {
+                        const { data } = await supa.auth.getSession();
+                        isLoggedIn = !!data?.session?.access_token;
+                    } catch (err) {
+                        console.error("Error checking session:", err);
+                    }
+                }
+
+                if (!isLoggedIn) {
+                    const email = paymentEmailInput.value.trim();
+                    if (!email || !email.includes("@")) {
+                        showEmailError("Please enter a valid email address");
+                        return;
+                    }
+                }
+
+                setPaymentLoading(true);
+
+                try {
+                    const { error } = await stripeInstance.confirmPayment({
+                        elements: paymentElement,
+                        confirmParams: {
+                            return_url: `${window.location.origin}/account?payment=success`,
+                        },
+                        redirect: "if_required"
+                    });
+
+                    if (error) {
+                        showPaymentError(error.message);
+                        setPaymentLoading(false);
+                    } else {
+                        // Payment succeeded
+                        showSuccessState(isLoggedIn);
+                    }
+                } catch (err) {
+                    console.error("Payment error:", err);
+                    showPaymentError(err.message || "Payment failed");
+                    setPaymentLoading(false);
+                }
+            });
+
+            // Show email error
+            function showEmailError(message) {
+                paymentEmailError.textContent = message;
+                paymentEmailError.style.display = "block";
+                paymentEmailInput.classList.add("error");
+                paymentEmailInput.focus();
+            }
+
+            // Show payment error
+            function showPaymentError(message) {
+                paymentError.textContent = message;
+                paymentError.style.display = "block";
+            }
+
+            // Set loading state
+            function setPaymentLoading(loading) {
+                if (loading) {
+                    paymentSubmitBtn.disabled = true;
+                    paymentBtnText.style.display = "none";
+                    paymentSpinner.style.display = "block";
+                } else {
+                    paymentSubmitBtn.disabled = false;
+                    paymentBtnText.style.display = "block";
+                    paymentSpinner.style.display = "none";
+                }
+            }
+
+            // Show success state
+            function showSuccessState(isLoggedIn) {
+                paymentFormState.style.display = "none";
+                paymentSuccessState.style.display = "block";
+
+                if (isLoggedIn) {
+                    paymentSuccessMessage.textContent = "Your subscription is now active! Redirecting to your account...";
+                    setTimeout(() => {
+                        window.location.href = "/account";
+                    }, 2000);
+                } else {
+                    paymentSuccessMessage.textContent = "Check your email for a password setup link. Click below to access your account.";
+                }
+            }
+
+            // Close modal handlers
+            paymentOverlay.addEventListener("click", closePaymentModal);
+            paymentClose.addEventListener("click", closePaymentModal);
+
+            function closePaymentModal() {
+                paymentModal.style.display = "none";
+                if (paymentElement) {
+                    paymentElement.unmount();
+                    paymentElement = null;
+                }
+
+                // Restore TANGENT extension UI (Master T button) when modal closes
+                const tangentExtensionRoot = document.getElementById('tangent-extension-root');
+                if (tangentExtensionRoot) {
+                    tangentExtensionRoot.style.display = '';
+                }
+            }
+
+            // Success button handler
+            paymentSuccessBtn.addEventListener("click", () => {
+                window.location.href = "/account";
+            });
+
+            // ===== MODIFIED CHECKOUT FUNCTION =====
+            // Map price IDs to plan details for modal display
+            const PLAN_DETAILS = {
+                "price_1Se2NPFYbfjZcbAUPVqOlJkL": { name: "Pro", price: "$10/month" },
+                "price_1Se2QsFYbfjZcbAUCOHKQDaP": { name: "Pro", price: "$8.75/month ($105 billed annually)" },
+                "price_1Se2WDFYbfjZcbAU7MEqsfPe": { name: "Business (Solo)", price: "$29/month" },
+                "price_1Se2X2FYbfjZcbAU4RBQw3LL": { name: "Business (Solo)", price: "$24.17/month ($290 billed annually)" },
+                "price_1SWtlcFYbfjZcbAUnebgB9UU": { name: "Business (Team)", price: "$49/month per seat" },
+                "price_1SWtm2FYbfjZcbAU8pWGPFYr": { name: "Business (Team)", price: "$40.83/month per seat ($490 billed annually)" }
+            };
+
+            async function startCheckout(planCode) {
+                try {
+                    window.tgPendingPlanCode = planCode;
+
+                    const supa = window.tgSupabase || window.supabaseClient || null;
+                    if (!supa || !supa.auth) {
+                        alert("Auth is not ready. Please refresh and try again.");
+                        return;
+                    }
+
+                    // Handle free trial separately
+                    if (planCode === "free_trial") {
+                        // Check if logged in
+                        let sessionData = null;
+                        try {
+                            const res = await supa.auth.getSession();
+                            sessionData = res?.data || null;
+                        } catch (_) { sessionData = null; }
+
+                        if (!sessionData?.session?.access_token) {
+                            if (window.tgOpenLogin) {
+                                window.tgOpenLogin();
+                            } else {
+                                alert("Please log in to continue.");
+                            }
+                            return;
+                        }
+
+                        window.location.href = "/account";
+                        return;
+                    }
+
+                    // Get price ID
+                    const priceId = PRICE_IDS[planCode];
+                    if (!priceId) {
+                        alert("Unknown plan selected. Please refresh and try again.");
+                        return;
+                    }
+
+                    // Get plan details for modal
+                    const planInfo = PLAN_DETAILS[priceId] || { name: "Plan", price: "" };
+
+                    // Open payment modal (no login required)
+                    await openPaymentModal(priceId, planInfo.name, planInfo.price, "subscription");
+
+                } catch (err) {
+                    console.error(err);
+                    alert("Error starting checkout. Please try again in a moment.");
+                }
+            }
+
+            // Expose globally so the modal script can call it
+            window.tgStartCheckout = startCheckout;
+
+            planButtons.forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    var planCode = btn.getAttribute("data-plan");
+                    startCheckout(planCode);
+                });
+            });
+        })();
+    </script>
+
+    <!-- Shared auth/nav logic with modal overlay -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script>
+        (function () {
+            var SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
+            var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
+            var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
+            window.tgSupabase = client;
+            var navRoot = document.getElementById("navRoot");
+
+            var pricingLink = document.getElementById("navPricing");
+            var signOutLink = document.getElementById("navSignOut");
+            var loginLink = document.getElementById("navLogin");
+            var signupBtn = document.getElementById("navSignup");
+            var accountLink = document.getElementById("navAccount");
+            var freeTrialBtn = document.getElementById("freeTrialBtn");
+
+            function setNavLoggedIn() {
+                if (pricingLink) pricingLink.style.display = "none";
+                if (signOutLink) {
+                    signOutLink.style.display = "inline-flex";
+                    signOutLink.onclick = function (e) {
+                        e.preventDefault();
+                        client.auth.signOut().catch(function () {});
+                        setNavLoggedOut();
+                    };
+                }
+                if (loginLink) loginLink.style.display = "none";
+                if (signupBtn) signupBtn.style.display = "none";
+                if (accountLink) {
+                    accountLink.style.display = "inline-flex";
+                    accountLink.onclick = null;
+                }
+                if (freeTrialBtn) freeTrialBtn.style.display = "none";
+
+                // Check trial status for logged-in users
+                checkTrialStatus();
+            }
+
+            function setNavLoggedOut() {
+                if (pricingLink) {
+                    pricingLink.style.display = "inline-flex";
+                    pricingLink.href = "/signup";
+                }
+                if (signOutLink) {
+                    signOutLink.style.display = "none";
+                    signOutLink.onclick = null;
+                }
+                if (loginLink) {
+                    loginLink.style.display = "inline-flex";
+                    loginLink.href = "javascript:void(0)";
+                    loginLink.onclick = function (e) { e.preventDefault(); openLoginModal(); };
+                }
+                if (signupBtn) {
+                    signupBtn.style.display = "inline-flex";
+                    signupBtn.href = "/signup";
+                    signupBtn.onclick = null;
+                    signupBtn.classList.add("nav-link-cta", "nav-link-cta-active");
+                }
+                if (accountLink) {
+                    accountLink.style.display = "none";
+                }
+                if (freeTrialBtn) {
+                    freeTrialBtn.style.display = "inline-flex";
+                    freeTrialBtn.onclick = function (e) { e.preventDefault(); openLoginModal(); };
+                }
+            }
+
+            var modal;
+            function ensureModal() {
+                if (modal) return modal;
+                modal = document.createElement("div");
+                modal.id = "tg-login-modal";
+                modal.style.position = "fixed";
+                modal.style.inset = "0";
+                modal.style.background = "rgba(15,23,42,0.55)";
+                modal.style.backdropFilter = "blur(8px)";
+                modal.style.display = "none";
+                modal.style.alignItems = "center";
+                modal.style.justifyContent = "center";
+                modal.style.zIndex = "9999";
+                modal.innerHTML = `
+                  <div style="background:#050915;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:22px;width:100%;max-width:420px;box-shadow:0 14px 36px rgba(0,0,0,0.45);color:#e5e7eb;position:relative;">
+                    <button id="tgLoginClose" style="position:absolute;top:10px;right:10px;background:transparent;border:0;color:#cbd5e1;font-size:18px;cursor:pointer;">×</button>
+                    <div style="display:flex;justify-content:center;margin-bottom:12px;">
+                      <img src="/images/tangent_logo.png" alt="Tangent" style="height:28px;" />
+                    </div>
+                    <h3 style="margin:0 0 14px 0;font-weight:700;">Sign In:</h3>
+                    <label style="display:block;margin-bottom:10px;font-weight:600;font-size:13px;">Email
+                      <input id="tgLoginEmail" type="email" autocomplete="email" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(5,6,10,0.7);color:#e5e7eb;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);" />
+                    </label>
+                    <label style="display:block;margin-bottom:14px;font-weight:600;font-size:13px;">Password
+                      <input id="tgLoginPassword" type="password" autocomplete="current-password" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(5,6,10,0.7);color:#e5e7eb;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);" />
+                    </label>
+                    <div style="display:flex;gap:10px;margin-top:12px;">
+                      <button id="tgLoginSignIn" class="cta-button secondary" style="flex:1;">Sign In</button>
+                      <button id="tgLoginSignUp" class="cta-button secondary" style="flex:1;">Sign Up</button>
+                    </div>
+                    <p id="tgLoginStatus" style="min-height:18px;font-size:13px;margin-top:10px;"></p>
+                  </div>
+                `;
+                document.body.appendChild(modal);
+                modal.addEventListener("click", function (e) { if (e.target === modal) closeLoginModal(); });
+                modal.querySelector("#tgLoginClose").addEventListener("click", closeLoginModal);
+                modal.querySelector("#tgLoginSignIn").addEventListener("click", function () { handleAuth("signin"); });
+                modal.querySelector("#tgLoginSignUp").addEventListener("click", function () { handleAuth("signup"); });
+                var emailInput = modal.querySelector("#tgLoginEmail");
+                var pwdInput = modal.querySelector("#tgLoginPassword");
+                var onKey = function (e) { if (e.key === "Enter") { e.preventDefault(); handleAuth("signin"); } };
+                emailInput.addEventListener("keydown", onKey);
+                pwdInput.addEventListener("keydown", onKey);
+                return modal;
+            }
+
+            function setStatus(msg, isError) {
+                var el = modal && modal.querySelector("#tgLoginStatus");
+                if (!el) return;
+                el.textContent = msg || "";
+                el.style.color = isError ? "#f87171" : "#cbd5e1";
+            }
+
+            function openLoginModal() {
+                ensureModal();
+                modal.style.display = "flex";
+                var emailInput = modal.querySelector("#tgLoginEmail");
+                if (emailInput) emailInput.focus();
+            }
+            function closeLoginModal() { if (modal) modal.style.display = "none"; }
+            window.tgOpenLogin = openLoginModal;
+
+            // Client-side rate limiting (3 attempts per 5 minutes)
+            var authAttempts = {};
+            var AUTH_RATE_LIMIT = 3;
+            var AUTH_WINDOW_MS = 5 * 60 * 1000; // 5 minutes
+
+            function checkAuthRateLimit(email) {
+                var now = Date.now();
+                if (!authAttempts[email]) {
+                    authAttempts[email] = [];
+                }
+
+                // Remove attempts older than window
+                authAttempts[email] = authAttempts[email].filter(function(timestamp) {
+                    return now - timestamp < AUTH_WINDOW_MS;
+                });
+
+                if (authAttempts[email].length >= AUTH_RATE_LIMIT) {
+                    var oldestAttempt = Math.min.apply(null, authAttempts[email]);
+                    var retryAfter = Math.ceil((oldestAttempt + AUTH_WINDOW_MS - now) / 1000);
+                    return { allowed: false, retryAfter: retryAfter };
+                }
+
+                authAttempts[email].push(now);
+                return { allowed: true };
+            }
+
+            async function handleAuth(mode) {
+                ensureModal();
+                var email = modal.querySelector("#tgLoginEmail").value.trim();
+                var password = modal.querySelector("#tgLoginPassword").value;
+                if (!email || !password) {
+                    setStatus("Enter email and password.", true);
+                    return;
+                }
+
+                // Check rate limit
+                var rateLimit = checkAuthRateLimit(email);
+                if (!rateLimit.allowed) {
+                    setStatus("Too many attempts. Please try again in " + rateLimit.retryAfter + " seconds.", true);
+                    return;
+                }
+                setStatus(mode === "signin" ? "Signing in…" : "Creating account…", false);
+                try {
+                    if (mode === "signin") {
+                        var signRes = await client.auth.signInWithPassword({ email: email, password: password });
+                        if (signRes.error) throw signRes.error;
+                        setStatus("Signed in. Redirecting…", false);
+                        setNavLoggedIn();
+                        if (window.tgPendingPlanCode) {
+                            var plan = window.tgPendingPlanCode;
+                            window.tgPendingPlanCode = null;
+                            if (window.tgStartCheckout) {
+                                window.tgStartCheckout(plan);
+                            }
+                        } else {
+                            window.location.href = "/account";
+                        }
+                    } else {
+                        var upRes = await client.auth.signUp({ email: email, password: password });
+                        if (upRes.error) throw upRes.error;
+
+                        // Check if email confirmation is required
+                        if (upRes.data?.user && !upRes.data.session) {
+                            setStatus("Account created. Check your email to confirm, then sign in.", false);
+                        } else if (upRes.data?.session) {
+                            // Auto-confirmed (some Supabase configs auto-confirm)
+                            setStatus("Account created. Redirecting…", false);
+                            setNavLoggedIn();
+                            setTimeout(function() {
+                                if (window.tgPendingPlanCode) {
+                                    var plan = window.tgPendingPlanCode;
+                                    window.tgPendingPlanCode = null;
+                                    if (window.tgStartCheckout) {
+                                        window.tgStartCheckout(plan);
+                                    }
+                                } else {
+                                    window.location.href = "/account";
+                                }
+                            }, 1000);
+                        }
+                    }
+                } catch (e) {
+                    setStatus(e.message || "Authentication failed.", true);
+                }
+            }
+
+            client.auth.getSession().then(function (res) {
+                var data = res && res.data;
+                if (data && data.session && data.session.access_token) {
+                    setNavLoggedIn();
+                } else {
+                    setNavLoggedOut();
+                }
+                if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
+            }).catch(function () {
+                setNavLoggedOut();
+                if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
+            });
+
+            if (freeTrialBtn) {
+                freeTrialBtn.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    openLoginModal();
+                });
+            }
+
+            // Check if user has already used their trial
+            async function checkTrialStatus() {
+                try {
+                    const sessionData = await client.auth.getSession();
+                    if (!sessionData?.data?.session?.access_token) return;
+
+                    const token = sessionData.data.session.access_token;
+                    const res = await fetch("https://api.tangentapp.co/api/user-plan", {
+                        method: "GET",
+                        headers: {
+                            "Authorization": "Bearer " + token
+                        }
+                    });
+
+                    if (!res.ok) return;
+
+                    const data = await res.json();
+                    const trialGranted = !!data.trial_granted;
+
+                    // Check if trial has expired
+                    const trialExpired = data.trial_expires_at && new Date(data.trial_expires_at) < new Date();
+
+                    // Disable all Free Trial buttons if trial already granted OR expired
+                    if (trialGranted || trialExpired) {
+                        disableFreeTrialButtons();
+                    }
+                } catch (err) {
+                    console.error("Error checking trial status:", err);
+                }
+            }
+
+            function disableFreeTrialButtons() {
+                // Find all Free Trial buttons
+                var freeTrialButtons = document.querySelectorAll('[data-plan="free_trial"]');
+                freeTrialButtons.forEach(function(btn) {
+                    btn.disabled = true;
+                    btn.style.opacity = "0.5";
+                    btn.style.cursor = "not-allowed";
+                    btn.title = "Free trial already used";
+
+                    // Remove click event and add message
+                    var originalOnClick = btn.onclick;
+                    btn.onclick = function(e) {
+                        e.preventDefault();
+                        alert("You have already used your free trial. Please choose a paid plan to continue.");
+                        return false;
+                    };
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>
