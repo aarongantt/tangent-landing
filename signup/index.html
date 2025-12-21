@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="/styles.css" />
   <link rel="icon" type="image/png" href="/images/tangent_t_logo.png" />
   <script src="https://js.stripe.com/v3/"></script>
+  <!-- Fraud Prevention -->
+  <script src="/js/fraud-prevention.js"></script>
   <style>
     .pricing-header-row {
       display: flex;
@@ -956,6 +958,41 @@
             var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
             var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
             window.tgSupabase = client;
+
+            // ========================================
+            // Fraud Prevention Initialization
+            // ========================================
+            var fraudPreventionInitialized = false;
+
+            async function initializeFraudPrevention() {
+              if (fraudPreventionInitialized) return;
+
+              try {
+                console.log('[Fraud Prevention] Initializing...');
+
+                // Initialize device fingerprinting
+                if (window.TangentFraudPrevention) {
+                  await window.TangentFraudPrevention.initialize();
+
+                  // Initialize CAPTCHA (will render when modal opens)
+                  await window.TangentFraudPrevention.initializeCaptcha('cf-turnstile-container');
+
+                  fraudPreventionInitialized = true;
+                  console.log('[Fraud Prevention] Initialization complete');
+                } else {
+                  console.warn('[Fraud Prevention] Library not loaded, continuing without fraud prevention');
+                }
+              } catch (err) {
+                console.error('[Fraud Prevention] Initialization failed:', err);
+                // Continue without fraud prevention (graceful degradation)
+              }
+            }
+
+            // Initialize on page load
+            document.addEventListener('DOMContentLoaded', function() {
+              initializeFraudPrevention();
+            });
+
             var navRoot = document.getElementById("navRoot");
 
             var pricingLink = document.getElementById("navPricing");
@@ -1042,6 +1079,8 @@
                     <label style="display:block;margin-bottom:14px;font-weight:600;font-size:13px;">Password
                       <input id="tgLoginPassword" type="password" autocomplete="current-password" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(5,6,10,0.7);color:#e5e7eb;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);" />
                     </label>
+                    <!-- CAPTCHA Container -->
+                    <div id="cf-turnstile-container" style="margin: 16px 0; min-height: 65px; display: flex; justify-content: center;"></div>
                     <div style="display:flex;gap:10px;margin-top:12px;">
                       <button id="tgLoginSignIn" class="cta-button secondary" style="flex:1;">Sign In</button>
                       <button id="tgLoginSignUp" class="cta-button secondary" style="flex:1;">Sign Up</button>
@@ -1074,6 +1113,14 @@
                 modal.style.display = "flex";
                 var emailInput = modal.querySelector("#tgLoginEmail");
                 if (emailInput) emailInput.focus();
+
+                // Re-initialize fraud prevention when modal opens
+                if (!fraudPreventionInitialized) {
+                  initializeFraudPrevention();
+                } else if (window.TangentFraudPrevention && window.TangentFraudPrevention.refreshCaptcha) {
+                  // CAPTCHA might need re-rendering if modal was previously closed
+                  window.TangentFraudPrevention.refreshCaptcha('cf-turnstile-container');
+                }
             }
             function closeLoginModal() { if (modal) modal.style.display = "none"; }
             window.tgOpenLogin = openLoginModal;
@@ -1108,6 +1155,7 @@
                 ensureModal();
                 var email = modal.querySelector("#tgLoginEmail").value.trim();
                 var password = modal.querySelector("#tgLoginPassword").value;
+
                 if (!email || !password) {
                     setStatus("Enter email and password.", true);
                     return;
@@ -1119,13 +1167,20 @@
                     setStatus("Too many attempts. Please try again in " + rateLimit.retryAfter + " seconds.", true);
                     return;
                 }
+
                 setStatus(mode === "signin" ? "Signing in…" : "Creating account…", false);
+
                 try {
                     if (mode === "signin") {
+                        // ========================================
+                        // SIGN IN (No fraud check needed)
+                        // ========================================
                         var signRes = await client.auth.signInWithPassword({ email: email, password: password });
                         if (signRes.error) throw signRes.error;
+
                         setStatus("Signed in. Redirecting…", false);
                         setNavLoggedIn();
+
                         if (window.tgPendingPlanCode) {
                             var plan = window.tgPendingPlanCode;
                             window.tgPendingPlanCode = null;
@@ -1136,31 +1191,85 @@
                             window.location.href = "/account";
                         }
                     } else {
-                        var upRes = await client.auth.signUp({ email: email, password: password });
-                        if (upRes.error) throw upRes.error;
+                        // ========================================
+                        // SIGN UP (Enhanced with fraud prevention)
+                        // ========================================
+
+                        setStatus("Checking for suspicious activity…", false);
+
+                        // Call enhanced signup with fraud prevention
+                        var signupResult;
+                        if (window.TangentFraudPrevention && window.TangentFraudPrevention.enhancedSignup) {
+                          signupResult = await window.TangentFraudPrevention.enhancedSignup(
+                              email,
+                              password,
+                              client
+                          );
+                        } else {
+                          // Fallback to regular signup if fraud prevention not available
+                          console.warn('[Auth] Fraud prevention not available, using regular signup');
+                          var upRes = await client.auth.signUp({ email: email, password: password });
+                          if (upRes.error) throw upRes.error;
+                          signupResult = {
+                            success: true,
+                            userData: upRes.data,
+                            requiresPhoneVerification: false
+                          };
+                        }
+
+                        if (!signupResult.success) {
+                            // Signup was blocked by fraud prevention
+                            throw new Error(signupResult.error || "Signup failed due to security checks");
+                        }
 
                         // Check if email confirmation is required
-                        if (upRes.data?.user && !upRes.data.session) {
+                        if (signupResult.userData?.user && !signupResult.userData.session) {
                             setStatus("Account created. Check your email to confirm, then sign in.", false);
-                        } else if (upRes.data?.session) {
-                            // Auto-confirmed (some Supabase configs auto-confirm)
+                        } else if (signupResult.userData?.session) {
+                            // Auto-confirmed account - success!
                             setStatus("Account created. Redirecting…", false);
                             setNavLoggedIn();
-                            setTimeout(function() {
-                                if (window.tgPendingPlanCode) {
-                                    var plan = window.tgPendingPlanCode;
-                                    window.tgPendingPlanCode = null;
-                                    if (window.tgStartCheckout) {
-                                        window.tgStartCheckout(plan);
+
+                            // Check if phone verification is required
+                            if (signupResult.requiresPhoneVerification && window.showPhoneVerificationModal) {
+                                // Show phone verification modal
+                                window.showPhoneVerificationModal(signupResult.userData.user.id);
+                            } else {
+                                // Proceed to account page or checkout
+                                setTimeout(function() {
+                                    if (window.tgPendingPlanCode) {
+                                        var plan = window.tgPendingPlanCode;
+                                        window.tgPendingPlanCode = null;
+                                        if (window.tgStartCheckout) {
+                                            window.tgStartCheckout(plan);
+                                        }
+                                    } else {
+                                        window.location.href = "/account";
                                     }
-                                } else {
-                                    window.location.href = "/account";
-                                }
-                            }, 1000);
+                                }, 800);
+                            }
                         }
                     }
-                } catch (e) {
-                    setStatus(e.message || "Authentication failed.", true);
+                } catch (err) {
+                    console.error('[Auth] Error:', err);
+
+                    // User-friendly error messages
+                    var errorMsg = err.message || "An error occurred";
+
+                    // Specific fraud prevention error messages
+                    if (errorMsg.includes("Too many signups from this IP")) {
+                        errorMsg = "Too many signup attempts from your network. Please try again later.";
+                    } else if (errorMsg.includes("device has already been used")) {
+                        errorMsg = "This device has already been used for multiple signups. Please contact support if you need assistance.";
+                    } else if (errorMsg.includes("email address has already been used")) {
+                        errorMsg = "This email address (or similar) has already been used for a free trial.";
+                    } else if (errorMsg.includes("suspicious activity")) {
+                        errorMsg = "Signup blocked due to suspicious activity. Please contact support for assistance.";
+                    } else if (errorMsg.includes("CAPTCHA")) {
+                        errorMsg = "Please complete the security verification (CAPTCHA) above.";
+                    }
+
+                    setStatus(errorMsg, true);
                 }
             }
 
@@ -1235,6 +1344,210 @@
             }
         })();
     </script>
+
+    <!-- Phone Verification Modal -->
+    <div id="phone-verification-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2147483648; align-items: center; justify-content: center;">
+        <div style="background: #1a1f2e; padding: 32px; border-radius: 16px; max-width: 400px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+            <h2 style="margin: 0 0 16px; color: #fff; font-size: 24px;">Verify Phone Number</h2>
+            <p style="color: #94a3b8; margin: 0 0 24px; line-height: 1.5;">To complete signup, please verify your phone number.</p>
+
+            <div id="phone-input-step">
+                <label style="display: block; color: #e5e7eb; margin-bottom: 8px; font-weight: 500;">Phone Number</label>
+                <input type="tel" id="phone-number-input" placeholder="+1 234 567 8900" style="width: 100%; padding: 12px; background: #0b1220; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #e5e7eb; font-size: 16px; margin-bottom: 16px;" />
+
+                <button id="send-verification-code-btn" class="cta-button" style="width: 100%; margin-top: 8px;">Send Verification Code</button>
+            </div>
+
+            <div id="code-input-step" style="display: none;">
+                <label style="display: block; color: #e5e7eb; margin-bottom: 8px; font-weight: 500;">Verification Code</label>
+                <input type="text" id="verification-code-input" placeholder="123456" maxlength="6" style="width: 100%; padding: 12px; background: #0b1220; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: #e5e7eb; font-size: 20px; text-align: center; letter-spacing: 4px; margin-bottom: 16px;" />
+
+                <button id="verify-code-btn" class="cta-button" style="width: 100%; margin-top: 8px;">Verify Code</button>
+                <button id="resend-code-btn" class="cta-button secondary" style="width: 100%; margin-top: 8px;">Resend Code</button>
+            </div>
+
+            <p id="phone-verification-status" style="color: #94a3b8; margin: 16px 0 0; text-align: center; font-size: 14px;"></p>
+
+            <button id="skip-phone-verification-btn" style="background: none; border: none; color: #64748b; margin-top: 16px; cursor: pointer; width: 100%; text-decoration: underline;">Skip for now</button>
+        </div>
+    </div>
+
+    <script>
+        // ========================================
+        // Phone Verification Functions
+        // ========================================
+
+        var currentUserId = null;
+
+        function showPhoneVerificationModal(userId) {
+            currentUserId = userId;
+            var modal = document.getElementById('phone-verification-modal');
+            if (!modal) {
+                console.error('[Phone Verification] Modal not found');
+                return;
+            }
+
+            modal.style.display = 'flex';
+
+            // Reset modal state
+            document.getElementById('phone-input-step').style.display = 'block';
+            document.getElementById('code-input-step').style.display = 'none';
+            document.getElementById('phone-number-input').value = '';
+            document.getElementById('verification-code-input').value = '';
+            document.getElementById('phone-verification-status').textContent = '';
+        }
+        window.showPhoneVerificationModal = showPhoneVerificationModal;
+
+        function hidePhoneVerificationModal() {
+            var modal = document.getElementById('phone-verification-modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        async function sendVerificationCode() {
+            var phoneInput = document.getElementById('phone-number-input');
+            var statusEl = document.getElementById('phone-verification-status');
+            var sendBtn = document.getElementById('send-verification-code-btn');
+
+            var phoneNumber = phoneInput.value.trim();
+
+            if (!phoneNumber) {
+                statusEl.textContent = 'Please enter a phone number';
+                statusEl.style.color = '#ef4444';
+                return;
+            }
+
+            // Validate E.164 format (+1234567890)
+            var cleanedPhone = phoneNumber.replace(/[\s-]/g, '');
+            if (!/^\+\d{10,15}$/.test(cleanedPhone)) {
+                statusEl.textContent = 'Invalid phone format. Use +1234567890';
+                statusEl.style.color = '#ef4444';
+                return;
+            }
+
+            sendBtn.disabled = true;
+            statusEl.textContent = 'Sending code...';
+            statusEl.style.color = '#94a3b8';
+
+            try {
+                var result;
+                if (window.TangentFraudPrevention && window.TangentFraudPrevention.sendPhoneVerification) {
+                    result = await window.TangentFraudPrevention.sendPhoneVerification(cleanedPhone, currentUserId);
+                } else {
+                    throw new Error('Phone verification not available');
+                }
+
+                if (result.success) {
+                    // Show code input step
+                    document.getElementById('phone-input-step').style.display = 'none';
+                    document.getElementById('code-input-step').style.display = 'block';
+                    statusEl.textContent = 'Code sent! Check your phone.';
+                    statusEl.style.color = '#10b981';
+
+                    // Focus code input
+                    document.getElementById('verification-code-input').focus();
+                } else {
+                    throw new Error(result.error || 'Failed to send verification code');
+                }
+            } catch (err) {
+                console.error('[Phone Verification] Error:', err);
+                statusEl.textContent = err.message || 'Failed to send code';
+                statusEl.style.color = '#ef4444';
+            } finally {
+                sendBtn.disabled = false;
+            }
+        }
+
+        async function verifyCode() {
+            var codeInput = document.getElementById('verification-code-input');
+            var statusEl = document.getElementById('phone-verification-status');
+            var verifyBtn = document.getElementById('verify-code-btn');
+
+            var code = codeInput.value.trim();
+
+            if (!code || code.length !== 6) {
+                statusEl.textContent = 'Please enter 6-digit code';
+                statusEl.style.color = '#ef4444';
+                return;
+            }
+
+            verifyBtn.disabled = true;
+            statusEl.textContent = 'Verifying...';
+            statusEl.style.color = '#94a3b8';
+
+            try {
+                var phoneNumber = document.getElementById('phone-number-input').value.trim().replace(/[\s-]/g, '');
+                var result;
+                if (window.TangentFraudPrevention && window.TangentFraudPrevention.verifyPhoneCode) {
+                    result = await window.TangentFraudPrevention.verifyPhoneCode(phoneNumber, code);
+                } else {
+                    throw new Error('Phone verification not available');
+                }
+
+                if (result.success) {
+                    statusEl.textContent = 'Phone verified! Redirecting...';
+                    statusEl.style.color = '#10b981';
+
+                    setTimeout(function() {
+                        hidePhoneVerificationModal();
+
+                        // Proceed to account page or checkout
+                        if (window.tgPendingPlanCode) {
+                            var plan = window.tgPendingPlanCode;
+                            window.tgPendingPlanCode = null;
+                            if (window.tgStartCheckout) {
+                                window.tgStartCheckout(plan);
+                            }
+                        } else {
+                            window.location.href = "/account";
+                        }
+                    }, 1500);
+                } else {
+                    throw new Error(result.error || 'Invalid verification code');
+                }
+            } catch (err) {
+                console.error('[Phone Verification] Error:', err);
+                statusEl.textContent = err.message || 'Verification failed';
+                statusEl.style.color = '#ef4444';
+            } finally {
+                verifyBtn.disabled = false;
+            }
+        }
+
+        // Event listeners for phone verification
+        document.addEventListener('DOMContentLoaded', function() {
+            var sendBtn = document.getElementById('send-verification-code-btn');
+            var verifyBtn = document.getElementById('verify-code-btn');
+            var resendBtn = document.getElementById('resend-code-btn');
+            var skipBtn = document.getElementById('skip-phone-verification-btn');
+
+            if (sendBtn) {
+                sendBtn.addEventListener('click', sendVerificationCode);
+            }
+
+            if (verifyBtn) {
+                verifyBtn.addEventListener('click', verifyCode);
+            }
+
+            if (resendBtn) {
+                resendBtn.addEventListener('click', function() {
+                    // Go back to phone input step
+                    document.getElementById('phone-input-step').style.display = 'block';
+                    document.getElementById('code-input-step').style.display = 'none';
+                    document.getElementById('phone-verification-status').textContent = '';
+                });
+            }
+
+            if (skipBtn) {
+                skipBtn.addEventListener('click', function() {
+                    hidePhoneVerificationModal();
+                    window.location.href = "/account";
+                });
+            }
+        });
+    </script>
+
 </body>
 
 </html>
