@@ -408,14 +408,55 @@
     left: calc(50% + 550px);
     top: calc(50% + 200px);
     transform: translate(-50%, -50%);
-    width: 1800px !important;
-    height: 1059px !important; /* Maintains 4405:2593 aspect ratio (1.7:1) */
-    max-width: none !important;
-    max-height: none !important;
-    min-width: 1800px !important;
-    min-height: 1059px !important;
+    width: 1800px;
+    height: 1059px; /* Maintains 4405:2593 aspect ratio (1.7:1) */
+    max-width: none;
+    max-height: none;
     z-index: 0;
     pointer-events: none;
+    object-fit: contain; /* Ensure image scales proportionally */
+}
+
+/* Responsive scaling for smaller viewports */
+@media (max-width: 2400px) {
+    .hero-3d-bg {
+        width: 1600px;
+        height: 941px; /* Maintains aspect ratio */
+    }
+}
+
+@media (max-width: 2000px) {
+    .hero-3d-bg {
+        width: 1400px;
+        height: 824px; /* Maintains aspect ratio */
+    }
+}
+
+@media (max-width: 1700px) {
+    .hero-3d-bg {
+        width: 1200px;
+        height: 706px; /* Maintains aspect ratio */
+        left: calc(50% + 450px);
+        top: calc(50% + 150px);
+    }
+}
+
+@media (max-width: 1512px) {
+    .hero-3d-bg {
+        width: 1000px;
+        height: 588px; /* Maintains aspect ratio */
+        left: calc(50% + 350px);
+        top: calc(50% + 100px);
+    }
+}
+
+@media (max-width: 1200px) {
+    .hero-3d-bg {
+        width: 900px;
+        height: 529px; /* Maintains aspect ratio */
+        left: calc(50% + 300px);
+        top: calc(50% + 80px);
+    }
 }
 
 .hero-overlay {
