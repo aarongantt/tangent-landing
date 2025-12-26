@@ -496,6 +496,34 @@
     display: inline-block;
 }
 
+/* Responsive CTA button sizing */
+@media (max-width: 1700px) {
+    .hero-trial-btn {
+        padding: 18px 36px;
+        font-size: 26px;
+        border-radius: 44px;
+        border: 3.5px solid #ffffff;
+    }
+}
+
+@media (max-width: 1512px) {
+    .hero-trial-btn {
+        padding: 16px 32px;
+        font-size: 24px;
+        border-radius: 40px;
+        border: 3px solid #ffffff;
+    }
+}
+
+@media (max-width: 1200px) {
+    .hero-trial-btn {
+        padding: 14px 28px;
+        font-size: 22px;
+        border-radius: 36px;
+        border: 3px solid #ffffff;
+    }
+}
+
 .hero-trial-btn:hover {
     background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
 }
@@ -508,6 +536,28 @@
     max-width: 650px;
 }
 
+/* Responsive positioning and sizing for hero left content */
+@media (max-width: 1700px) {
+    .hero-left-content {
+        left: 80px;
+        max-width: 550px;
+    }
+}
+
+@media (max-width: 1512px) {
+    .hero-left-content {
+        left: 60px;
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .hero-left-content {
+        left: 40px;
+        max-width: 450px;
+    }
+}
+
 .hero-overlay h1 {
     font-size: 35px;
     font-weight: 700;
@@ -518,6 +568,25 @@
     flex: 0 1 auto;
     position: relative;
     z-index: 1;
+}
+
+/* Responsive headline sizing */
+@media (max-width: 1700px) {
+    .hero-overlay h1 {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 1512px) {
+    .hero-overlay h1 {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .hero-overlay h1 {
+        font-size: 28px;
+    }
 }
 
 /* Blue highlight for "AI Assistant" */
@@ -551,6 +620,37 @@
     top: 1px;
 }
 
+/* Responsive chip bar sizing */
+@media (max-width: 1700px) {
+    .hero-chips {
+        gap: 6px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        margin-top: 20px;
+        left: 48px;
+    }
+}
+
+@media (max-width: 1512px) {
+    .hero-chips {
+        gap: 5.5px;
+        padding: 9px 13px;
+        border-radius: 11px;
+        margin-top: 18px;
+        left: 40px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .hero-chips {
+        gap: 5px;
+        padding: 8px 12px;
+        border-radius: 10px;
+        margin-top: 16px;
+        left: 32px;
+    }
+}
+
 .hero-chip {
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
     font-weight: 600;
@@ -564,6 +664,28 @@
     cursor: pointer;
     user-select: none;
     transition: background 0.2s ease, transform 0.1s ease;
+}
+
+/* Responsive chip sizing */
+@media (max-width: 1700px) {
+    .hero-chip {
+        font-size: 1.08em;
+        padding: 6.5px 11px;
+    }
+}
+
+@media (max-width: 1512px) {
+    .hero-chip {
+        font-size: 1.02em;
+        padding: 6px 10px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .hero-chip {
+        font-size: 0.98em;
+        padding: 5.5px 9px;
+    }
 }
 
 .hero-chip:hover {
@@ -581,6 +703,43 @@
     justify-content: center;
     min-width: 36.8px;
     border-radius: 6.9px;
+}
+
+/* Responsive icon chip sizing */
+@media (max-width: 1700px) {
+    .hero-chip--icon {
+        padding: 6.5px;
+        min-width: 35px;
+        border-radius: 6.5px;
+    }
+    .hero-chip--icon img {
+        width: 17px !important;
+        height: 17px !important;
+    }
+}
+
+@media (max-width: 1512px) {
+    .hero-chip--icon {
+        padding: 6px;
+        min-width: 33px;
+        border-radius: 6px;
+    }
+    .hero-chip--icon img {
+        width: 16px !important;
+        height: 16px !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    .hero-chip--icon {
+        padding: 5.5px;
+        min-width: 31px;
+        border-radius: 5.5px;
+    }
+    .hero-chip--icon img {
+        width: 15px !important;
+        height: 15px !important;
+    }
 }
 
 .hero-tagline {
