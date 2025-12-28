@@ -16,19 +16,17 @@
         }
 
         .privacy-logo {
-            width: 160px;
-            margin: 0 auto 30px;
+            width: 280px;
+            margin: 0 auto 40px;
             display: block;
         }
 
         .privacy-hero h1 {
-            font-size: clamp(2rem, 4vw, 3.5rem);
-            line-height: 1.1;
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            line-height: 1.2;
             margin-bottom: 16px;
-            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #e5e7eb;
+            font-weight: 600;
         }
 
         .privacy-hero .last-updated {
@@ -161,59 +159,10 @@
             color: #e5e7eb;
         }
 
-        /* Hide nav until state is resolved to avoid flash */
-        .nav-guard {
-            opacity: 0;
-            visibility: hidden;
-        }
     </style>
 </head>
 
 <body>
-    <!-- Site header -->
-    <header class="site-header">
-        <div class="container header-inner" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-            <!-- Mobile hamburger menu (hidden on desktop) -->
-            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-
-            <a href="/" class="logo-link" style="margin-right: auto;">
-                <img src="images/tangent_logo_light.png" alt="Tangent" class="logo-wordmark" />
-            </a>
-
-            <!-- Desktop navigation (hidden on mobile) -->
-            <nav class="nav nav-guard" id="navRoot" style="margin-left: auto; display: flex; gap: 19px; align-items: center;">
-                <a href="/download" class="nav-link">Download</a>
-                <a href="/how-it-works.html" class="nav-link" id="navHow">How It Works</a>
-                <a href="/demo.html" class="nav-link" id="navDemo">Demo</a>
-                <a href="/faq.html" class="nav-link" id="navFaq">FAQ</a>
-                <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
-                <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
-                <a href="/signup" class="nav-link nav-link-cta" id="navSignup">Sign Up</a>
-                <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
-            </nav>
-
-            <!-- Mobile slide-out menu (hidden by default) -->
-            <div class="mobile-menu" id="mobileMenu">
-                <div class="mobile-menu-content">
-                    <a href="/download" class="mobile-menu-link">Download</a>
-                    <a href="/how-it-works.html" class="mobile-menu-link" id="mobileNavHow">How It Works</a>
-                    <a href="/demo.html" class="mobile-menu-link" id="mobileNavDemo">Demo</a>
-                    <a href="/pricing.html" class="mobile-menu-link" id="mobileNavPricing">Pricing</a>
-                    <a href="/faq.html" class="mobile-menu-link" id="mobileNavFaq">FAQ</a>
-                    <a href="/account/login/" class="mobile-menu-link" id="mobileNavLogin">Log In</a>
-                    <a href="javascript:void(0)" class="mobile-menu-link" id="mobileNavSignOut" style="display:none;">Sign Out</a>
-                    <a href="/account" class="mobile-menu-link mobile-menu-link-highlight" id="mobileNavAccount" style="display:none;">Account</a>
-                </div>
-            </div>
-            <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-        </div>
-    </header>
-
-    <!-- Privacy Policy Content -->
     <main>
         <div class="privacy-hero">
             <img src="images/tangent_logo_light.png" alt="TANGENT" class="privacy-logo" />
@@ -465,106 +414,6 @@
             </div>
         </div>
     </main>
-
-    <!-- Supabase Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        (function () {
-            const { createClient } = supabase;
-            const client = createClient(
-                "https://xnuqrfnfokxtuvhlgslc.supabase.co",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.KLNhzBjFpmUtLvMH-NfpjTvkwPNDBSLVp99VcbLH1BY"
-            );
-            window.tgSupabase = client;
-
-            const navRoot = document.getElementById("navRoot");
-
-            function setNavLoggedIn() {
-                document.getElementById("navLogin")?.style.setProperty("display", "none");
-                document.getElementById("navSignup")?.style.setProperty("display", "none");
-                document.getElementById("navAccount")?.style.setProperty("display", "inline-block");
-                document.getElementById("navSignOut")?.style.setProperty("display", "inline-block");
-                document.getElementById("mobileNavLogin")?.style.setProperty("display", "none");
-                document.getElementById("mobileNavAccount")?.style.setProperty("display", "block");
-                document.getElementById("mobileNavSignOut")?.style.setProperty("display", "block");
-            }
-
-            function setNavLoggedOut() {
-                document.getElementById("navLogin")?.style.setProperty("display", "inline-block");
-                document.getElementById("navSignup")?.style.setProperty("display", "inline-block");
-                document.getElementById("navAccount")?.style.setProperty("display", "none");
-                document.getElementById("navSignOut")?.style.setProperty("display", "none");
-                document.getElementById("mobileNavLogin")?.style.setProperty("display", "block");
-                document.getElementById("mobileNavAccount")?.style.setProperty("display", "none");
-                document.getElementById("mobileNavSignOut")?.style.setProperty("display", "none");
-            }
-
-            document.getElementById("navSignOut")?.addEventListener("click", async (e) => {
-                e.preventDefault();
-                await client.auth.signOut();
-                setNavLoggedOut();
-                window.location.href = "/";
-            });
-
-            document.getElementById("mobileNavSignOut")?.addEventListener("click", async (e) => {
-                e.preventDefault();
-                await client.auth.signOut();
-                setNavLoggedOut();
-                window.location.href = "/";
-            });
-
-            client.auth.getSession().then(({ data }) => {
-                if (data?.session?.access_token) {
-                    setNavLoggedIn();
-                } else {
-                    setNavLoggedOut();
-                }
-                if (navRoot) {
-                    navRoot.classList.remove("nav-guard");
-                    navRoot.style.visibility = "visible";
-                    navRoot.style.opacity = "1";
-                }
-            }).catch(() => {
-                setNavLoggedOut();
-                if (navRoot) {
-                    navRoot.classList.remove("nav-guard");
-                    navRoot.style.visibility = "visible";
-                    navRoot.style.opacity = "1";
-                }
-            });
-
-            // Mobile menu toggle
-            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-            const mobileMenu = document.getElementById('mobileMenu');
-            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-
-            function openMobileMenu() {
-                mobileMenu.classList.add('mobile-menu-active');
-                mobileMenuOverlay.classList.add('mobile-menu-overlay-active');
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeMobileMenu() {
-                mobileMenu.classList.remove('mobile-menu-active');
-                mobileMenuOverlay.classList.remove('mobile-menu-overlay-active');
-                document.body.style.overflow = '';
-            }
-
-            if (mobileMenuToggle) {
-                mobileMenuToggle.addEventListener('click', openMobileMenu);
-            }
-
-            if (mobileMenuOverlay) {
-                mobileMenuOverlay.addEventListener('click', closeMobileMenu);
-            }
-
-            // Close mobile menu when clicking a link
-            const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
-            mobileMenuLinks.forEach(link => {
-                link.addEventListener('click', closeMobileMenu);
-            });
-        })();
-    </script>
 </body>
 
 </html>
