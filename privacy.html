@@ -1,245 +1,570 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - TANGENT</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <title>Privacy Policy – TANGENT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Learn how TANGENT protects your privacy and handles your data." />
+    <link rel="stylesheet" href="styles.css?v=20241219" />
+    <link rel="icon" type="image/png" href="images/tangent_t_logo.png" />
     <style>
+        /* Privacy-specific styles */
+        .privacy-hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+
+        .privacy-logo {
+            width: 160px;
+            margin: 0 auto 30px;
+            display: block;
+        }
+
+        .privacy-hero h1 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .privacy-hero .last-updated {
+            color: #64748b;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
         .privacy-container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
         }
-        .privacy-container h1 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .privacy-container h2 {
-            color: #555;
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-        .privacy-container p {
-            margin-bottom: 15px;
-            color: #666;
-        }
-        .privacy-container ul {
-            margin-left: 20px;
-            margin-bottom: 15px;
-        }
-        .privacy-container li {
-            margin-bottom: 8px;
-            color: #666;
-        }
-        .privacy-container a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .privacy-container a:hover {
-            text-decoration: underline;
-        }
-        .last-updated {
-            color: #999;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
+
         .highlight-box {
-            background: #f8f9fa;
-            border-left: 4px solid #007bff;
-            padding: 15px;
+            background: rgba(59, 130, 246, 0.08);
+            border-left: 4px solid #3b82f6;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .highlight-box p {
+            margin: 0;
+            line-height: 1.7;
+            color: #e5e7eb;
+        }
+
+        .highlight-box strong {
+            color: #ffffff;
+        }
+
+        .privacy-section {
+            margin: 50px 0;
+        }
+
+        .privacy-section h2 {
+            font-size: clamp(1.5rem, 2.5vw, 1.9rem);
+            color: #ffffff;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .privacy-section h3 {
+            font-size: 1.3rem;
+            color: #f1f5f9;
+            margin: 30px 0 16px;
+        }
+
+        .privacy-section p {
+            line-height: 1.8;
+            color: #cbd5e1;
+            margin-bottom: 18px;
+            font-size: 16px;
+        }
+
+        .privacy-section ul {
             margin: 20px 0;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .privacy-section li {
+            padding-left: 30px;
+            margin-bottom: 14px;
+            position: relative;
+            line-height: 1.7;
+            color: #cbd5e1;
+            font-size: 16px;
+        }
+
+        .privacy-section li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        .privacy-section strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .privacy-section a {
+            color: #60a5fa;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 120ms ease;
+        }
+
+        .privacy-section a:hover {
+            border-bottom-color: #60a5fa;
+        }
+
+        .no-list {
+            list-style: none;
+            padding-left: 30px;
+        }
+
+        .no-list li::before {
+            content: "❌";
+            left: 0;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            margin: 60px 0;
+        }
+
+        .privacy-footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #64748b;
+            font-size: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .privacy-footer a {
+            color: #94a3b8;
+            text-decoration: none;
+            margin: 0 12px;
+            transition: color 120ms ease;
+        }
+
+        .privacy-footer a:hover {
+            color: #e5e7eb;
+        }
+
+        /* Hide nav until state is resolved to avoid flash */
+        .nav-guard {
+            opacity: 0;
+            visibility: hidden;
         }
     </style>
 </head>
-<body>
-    <div class="privacy-container">
-        <h1>TANGENT Privacy Policy</h1>
-        <p class="last-updated">Last Updated: December 9, 2025</p>
 
-        <div class="highlight-box">
-            <p><strong>In Short:</strong> TANGENT is an AI assistant that helps you understand web content. We collect the page content you're viewing and your questions to provide AI-powered responses via OpenAI. We take your privacy seriously and only collect what's necessary to provide our service.</p>
+<body>
+    <!-- Site header -->
+    <header class="site-header">
+        <div class="container header-inner" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <!-- Mobile hamburger menu (hidden on desktop) -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
+            <a href="/" class="logo-link" style="margin-right: auto;">
+                <img src="images/tangent_logo_light.png" alt="Tangent" class="logo-wordmark" />
+            </a>
+
+            <!-- Desktop navigation (hidden on mobile) -->
+            <nav class="nav nav-guard" id="navRoot" style="margin-left: auto; display: flex; gap: 19px; align-items: center;">
+                <a href="/download" class="nav-link">Download</a>
+                <a href="/how-it-works.html" class="nav-link" id="navHow">How It Works</a>
+                <a href="/demo.html" class="nav-link" id="navDemo">Demo</a>
+                <a href="/faq.html" class="nav-link" id="navFaq">FAQ</a>
+                <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
+                <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
+                <a href="/signup" class="nav-link nav-link-cta" id="navSignup">Sign Up</a>
+                <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
+            </nav>
+
+            <!-- Mobile slide-out menu (hidden by default) -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="mobile-menu-content">
+                    <a href="/download" class="mobile-menu-link">Download</a>
+                    <a href="/how-it-works.html" class="mobile-menu-link" id="mobileNavHow">How It Works</a>
+                    <a href="/demo.html" class="mobile-menu-link" id="mobileNavDemo">Demo</a>
+                    <a href="/pricing.html" class="mobile-menu-link" id="mobileNavPricing">Pricing</a>
+                    <a href="/faq.html" class="mobile-menu-link" id="mobileNavFaq">FAQ</a>
+                    <a href="/account/login/" class="mobile-menu-link" id="mobileNavLogin">Log In</a>
+                    <a href="javascript:void(0)" class="mobile-menu-link" id="mobileNavSignOut" style="display:none;">Sign Out</a>
+                    <a href="/account" class="mobile-menu-link mobile-menu-link-highlight" id="mobileNavAccount" style="display:none;">Account</a>
+                </div>
+            </div>
+            <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+        </div>
+    </header>
+
+    <!-- Privacy Policy Content -->
+    <main>
+        <div class="privacy-hero">
+            <img src="images/tangent_logo_light.png" alt="TANGENT" class="privacy-logo" />
+            <h1>Privacy Policy</h1>
+            <p class="last-updated">Last Updated: December 28, 2025</p>
         </div>
 
-        <h2>1. Information We Collect</h2>
+        <div class="privacy-container">
+            <div class="highlight-box">
+                <p><strong>In Short:</strong> TANGENT is an AI assistant that helps you understand web content. We collect the page content you're viewing and your questions to provide AI-powered responses via OpenAI. We take your privacy seriously and only collect what's necessary to provide our service. <strong>We do not sell your data, track your browsing for ads, or store your browsing history.</strong></p>
+            </div>
 
-        <h3>1.1 Page Content</h3>
-        <p>When you use TANGENT features (selecting text, using chips, or asking questions):</p>
-        <ul>
-            <li><strong>Selected text</strong> - The text you highlight on web pages</li>
-            <li><strong>Page context</strong> - Up to 50,000 characters from the current page (title, headings, paragraphs around your selection)</li>
-            <li><strong>Page URL and metadata</strong> - The website address and basic page information</li>
-        </ul>
-        <p><strong>Why we collect this:</strong> To provide AI-powered answers that are relevant to the content you're reading.</p>
-        <p><strong>Where it goes:</strong> Your page content is sent to our backend server, then to OpenAI's API to generate responses. We do not permanently store your page content or browsing history.</p>
+            <section class="privacy-section">
+                <h2>1. Information We Collect</h2>
 
-        <h3>1.2 User Prompts and AI Responses</h3>
-        <ul>
-            <li><strong>Your questions</strong> - Chat messages and chip queries you submit</li>
-            <li><strong>AI responses</strong> - The answers generated by OpenAI</li>
-        </ul>
-        <p><strong>Storage:</strong> Prompts and responses are processed in real-time and not permanently stored on our servers. OpenAI may retain data according to their <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">privacy policy</a>.</p>
+                <h3>1.1 Page Content</h3>
+                <p>When you use TANGENT features (selecting text, using chips, or asking questions):</p>
+                <ul>
+                    <li><strong>Selected text</strong> – The text you highlight on web pages</li>
+                    <li><strong>Page context</strong> – Up to 50,000 characters from the current page (title, headings, paragraphs around your selection)</li>
+                    <li><strong>Page URL and metadata</strong> – The website address and basic page information</li>
+                </ul>
+                <p><strong>Why we collect this:</strong> To provide AI-powered answers that are relevant to the content you're reading.</p>
+                <p><strong>Where it goes:</strong> Your page content is sent to our backend server, then to OpenAI's API to generate responses. We do not permanently store your page content or browsing history.</p>
 
-        <h3>1.3 Account Information</h3>
-        <ul>
-            <li><strong>Email address</strong> - Collected when you create an account via Supabase Auth</li>
-            <li><strong>Authentication tokens</strong> - Supabase JWT tokens stored in your browser (chrome.storage.sync)</li>
-        </ul>
-        <p><strong>Why we collect this:</strong> To manage your account, track your usage quota, and enable subscription features.</p>
+                <h3>1.2 User Prompts and AI Responses</h3>
+                <ul>
+                    <li><strong>Your questions</strong> – Chat messages and chip queries you submit</li>
+                    <li><strong>AI responses</strong> – The answers generated by OpenAI</li>
+                </ul>
+                <p><strong>Storage:</strong> Prompts and responses are processed in real-time and not permanently stored on our servers. OpenAI may retain data according to their <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">privacy policy</a>.</p>
 
-        <h3>1.4 Usage Data</h3>
-        <ul>
-            <li><strong>Token usage</strong> - Number of AI tokens consumed per request</li>
-            <li><strong>Request timestamps</strong> - When you make queries</li>
-            <li><strong>Endpoint usage</strong> - Which features you use (chat, image analysis, etc.)</li>
-            <li><strong>User ID</strong> - Your unique Supabase user identifier</li>
-        </ul>
-        <p><strong>Why we collect this:</strong> To enforce usage quotas, prevent abuse, and improve our service.</p>
-        <p><strong>Retention:</strong> Usage logs are stored for 90 days, then automatically deleted.</p>
+                <h3>1.3 Account Information</h3>
+                <ul>
+                    <li><strong>Email address</strong> – Collected when you create an account via Supabase Auth</li>
+                    <li><strong>Authentication tokens</strong> – Supabase JWT tokens stored in your browser (chrome.storage.sync)</li>
+                </ul>
+                <p><strong>Why we collect this:</strong> To manage your account, track your usage quota, and enable subscription features.</p>
 
-        <h3>1.5 Payment Information</h3>
-        <ul>
-            <li><strong>Billing details</strong> - Email, name, and payment method (processed by Stripe)</li>
-        </ul>
-        <p><strong>Important:</strong> We <strong>never</strong> see or store your credit card numbers. All payment processing is handled securely by <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe</a>.</p>
+                <h3>1.4 Usage Data</h3>
+                <ul>
+                    <li><strong>Token usage</strong> – Number of AI tokens consumed per request</li>
+                    <li><strong>Request timestamps</strong> – When you make queries</li>
+                    <li><strong>Endpoint usage</strong> – Which features you use (chat, image analysis, etc.)</li>
+                    <li><strong>User ID</strong> – Your unique Supabase user identifier</li>
+                </ul>
+                <p><strong>Why we collect this:</strong> To enforce usage quotas, prevent abuse, and improve our service.</p>
+                <p><strong>Retention:</strong> Usage logs are stored for 90 days, then automatically deleted.</p>
 
-        <h3>1.6 User Preferences</h3>
-        <ul>
-            <li><strong>Settings</strong> - Your chip layout, theme, language, and shortcuts</li>
-        </ul>
-        <p><strong>Storage:</strong> Stored locally in your browser via chrome.storage.sync (syncs across your Chrome profile).</p>
+                <h3>1.5 Payment Information</h3>
+                <ul>
+                    <li><strong>Billing details</strong> – Email, name, and payment method (processed by Stripe)</li>
+                </ul>
+                <p><strong>Important:</strong> We <strong>never</strong> see or store your credit card numbers. All payment processing is handled securely by <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe</a>.</p>
 
-        <h2>2. How We Use Your Information</h2>
-        <ul>
-            <li><strong>Provide AI assistance</strong> - Send your prompts and page content to OpenAI to generate responses</li>
-            <li><strong>Manage quotas</strong> - Track your token usage and enforce subscription limits</li>
-            <li><strong>Process payments</strong> - Handle subscriptions via Stripe</li>
-            <li><strong>Prevent abuse</strong> - Rate limiting and security monitoring</li>
-            <li><strong>Improve service quality</strong> - Analyze usage patterns (aggregated, anonymous data only)</li>
-            <li><strong>Communicate with you</strong> - Send account-related emails (quota warnings, subscription updates)</li>
-        </ul>
+                <h3>1.6 User Preferences</h3>
+                <ul>
+                    <li><strong>Settings</strong> – Your chip layout, theme preferences, language, and keyboard shortcuts</li>
+                </ul>
+                <p><strong>Storage:</strong> Stored locally in your browser via chrome.storage.sync (syncs across your Chrome profile).</p>
 
-        <h2>3. Third Parties We Share Data With</h2>
+                <h3>1.7 User Feedback</h3>
+                <ul>
+                    <li><strong>Feedback submissions</strong> – Category, description, email (optional), page URL, extension version, browser info</li>
+                </ul>
+                <p><strong>Why we collect this:</strong> To improve our service based on user reports and feature requests.</p>
+                <p><strong>Retention:</strong> Feedback is stored for 2 years, then automatically deleted.</p>
+            </section>
 
-        <h3>3.1 OpenAI</h3>
-        <p><strong>What we share:</strong> Your prompts, selected text, and page content</p>
-        <p><strong>Why:</strong> To generate AI-powered responses using GPT-4o</p>
-        <p><strong>Their policy:</strong> <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">OpenAI Privacy Policy</a></p>
-        <p><strong>Data retention:</strong> OpenAI may retain data for up to 30 days for abuse monitoring (unless you're on their zero-retention plan)</p>
+            <section class="privacy-section">
+                <h2>2. How We Use Your Information</h2>
+                <ul>
+                    <li><strong>Provide AI assistance</strong> – Send your prompts and page content to OpenAI to generate responses</li>
+                    <li><strong>Manage quotas</strong> – Track your token usage and enforce subscription limits</li>
+                    <li><strong>Process payments</strong> – Handle subscriptions via Stripe</li>
+                    <li><strong>Prevent abuse</strong> – Rate limiting and security monitoring</li>
+                    <li><strong>Improve service quality</strong> – Analyze usage patterns (aggregated, anonymous data only)</li>
+                    <li><strong>Communicate with you</strong> – Send account-related emails (quota warnings, subscription updates, feedback responses)</li>
+                </ul>
+            </section>
 
-        <h3>3.2 Supabase</h3>
-        <p><strong>What we share:</strong> Email, user profiles, usage logs, quotas, subscription records</p>
-        <p><strong>Why:</strong> Database and authentication infrastructure</p>
-        <p><strong>Their policy:</strong> <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase Privacy Policy</a></p>
-        <p><strong>Data location:</strong> Hosted on AWS (specify region if known)</p>
+            <section class="privacy-section">
+                <h2>3. Third Parties We Share Data With</h2>
 
-        <h3>3.3 Stripe</h3>
-        <p><strong>What we share:</strong> Email and subscription metadata</p>
-        <p><strong>Why:</strong> Payment processing for subscriptions and token packs</p>
-        <p><strong>Their policy:</strong> <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe Privacy Policy</a></p>
-        <p><strong>Note:</strong> Stripe handles all credit card information directly; we never see your card numbers</p>
+                <h3>3.1 OpenAI</h3>
+                <p><strong>What we share:</strong> Your prompts, selected text, and page content</p>
+                <p><strong>Why:</strong> To generate AI-powered responses using GPT-4o and GPT-4o-mini</p>
+                <p><strong>Their policy:</strong> <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">OpenAI Privacy Policy</a></p>
+                <p><strong>Data retention:</strong> OpenAI may retain data for up to 30 days for abuse monitoring</p>
 
-        <h2>4. Data Security</h2>
-        <p>We implement multiple security measures to protect your data:</p>
-        <ul>
-            <li><strong>HTTPS encryption</strong> - All data transmitted over secure connections</li>
-            <li><strong>Authentication</strong> - Supabase JWT tokens with Row Level Security (RLS)</li>
-            <li><strong>Sensitive data redaction</strong> - Credit cards, SSNs, passwords, and API keys are automatically filtered from logs</li>
-            <li><strong>Rate limiting</strong> - Prevents spam and abuse</li>
-            <li><strong>Restricted domains</strong> - TANGENT is automatically disabled on banking, financial, and government websites</li>
-            <li><strong>XSS protection</strong> - All AI output is sanitized with DOMPurify before rendering</li>
-        </ul>
+                <h3>3.2 Supabase</h3>
+                <p><strong>What we share:</strong> Email, user profiles, usage logs, quotas, subscription records, feedback submissions</p>
+                <p><strong>Why:</strong> Database and authentication infrastructure</p>
+                <p><strong>Their policy:</strong> <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase Privacy Policy</a></p>
+                <p><strong>Data location:</strong> Hosted on AWS in the United States</p>
 
-        <h2>5. What We DO NOT Do</h2>
-        <ul>
-            <li>❌ <strong>We do not sell your data</strong> to advertisers or data brokers</li>
-            <li>❌ <strong>We do not track your browsing</strong> across websites for advertising</li>
-            <li>❌ <strong>We do not store browsing history</strong> - only usage statistics (token counts, timestamps)</li>
-            <li>❌ <strong>We do not inject ads</strong> or affiliate links into web pages</li>
-            <li>❌ <strong>We do not share data</strong> with anyone except the third parties listed above (OpenAI, Supabase, Stripe)</li>
-        </ul>
+                <h3>3.3 Stripe</h3>
+                <p><strong>What we share:</strong> Email and subscription metadata</p>
+                <p><strong>Why:</strong> Payment processing for subscriptions and token packs</p>
+                <p><strong>Their policy:</strong> <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe Privacy Policy</a></p>
+                <p><strong>Note:</strong> Stripe handles all credit card information directly; we never see your card numbers</p>
 
-        <h2>6. Data Retention</h2>
-        <ul>
-            <li><strong>Page content & prompts:</strong> Not permanently stored (processed in real-time only)</li>
-            <li><strong>Usage logs:</strong> 90 days, then automatically deleted</li>
-            <li><strong>Account data:</strong> Retained while your account is active</li>
-            <li><strong>Payment records:</strong> Retained by Stripe for tax/legal compliance (typically 7 years)</li>
-        </ul>
+                <h3>3.4 Resend (Optional)</h3>
+                <p><strong>What we share:</strong> Your email address and feedback content (only when you submit feedback)</p>
+                <p><strong>Why:</strong> To send email notifications to our support team about your feedback</p>
+                <p><strong>Their policy:</strong> <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener">Resend Privacy Policy</a></p>
+            </section>
 
-        <h2>7. Your Rights</h2>
-        <p>You have the right to:</p>
-        <ul>
-            <li><strong>Access your data</strong> - Request a copy of your account information and usage logs</li>
-            <li><strong>Delete your account</strong> - Permanently delete your account and all associated data</li>
-            <li><strong>Export your data</strong> - Download your settings and preferences</li>
-            <li><strong>Opt-out</strong> - Uninstall the extension at any time to stop data collection</li>
-            <li><strong>Update preferences</strong> - Control which features you use (e.g., disable specific chips)</li>
-        </ul>
-        <p><strong>To exercise these rights:</strong> Email us at <a href="mailto:privacy@tangentapp.co">privacy@tangentapp.co</a> or use the account deletion feature in the extension settings.</p>
+            <section class="privacy-section">
+                <h2>4. Data Security</h2>
+                <p>We implement multiple security measures to protect your data:</p>
+                <ul>
+                    <li><strong>HTTPS encryption</strong> – All data transmitted over secure connections</li>
+                    <li><strong>Authentication</strong> – Supabase JWT tokens with Row Level Security (RLS) on all database tables</li>
+                    <li><strong>Sensitive data redaction</strong> – Credit cards, SSNs, passwords, and API keys are automatically filtered from logs</li>
+                    <li><strong>Rate limiting</strong> – Prevents spam and abuse (token bucket algorithm per user/endpoint)</li>
+                    <li><strong>Restricted domains</strong> – TANGENT is automatically disabled on 43 sensitive websites including banks, government sites, healthcare portals (HIPAA compliance), and legal services (attorney-client privilege protection)</li>
+                    <li><strong>XSS protection</strong> – All AI output is sanitized with DOMPurify before rendering (Grade A security audit)</li>
+                    <li><strong>Regular security audits</strong> – Comprehensive security reviews completed December 2025</li>
+                </ul>
+            </section>
 
-        <h2>8. Children's Privacy</h2>
-        <p>TANGENT is not intended for users under 13 years old. We do not knowingly collect data from children under 13. If you believe a child has provided us with personal information, please contact us immediately.</p>
+            <section class="privacy-section">
+                <h2>5. What We DO NOT Do</h2>
+                <ul class="no-list">
+                    <li><strong>We do not sell your data</strong> to advertisers or data brokers</li>
+                    <li><strong>We do not track your browsing</strong> across websites for advertising</li>
+                    <li><strong>We do not store browsing history</strong> – only usage statistics (token counts, timestamps)</li>
+                    <li><strong>We do not inject ads</strong> or affiliate links into web pages</li>
+                    <li><strong>We do not share data</strong> with anyone except the third parties listed above (OpenAI, Supabase, Stripe, Resend)</li>
+                    <li><strong>We do not use cookies for tracking</strong> – only browser storage for your preferences</li>
+                </ul>
+            </section>
 
-        <h2>9. International Users</h2>
-        <p>TANGENT is operated in the United States. If you're using TANGENT from outside the US, your data will be transferred to and processed in the United States. By using TANGENT, you consent to this transfer.</p>
+            <section class="privacy-section">
+                <h2>6. Data Retention</h2>
+                <ul>
+                    <li><strong>Page content & prompts:</strong> Not permanently stored (processed in real-time only)</li>
+                    <li><strong>Usage logs:</strong> 90 days, then automatically deleted</li>
+                    <li><strong>User feedback:</strong> 2 years, then automatically deleted</li>
+                    <li><strong>Account data:</strong> Retained while your account is active. Inactive accounts (3+ years with no usage) are automatically deleted</li>
+                    <li><strong>Payment records:</strong> Retained by Stripe for 7 years for tax/legal compliance</li>
+                </ul>
+            </section>
 
-        <h2>10. Cookies and Tracking</h2>
-        <p>TANGENT does <strong>not</strong> use cookies for tracking. We only use browser storage (chrome.storage.sync) to save your preferences and authentication tokens locally on your device.</p>
+            <section class="privacy-section">
+                <h2>7. Your Rights</h2>
+                <p>You have the right to:</p>
+                <ul>
+                    <li><strong>Access your data</strong> – Request a copy of your account information and usage logs</li>
+                    <li><strong>Export your data</strong> – Download all your data as JSON (GDPR Article 20 compliance)</li>
+                    <li><strong>Delete your account</strong> – Request permanent deletion of your account and all associated data (30-day grace period with email confirmation)</li>
+                    <li><strong>Cancel deletion</strong> – Reverse a deletion request during the 30-day grace period</li>
+                    <li><strong>Opt-out</strong> – Uninstall the extension at any time to stop data collection</li>
+                    <li><strong>Update preferences</strong> – Control which features you use (e.g., disable specific chips, adjust settings)</li>
+                </ul>
+                <p><strong>To exercise these rights:</strong> Email us at <a href="mailto:privacy@tangentapp.co">privacy@tangentapp.co</a> or use the account deletion/export features in your account settings.</p>
+            </section>
 
-        <h2>11. Changes to This Policy</h2>
-        <p>We may update this Privacy Policy from time to time. When we do:</p>
-        <ul>
-            <li>We'll update the "Last Updated" date at the top</li>
-            <li>If changes are significant, we'll notify you via email or an in-extension notice</li>
-            <li>Your continued use of TANGENT after changes constitutes acceptance</li>
-        </ul>
+            <section class="privacy-section">
+                <h2>8. Children's Privacy</h2>
+                <p>TANGENT is not intended for users under 13 years old. We do not knowingly collect data from children under 13. If you believe a child has provided us with personal information, please contact us immediately at <a href="mailto:privacy@tangentapp.co">privacy@tangentapp.co</a>.</p>
+            </section>
 
-        <h2>12. California Privacy Rights (CCPA)</h2>
-        <p>If you're a California resident, you have additional rights under the California Consumer Privacy Act (CCPA):</p>
-        <ul>
-            <li>Right to know what personal information is collected</li>
-            <li>Right to delete personal information</li>
-            <li>Right to opt-out of sale (we don't sell data, so this doesn't apply)</li>
-            <li>Right to non-discrimination for exercising your rights</li>
-        </ul>
+            <section class="privacy-section">
+                <h2>9. International Users</h2>
+                <p>TANGENT is operated in the United States. If you're using TANGENT from outside the US, your data will be transferred to and processed in the United States. By using TANGENT, you consent to this transfer.</p>
+                <p><strong>Data location:</strong> All data is stored on AWS servers in the United States via Supabase infrastructure.</p>
+            </section>
 
-        <h2>13. European Privacy Rights (GDPR)</h2>
-        <p>If you're in the EU/EEA, you have rights under GDPR including:</p>
-        <ul>
-            <li>Right to access, rectification, erasure, and data portability</li>
-            <li>Right to restrict or object to processing</li>
-            <li>Right to withdraw consent</li>
-            <li>Right to lodge a complaint with your local data protection authority</li>
-        </ul>
+            <section class="privacy-section">
+                <h2>10. Cookies and Tracking</h2>
+                <p>TANGENT does <strong>not</strong> use cookies for tracking. We only use browser storage (chrome.storage.sync and chrome.storage.local) to save your preferences, authentication tokens, and chat export data locally on your device. This data syncs across your Chrome profile but never leaves your browser except when you explicitly use TANGENT features.</p>
+            </section>
 
-        <h2>14. Contact Us</h2>
-        <p>If you have questions about this Privacy Policy or your data:</p>
-        <ul>
-            <li><strong>Email:</strong> <a href="mailto:privacy@tangentapp.co">privacy@tangentapp.co</a></li>
-            <li><strong>Website:</strong> <a href="https://www.tangentapp.co">https://www.tangentapp.co</a></li>
-            <li><strong>Support:</strong> <a href="mailto:support@tangentapp.co">support@tangentapp.co</a></li>
-        </ul>
+            <section class="privacy-section">
+                <h2>11. Changes to This Policy</h2>
+                <p>We may update this Privacy Policy from time to time. When we do:</p>
+                <ul>
+                    <li>We'll update the "Last Updated" date at the top</li>
+                    <li>If changes are significant, we'll notify you via email or an in-extension notice</li>
+                    <li>Your continued use of TANGENT after changes constitutes acceptance</li>
+                </ul>
+                <p><strong>Policy Version History:</strong> This policy was last revised on December 28, 2025 to reflect new features including user feedback system, chat export, and enhanced security measures.</p>
+            </section>
 
-        <h2>15. Chrome Web Store Disclosure</h2>
-        <p>This extension is listed on the Chrome Web Store. Google requires us to disclose:</p>
-        <ul>
-            <li><strong>Browsing activity:</strong> Yes - We access page content when you use TANGENT features</li>
-            <li><strong>Personal information:</strong> Yes - Email address for account management</li>
-            <li><strong>Website content:</strong> Yes - Page text and metadata for AI analysis</li>
-            <li><strong>Authentication:</strong> Yes - Supabase JWT tokens stored in chrome.storage.sync</li>
-        </ul>
-        <p><strong>Single Purpose:</strong> TANGENT's sole purpose is to provide AI-powered assistance for understanding web content. All data collection is directly related to this purpose.</p>
+            <section class="privacy-section">
+                <h2>12. California Privacy Rights (CCPA)</h2>
+                <p>If you're a California resident, you have additional rights under the California Consumer Privacy Act (CCPA):</p>
+                <ul>
+                    <li><strong>Right to know</strong> what personal information is collected (see Section 1)</li>
+                    <li><strong>Right to delete</strong> personal information (30-day grace period, email confirmation required)</li>
+                    <li><strong>Right to opt-out of sale</strong> – We don't sell data, so this doesn't apply</li>
+                    <li><strong>Right to non-discrimination</strong> for exercising your rights</li>
+                    <li><strong>Right to data portability</strong> – Export all your data as JSON</li>
+                </ul>
+                <p><strong>CCPA Compliance Status:</strong> 100% (verified December 2025)</p>
+            </section>
 
-        <hr style="margin: 40px 0; border: none; border-top: 1px solid #ddd;">
+            <section class="privacy-section">
+                <h2>13. European Privacy Rights (GDPR)</h2>
+                <p>If you're in the EU/EEA, you have rights under GDPR including:</p>
+                <ul>
+                    <li><strong>Right to access, rectification, and erasure</strong> (see Section 7)</li>
+                    <li><strong>Right to data portability</strong> – Export your data in machine-readable JSON format</li>
+                    <li><strong>Right to restrict or object to processing</strong> – Uninstall the extension or disable specific features</li>
+                    <li><strong>Right to withdraw consent</strong> – Delete your account at any time</li>
+                    <li><strong>Right to lodge a complaint</strong> with your local data protection authority</li>
+                </ul>
+                <p><strong>Legal Basis for Processing:</strong> We process your data based on (1) your consent when using TANGENT features, (2) contractual necessity for subscription services, and (3) legitimate interests in preventing fraud and improving our service.</p>
+                <p><strong>GDPR Compliance Status:</strong> 100% (verified December 2025)</p>
+            </section>
 
-        <p style="text-align: center; color: #999; font-size: 14px;">
-            © 2025 TANGENT. All rights reserved.<br>
-            <a href="https://www.tangentapp.co">Home</a> |
-            <a href="https://www.tangentapp.co/faq.html">FAQ</a> |
-            <a href="mailto:support@tangentapp.co">Support</a>
-        </p>
-    </div>
+            <section class="privacy-section">
+                <h2>14. Contact Us</h2>
+                <p>If you have questions about this Privacy Policy or your data:</p>
+                <ul>
+                    <li><strong>Privacy inquiries:</strong> <a href="mailto:privacy@tangentapp.co">privacy@tangentapp.co</a></li>
+                    <li><strong>General support:</strong> <a href="mailto:support@tangentapp.co">support@tangentapp.co</a></li>
+                    <li><strong>Website:</strong> <a href="https://www.tangentapp.co">https://www.tangentapp.co</a></li>
+                    <li><strong>Data deletion requests:</strong> Use the account settings page or email <a href="mailto:privacy@tangentapp.co">privacy@tangentapp.co</a></li>
+                </ul>
+                <p><strong>Response time:</strong> We aim to respond to all privacy inquiries within 72 hours.</p>
+            </section>
+
+            <section class="privacy-section">
+                <h2>15. Chrome Web Store Disclosure</h2>
+                <p>This extension is listed on the Chrome Web Store. Google requires us to disclose:</p>
+                <ul>
+                    <li><strong>Browsing activity:</strong> Yes – We access page content when you use TANGENT features</li>
+                    <li><strong>Personal information:</strong> Yes – Email address for account management</li>
+                    <li><strong>Website content:</strong> Yes – Page text and metadata for AI analysis</li>
+                    <li><strong>Authentication:</strong> Yes – Supabase JWT tokens stored in chrome.storage.sync</li>
+                </ul>
+                <p><strong>Single Purpose:</strong> TANGENT's sole purpose is to provide AI-powered assistance for understanding web content. All data collection is directly related to this purpose.</p>
+                <p><strong>Permissions Used:</strong> storage (save preferences), activeTab (access current page), scripting (inject UI), tabs (detect navigation), alarms (scheduled tasks). See our <a href="/permissions.html">Permissions Justification</a> for detailed explanations.</p>
+            </section>
+
+            <div class="divider"></div>
+
+            <div class="privacy-footer">
+                <p>© 2025 TANGENT. All rights reserved.</p>
+                <p>
+                    <a href="/">Home</a> |
+                    <a href="/faq.html">FAQ</a> |
+                    <a href="/how-it-works.html">How It Works</a> |
+                    <a href="mailto:support@tangentapp.co">Support</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        (function () {
+            const { createClient } = supabase;
+            const client = createClient(
+                "https://xnuqrfnfokxtuvhlgslc.supabase.co",
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.KLNhzBjFpmUtLvMH-NfpjTvkwPNDBSLVp99VcbLH1BY"
+            );
+            window.tgSupabase = client;
+
+            const navRoot = document.getElementById("navRoot");
+
+            function setNavLoggedIn() {
+                document.getElementById("navLogin")?.style.setProperty("display", "none");
+                document.getElementById("navSignup")?.style.setProperty("display", "none");
+                document.getElementById("navAccount")?.style.setProperty("display", "inline-block");
+                document.getElementById("navSignOut")?.style.setProperty("display", "inline-block");
+                document.getElementById("mobileNavLogin")?.style.setProperty("display", "none");
+                document.getElementById("mobileNavAccount")?.style.setProperty("display", "block");
+                document.getElementById("mobileNavSignOut")?.style.setProperty("display", "block");
+            }
+
+            function setNavLoggedOut() {
+                document.getElementById("navLogin")?.style.setProperty("display", "inline-block");
+                document.getElementById("navSignup")?.style.setProperty("display", "inline-block");
+                document.getElementById("navAccount")?.style.setProperty("display", "none");
+                document.getElementById("navSignOut")?.style.setProperty("display", "none");
+                document.getElementById("mobileNavLogin")?.style.setProperty("display", "block");
+                document.getElementById("mobileNavAccount")?.style.setProperty("display", "none");
+                document.getElementById("mobileNavSignOut")?.style.setProperty("display", "none");
+            }
+
+            document.getElementById("navSignOut")?.addEventListener("click", async (e) => {
+                e.preventDefault();
+                await client.auth.signOut();
+                setNavLoggedOut();
+                window.location.href = "/";
+            });
+
+            document.getElementById("mobileNavSignOut")?.addEventListener("click", async (e) => {
+                e.preventDefault();
+                await client.auth.signOut();
+                setNavLoggedOut();
+                window.location.href = "/";
+            });
+
+            client.auth.getSession().then(({ data }) => {
+                if (data?.session?.access_token) {
+                    setNavLoggedIn();
+                } else {
+                    setNavLoggedOut();
+                }
+                if (navRoot) {
+                    navRoot.classList.remove("nav-guard");
+                    navRoot.style.visibility = "visible";
+                    navRoot.style.opacity = "1";
+                }
+            }).catch(() => {
+                setNavLoggedOut();
+                if (navRoot) {
+                    navRoot.classList.remove("nav-guard");
+                    navRoot.style.visibility = "visible";
+                    navRoot.style.opacity = "1";
+                }
+            });
+
+            // Mobile menu toggle
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+            function openMobileMenu() {
+                mobileMenu.classList.add('mobile-menu-active');
+                mobileMenuOverlay.classList.add('mobile-menu-overlay-active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMobileMenu() {
+                mobileMenu.classList.remove('mobile-menu-active');
+                mobileMenuOverlay.classList.remove('mobile-menu-overlay-active');
+                document.body.style.overflow = '';
+            }
+
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', openMobileMenu);
+            }
+
+            if (mobileMenuOverlay) {
+                mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+            }
+
+            // Close mobile menu when clicking a link
+            const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+        })();
+    </script>
 </body>
+
 </html>
