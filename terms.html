@@ -176,8 +176,8 @@
 
         <h1>Terms and Conditions</h1>
         <div class="last-updated">
-            <strong>Effective Date:</strong> December 16, 2025<br>
-            <strong>Last Updated:</strong> December 16, 2025
+            <strong>Effective Date:</strong> December 28, 2025<br>
+            <strong>Last Updated:</strong> December 28, 2025
         </div>
 
         <div class="info">
@@ -233,6 +233,7 @@
             <li><strong>"Free Trial"</strong> means the 7-day trial period with 70,000 standard tokens provided to new users.</li>
             <li><strong>"Tokens"</strong> means the usage units that measure your consumption of AI services (standard tokens and deep tokens).</li>
             <li><strong>"Chips"</strong> means the quick-action buttons that appear when you select text on a webpage.</li>
+            <li><strong>"Feedback"</strong> means user-submitted feedback, bug reports, feature requests, or other communications sent to us through the Service.</li>
         </ul>
 
         <h2 id="acceptance">3. Acceptance of Terms</h2>
@@ -266,7 +267,9 @@
             <li><strong>Page Context Awareness:</strong> AI responses that incorporate the content and context of the webpage you're viewing</li>
             <li><strong>Custom Chips:</strong> Create and save your own custom action chips with personalized prompts</li>
             <li><strong>Reference Detection (Experimental):</strong> AI-generated responses that can highlight and reference specific elements on webpages</li>
-            <li><strong>Web-Based Account Management:</strong> Dashboard for managing subscriptions, viewing usage, and customizing settings</li>
+            <li><strong>Chat Export:</strong> Export conversation history to clipboard or download as text files</li>
+            <li><strong>User Feedback System:</strong> Submit bug reports, feature requests, and feedback directly through the extension</li>
+            <li><strong>Web-Based Account Management:</strong> Dashboard for managing subscriptions, viewing usage, customizing settings, and accessing data export/deletion tools</li>
         </ul>
 
         <h3>AI Technology</h3>
@@ -407,6 +410,39 @@
             <li><strong>Price Changes:</strong> We may change subscription prices with 30 days' advance notice to existing subscribers. Price changes will take effect at your next renewal date.</li>
             <li><strong>Subscription Changes:</strong> You may upgrade or downgrade your plan at any time. Changes take effect at the start of your next billing cycle.</li>
         </ul>
+
+        <h3>Token Allocation Changes</h3>
+        <div class="important">
+            <p class="caps"><strong>IMPORTANT: TOKEN ALLOCATIONS MAY CHANGE BASED ON AI PROVIDER PRICING</strong></p>
+            <p>TANGENT uses third-party AI services (currently OpenAI) to provide AI-generated responses. The cost of these services may change at any time based on the AI provider's pricing structure.</p>
+
+            <p><strong>We reserve the right to adjust token allocations for all subscription plans and token packs at any time if:</strong></p>
+            <ul>
+                <li>OpenAI or our AI provider increases API pricing</li>
+                <li>OpenAI or our AI provider changes their token calculation methodology</li>
+                <li>We switch to a different AI provider with different pricing</li>
+                <li>Market conditions require adjustment to maintain service sustainability</li>
+                <li>New AI models with different cost structures are introduced</li>
+            </ul>
+
+            <p><strong>Notice and Effective Date:</strong></p>
+            <ul>
+                <li>For <strong>existing subscribers</strong>: We will provide <strong>30 days' advance notice</strong> via email before token allocation changes take effect. Your existing allocation will remain unchanged until your next renewal date after the 30-day notice period.</li>
+                <li>For <strong>new subscribers</strong>: Changes to token allocations will take effect immediately for new subscriptions purchased after the change is announced on our website.</li>
+                <li>For <strong>token packs</strong>: The token quantities displayed at the time of purchase are what you will receive. Future purchases may have different allocations.</li>
+            </ul>
+
+            <p><strong>Your Options if Token Allocations Change:</strong></p>
+            <ul>
+                <li>Continue your subscription with the new token allocation at your next renewal</li>
+                <li>Cancel your subscription before your next renewal date to avoid the new allocation (see Section 8)</li>
+                <li>Downgrade or upgrade to a different plan if the new allocations better suit your needs</li>
+            </ul>
+
+            <p><strong>Grandfathering:</strong> We may, at our sole discretion, choose to "grandfather" existing subscribers at their current token allocations for a limited time or indefinitely. However, we are under no obligation to do so, and any grandfathering is subject to change with 30 days' notice.</p>
+
+            <p><strong>Price Stability Commitment:</strong> If we reduce token allocations due to increased AI provider costs, we will make reasonable efforts to maintain current subscription prices for existing subscribers. However, we reserve the right to adjust both pricing AND token allocations with appropriate notice as described above.</p>
+        </div>
 
         <h3>Token Packs</h3>
         <p>Token Packs are one-time purchases that do NOT auto-renew. Tokens from Token Packs:</p>
@@ -667,9 +703,13 @@
 
         <h3>Data Retention</h3>
         <ul>
-            <li><strong>Active accounts:</strong> Data is retained indefinitely while your account is active</li>
-            <li><strong>Canceled accounts:</strong> Data is deleted 90 days after account cancellation (unless you reactivate)</li>
-            <li><strong>Usage logs:</strong> Retained for 2 years for billing, fraud prevention, and legal compliance</li>
+            <li><strong>Page content & prompts:</strong> Not permanently stored (processed in real-time only)</li>
+            <li><strong>Usage logs:</strong> Retained for 90 days, then automatically deleted</li>
+            <li><strong>User feedback:</strong> Retained for 2 years, then automatically deleted</li>
+            <li><strong>Active accounts:</strong> Account data is retained indefinitely while your account is active</li>
+            <li><strong>Inactive accounts:</strong> Accounts with no usage for 3+ years are automatically deleted</li>
+            <li><strong>Canceled accounts:</strong> Data is deleted 90 days after account cancellation (unless you reactivate within 90 days)</li>
+            <li><strong>Payment records:</strong> Retained by Stripe for 7 years for tax and legal compliance</li>
             <li><strong>Anonymized data:</strong> We may retain anonymized/aggregated usage data indefinitely for analytical purposes</li>
         </ul>
 
@@ -697,6 +737,7 @@
             <li><strong>OpenAI</strong> (AI model provider): <a href="https://openai.com/policies/" target="_blank">https://openai.com/policies/</a></li>
             <li><strong>Stripe</strong> (payment processing): <a href="https://stripe.com/legal/consumer" target="_blank">https://stripe.com/legal/consumer</a></li>
             <li><strong>Supabase</strong> (database hosting): <a href="https://supabase.com/privacy" target="_blank">https://supabase.com/privacy</a></li>
+            <li><strong>Resend</strong> (email notifications - optional): <a href="https://resend.com/legal/privacy-policy" target="_blank">https://resend.com/legal/privacy-policy</a></li>
         </ul>
 
         <p>Your use of TANGENT is subject to these third-party terms and privacy policies. We encourage you to review them.</p>
@@ -1158,8 +1199,8 @@
         </div>
 
         <p style="text-align: center; margin-top: 40px; color: #718096; font-size: 0.9rem;">
-            Last Updated: December 16, 2025<br>
-            Version 1.0
+            Last Updated: December 28, 2025<br>
+            Version 1.1
         </p>
 
         <p style="text-align: center; margin-top: 20px;">
