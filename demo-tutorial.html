@@ -157,43 +157,36 @@
     </div>
 
     <script>
-        // Auto-start tutorial when page loads if TANGENT extension is installed
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('[Demo Page] DOM loaded, waiting for TANGENT extension...');
+        // Auto-start tutorial using event bridge (CSP-safe)
+        let tutorialReady = false;
 
-            let attempts = 0;
-            const maxAttempts = 10; // Try for 5 seconds (10 * 500ms)
+        // Listen for tutorial ready signal
+        window.addEventListener('TangentTutorialReady', (e) => {
+            console.log('[Demo Page] ✅ TANGENT tutorial ready signal received:', e.detail);
+            tutorialReady = true;
 
-            function tryStartTutorial() {
-                attempts++;
-                console.log(`[Demo Page] Attempt ${attempts}/${maxAttempts} - Checking for window.TangentTutorial...`);
+            // Show banner and start tutorial
+            document.getElementById('tutorial-banner').style.display = 'block';
+            document.body.classList.add('tutorial-active');
 
-                if (window.TangentTutorial) {
-                    console.log('[Demo Page] ✅ TANGENT tutorial system found! Starting...');
-                    document.getElementById('tutorial-banner').style.display = 'block';
-                    document.body.classList.add('tutorial-active');
-                    window.TangentTutorial.start();
-                } else if (attempts < maxAttempts) {
-                    console.log('[Demo Page] ⏳ Tutorial not ready yet, retrying in 500ms...');
-                    setTimeout(tryStartTutorial, 500);
-                } else {
-                    console.error('[Demo Page] ❌ TANGENT extension not detected after 5 seconds.');
-                    console.log('[Demo Page] Debugging info:');
-                    console.log('  - window.TangentTutorial:', window.TangentTutorial);
-                    console.log('  - Current URL:', window.location.href);
-                    console.log('  - Extension might not be installed or content script failed to inject');
+            // Start tutorial via event bridge
+            window.dispatchEvent(new CustomEvent('TangentTutorialCommand', {
+                detail: { command: 'start' }
+            }));
 
-                    // Show error message to user
-                    const banner = document.getElementById('tutorial-banner');
-                    banner.style.display = 'block';
-                    banner.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
-                    banner.innerHTML = '<div class="tutorial-banner-content"><span style="font-size:18px;">⚠️</span><span>TANGENT extension not detected. Please install the extension to run the tutorial.</span></div>';
-                }
-            }
-
-            // Start trying after 500ms
-            setTimeout(tryStartTutorial, 500);
+            console.log('[Demo Page] Tutorial start command sent');
         });
+
+        // Fallback: Show error if tutorial doesn't load within 5 seconds
+        setTimeout(() => {
+            if (!tutorialReady) {
+                console.error('[Demo Page] ❌ TANGENT extension not detected after 5 seconds.');
+                const banner = document.getElementById('tutorial-banner');
+                banner.style.display = 'block';
+                banner.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+                banner.innerHTML = '<div class="tutorial-banner-content"><span style="font-size:18px;">⚠️</span><span>TANGENT extension not detected. Please install the extension to run the tutorial.</span></div>';
+            }
+        }, 5000);
     </script>
 </body>
 </html>
