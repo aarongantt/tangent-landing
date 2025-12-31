@@ -1112,28 +1112,10 @@
         // CLEAR any existing warning banners when quota loads successfully
         const existingBanner = document.querySelector('.token-exhausted-banner');
         if (existingBanner) existingBanner.remove();
-        const remainingStdRaw =
-          info.remaining_standard_tokens ??
-          quota.remaining_standard_tokens ??
-          info.monthly_standard_tokens ??
-          quota.monthly_standard_tokens ??
-          info.remaining_tokens ??
-          quota.remaining_tokens;
-        const remainingDeepRaw =
-          info.remaining_deep_tokens ??
-          quota.remaining_deep_tokens ??
-          info.monthly_deep_tokens ??
-          quota.monthly_deep_tokens ??
-          (
-            (info.remaining_tokens != null && (info.remaining_standard_tokens ?? quota.remaining_standard_tokens) != null)
-              ? (info.remaining_tokens - (info.remaining_standard_tokens ?? quota.remaining_standard_tokens))
-              : null
-          ) ??
-          (
-            (quota.remaining_tokens != null && (info.remaining_standard_tokens ?? quota.remaining_standard_tokens) != null)
-              ? (quota.remaining_tokens - (info.remaining_standard_tokens ?? quota.remaining_standard_tokens))
-              : null
-          );
+        // FIX: Use top-level fields from API (user-plan.js lines 152-157)
+        // The backend returns both flat fields AND quota object
+        const remainingStdRaw = info.remaining_standard_tokens ?? 0;
+        const remainingDeepRaw = info.remaining_deep_tokens ?? 0;
         const remainingStd = formatNumber(remainingStdRaw ?? 0);
         const remainingDeep = formatNumber(remainingDeepRaw ?? 0);
         planDetails.innerHTML = `
