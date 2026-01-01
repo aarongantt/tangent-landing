@@ -486,8 +486,18 @@
 
         function makeNavVisible() {
             console.log('[HOW-IT-WORKS] makeNavVisible called');
+
+            // Check for duplicate navs
+            const allNavs = document.querySelectorAll('#navRoot');
+            console.log('[HOW-IT-WORKS] Total navRoot elements found:', allNavs.length);
+            allNavs.forEach((nav, index) => {
+                console.log(`[HOW-IT-WORKS] Nav ${index}:`, nav);
+                console.log(`[HOW-IT-WORKS] Nav ${index} classes:`, nav.className);
+                console.log(`[HOW-IT-WORKS] Nav ${index} inline styles:`, nav.getAttribute('style'));
+            });
+
             const nav = document.getElementById('navRoot');
-            console.log('[HOW-IT-WORKS] navRoot element:', nav);
+            console.log('[HOW-IT-WORKS] navRoot element (getElementById):', nav);
             console.log('[HOW-IT-WORKS] Current nav classes:', nav?.className);
             console.log('[HOW-IT-WORKS] Current nav opacity:', nav?.style.opacity);
             console.log('[HOW-IT-WORKS] Current nav visibility:', nav?.style.visibility);
