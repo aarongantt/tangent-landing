@@ -1118,11 +1118,15 @@
         const remainingDeepRaw = info.remaining_deep_tokens ?? 0;
         const remainingStd = formatNumber(remainingStdRaw ?? 0);
         const remainingDeep = formatNumber(remainingDeepRaw ?? 0);
+        const remainingUnits = info.remaining_units ?? (remainingStdRaw + remainingDeepRaw);
+        const monthlyUnits = info.monthly_units ?? (info.monthly_std + info.monthly_deep);
+        const resetDate = info.period_end || info.paid_through ? new Date(info.period_end || info.paid_through).toLocaleDateString() : "—";
+
         planDetails.innerHTML = `
           <p><strong>Plan:</strong> ${formatPlan(plan)}</p>
           <p><strong>Email:</strong> ${info.email || info.user_email || "—"}</p>
-          <p><strong>Standard Tokens Remaining:</strong> ${remainingStd ?? "—"}</p>
-          <p><strong>Deep Tokens Remaining:</strong> ${remainingDeep}</p>
+          <p><strong>Queries Remaining:</strong> ${formatNumber(remainingUnits)} / ${formatNumber(monthlyUnits)} this month</p>
+          <p class="quota-footnote">Resets on ${resetDate}</p>
         `;
         renderTokensAndPlans(plan);
         // Event listeners for plan buttons are now attached inside renderTokensAndPlans()
