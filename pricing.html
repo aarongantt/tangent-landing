@@ -320,42 +320,6 @@
         // Simple current-year setter
         document.getElementById("year").textContent = new Date().getFullYear();
 
-        // Mobile menu toggle functionality (reused from index.html)
-        (function() {
-            const menuToggle = document.getElementById('mobileMenuToggle');
-            const mobileMenu = document.getElementById('mobileMenu');
-            const menuOverlay = document.getElementById('mobileMenuOverlay');
-
-            if (!menuToggle || !mobileMenu || !menuOverlay) return;
-
-            function toggleMenu() {
-                const isActive = mobileMenu.classList.contains('active');
-
-                if (isActive) {
-                    menuToggle.classList.remove('active');
-                    mobileMenu.classList.remove('active');
-                    menuOverlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                } else {
-                    menuToggle.classList.add('active');
-                    mobileMenu.classList.add('active');
-                    menuOverlay.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                }
-            }
-
-            menuToggle.addEventListener('click', toggleMenu);
-            menuOverlay.addEventListener('click', toggleMenu);
-
-            document.querySelectorAll('.mobile-menu-link').forEach(link => {
-                link.addEventListener('click', function() {
-                    if (this.getAttribute('href') && this.getAttribute('href') !== 'javascript:void(0)') {
-                        toggleMenu();
-                    }
-                });
-            });
-        })();
-
         // Load header FIRST, then check auth
         fetch('/header.html')
             .then(response => response.text())

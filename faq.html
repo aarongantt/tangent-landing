@@ -162,23 +162,7 @@
 
 <body>
     <!-- Site header -->
-    <header class="site-header">
-        <div class="container header-inner">
-            <a href="/" class="logo-link">
-                <img src="images/tangent_logo.png" alt="Tangent" class="logo-wordmark" />
-            </a>
-            <nav class="nav nav-guard" id="navRoot">
-                <a href="/download" class="nav-link">Download Tangent</a>
-                <a href="/#how-it-works" class="nav-link" id="navHow">How It Works</a>
-                <a href="/faq.html" class="nav-link" id="navFaq">FAQ</a>
-                <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
-                <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
-                <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
-                <a href="/signup" class="nav-link nav-link-cta" id="navSignup">Sign Up</a>
-                <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
-            </nav>
-        </div>
-    </header>
+    <div id="header-placeholder"></div>
 
     <!-- Main FAQ Content -->
     <main>
@@ -1731,6 +1715,15 @@
                 if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
             });
         })();
+    </script>
+    <script>
+        // Load header and setup navigation
+        fetch('/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading header:', error));
     </script>
 </body>
 
