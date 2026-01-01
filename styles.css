@@ -76,7 +76,7 @@ a {
 
 .logo-link {
     flex-shrink: 0;
-    margin-right: auto !important;
+    margin-right: 0 !important;
     order: 1;
     margin-left: 0 !important;
     padding-left: 50px !important;
@@ -92,7 +92,7 @@ a {
     gap: 19px !important;
     font-size: 16px !important;
     flex-shrink: 0 !important;
-    margin-left: auto !important;
+    margin-left: 60px !important;
     margin-right: 0 !important;
     padding-right: 50px !important;
     order: 3;
