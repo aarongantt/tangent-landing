@@ -1719,11 +1719,20 @@
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // DEBUG: Log page load
+        console.log('[FAQ] Page loaded, starting header fetch...');
+
         // Load header FIRST, then check auth
         fetch('/header.html')
-            .then(response => response.text())
+            .then(response => {
+                console.log('[FAQ] Header fetch response:', response.status);
+                return response.text();
+            })
             .then(html => {
+                console.log('[FAQ] Header HTML length:', html.length);
+                console.log('[FAQ] Header HTML preview:', html.substring(0, 200));
                 document.getElementById('header-placeholder').innerHTML = html;
+                console.log('[FAQ] Header injected into DOM');
                 
                 // Setup mobile menu handlers
                 const menuToggle = document.getElementById('mobileMenuToggle');
@@ -1804,11 +1813,23 @@
         }
         
         function makeNavVisible() {
+            console.log('[FAQ] makeNavVisible called');
             const nav = document.getElementById('navRoot');
+            console.log('[FAQ] navRoot element:', nav);
+            console.log('[FAQ] Current nav classes:', nav?.className);
+            console.log('[FAQ] Current nav opacity:', nav?.style.opacity);
+            console.log('[FAQ] Current nav visibility:', nav?.style.visibility);
             if (nav) {
+                console.log('[FAQ] Making nav visible...');
                 nav.classList.remove('nav-guard');
                 nav.style.opacity = '1';
                 nav.style.visibility = 'visible';
+                console.log('[FAQ] Nav is now visible!');
+                console.log('[FAQ] Final nav classes:', nav.className);
+                console.log('[FAQ] Final nav opacity:', nav.style.opacity);
+                console.log('[FAQ] Final nav visibility:', nav.style.visibility);
+            } else {
+                console.error('[FAQ] ERROR: navRoot element not found!');
             }
         }
     </script>

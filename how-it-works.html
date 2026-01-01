@@ -391,11 +391,20 @@
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // DEBUG: Log page load
+        console.log('[HOW-IT-WORKS] Page loaded, starting header fetch...');
+
         // Load header FIRST, then check auth
         fetch('/header.html')
-            .then(response => response.text())
+            .then(response => {
+                console.log('[HOW-IT-WORKS] Header fetch response:', response.status);
+                return response.text();
+            })
             .then(html => {
+                console.log('[HOW-IT-WORKS] Header HTML length:', html.length);
+                console.log('[HOW-IT-WORKS] Header HTML preview:', html.substring(0, 200));
                 document.getElementById('header-placeholder').innerHTML = html;
+                console.log('[HOW-IT-WORKS] Header injected into DOM');
                 
                 // Setup mobile menu handlers
                 const menuToggle = document.getElementById('mobileMenuToggle');
@@ -474,13 +483,25 @@
             
             makeNavVisible();
         }
-        
+
         function makeNavVisible() {
+            console.log('[HOW-IT-WORKS] makeNavVisible called');
             const nav = document.getElementById('navRoot');
+            console.log('[HOW-IT-WORKS] navRoot element:', nav);
+            console.log('[HOW-IT-WORKS] Current nav classes:', nav?.className);
+            console.log('[HOW-IT-WORKS] Current nav opacity:', nav?.style.opacity);
+            console.log('[HOW-IT-WORKS] Current nav visibility:', nav?.style.visibility);
             if (nav) {
+                console.log('[HOW-IT-WORKS] Making nav visible...');
                 nav.classList.remove('nav-guard');
                 nav.style.opacity = '1';
                 nav.style.visibility = 'visible';
+                console.log('[HOW-IT-WORKS] Nav is now visible!');
+                console.log('[HOW-IT-WORKS] Final nav classes:', nav.className);
+                console.log('[HOW-IT-WORKS] Final nav opacity:', nav.style.opacity);
+                console.log('[HOW-IT-WORKS] Final nav visibility:', nav.style.visibility);
+            } else {
+                console.error('[HOW-IT-WORKS] ERROR: navRoot element not found!');
             }
         }
     </script>
