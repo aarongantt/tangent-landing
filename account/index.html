@@ -1737,7 +1737,12 @@
     }
 
     // On load, ensure session or redirect to login, then show plan
-    renderPlan();
+    // Wait for header to load first, then render plan
+    (async function() {
+      // Wait a bit for header to be injected
+      await new Promise(resolve => setTimeout(resolve, 100));
+      renderPlan();
+    })();
   </script>
 
   <!-- Payment Modal -->
