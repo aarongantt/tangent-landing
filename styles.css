@@ -66,7 +66,7 @@ a {
 .header-inner {
     display: flex !important;
     align-items: center !important;
-    justify-content: flex-start !important;
+    justify-content: space-between !important;
     padding: 18px 40px !important;
     flex-wrap: nowrap !important;
     width: 100% !important;

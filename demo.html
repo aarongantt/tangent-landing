@@ -2486,6 +2486,9 @@
             const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
             const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
 
+            // Expose client globally for auth-modal.js
+            window.supabaseClient = client;
+
             const navRoot = document.getElementById("navRoot");
             const signOutLink = document.getElementById("navSignOut");
             const loginLink = document.getElementById("navLogin");
@@ -2764,6 +2767,7 @@
             }
         }
     </script>
+    <script src="/auth-modal.js"></script>
 
 </body>
 

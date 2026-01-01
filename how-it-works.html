@@ -295,40 +295,17 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/load-header.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
     <script>
-        // DEBUG: Log page load
-        console.log('[HOW-IT-WORKS] Page loaded, starting header fetch...');
+        (async function() {
+            const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
+            const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
 
-        // Load header FIRST, then check auth
-        fetch('/header.html')
-            .then(response => {
-                console.log('[HOW-IT-WORKS] Header fetch response:', response.status);
-                return response.text();
-            })
-            .then(html => {
-                console.log('[HOW-IT-WORKS] Header HTML length:', html.length);
-                console.log('[HOW-IT-WORKS] Header HTML preview:', html.substring(0, 200));
-                document.getElementById('header-placeholder').innerHTML = html;
-                console.log('[HOW-IT-WORKS] Header injected into DOM');
+            // Expose client globally for auth-modal.js
+            window.supabaseClient = supabase;
 
-                // Check auth state
-                return checkAuth();
-            })
-            .catch(error => console.error('Error loading header:', error));
-        
-        async function checkAuth() {
-            const {createClient} = window.supabase || {};
-            if (!createClient) {
-                makeNavVisible();
-                return;
-            }
-            
-            const supabase = createClient(
-                'https://kkufltyogoaoxacvhdab.supabase.co',
-                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtrdWZsdHlvZ29hb3hhY3ZoZGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI1OTUzOTQsImV4cCI6MjA0ODE3MTM5NH0.wOkUq0H1JR4lRUn_HkuT87cPPY0qyBG6JeCCkZ51-_Q'
-            );
-            
             const {data, error} = await supabase.auth.getSession();
             const loggedIn = !error && data?.session;
             
@@ -388,8 +365,9 @@
             } else {
                 console.error('[HOW-IT-WORKS] ERROR: navRoot element not found!');
             }
-        }
+        })();
     </script>
+    <script src="/auth-modal.js"></script>
 
 </body>
 
