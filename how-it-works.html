@@ -86,7 +86,10 @@
         }
 
         .feature-visual video:hover {
-            transform: scale(2);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(2);
             box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9);
             z-index: 10000;
         }
@@ -163,6 +166,7 @@
 
         .video-card video {
             width: 100%;
+            height: auto;
             display: block;
             border-radius: 12px;
             border: 2px solid #ffffff;
@@ -171,10 +175,15 @@
             cursor: pointer;
             position: relative;
             z-index: 1;
+            object-fit: cover;
+            aspect-ratio: 16 / 9;
         }
 
         .video-card video:hover {
-            transform: scale(2);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(2);
             box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9);
             z-index: 10000;
         }
@@ -378,7 +387,7 @@
                 <a href="mailto:support@tangentapp.co">Support</a>
             </div>
             <div class="footer-tagline">
-                <span>© <span id="year"></span> Tangent. Discover without distraction.</span>
+                <span>© <span id="year"></span> Tangent -- Discover Without Distraction.</span>
             </div>
         </div>
     </footer>

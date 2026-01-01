@@ -72,7 +72,7 @@ a {
     width: 100% !important;
     max-width: var(--max-width) !important;
     margin: 0 auto !important;
-    gap: 100px !important;
+    gap: 140px !important;
 }
 
 .logo-link {
