@@ -98,6 +98,11 @@ a {
     order: 3;
 }
 
+.nav-guard {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
 .mobile-menu-toggle {
     order: 0;
     margin-right: auto !important;
