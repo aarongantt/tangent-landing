@@ -1112,14 +1112,9 @@
         // CLEAR any existing warning banners when quota loads successfully
         const existingBanner = document.querySelector('.token-exhausted-banner');
         if (existingBanner) existingBanner.remove();
-        // FIX: Use top-level fields from API (user-plan.js lines 152-157)
-        // The backend returns both flat fields AND quota object
-        const remainingStdRaw = info.remaining_standard_tokens ?? 0;
-        const remainingDeepRaw = info.remaining_deep_tokens ?? 0;
-        const remainingStd = formatNumber(remainingStdRaw ?? 0);
-        const remainingDeep = formatNumber(remainingDeepRaw ?? 0);
-        const remainingUnits = info.remaining_units ?? (remainingStdRaw + remainingDeepRaw);
-        const monthlyUnits = info.monthly_units ?? (info.monthly_std + info.monthly_deep);
+        // Use query units from new API response
+        const remainingUnits = info.remaining_units ?? 0;
+        const monthlyUnits = info.monthly_units ?? 0;
         const periodEnd = info.period_end || info.paid_through;
         const resetDate = periodEnd ? new Date(periodEnd).toLocaleDateString() : "—";
 
@@ -1732,7 +1727,7 @@
     async function startPlanCheckout(priceId) {
       // Look up plan name and price from PLAN_PRICE_IDS
       let planName = "Pro";
-      let planPrice = "$10/month";
+      let planPrice = "$12/month";
 
       for (const [planCode, prices] of Object.entries(PLAN_PRICE_IDS)) {
         if (prices.monthly === priceId) {
@@ -1771,7 +1766,7 @@
       <div class="tg-payment-header">
         <img src="/images/tangent_logo.png" alt="TANGENT" class="tg-payment-logo">
         <h2 id="tg-payment-title">Upgrade to Pro</h2>
-        <p id="tg-payment-subtitle">$10/month</p>
+        <p id="tg-payment-subtitle">$12/month</p>
       </div>
 
       <!-- Payment Form State -->
