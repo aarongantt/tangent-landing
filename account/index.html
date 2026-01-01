@@ -861,7 +861,7 @@
         desc: "Try it out for free and see where it takes you.",
         bullets: [
           "1,000 queries (~7 days of typical use)",
-          "0 Deep tokens",
+          "Automatic AI model selection (picks the right depth for each task)",
           "All core Tangent chips (Explain, Summarize, Translate, Teach Me, etc.)",
           "Context-aware responses that automatically understand the page",
           "Support for long articles and docs",
@@ -873,33 +873,33 @@
       {
         code: "tangent_pro_monthly",
         title: "Pro",
-        price: "$10",
+        price: "$12",
         suffix: "/ month",
         desc: "For people who live in their browser and rely on AI every day.",
         bullets: [
-          "12M Standard tokens / month",
-          "Unlimited AI model selection / month",
+          "6,000 queries / month (~200/day avg)",
+          "Automatic AI model selection",
           "All core Tangent chips (Explain, Summarize, Translate, Teach Me, etc.)",
           "Context-aware responses that automatically understand the page",
           "Support for long articles and docs",
           "Ability to create and save custom chips"
         ],
-        altPrice: "$8.75 / mo ($105 billed annually)"
+        altPrice: "$12 / mo ($144 billed annually)"
       },
       {
         code: "tangent_business_solo_monthly",
         title: "Business (Solo)",
-        price: "$29",
+        price: "$30",
         suffix: "/ month",
         desc: "For creators, freelancers, and power users who need more headroom.",
         bullets: [
-          "20M Standard tokens / month",
-          "Unlimited AI model selection / month",
+          "15,000 queries / month (~500/day avg)",
+          "Automatic AI model selection",
           "All Pro features included",
           "Priority access to new features and improvements",
           "Email support"
         ],
-        altPrice: "$24.17 / mo ($290 billed annually)"
+        altPrice: "$25.50 / mo ($306 billed annually)"
       }
     ];
 
@@ -1120,13 +1120,17 @@
         const remainingDeep = formatNumber(remainingDeepRaw ?? 0);
         const remainingUnits = info.remaining_units ?? (remainingStdRaw + remainingDeepRaw);
         const monthlyUnits = info.monthly_units ?? (info.monthly_std + info.monthly_deep);
-        const resetDate = info.period_end || info.paid_through ? new Date(info.period_end || info.paid_through).toLocaleDateString() : "—";
+        const periodEnd = info.period_end || info.paid_through;
+        const resetDate = periodEnd ? new Date(periodEnd).toLocaleDateString() : "—";
+
+        const isTrial = (plan || '').toLowerCase() === 'free_trial';
+        const resetLabel = isTrial ? 'Trial expires on' : 'Resets on';
 
         planDetails.innerHTML = `
           <p><strong>Plan:</strong> ${formatPlan(plan)}</p>
           <p><strong>Email:</strong> ${info.email || info.user_email || "—"}</p>
-          <p><strong>Queries Remaining:</strong> ${formatNumber(remainingUnits)} / ${formatNumber(monthlyUnits)} this month</p>
-          <p class="quota-footnote">Resets on ${resetDate}</p>
+          <p><strong>Queries Remaining:</strong> ${formatNumber(remainingUnits)} / ${formatNumber(monthlyUnits)}</p>
+          <p class="quota-footnote">${resetLabel} ${resetDate}</p>
         `;
         renderTokensAndPlans(plan);
         // Event listeners for plan buttons are now attached inside renderTokensAndPlans()
@@ -1177,13 +1181,12 @@
           if (middleColumn) middleColumn.appendChild(banner);
 
         } else if (normalizedError.includes("quota") && normalizedError.includes("exceeded")) {
-          // TYPE 2: Usage quota exceeded (ran out of tokens during free trial)
-          // This happens when user exhausts 70K tokens BEFORE the 7-day trial ends
+          // TYPE 2: Usage quota exceeded (ran out of queries during free trial)
+          // This happens when user exhausts 1,000 queries BEFORE the 7-day trial ends
           planDetails.innerHTML = `
-            <p><strong>Plan:</strong> Free Trial (Tokens Exhausted)</p>
+            <p><strong>Plan:</strong> Free Trial (Queries Exhausted)</p>
             <p><strong>Email:</strong> ${userEmail}</p>
-            <p><strong>Standard Tokens Remaining:</strong> 0</p>
-            <p><strong>Deep Tokens Remaining:</strong> 0</p>
+            <p><strong>Queries Remaining:</strong> 0 / 1,000</p>
           `;
 
           // Insert warning banner in middle column
@@ -1192,7 +1195,7 @@
           banner.innerHTML = `
             <div class="token-exhausted-icon">⏰</div>
             <div class="token-exhausted-text">
-              <div class="token-exhausted-title">Free Trial Ended</div>
+              <div class="token-exhausted-title">Queries Exhausted</div>
               <div class="token-exhausted-message">Choose a subscription tier below to continue using Tangent</div>
             </div>
           `;
