@@ -96,6 +96,27 @@
         .pricing-card {
             position: relative;
         }
+        .pricing-card-featured {
+            border-color: var(--accent);
+            box-shadow: 0 0 40px rgba(74, 144, 226, 0.25);
+        }
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            color: #05060a;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: var(--radius-pill);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .pricing-card-featured .pill-tag {
+            top: 24px;
+        }
         .pricing-features {
             list-style: none;
             padding-left: 0;
@@ -344,7 +365,7 @@
                 <a href="/faq.html" class="nav-link" id="navFaq">FAQ</a>
                 <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
                 <a href="javascript:void(0)" class="nav-link" id="navLogin">Log In / Sign Up</a>
-                <a href="/pricing.html" class="nav-link nav-link-cta" id="navSubscribe">SUBSCRIBE</a>
+                <a href="/signup" class="nav-link nav-link-cta" id="navSubscribe">SUBSCRIBE</a>
                 <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
             </nav>
         </div>
@@ -394,7 +415,8 @@
                     </article>
 
                     <!-- Pro -->
-                    <article class="pricing-card">
+                    <article class="pricing-card pricing-card-featured">
+                        <div class="pricing-badge">Most Popular</div>
                         <div class="pill pill-tag upgrade">Upgrade</div>
                         <h2 class="pricing-name">Pro</h2>
                         <p class="pricing-price">
