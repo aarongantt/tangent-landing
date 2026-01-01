@@ -191,42 +191,145 @@
             </div>
         </section>
 
-        <!-- How Tangent Works (3-step explanation) -->
+        <!-- How Tangent Works (4-step with videos) -->
         <section id="how-it-works" class="section section-alt">
             <div class="container">
-                <h2>How Tangent Works</h2>
+                <h2 style="background: linear-gradient(135deg, #ffffff 0%, #ffffff 30%, #4a90e2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">How Tangent Works</h2>
                 <p class="section-intro">
                     Tangent lives in your browser. It understands the page you're on and responds
                     in context so you don't have to copy, paste, and re-explain everything.
                 </p>
 
-                <div class="how-it-works-container">
-                    <article class="how-it-works-step">
-                        <h3>1. Highlight anything</h3>
-                        <p>
-                            Select a sentence, paragraph, section of code, or anything else on the page.
-                            Tangent captures the relevant context from the page automatically.
-                        </p>
-                    </article>
+                <div class="how-it-works-steps-compact">
+                    <div class="compact-step">
+                        <div class="compact-step-text">
+                            <h3>1. Select text on any webpage</h3>
+                            <p>Highlight anything—a paragraph, a sentence, a single word. Tangent's chip bar appears instantly, ready to help.</p>
+                        </div>
+                        <div class="compact-step-video">
+                            <video autoplay loop muted playsinline preload="auto">
+                                <source src="videos/step_1.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
 
-                    <article class="how-it-works-step">
-                        <h3>2. Tap a chip</h3>
-                        <p>
-                            Choose from smart chips like <strong>Explain</strong>, <strong>Summarize</strong>,
-                            <strong>Translate</strong>, <strong>Teach me</strong>, or custom chips you create.
-                        </p>
-                    </article>
+                    <div class="compact-step">
+                        <div class="compact-step-text">
+                            <h3>2. Choose an action or ask a question</h3>
+                            <p>Click a pre-built chip (Summarize, Explain, Translate) or type your own question in the chat panel.</p>
+                        </div>
+                        <div class="compact-step-video">
+                            <video autoplay loop muted playsinline preload="auto">
+                                <source src="videos/step_2.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
 
-                    <article class="how-it-works-step">
-                        <h3>3. Get focused answers</h3>
-                        <p>
-                            Tangent responds in a small, anchored chat window, tailored to the page—
-                            no tab-switching, no losing your place, no context lost.
-                        </p>
-                    </article>
+                    <div class="compact-step">
+                        <div class="compact-step-text">
+                            <h3>3. Get intelligent, context-aware responses</h3>
+                            <p>Tangent analyzes the entire page and responds based on what you're looking at—with clickable references.</p>
+                        </div>
+                        <div class="compact-step-video">
+                            <video autoplay loop muted playsinline preload="auto">
+                                <source src="videos/step_3.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+
+                    <div class="compact-step">
+                        <div class="compact-step-text">
+                            <h3>4. Go further when you're ready</h3>
+                            <p>Continue the conversation—or shift into Draft mode to think and write with AI-powered notes.</p>
+                        </div>
+                        <div class="compact-step-video">
+                            <video autoplay loop muted playsinline preload="auto">
+                                <source src="videos/step_4.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════════════
+   COMPACT HOW IT WORKS STEPS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.how-it-works-steps-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    margin-top: 40px;
+}
+
+.compact-step {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 48px;
+    align-items: center;
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+    overflow: visible;
+    position: relative;
+    isolation: isolate;
+}
+
+.compact-step:hover {
+    z-index: 100;
+}
+
+.compact-step-text h3 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.compact-step-text p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.compact-step-video {
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.compact-step-video video {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 2px solid #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+.compact-step-video video:hover {
+    transform: scale(2);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9);
+    z-index: 10000;
+}
+
+@media (max-width: 900px) {
+    .compact-step {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 
 <style>
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -2367,32 +2470,6 @@
                     <div class="feature">
                         <h3>Moves at your pace</h3>
                         <p>AI where you want it when you need it. Not intrusive, not distracting.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Use Cases Section -->
-        <section class="section section-alt">
-            <div class="container">
-                <h2>Built for everyone who thinks in tabs</h2>
-
-                <div class="use-cases-grid">
-                    <div class="use-case">
-                        <h3>Researchers</h3>
-                        <p>Summarize articles, extract key points, compare sources—all without leaving the page.</p>
-                    </div>
-                    <div class="use-case">
-                        <h3>Students</h3>
-                        <p>Understand complex concepts, get definitions in context, create study outlines from lecture notes.</p>
-                    </div>
-                    <div class="use-case">
-                        <h3>Analysts</h3>
-                        <p>Digest reports, extract data, compare claims across documents—with intelligent reference detection.</p>
-                    </div>
-                    <div class="use-case">
-                        <h3>Every-day users</h3>
-                        <p>Translate pages, explain unfamiliar topics, explore ideas—turn any webpage into a conversation.</p>
                     </div>
                 </div>
             </div>
