@@ -590,8 +590,15 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>© <span id="year"></span> Tangent.</span>
-      <span>Manage your plan securely.</span>
+      <div class="footer-links">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/privacy.html#security">Security</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="mailto:support@tangentapp.co">Support</a>
+      </div>
+      <div class="footer-tagline">
+        <span>© <span id="year"></span> Tangent -- Discover Without Distraction.</span>
+      </div>
     </div>
   </footer>
 
@@ -1745,6 +1752,58 @@
     })();
   </script>
 
+  <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script>
+    (async function() {
+      const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
+
+      // Expose client globally for auth-modal.js
+      window.supabaseClient = supabase;
+
+      // Load header first
+      await fetch('/header.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('header-placeholder').innerHTML = html;
+        });
+
+      const {data, error} = await supabase.auth.getSession();
+      const loggedIn = !error && data?.session;
+
+      function toggle(id, show) {
+        const el = document.getElementById(id);
+        if (el) el.style.display = show ? '' : 'none';
+      }
+
+      toggle('navSubscribe', !loggedIn);
+      toggle('navLogin', !loggedIn);
+      toggle('navAccount', loggedIn);
+      toggle('navSignOut', loggedIn);
+
+      if (loggedIn) {
+        const signOut = async () => {
+          await supabase.auth.signOut();
+          window.location.href = '/';
+        };
+        document.getElementById('navSignOut')?.addEventListener('click', signOut);
+      }
+
+      makeNavVisible();
+    })();
+
+    function makeNavVisible() {
+      const nav = document.getElementById('navRoot');
+      if (nav) {
+        nav.classList.remove('nav-guard');
+        nav.style.opacity = '1';
+        nav.style.visibility = 'visible';
+      }
+    }
+  </script>
+  <script src="/auth-modal.js"></script>
+
   <!-- Payment Modal -->
   <div id="tangent-payment-modal" style="display: none;">
     <div class="tg-payment-overlay"></div>
@@ -1801,5 +1860,9 @@
   </div>
 
   <script src="/load-header.js"></script>
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
