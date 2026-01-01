@@ -47,7 +47,7 @@
 <body>
     <!-- Site header -->
     <header class="site-header">
-        <div class="container header-inner" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <div class="container header-inner" style="display: flex; align-items: center; gap: 40px;">
             <!-- Mobile hamburger menu (hidden on desktop) -->
             <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
                 <span class="hamburger-line"></span>
@@ -55,32 +55,32 @@
                 <span class="hamburger-line"></span>
             </button>
 
-            <a href="/" class="logo-link" style="margin-right: auto;">
+            <a href="/" class="logo-link">
                 <img src="images/tangent_logo_light.png" alt="Tangent" class="logo-wordmark" />
             </a>
 
             <!-- Desktop navigation (hidden on mobile) -->
-            <nav class="nav nav-guard" id="navRoot" style="margin-left: auto; display: flex; gap: 19px; align-items: center;">
-                <a href="/download" class="nav-link">Download</a>
+            <nav class="nav nav-guard" id="navRoot" style="display: flex; gap: 19px; align-items: center;">
+                <a href="/download" class="nav-link">Download Tangent</a>
                 <a href="/how-it-works.html" class="nav-link" id="navHow">How It Works</a>
                 <a href="/demo.html" class="nav-link" id="navDemo">Demo</a>
                 <a href="/faq.html" class="nav-link" id="navFaq">FAQ</a>
                 <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
-                <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
-                <a href="/signup" class="nav-link nav-link-cta" id="navSignup">Sign Up</a>
+                <a href="/account/login/" class="nav-link" id="navLogin">Log In / Sign Up</a>
+                <a href="/pricing.html" class="nav-link nav-link-cta" id="navSubscribe">SUBSCRIBE</a>
                 <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
             </nav>
 
             <!-- Mobile slide-out menu (hidden by default) -->
             <div class="mobile-menu" id="mobileMenu">
                 <div class="mobile-menu-content">
-                    <a href="/download" class="mobile-menu-link">Download</a>
+                    <a href="/download" class="mobile-menu-link">Download Tangent</a>
                     <a href="/how-it-works.html" class="mobile-menu-link" id="mobileNavHow">How It Works</a>
                     <a href="/demo.html" class="mobile-menu-link" id="mobileNavDemo">Demo</a>
-                    <a href="/pricing.html" class="mobile-menu-link" id="mobileNavPricing">Pricing</a>
                     <a href="/faq.html" class="mobile-menu-link" id="mobileNavFaq">FAQ</a>
-                    <a href="/account/login/" class="mobile-menu-link" id="mobileNavLogin">Log In</a>
+                    <a href="/account/login/" class="mobile-menu-link" id="mobileNavLogin">Log In / Sign Up</a>
                     <a href="javascript:void(0)" class="mobile-menu-link" id="mobileNavSignOut" style="display:none;">Sign Out</a>
+                    <a href="/pricing.html" class="mobile-menu-link mobile-menu-link-highlight" id="mobileNavSubscribe">SUBSCRIBE</a>
                     <a href="/account" class="mobile-menu-link mobile-menu-link-highlight" id="mobileNavAccount" style="display:none;">Account</a>
                 </div>
             </div>
@@ -2261,11 +2261,11 @@
             const navRoot = document.getElementById("navRoot");
             const signOutLink = document.getElementById("navSignOut");
             const loginLink = document.getElementById("navLogin");
-            const signupBtn = document.getElementById("navSignup");
+            const subscribeBtn = document.getElementById("navSubscribe");
             const accountLink = document.getElementById("navAccount");
 
             // Mobile elements
-            const mobileSignup = document.getElementById("mobileSignup");
+            const mobileNavSubscribe = document.getElementById("mobileNavSubscribe");
             const mobileNavLogin = document.getElementById("mobileNavLogin");
             const mobileNavSignOut = document.getElementById("mobileNavSignOut");
             const mobileNavAccount = document.getElementById("mobileNavAccount");
@@ -2278,7 +2278,7 @@
             function setNavLoggedIn() {
                 // Desktop nav
                 if (loginLink) loginLink.style.display = "none";
-                if (signupBtn) signupBtn.style.display = "none";
+                if (subscribeBtn) subscribeBtn.style.display = "none";
                 if (signOutLink) {
                     signOutLink.style.display = "inline-flex";
                     signOutLink.onclick = async (e) => {
@@ -2293,7 +2293,7 @@
                 }
 
                 // Mobile nav
-                if (mobileSignup) mobileSignup.style.display = "none";
+                if (mobileNavSubscribe) mobileNavSubscribe.style.display = "none";
                 if (mobileNavLogin) mobileNavLogin.style.display = "none";
                 if (mobileNavSignOut) {
                     mobileNavSignOut.style.display = "block";
@@ -2320,20 +2320,21 @@
                     loginLink.href = "javascript:void(0)";
                     loginLink.onclick = (e) => { e.preventDefault(); openLoginModal(); };
                 }
-                if (signupBtn) {
-                    signupBtn.style.display = "inline-flex";
-                    signupBtn.href = "javascript:void(0)";
-                    signupBtn.onclick = (e) => { e.preventDefault(); openLoginModal(); };
-                    signupBtn.classList.add("nav-link-cta");
+                if (subscribeBtn) {
+                    subscribeBtn.style.display = "inline-flex";
+                    // SUBSCRIBE button goes to pricing page (not modal)
+                    subscribeBtn.href = "/pricing.html";
+                    subscribeBtn.onclick = null;
                 }
                 if (accountLink) {
                     accountLink.style.display = "none";
                 }
 
                 // Mobile nav
-                if (mobileSignup) {
-                    mobileSignup.style.display = "inline-flex";
-                    mobileSignup.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+                if (mobileNavSubscribe) {
+                    mobileNavSubscribe.style.display = "block";
+                    mobileNavSubscribe.href = "/pricing.html";
+                    mobileNavSubscribe.onclick = null;
                 }
                 if (mobileNavLogin) {
                     mobileNavLogin.style.display = "block";
