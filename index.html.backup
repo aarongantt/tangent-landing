@@ -2237,9 +2237,252 @@
     </script>
 
     <!-- Shared auth/nav logic with modal overlay -->
-    <!-- Unified auth and navigation -->
     <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-    <script src="/auth-nav.js"></script>
+    <script>
+        (function () {
+            const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
+            const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
+            const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
+
+            // Expose client globally for auth-modal.js
+            window.supabaseClient = client;
+
+            const navRoot = document.getElementById("navRoot");
+            const signOutLink = document.getElementById("navSignOut");
+            const loginLink = document.getElementById("navLogin");
+            const subscribeBtn = document.getElementById("navSubscribe");
+            const accountLink = document.getElementById("navAccount");
+
+            // Mobile elements
+            const mobileNavSubscribe = document.getElementById("mobileNavSubscribe");
+            const mobileNavLogin = document.getElementById("mobileNavLogin");
+            const mobileNavSignOut = document.getElementById("mobileNavSignOut");
+            const mobileNavAccount = document.getElementById("mobileNavAccount");
+
+            // Hero CTA elements
+            const heroCtas = document.getElementById("heroCtas");
+            const heroStartTrial = document.getElementById("heroStartTrial");
+            const heroSignUp = document.getElementById("heroSignUp");
+
+            function setNavLoggedIn() {
+                // Desktop nav
+                if (loginLink) loginLink.style.display = "none";
+                if (subscribeBtn) subscribeBtn.style.display = "none";
+                if (signOutLink) {
+                    signOutLink.style.display = "inline-flex";
+                    signOutLink.onclick = async (e) => {
+                        e.preventDefault();
+                        await client.auth.signOut().catch(() => {});
+                        setNavLoggedOut();
+                    };
+                }
+                if (accountLink) {
+                    accountLink.style.display = "inline-flex";
+                    accountLink.onclick = null;
+                }
+
+                // Mobile nav
+                if (mobileNavSubscribe) mobileNavSubscribe.style.display = "none";
+                if (mobileNavLogin) mobileNavLogin.style.display = "none";
+                if (mobileNavSignOut) {
+                    mobileNavSignOut.style.display = "block";
+                    mobileNavSignOut.onclick = async (e) => {
+                        e.preventDefault();
+                        await client.auth.signOut().catch(() => {});
+                        setNavLoggedOut();
+                    };
+                }
+                if (mobileNavAccount) mobileNavAccount.style.display = "block";
+
+                // Hero CTAs - hide when logged in
+                if (heroCtas) heroCtas.style.display = "none";
+            }
+
+            function setNavLoggedOut() {
+                // Desktop nav
+                if (signOutLink) {
+                    signOutLink.style.display = "none";
+                    signOutLink.onclick = null;
+                }
+                if (loginLink) {
+                    loginLink.style.display = "inline-flex";
+                    loginLink.href = "javascript:void(0)";
+                    loginLink.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+                }
+                if (subscribeBtn) {
+                    subscribeBtn.style.display = "inline-flex";
+                    // SUBSCRIBE button goes to pricing page (not modal)
+                    subscribeBtn.href = "/pricing.html";
+                    subscribeBtn.onclick = null;
+                }
+                if (accountLink) {
+                    accountLink.style.display = "none";
+                }
+
+                // Mobile nav
+                if (mobileNavSubscribe) {
+                    mobileNavSubscribe.style.display = "block";
+                    mobileNavSubscribe.href = "/pricing.html";
+                    mobileNavSubscribe.onclick = null;
+                }
+                if (mobileNavLogin) {
+                    mobileNavLogin.style.display = "block";
+                    mobileNavLogin.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+                }
+                if (mobileNavSignOut) mobileNavSignOut.style.display = "none";
+                if (mobileNavAccount) mobileNavAccount.style.display = "none";
+
+                // Hero CTAs - show when logged out, wire up modal
+                if (heroCtas) heroCtas.style.display = "flex";
+                if (heroStartTrial) {
+                    heroStartTrial.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+                }
+                if (heroSignUp) {
+                    heroSignUp.onclick = (e) => { e.preventDefault(); openLoginModal(); };
+                }
+            }
+
+            let modal;
+            function ensureModal() {
+                if (modal) return modal;
+                modal = document.createElement("div");
+                modal.id = "tg-login-modal";
+                modal.style.position = "fixed";
+                modal.style.inset = "0";
+                modal.style.background = "rgba(15,23,42,0.55)";
+                modal.style.backdropFilter = "blur(8px)";
+                modal.style.display = "none";
+                modal.style.alignItems = "center";
+                modal.style.justifyContent = "center";
+                modal.style.zIndex = "9999";
+                modal.innerHTML = `
+                  <div style="background:#050915;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:22px;width:100%;max-width:420px;box-shadow:0 14px 36px rgba(0,0,0,0.45);color:#e5e7eb;position:relative;">
+                    <button id="tgLoginClose" style="position:absolute;top:10px;right:10px;background:transparent;border:0;color:#cbd5e1;font-size:18px;cursor:pointer;">×</button>
+                    <div style="display:flex;justify-content:center;margin-bottom:12px;">
+                      <img src="images/tangent_logo.png" alt="Tangent" style="height:28px;" />
+                    </div>
+                    <h3 style="margin:0 0 14px 0;font-weight:700;">Sign In:</h3>
+                    <label style="display:block;margin-bottom:10px;font-weight:600;font-size:13px;">Email
+                      <input id="tgLoginEmail" type="email" autocomplete="email" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(5,6,10,0.7);color:#e5e7eb;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);" />
+                    </label>
+                    <label style="display:block;margin-bottom:14px;font-weight:600;font-size:13px;">Password
+                      <input id="tgLoginPassword" type="password" autocomplete="current-password" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(5,6,10,0.7);color:#e5e7eb;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);" />
+                    </label>
+                    <div style="display:flex;gap:10px;margin-top:12px;">
+            <button id="tgLoginSignIn" class="cta-button secondary" style="flex:1;">Sign In</button>
+            <button id="tgLoginSignUp" class="cta-button secondary" style="flex:1;">Sign Up</button>
+                    </div>
+                    <p id="tgLoginStatus" style="min-height:18px;font-size:13px;margin-top:10px;"></p>
+                  </div>
+                `;
+                document.body.appendChild(modal);
+
+                modal.addEventListener("click", (e) => {
+                    if (e.target === modal) closeLoginModal();
+                });
+                modal.querySelector("#tgLoginClose").addEventListener("click", closeLoginModal);
+                modal.querySelector("#tgLoginSignIn").addEventListener("click", () => handleAuth("signin"));
+                modal.querySelector("#tgLoginSignUp").addEventListener("click", () => handleAuth("signup"));
+                const emailInput = modal.querySelector("#tgLoginEmail");
+                const pwdInput = modal.querySelector("#tgLoginPassword");
+                const onKey = (e) => { if (e.key === "Enter") { e.preventDefault(); handleAuth("signin"); } };
+                emailInput.addEventListener("keydown", onKey);
+                pwdInput.addEventListener("keydown", onKey);
+                return modal;
+            }
+
+            function setStatus(msg, isError) {
+                const el = modal?.querySelector("#tgLoginStatus");
+                if (!el) return;
+                el.textContent = msg || "";
+                el.style.color = isError ? "#f87171" : "#cbd5e1";
+            }
+
+            function openLoginModal() {
+                ensureModal();
+                modal.style.display = "flex";
+                const emailInput = modal.querySelector("#tgLoginEmail");
+                if (emailInput) emailInput.focus();
+            }
+            function closeLoginModal() {
+                if (modal) modal.style.display = "none";
+            }
+
+            async function handleAuth(mode) {
+                ensureModal();
+                const email = modal.querySelector("#tgLoginEmail").value.trim();
+                const password = modal.querySelector("#tgLoginPassword").value;
+                if (!email || !password) {
+                    setStatus("Enter email and password.", true);
+                    return;
+                }
+                setStatus(mode === "signin" ? "Signing in…" : "Creating account…", false);
+                try {
+                    if (mode === "signin") {
+                        const { error } = await client.auth.signInWithPassword({ email, password });
+                        if (error) throw error;
+                        setStatus("Signed in. Redirecting…", false);
+                        setNavLoggedIn();
+                        window.location.href = "/account";
+                    } else {
+                        const { data, error } = await client.auth.signUp({ email, password });
+                        if (error) throw error;
+
+                        // Check if account was auto-confirmed (no email verification required)
+                        const isAutoConfirmed = data?.user?.confirmed_at || data?.session?.access_token;
+
+                        if (isAutoConfirmed) {
+                            // Auto-confirmed - redirect to account immediately
+                            setStatus("Account created. Redirecting…", false);
+                            setNavLoggedIn();
+                            setTimeout(() => {
+                                window.location.href = "/account";
+                            }, 500);
+                        } else {
+                            // Email confirmation required
+                            setStatus("Account created. Check your email to confirm, then sign in.", false);
+                        }
+                    }
+                } catch (e) {
+                    setStatus(e.message || "Authentication failed.", true);
+                }
+            }
+
+            // Load header FIRST, then check auth
+            fetch('/header.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('header-placeholder').innerHTML = html;
+
+                    // Now that header is loaded, check auth and update nav
+                    return client.auth.getSession();
+                })
+                .then(({ data }) => {
+                    const navRoot = document.getElementById('navRoot');
+                    if (data?.session?.access_token) {
+                        setNavLoggedIn();
+                    } else {
+                        setNavLoggedOut();
+                    }
+                    if (navRoot) {
+                        navRoot.classList.remove("nav-guard");
+                        navRoot.style.visibility = "visible";
+                        navRoot.style.opacity = "1";
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    const navRoot = document.getElementById('navRoot');
+                    setNavLoggedOut();
+                    if (navRoot) {
+                        navRoot.classList.remove("nav-guard");
+                        navRoot.style.visibility = "visible";
+                        navRoot.style.opacity = "1";
+                    }
+                });
+        })();
+    </script>
+    <script src="/auth-modal.js"></script>
 </body>
 
 </html>

@@ -298,12 +298,12 @@
             </a>
             <nav class="nav nav-guard" id="navRoot">
                 <a href="/download" class="nav-link">Download Tangent</a>
-                <a href="/#how-it-works" class="nav-link" id="navHow">How It Works</a>
+                <a href="/how-it-works.html" class="nav-link" id="navHow">How It Works</a>
+                <a href="/demo.html" class="nav-link" id="navDemo">Demo</a>
                 <a href="/faq.html" class="nav-link" id="navFaq">FAQ</a>
                 <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
-                <a href="/signup" class="nav-link" id="navPricing">Pricing</a>
-                <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
-                <a href="/signup" class="nav-link nav-link-cta nav-link-cta-active" id="navSignup">Sign Up</a>
+                <a href="javascript:void(0)" class="nav-link" id="navLogin">Log In / Sign Up</a>
+                <a href="/pricing.html" class="nav-link nav-link-cta" id="navSubscribe">SUBSCRIBE</a>
                 <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
             </nav>
         </div>
@@ -1554,6 +1554,10 @@
             }
         });
     </script>
+
+    <!-- Unified auth and navigation -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="/auth-nav.js"></script>
 
     <script>
         // Set current year in footer

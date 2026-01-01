@@ -1743,59 +1743,11 @@
       await openPaymentModal(priceId, planName, planPrice, "subscription");
     }
 
-    // MERGED SCRIPT: Load header and nav, then render plan
-    (async function() {
-      const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
-      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
-      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: true } });
-
-      // Expose client globally for auth-modal.js
-      window.supabaseClient = supabase;
-
-      // Load header first
-      await fetch('/header.html')
-        .then(response => response.text())
-        .then(html => {
-          document.getElementById('header-placeholder').innerHTML = html;
-        });
-
-      const {data, error} = await supabase.auth.getSession();
-      const loggedIn = !error && data?.session;
-
-      function toggle(id, show) {
-        const el = document.getElementById(id);
-        if (el) el.style.display = show ? '' : 'none';
-      }
-
-      toggle('navSubscribe', !loggedIn);
-      toggle('navLogin', !loggedIn);
-      toggle('navAccount', loggedIn);
-      toggle('navSignOut', loggedIn);
-
-      if (loggedIn) {
-        const signOut = async () => {
-          await supabase.auth.signOut();
-          window.location.href = '/';
-        };
-        document.getElementById('navSignOut')?.addEventListener('click', signOut);
-      }
-
-      makeNavVisible();
-
-      // Now that header is loaded, render the plan
-      renderPlan();
-    })();
-
-    function makeNavVisible() {
-      const nav = document.getElementById('navRoot');
-      if (nav) {
-        nav.classList.remove('nav-guard');
-        nav.style.opacity = '1';
-        nav.style.visibility = 'visible';
-      }
-    }
   </script>
+  <!-- Unified auth and navigation -->
   <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="/auth-nav.js"></script>
+  <script src="/account/account-init.js"></script>
   <script src="/auth-modal.js"></script>
 
   <!-- Payment Modal -->
