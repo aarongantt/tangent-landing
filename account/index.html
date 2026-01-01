@@ -994,8 +994,8 @@
                     ${pl.bullets.map(b => `<li>${b}</li>`).join("")}
                   </ul>
                   <div class="plan-actions">
-                    <button class="plan-cta" data-price="${monthlyId}" ${monthlyDisabled ? "disabled" : ""}>${pl.price} ${pl.suffix}</button>
-                    <button class="plan-cta" data-price="${annualId}" ${annualDisabled ? "disabled" : ""}>${pl.altPrice}</button>
+                    <button class="plan-cta" data-price="${monthlyId}" ${monthlyDisabled ? "disabled" : ""}>${monthlyDisabled ? 'Current Plan' : pl.price + ' ' + pl.suffix}</button>
+                    <button class="plan-cta" data-price="${annualId}" ${annualDisabled ? "disabled" : ""}>${annualDisabled ? 'Current Plan' : pl.altPrice}</button>
                   </div>
                 </div>`;
               }).join("")}
