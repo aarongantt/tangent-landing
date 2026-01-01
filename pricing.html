@@ -136,14 +136,15 @@
 
         .tier-card .cta-button.primary {
             background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-            color: #05060a;
-            box-shadow: 0 10px 24px rgba(5, 122, 255, 0.45);
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            box-shadow: 0 0 24px rgba(5, 122, 255, 0.45);
         }
 
         .tier-card .cta-button.primary:hover {
             transform: translateY(-1px);
             filter: brightness(1.05);
-            box-shadow: 0 14px 28px rgba(5, 122, 255, 0.55);
+            box-shadow: 0 0 28px rgba(5, 122, 255, 0.55);
         }
 
         .tier-card .cta-button.secondary {
@@ -193,7 +194,7 @@
 <body>
     <!-- Site header -->
     <header class="site-header">
-        <div class="container header-inner">
+        <div class="container header-inner" style="display: flex; align-items: center; gap: 40px;">
             <!-- Mobile hamburger menu (hidden on desktop) -->
             <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
                 <span class="hamburger-line"></span>
@@ -202,33 +203,31 @@
             </button>
 
             <a href="/" class="logo-link">
-                <img src="images/tangent_logo.png" alt="Tangent" class="logo-wordmark" />
+                <img src="images/tangent_logo_light.png" alt="Tangent" class="logo-wordmark" />
             </a>
 
-            <!-- Mobile Sign Up button (hidden on desktop) -->
-            <a href="/signup" class="mobile-signup-btn" id="mobileSignup">Sign Up</a>
-
             <!-- Desktop navigation (hidden on mobile) -->
-            <nav class="nav nav-guard" id="navRoot">
-                <a href="/download" class="nav-link">Download</a>
+            <nav class="nav nav-guard" id="navRoot" style="display: flex; gap: 19px; align-items: center;">
+                <a href="/download" class="nav-link">Download Tangent</a>
                 <a href="/how-it-works.html" class="nav-link" id="navHow">How It Works</a>
-                <a href="/pricing.html" class="nav-link" id="navPricing">Pricing</a>
+                <a href="/demo.html" class="nav-link" id="navDemo">Demo</a>
                 <a href="/faq.html" class="nav-link" id="navFaq">FAQ</a>
                 <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
-                <a href="/account/login/" class="nav-link" id="navLogin">Log In</a>
-                <a href="/signup" class="nav-link nav-link-cta" id="navSignup">Sign Up</a>
+                <a href="/account/login/" class="nav-link" id="navLogin">Log In / Sign Up</a>
+                <a href="/pricing.html" class="nav-link nav-link-cta" id="navSubscribe">SUBSCRIBE</a>
                 <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
             </nav>
 
             <!-- Mobile slide-out menu (hidden by default) -->
             <div class="mobile-menu" id="mobileMenu">
                 <div class="mobile-menu-content">
-                    <a href="/download" class="mobile-menu-link">Download</a>
+                    <a href="/download" class="mobile-menu-link">Download Tangent</a>
                     <a href="/how-it-works.html" class="mobile-menu-link" id="mobileNavHow">How It Works</a>
-                    <a href="/pricing.html" class="mobile-menu-link" id="mobileNavPricing">Pricing</a>
+                    <a href="/demo.html" class="mobile-menu-link" id="mobileNavDemo">Demo</a>
                     <a href="/faq.html" class="mobile-menu-link" id="mobileNavFaq">FAQ</a>
-                    <a href="/account/login/" class="mobile-menu-link" id="mobileNavLogin">Log In</a>
+                    <a href="/account/login/" class="mobile-menu-link" id="mobileNavLogin">Log In / Sign Up</a>
                     <a href="javascript:void(0)" class="mobile-menu-link" id="mobileNavSignOut" style="display:none;">Sign Out</a>
+                    <a href="/pricing.html" class="mobile-menu-link mobile-menu-link-highlight" id="mobileNavSubscribe">SUBSCRIBE</a>
                     <a href="/account" class="mobile-menu-link mobile-menu-link-highlight" id="mobileNavAccount" style="display:none;">Account</a>
                 </div>
             </div>
@@ -418,12 +417,12 @@
                 if (el) el.style.display = show ? '' : 'none';
             }
 
-            toggle('navSignup', !loggedIn);
+            toggle('navSubscribe', !loggedIn);
             toggle('navLogin', !loggedIn);
             toggle('navAccount', loggedIn);
             toggle('navSignOut', loggedIn);
 
-            toggle('mobileSignup', !loggedIn);
+            toggle('mobileNavSubscribe', !loggedIn);
             toggle('mobileNavLogin', !loggedIn);
             toggle('mobileNavAccount', loggedIn);
             toggle('mobileNavSignOut', loggedIn);
