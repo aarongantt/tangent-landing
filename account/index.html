@@ -208,11 +208,24 @@
       line-height: 1.4;
     }
     .plan-list {
-      margin: 0 0 12px 16px;
+      margin: 0 0 12px 0;
       padding: 0;
       color: #cbd5e1;
       font-size: 13px;
       line-height: 1.5;
+      list-style: none;
+    }
+    .plan-list li {
+      position: relative;
+      padding-left: 22px;
+      margin-bottom: 10px;
+    }
+    .plan-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent-strong);
+      font-weight: 700;
     }
     .plan-actions {
       display: flex;

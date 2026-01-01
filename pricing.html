@@ -157,6 +157,52 @@
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
+        /* Status pill badges */
+        .pill {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: var(--radius-pill);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 13px;
+            color: #e5e7eb;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .pill-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 2;
+        }
+
+        /* Adjust position when tier-badge (Most Popular) is present */
+        .tier-card.featured .pill-tag {
+            top: 24px;
+        }
+
+        .pill.upgrade {
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            color: #ffffff;
+            border-color: var(--accent);
+            cursor: pointer;
+            transition: transform 0.12s ease-out, filter 0.12s ease-out;
+        }
+
+        .pill.upgrade:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.1);
+        }
+
+        .pill.sign-up-pill {
+            background: rgba(74, 144, 226, 0.15);
+            color: var(--accent-strong);
+            border-color: var(--accent);
+        }
+
+        .pill.sign-up-pill:hover {
+            background: rgba(74, 144, 226, 0.25);
+        }
+
         .tier-card .cta-button.secondary:hover {
             border-color: rgba(255, 255, 255, 0.5);
             background: rgba(255, 255, 255, 0.05);
@@ -212,7 +258,9 @@
         <section class="pricing-tiers">
             <div class="tier-cards">
                 <!-- Free Trial Card -->
-                <div class="tier-card">
+                <div class="tier-card" data-plan="trial">
+                    <!-- Status badge (will be populated by JS) -->
+                    <div class="pill pill-tag tier-status-badge" style="display: none;"></div>
                     <h3>Free Trial</h3>
                     <div class="tier-price">Free <span class="tier-duration">7 days</span></div>
                     <ul class="tier-features">
@@ -225,8 +273,10 @@
                 </div>
 
                 <!-- Pro Card -->
-                <div class="tier-card featured">
+                <div class="tier-card featured" data-plan="pro_monthly">
                     <div class="tier-badge">Most Popular</div>
+                    <!-- Status badge (will be populated by JS) -->
+                    <div class="pill pill-tag tier-status-badge" style="display: none;"></div>
                     <h3>Pro</h3>
                     <div class="tier-price">$12 <span class="tier-duration">/ month</span></div>
                     <div class="tier-price-alt">or $120/year ($10/mo, 17% discount)</div>
@@ -244,7 +294,9 @@
                 </div>
 
                 <!-- Business Solo Card -->
-                <div class="tier-card">
+                <div class="tier-card" data-plan="business_solo_monthly">
+                    <!-- Status badge (will be populated by JS) -->
+                    <div class="pill pill-tag tier-status-badge" style="display: none;"></div>
                     <h3>Business (Solo)</h3>
                     <div class="tier-price">$30 <span class="tier-duration">/ month</span></div>
                     <div class="tier-price-alt">or $306/year ($25.50/mo, 15% discount)</div>

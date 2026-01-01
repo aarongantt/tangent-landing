@@ -92,6 +92,47 @@
             opacity: 0.9;
         }
 
+        /* Pricing card checkmarks and badges */
+        .pricing-card {
+            position: relative;
+        }
+        .pricing-features {
+            list-style: none;
+            padding-left: 0;
+        }
+        .pricing-features li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 10px;
+        }
+        .pricing-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: 700;
+        }
+        .pill {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 13px;
+            color: #e5e7eb;
+            background: rgba(255,255,255,0.05);
+        }
+        .pill-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .pill.upgrade {
+            background: #3b82f6;
+            color: #ffffff;
+            border-color: #3b82f6;
+            cursor: pointer;
+        }
+
         /* Payment Modal Styles */
         #tangent-payment-modal {
             position: fixed;
@@ -325,6 +366,7 @@
                 <div class="pricing-tier-grid">
                     <!-- Free Trial -->
                     <article class="pricing-card">
+                        <div class="pill pill-tag upgrade">Sign Up</div>
                         <h2 class="pricing-name">Free Trial</h2>
                         <p class="pricing-price">
                             <span class="pricing-amount">$0</span>
@@ -353,6 +395,7 @@
 
                     <!-- Pro -->
                     <article class="pricing-card">
+                        <div class="pill pill-tag upgrade">Upgrade</div>
                         <h2 class="pricing-name">Pro</h2>
                         <p class="pricing-price">
                             <span class="pricing-amount">$12</span>
@@ -383,6 +426,7 @@
 
                     <!-- Business (Solo) -->
                     <article class="pricing-card">
+                        <div class="pill pill-tag upgrade">Upgrade</div>
                         <h2 class="pricing-name">Business (Solo)</h2>
                         <p class="pricing-price">
                             <span class="pricing-amount">$30</span>
