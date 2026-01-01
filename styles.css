@@ -67,12 +67,11 @@ a {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    padding: 18px 40px !important;
+    padding: 18px 0 !important;
     flex-wrap: nowrap !important;
     width: 100% !important;
     max-width: var(--max-width) !important;
     margin: 0 auto !important;
-    gap: 180px !important;
 }
 
 .logo-link {
