@@ -1743,17 +1743,7 @@
       await openPaymentModal(priceId, planName, planPrice, "subscription");
     }
 
-    // On load, ensure session or redirect to login, then show plan
-    // Wait for header to load first, then render plan
-    (async function() {
-      // Wait a bit for header to be injected
-      await new Promise(resolve => setTimeout(resolve, 100));
-      renderPlan();
-    })();
-  </script>
-
-  <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-  <script>
+    // MERGED SCRIPT: Load header and nav, then render plan
     (async function() {
       const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
       const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
@@ -1791,6 +1781,9 @@
       }
 
       makeNavVisible();
+
+      // Now that header is loaded, render the plan
+      renderPlan();
     })();
 
     function makeNavVisible() {
@@ -1802,6 +1795,7 @@
       }
     }
   </script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="/auth-modal.js"></script>
 
   <!-- Payment Modal -->
