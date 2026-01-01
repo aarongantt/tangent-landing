@@ -356,8 +356,49 @@
             });
         })();
 
-        // Auth state management (same as index.html)
-        (async function showOrHideAuthLinks() {
+        // Load header FIRST, then check auth
+        fetch('/header.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+
+                // Now setup mobile menu handlers
+                const menuToggle = document.getElementById('mobileMenuToggle');
+                const mobileMenu = document.getElementById('mobileMenu');
+                const menuOverlay = document.getElementById('mobileMenuOverlay');
+
+                if (menuToggle && mobileMenu && menuOverlay) {
+                    function toggleMenu() {
+                        const isActive = mobileMenu.classList.contains('active');
+                        if (isActive) {
+                            menuToggle.classList.remove('active');
+                            mobileMenu.classList.remove('active');
+                            menuOverlay.classList.remove('active');
+                            document.body.style.overflow = '';
+                        } else {
+                            menuToggle.classList.add('active');
+                            mobileMenu.classList.add('active');
+                            menuOverlay.classList.add('active');
+                            document.body.style.overflow = 'hidden';
+                        }
+                    }
+                    menuToggle.addEventListener('click', toggleMenu);
+                    menuOverlay.addEventListener('click', toggleMenu);
+                    document.querySelectorAll('.mobile-menu-link').forEach(link => {
+                        link.addEventListener('click', function() {
+                            if (this.getAttribute('href') && this.getAttribute('href') !== 'javascript:void(0)') {
+                                toggleMenu();
+                            }
+                        });
+                    });
+                }
+
+                // Now check auth state
+                return showOrHideAuthLinks();
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        async function showOrHideAuthLinks() {
             const {createClient} = window.supabase || {};
             if (!createClient) {
                 makeNavVisible();
@@ -397,7 +438,7 @@
             }
 
             makeNavVisible();
-        })();
+        }
 
         function makeNavVisible() {
             const nav = document.getElementById('navRoot');
@@ -409,17 +450,6 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        // Load header immediately
-        (function() {
-            fetch('/header.html')
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('header-placeholder').innerHTML = html;
-                })
-                .catch(error => console.error('Error loading header:', error));
-        })();
-    </script>
 </body>
 
 </html>

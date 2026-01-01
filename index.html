@@ -2419,28 +2419,38 @@
                 }
             }
 
-            client.auth.getSession().then(({ data }) => {
-                if (data?.session?.access_token) {
-                    setNavLoggedIn();
-                } else {
-                    setNavLoggedOut();
-                }
-                if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
-            }).catch(() => {
-                setNavLoggedOut();
-                if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
-            });
-        })();
-    </script>
-    <script>
-        // Load header immediately
-        (function() {
+            // Load header FIRST, then check auth
             fetch('/header.html')
                 .then(response => response.text())
                 .then(html => {
                     document.getElementById('header-placeholder').innerHTML = html;
+
+                    // Now that header is loaded, check auth and update nav
+                    return client.auth.getSession();
                 })
-                .catch(error => console.error('Error loading header:', error));
+                .then(({ data }) => {
+                    const navRoot = document.getElementById('navRoot');
+                    if (data?.session?.access_token) {
+                        setNavLoggedIn();
+                    } else {
+                        setNavLoggedOut();
+                    }
+                    if (navRoot) {
+                        navRoot.classList.remove("nav-guard");
+                        navRoot.style.visibility = "visible";
+                        navRoot.style.opacity = "1";
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    const navRoot = document.getElementById('navRoot');
+                    setNavLoggedOut();
+                    if (navRoot) {
+                        navRoot.classList.remove("nav-guard");
+                        navRoot.style.visibility = "visible";
+                        navRoot.style.opacity = "1";
+                    }
+                });
         })();
     </script>
 </body>
