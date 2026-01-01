@@ -205,54 +205,54 @@
 
                 <div class="how-it-works-steps-compact">
                     <div class="compact-step">
-                        <div class="compact-step-text">
-                            <h3>1. Select text on any webpage</h3>
-                            <p>Highlight anything—a paragraph, a sentence, a single word. Tangent's chip bar appears instantly, ready to help.</p>
-                        </div>
                         <div class="compact-step-video">
                             <video autoplay loop muted playsinline preload="auto">
                                 <source src="videos/step_1.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         </div>
+                        <div class="compact-step-text">
+                            <h3>1. Select text on any webpage</h3>
+                            <p>Highlight anything—a paragraph, a sentence, a single word. Tangent's chip bar appears instantly, ready to help.</p>
+                        </div>
                     </div>
 
-                    <div class="compact-step">
-                        <div class="compact-step-text">
-                            <h3>2. Choose an action or ask a question</h3>
-                            <p>Click a pre-built chip (Summarize, Explain, Translate) or type your own question in the chat panel.</p>
-                        </div>
+                    <div class="compact-step compact-step-reverse">
                         <div class="compact-step-video">
                             <video autoplay loop muted playsinline preload="auto">
                                 <source src="videos/step_2.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         </div>
+                        <div class="compact-step-text">
+                            <h3>2. Choose an action or ask a question</h3>
+                            <p>Click a pre-built chip (Summarize, Explain, Translate) or type your own question in the chat panel.</p>
+                        </div>
                     </div>
 
                     <div class="compact-step">
-                        <div class="compact-step-text">
-                            <h3>3. Get intelligent, context-aware responses</h3>
-                            <p>Tangent analyzes the entire page and responds based on what you're looking at—with clickable references.</p>
-                        </div>
                         <div class="compact-step-video">
                             <video autoplay loop muted playsinline preload="auto">
                                 <source src="videos/step_3.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         </div>
+                        <div class="compact-step-text">
+                            <h3>3. Get intelligent, context-aware responses</h3>
+                            <p>Tangent analyzes the entire page and responds based on what you're looking at—with clickable references.</p>
+                        </div>
                     </div>
 
-                    <div class="compact-step">
-                        <div class="compact-step-text">
-                            <h3>4. Go further when you're ready</h3>
-                            <p>Continue the conversation—or shift into Draft mode to think and write with AI-powered notes.</p>
-                        </div>
+                    <div class="compact-step compact-step-reverse">
                         <div class="compact-step-video">
                             <video autoplay loop muted playsinline preload="auto">
                                 <source src="videos/step_4.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
+                        </div>
+                        <div class="compact-step-text">
+                            <h3>4. Go further when you're ready</h3>
+                            <p>Continue the conversation—or shift into Draft mode to think and write with AI-powered notes.</p>
                         </div>
                     </div>
                 </div>
@@ -267,19 +267,38 @@
 .how-it-works-steps-compact {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 60px;
     margin-top: 40px;
 }
 
 .compact-step {
     display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 40px;
+    grid-template-columns: 300px 1fr;
+    gap: 48px;
     align-items: center;
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+    overflow: visible;
+    position: relative;
+    isolation: isolate;
+}
+
+.compact-step:hover {
+    z-index: 100;
+}
+
+.compact-step-reverse {
+    direction: rtl;
+}
+
+.compact-step-reverse > * {
+    direction: ltr;
 }
 
 .compact-step-text h3 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     margin-bottom: 12px;
     color: var(--text-primary);
 }
@@ -295,8 +314,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    isolation: isolate;
 }
 
 .compact-step-video video {
@@ -313,21 +330,16 @@
 }
 
 .compact-step-video video:hover {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(2);
+    transform: scale(2);
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9);
     z-index: 10000;
 }
 
 @media (max-width: 900px) {
-    .compact-step {
+    .compact-step,
+    .compact-step-reverse {
         grid-template-columns: 1fr;
-    }
-
-    .compact-step-video {
-        order: -1;
+        direction: ltr;
     }
 }
 
