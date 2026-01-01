@@ -388,15 +388,103 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // Load header and setup navigation
+        // Load header FIRST, then check auth
         fetch('/header.html')
             .then(response => response.text())
             .then(html => {
                 document.getElementById('header-placeholder').innerHTML = html;
+                
+                // Setup mobile menu handlers
+                const menuToggle = document.getElementById('mobileMenuToggle');
+                const mobileMenu = document.getElementById('mobileMenu');
+                const menuOverlay = document.getElementById('mobileMenuOverlay');
+                
+                if (menuToggle && mobileMenu && menuOverlay) {
+                    function toggleMenu() {
+                        const isActive = mobileMenu.classList.contains('active');
+                        if (isActive) {
+                            menuToggle.classList.remove('active');
+                            mobileMenu.classList.remove('active');
+                            menuOverlay.classList.remove('active');
+                            document.body.style.overflow = '';
+                        } else {
+                            menuToggle.classList.add('active');
+                            mobileMenu.classList.add('active');
+                            menuOverlay.classList.add('active');
+                            document.body.style.overflow = 'hidden';
+                        }
+                    }
+                    menuToggle.addEventListener('click', toggleMenu);
+                    menuOverlay.addEventListener('click', toggleMenu);
+                    document.querySelectorAll('.mobile-menu-link').forEach(link => {
+                        link.addEventListener('click', function() {
+                            if (this.getAttribute('href') && this.getAttribute('href') !== 'javascript:void(0)') {
+                                toggleMenu();
+                            }
+                        });
+                    });
+                }
+                
+                // Check auth state
+                return checkAuth();
             })
             .catch(error => console.error('Error loading header:', error));
+        
+        async function checkAuth() {
+            const {createClient} = window.supabase || {};
+            if (!createClient) {
+                makeNavVisible();
+                return;
+            }
+            
+            const supabase = createClient(
+                'https://kkufltyogoaoxacvhdab.supabase.co',
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtrdWZsdHlvZ29hb3hhY3ZoZGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI1OTUzOTQsImV4cCI6MjA0ODE3MTM5NH0.wOkUq0H1JR4lRUn_HkuT87cPPY0qyBG6JeCCkZ51-_Q'
+            );
+            
+            const {data, error} = await supabase.auth.getSession();
+            const loggedIn = !error && data?.session;
+            
+            function toggle(id, show) {
+                const el = document.getElementById(id);
+                if (el) el.style.display = show ? '' : 'none';
+            }
+            
+            toggle('navSubscribe', !loggedIn);
+            toggle('navLogin', !loggedIn);
+            toggle('navAccount', loggedIn);
+            toggle('navSignOut', loggedIn);
+            
+            toggle('mobileNavSubscribe', !loggedIn);
+            toggle('mobileNavLogin', !loggedIn);
+            toggle('mobileNavAccount', loggedIn);
+            toggle('mobileNavSignOut', loggedIn);
+            
+            if (loggedIn) {
+                const signOut = async () => {
+                    await supabase.auth.signOut();
+                    window.location.href = '/';
+                };
+                document.getElementById('navSignOut')?.addEventListener('click', signOut);
+                document.getElementById('mobileNavSignOut')?.addEventListener('click', signOut);
+            }
+            
+            makeNavVisible();
+        }
+        
+        function makeNavVisible() {
+            const nav = document.getElementById('navRoot');
+            if (nav) {
+                nav.classList.remove('nav-guard');
+                nav.style.opacity = '1';
+                nav.style.visibility = 'visible';
+            }
+        }
     </script>
+
 </body>
 
 </html>
