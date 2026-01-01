@@ -311,38 +311,7 @@
                 console.log('[HOW-IT-WORKS] Header HTML preview:', html.substring(0, 200));
                 document.getElementById('header-placeholder').innerHTML = html;
                 console.log('[HOW-IT-WORKS] Header injected into DOM');
-                
-                // Setup mobile menu handlers
-                const menuToggle = document.getElementById('mobileMenuToggle');
-                const mobileMenu = document.getElementById('mobileMenu');
-                const menuOverlay = document.getElementById('mobileMenuOverlay');
-                
-                if (menuToggle && mobileMenu && menuOverlay) {
-                    function toggleMenu() {
-                        const isActive = mobileMenu.classList.contains('active');
-                        if (isActive) {
-                            menuToggle.classList.remove('active');
-                            mobileMenu.classList.remove('active');
-                            menuOverlay.classList.remove('active');
-                            document.body.style.overflow = '';
-                        } else {
-                            menuToggle.classList.add('active');
-                            mobileMenu.classList.add('active');
-                            menuOverlay.classList.add('active');
-                            document.body.style.overflow = 'hidden';
-                        }
-                    }
-                    menuToggle.addEventListener('click', toggleMenu);
-                    menuOverlay.addEventListener('click', toggleMenu);
-                    document.querySelectorAll('.mobile-menu-link').forEach(link => {
-                        link.addEventListener('click', function() {
-                            if (this.getAttribute('href') && this.getAttribute('href') !== 'javascript:void(0)') {
-                                toggleMenu();
-                            }
-                        });
-                    });
-                }
-                
+
                 // Check auth state
                 return checkAuth();
             })

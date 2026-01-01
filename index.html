@@ -2158,56 +2158,6 @@
     <script>
         // Simple current-year setter
         document.getElementById("year").textContent = new Date().getFullYear();
-
-        // Mobile menu toggle functionality
-        (function() {
-            const menuToggle = document.getElementById('mobileMenuToggle');
-            const mobileMenu = document.getElementById('mobileMenu');
-            const menuOverlay = document.getElementById('mobileMenuOverlay');
-            const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
-
-            if (!menuToggle || !mobileMenu || !menuOverlay) return;
-
-            // Toggle menu open/closed
-            function toggleMenu() {
-                const isActive = mobileMenu.classList.contains('active');
-
-                if (isActive) {
-                    // Close menu
-                    menuToggle.classList.remove('active');
-                    mobileMenu.classList.remove('active');
-                    menuOverlay.classList.remove('active');
-                    document.body.style.overflow = ''; // Re-enable scrolling
-                } else {
-                    // Open menu
-                    menuToggle.classList.add('active');
-                    mobileMenu.classList.add('active');
-                    menuOverlay.classList.add('active');
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling
-                }
-            }
-
-            // Click hamburger to toggle
-            menuToggle.addEventListener('click', toggleMenu);
-
-            // Click overlay to close
-            menuOverlay.addEventListener('click', toggleMenu);
-
-            // Click any menu link to close menu
-            mobileMenuLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    // Small delay to let navigation start before closing
-                    setTimeout(toggleMenu, 100);
-                });
-            });
-
-            // Close menu on escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-                    toggleMenu();
-                }
-            });
-        })();
     </script>
 
     <!-- Shared auth/nav logic with modal overlay -->
