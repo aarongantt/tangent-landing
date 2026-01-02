@@ -1371,6 +1371,8 @@
 
     // Open payment modal (make globally accessible)
     window.openPaymentModal = async function(priceId, planName, planPrice, checkoutKind = "subscription") {
+      console.log('[PAYMENT MODAL] Function called with:', { priceId, planName, planPrice, checkoutKind });
+
       // Get modal elements (lazy selection - modal HTML is below this script)
       const paymentModal = document.getElementById("tangent-payment-modal");
       const paymentClose = document.querySelector(".tg-payment-close");
@@ -1510,6 +1512,9 @@
       // Initialize payment intent and mount Stripe
       await initializePaymentElement(priceId, checkoutKind);
     }
+
+    // Confirm function is globally available
+    console.log('[PAYMENT MODAL] window.openPaymentModal registered:', typeof window.openPaymentModal);
 
     // Initialize Payment Element
     async function initializePaymentElement(priceId, checkoutKind) {
