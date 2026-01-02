@@ -1048,47 +1048,65 @@
         return;
       }
       try {
-        const { data: session } = await supabaseClient.auth.getSession();
-        const token = session?.session?.access_token || null;
-        const headers = { "Content-Type": "application/json" };
-        if (token) headers.Authorization = `Bearer ${token}`;
+        // Define pack pricing details
+        const packPricing = {
+          Small: { name: "Small Token Pack", price: "$7.99" },
+          Medium: { name: "Medium Token Pack", price: "$29.99" },
+          Large: { name: "Large Token Pack", price: "$69.99" }
+        };
 
-        const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
-          method: "POST",
-          headers,
-          body: JSON.stringify({ priceId, checkoutKind: "addon" })
-        });
-        const body = await res.json().catch(() => ({}));
-        if (!res.ok || !body.url) {
-          throw new Error(body.error || `HTTP ${res.status}`);
-        }
-        openSecureStripeUrl(body.url);
+        const pack = packPricing[packName] || { name: "Token Pack", price: "" };
+
+        // Open Payment Element modal with one-time payment mode
+        await openPaymentModal(priceId, pack.name, pack.price, "addon");
       } catch (e) {
-        // no status line
+        console.error('[Account] Addon checkout error:', e);
+        alert('Failed to start checkout. Please try again.');
       }
     }
 
     async function startPlanCheckout(priceId) {
       if (!priceId) return;
-      // no status line
-      try {
-        const { data: session } = await supabaseClient.auth.getSession();
-        const token = session?.session?.access_token || null;
-        const headers = { "Content-Type": "application/json" };
-        if (token) headers.Authorization = `Bearer ${token}`;
 
-        const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
-          method: "POST",
-          headers,
-          body: JSON.stringify({ priceId })
-        });
-        const body = await res.json().catch(() => ({}));
-        if (!res.ok || !body.url) {
-          throw new Error(body.error || `HTTP ${res.status}`);
+      try {
+        // Find the plan name and price from PLAN_PRICE_IDS
+        let planName = "Subscription";
+        let planPrice = "";
+
+        // Check which plan this price ID belongs to
+        for (const [planCode, prices] of Object.entries(PLAN_PRICE_IDS)) {
+          if (prices.monthly === priceId) {
+            if (planCode.includes("pro")) {
+              planName = "Pro";
+              planPrice = "$12/month";
+            } else if (planCode.includes("business_solo")) {
+              planName = "Business (Solo)";
+              planPrice = "$30/month";
+            } else if (planCode.includes("business_teams")) {
+              planName = "Business (Teams)";
+              planPrice = "$49/month per seat";
+            }
+            break;
+          } else if (prices.annual === priceId) {
+            if (planCode.includes("pro")) {
+              planName = "Pro";
+              planPrice = "$10/month ($120 billed annually)";
+            } else if (planCode.includes("business_solo")) {
+              planName = "Business (Solo)";
+              planPrice = "$25.50/month ($306 billed annually)";
+            } else if (planCode.includes("business_teams")) {
+              planName = "Business (Teams)";
+              planPrice = "$40.83/month per seat ($490 billed annually)";
+            }
+            break;
+          }
         }
-        openSecureStripeUrl(body.url);
+
+        // Open Payment Element modal
+        await openPaymentModal(priceId, planName, planPrice, "subscription");
       } catch (e) {
-        // no status line
+        console.error('[Account] Plan checkout error:', e);
+        alert('Failed to start checkout. Please try again.');
       }
     }
 
