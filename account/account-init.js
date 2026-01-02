@@ -29,12 +29,17 @@ const checkReady = setInterval(() => {
 
       if (priceId && planName && planPrice) {
         // Wait for page to fully render and openPaymentModal to be defined
+        let modalOpened = false;
+
         const openModal = () => {
+          if (modalOpened) return; // Already opened, don't open again
+
           if (typeof window.openPaymentModal === 'function') {
             console.log('[ACCOUNT] Opening payment modal...');
+            modalOpened = true; // Mark as opened
             window.openPaymentModal(priceId, planName, planPrice, checkoutKind);
           } else {
-            console.error('[ACCOUNT] window.openPaymentModal function not found');
+            console.error('[ACCOUNT] window.openPaymentModal function not found, will retry...');
           }
         };
 
