@@ -1346,9 +1346,7 @@
         // Event listeners for plan buttons are now attached inside renderTokensAndPlans()
         // no status line
 
-        // Check if user is on Free Trial
-        const isTrial = (plan || '').toLowerCase() === 'free_trial';
-
+        // Check if user is on Free Trial (isTrial already declared at line 1336)
         if (isTrial) {
           // Hide buttons for Free Trial users
           if (billingBtn) billingBtn.style.display = 'none';
