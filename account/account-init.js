@@ -13,6 +13,22 @@ const checkReady = setInterval(() => {
     if (typeof renderPlan === 'function') {
       renderPlan();
     }
+
+    // Check if we should auto-open payment modal (from extension)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('checkout') === 'true') {
+      const priceId = urlParams.get('priceId');
+      const planName = urlParams.get('planName');
+      const planPrice = urlParams.get('planPrice');
+      const checkoutKind = urlParams.get('kind') || 'subscription';
+
+      if (priceId && planName && planPrice && typeof openPaymentModal === 'function') {
+        // Wait a bit for page to fully render, then open modal
+        setTimeout(() => {
+          openPaymentModal(priceId, planName, planPrice, checkoutKind);
+        }, 500);
+      }
+    }
   }
 }, 50); // Check every 50ms
 
