@@ -426,7 +426,7 @@
                     <!-- Pro -->
                     <article class="pricing-card pricing-card-featured">
                         <div class="pricing-badge">Most Popular</div>
-                        <div class="pill pill-tag upgrade">Upgrade</div>
+                        <div class="pill pill-tag upgrade" data-plan="pro_monthly" style="cursor: pointer;">Upgrade</div>
                         <h2 class="pricing-name">Pro</h2>
                         <p class="pricing-price">
                             <span class="pricing-amount">$12</span>
@@ -457,7 +457,7 @@
 
                     <!-- Business (Solo) -->
                     <article class="pricing-card">
-                        <div class="pill pill-tag upgrade">Upgrade</div>
+                        <div class="pill pill-tag upgrade" data-plan="business_solo_monthly" style="cursor: pointer;">Upgrade</div>
                         <h2 class="pricing-name">Business (Solo)</h2>
                         <p class="pricing-price">
                             <span class="pricing-amount">$30</span>
@@ -1031,6 +1031,17 @@
                 btn.addEventListener("click", function () {
                     var planCode = btn.getAttribute("data-plan");
                     startCheckout(planCode);
+                });
+            });
+
+            // Add click handlers for Upgrade pill badges
+            var upgradePills = document.querySelectorAll(".pill.upgrade");
+            upgradePills.forEach(function (pill) {
+                pill.addEventListener("click", function () {
+                    var planCode = pill.getAttribute("data-plan");
+                    if (planCode) {
+                        startCheckout(planCode);
+                    }
                 });
             });
         })();
