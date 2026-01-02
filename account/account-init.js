@@ -16,10 +16,13 @@ const checkReady = setInterval(() => {
 
     // Check if we should auto-open payment modal (from extension)
     const urlParams = new URLSearchParams(window.location.search);
+    console.log('[ACCOUNT] URL params:', window.location.search);
+    console.log('[ACCOUNT] checkout param:', urlParams.get('checkout'));
+
     if (urlParams.get('checkout') === 'true') {
       const priceId = urlParams.get('priceId');
-      const planName = urlParams.get('planName');
-      const planPrice = urlParams.get('planPrice');
+      const planName = decodeURIComponent(urlParams.get('planName') || '');
+      const planPrice = decodeURIComponent(urlParams.get('planPrice') || '');
       const checkoutKind = urlParams.get('kind') || 'subscription';
 
       console.log('[ACCOUNT] Auto-checkout detected:', { priceId, planName, planPrice, checkoutKind });
