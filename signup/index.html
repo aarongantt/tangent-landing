@@ -616,9 +616,11 @@
                 window.open(safeUrl, "_blank", "noopener");
             }
 
-            // ===== STRIPE PAYMENT ELEMENT INTEGRATION =====
-            const STRIPE_PUBLISHABLE_KEY = "pk_live_51SSu7dFYbfjZcbAUM0AOm5Gp46bwFIxa4ypSHGNuSmmJtijAqxPPHtKXjswuewj3ska3BTiFPFCNCKzSeJzybyRq005zzonyRd";
+            // ===== STRIPE CHECKOUT (Simplified - using redirect instead of Payment Element) =====
             const API_BASE = "https://api.tangentapp.co";
+
+            /* UNUSED - Payment Element code commented out, using Stripe Checkout redirect instead
+            const STRIPE_PUBLISHABLE_KEY = "pk_live_51SSu7dFYbfjZcbAUM0AOm5Gp46bwFIxa4ypSHGNuSmmJtijAqxPPHtKXjswuewj3ska3BTiFPFCNCKzSeJzybyRq005zzonyRd";
             const stripeInstance = Stripe(STRIPE_PUBLISHABLE_KEY);
 
             let paymentElement = null;
@@ -957,9 +959,10 @@
             paymentSuccessBtn.addEventListener("click", () => {
                 window.location.href = "/account";
             });
+            END UNUSED PAYMENT ELEMENT CODE */
 
-            // ===== MODIFIED CHECKOUT FUNCTION =====
-            // Map price IDs to plan details for modal display
+            // ===== ACTIVE CHECKOUT FUNCTION =====
+            // Map price IDs to plan details
             const PLAN_DETAILS = {
                 "price_1Se2NPFYbfjZcbAUPVqOlJkL": { name: "Pro", price: "$12/month" },
                 "price_1Se2QsFYbfjZcbAUCOHKQDaP": { name: "Pro", price: "$10/month ($120 billed annually)" },
@@ -1008,11 +1011,37 @@
                         return;
                     }
 
-                    // Get plan details for modal
-                    const planInfo = PLAN_DETAILS[priceId] || { name: "Plan", price: "" };
+                    // Create Stripe Checkout session
+                    const supa = window.tgSupabase || window.supabaseClient || null;
+                    let token = null;
+                    try {
+                        const { data } = await supa.auth.getSession();
+                        token = data?.session?.access_token || null;
+                    } catch (err) {
+                        console.error("Error getting session:", err);
+                    }
 
-                    // Open payment modal (no login required)
-                    await openPaymentModal(priceId, planInfo.name, planInfo.price, "subscription");
+                    const headers = { "Content-Type": "application/json" };
+                    if (token) headers["Authorization"] = `Bearer ${token}`;
+
+                    const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
+                        method: "POST",
+                        headers,
+                        body: JSON.stringify({ priceId })
+                    });
+
+                    const body = await res.json().catch(() => ({}));
+                    if (!res.ok || !body.url) {
+                        throw new Error(body.error || `HTTP ${res.status}`);
+                    }
+
+                    // Validate Stripe URL and open in new window
+                    const STRIPE_URL_PATTERN = /^https:\/\/(?:checkout|billing|buy|pay)\.stripe\.com\/?/i;
+                    if (STRIPE_URL_PATTERN.test(body.url)) {
+                        window.open(body.url, "_blank", "noopener");
+                    } else {
+                        throw new Error("Invalid checkout URL");
+                    }
 
                 } catch (err) {
                     console.error(err);

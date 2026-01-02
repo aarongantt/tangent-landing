@@ -1341,22 +1341,12 @@
     signOutBtn?.addEventListener("click", handleSignOut);
 
     // ========================================================================
-    // PAYMENT MODAL LOGIC (Stripe Payment Element Integration)
+    // STRIPE CHECKOUT SESSION (Simplified - No Payment Element)
     // ========================================================================
+    // Note: Payment Element modal code removed - using standard Stripe Checkout redirect instead
+    // This is simpler and doesn't require additional backend endpoints
 
-    const STRIPE_PUBLISHABLE_KEY = "pk_live_51SSu7dFYbfjZcbAUM0AOm5Gp46bwFIxa4ypSHGNuSmmJtijAqxPPHtKXjswuewj3ska3BTiFPFCNCKzSeJzybyRq005zzonyRd";
-
-    let stripeInstance = null;
-    let elementsGroup = null; // Store the Elements group (required for confirmPayment)
-    let paymentElement = null; // Store the individual payment element (for mounting/unmounting)
-    let currentPriceId = null;
-    let currentCheckoutKind = "subscription";
-
-    // Initialize Stripe
-    if (typeof Stripe !== "undefined") {
-      stripeInstance = Stripe(STRIPE_PUBLISHABLE_KEY);
-    }
-
+    /* UNUSED - Payment Element modal (commented out, using Stripe Checkout redirect instead)
     // Open payment modal
     async function openPaymentModal(priceId, planName, planPrice, checkoutKind = "subscription") {
       // Get modal elements (lazy selection - modal HTML is below this script)
@@ -1726,34 +1716,32 @@
         paymentEmailInput.classList.remove("error");
       }
     }
+    END UNUSED PAYMENT ELEMENT CODE */
 
-    // Start plan checkout using custom modal
+    // Start plan checkout - redirect to Stripe Checkout
     async function startPlanCheckout(priceId) {
-      // Look up plan name and price from PLAN_PRICE_IDS
-      let planName = "Pro";
-      let planPrice = "$12/month";
+      if (!priceId) return;
 
-      for (const [planCode, prices] of Object.entries(PLAN_PRICE_IDS)) {
-        if (prices.monthly === priceId) {
-          // Monthly plan
-          const planInfo = plans.find(p => p.code === planCode);
-          if (planInfo) {
-            planName = planInfo.title;
-            planPrice = `${planInfo.price} ${planInfo.suffix}`;
-          }
-          break;
-        } else if (prices.annual === priceId) {
-          // Annual plan
-          const planInfo = plans.find(p => p.code === planCode);
-          if (planInfo) {
-            planName = planInfo.title;
-            planPrice = planInfo.altPrice;
-          }
-          break;
+      try {
+        const { data: session } = await supabaseClient.auth.getSession();
+        const token = session?.session?.access_token || null;
+        const headers = { "Content-Type": "application/json" };
+        if (token) headers.Authorization = `Bearer ${token}`;
+
+        const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ priceId })
+        });
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok || !body.url) {
+          throw new Error(body.error || `HTTP ${res.status}`);
         }
+        openSecureStripeUrl(body.url);
+      } catch (e) {
+        console.error('[Account] Checkout error:', e);
+        alert('Failed to start checkout. Please try again.');
       }
-
-      await openPaymentModal(priceId, planName, planPrice, "subscription");
     }
 
   </script>
