@@ -841,12 +841,12 @@
     };
     const PLAN_PRICE_IDS = {
       tangent_pro_monthly: {
-        monthly: "price_1Se2NPFYbfjZcbAUPVqOlJkL",
-        annual: "price_1Se2QsFYbfjZcbAUCOHKQDaP"
+        monthly: "price_1SkbQwFYbfjZcbAUPsBNFSvi",
+        annual: "price_1SkbSkFYbfjZcbAUiaYapVsC"
       },
       tangent_business_solo_monthly: {
-        monthly: "price_1Se2WDFYbfjZcbAU7MEqsfPe",
-        annual: "price_1Se2X2FYbfjZcbAU4RBQw3LL"
+        monthly: "price_1SkbTtFYbfjZcbAUt9S7XBhc",
+        annual: "price_1SkbUoFYbfjZcbAUCgSSXX2u"
       }
       // TEMPORARILY HIDDEN: Business Teams plan
       // tangent_business_teams_monthly: {
@@ -1341,12 +1341,16 @@
     signOutBtn?.addEventListener("click", handleSignOut);
 
     // ========================================================================
-    // STRIPE CHECKOUT SESSION (Simplified - No Payment Element)
+    // STRIPE PAYMENT ELEMENT (Keep users in Tangent ecosystem)
     // ========================================================================
-    // Note: Payment Element modal code removed - using standard Stripe Checkout redirect instead
-    // This is simpler and doesn't require additional backend endpoints
 
-    /* UNUSED - Payment Element modal (commented out, using Stripe Checkout redirect instead)
+    const STRIPE_PUBLISHABLE_KEY = "pk_live_51SSu7dFYbfjZcbAUM0AOm5Gp46bwFIxa4ypSHGNuSmmJtijAqxPPHtKXjswuewj3ska3BTiFPFCNCKzSeJzybyRq005zzonyRd";
+    const stripeInstance = Stripe(STRIPE_PUBLISHABLE_KEY);
+
+    let paymentElement = null;
+    let currentPriceId = null;
+    let currentCheckoutKind = "subscription";
+
     // Open payment modal
     async function openPaymentModal(priceId, planName, planPrice, checkoutKind = "subscription") {
       // Get modal elements (lazy selection - modal HTML is below this script)
@@ -1714,33 +1718,6 @@
       }
       if (paymentEmailInput) {
         paymentEmailInput.classList.remove("error");
-      }
-    }
-    END UNUSED PAYMENT ELEMENT CODE */
-
-    // Start plan checkout - redirect to Stripe Checkout
-    async function startPlanCheckout(priceId) {
-      if (!priceId) return;
-
-      try {
-        const { data: session } = await supabaseClient.auth.getSession();
-        const token = session?.session?.access_token || null;
-        const headers = { "Content-Type": "application/json" };
-        if (token) headers.Authorization = `Bearer ${token}`;
-
-        const res = await fetch(`${API_BASE}/api/create-checkout-session`, {
-          method: "POST",
-          headers,
-          body: JSON.stringify({ priceId })
-        });
-        const body = await res.json().catch(() => ({}));
-        if (!res.ok || !body.url) {
-          throw new Error(body.error || `HTTP ${res.status}`);
-        }
-        openSecureStripeUrl(body.url);
-      } catch (e) {
-        console.error('[Account] Checkout error:', e);
-        alert('Failed to start checkout. Please try again.');
       }
     }
 
