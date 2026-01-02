@@ -29,30 +29,26 @@ const checkReady = setInterval(() => {
 
       if (priceId && planName && planPrice) {
         // Wait for page to fully render and openPaymentModal to be defined
-        let modalOpened = false;
-        let retryTimeout1, retryTimeout2;
+        let attemptCount = 0;
+        const maxAttempts = 3;
 
         const openModal = () => {
-          if (modalOpened) return; // Already opened, don't open again
+          attemptCount++;
+          console.log(`[ACCOUNT] Attempt ${attemptCount}/${maxAttempts} to open modal`);
 
           if (typeof window.openPaymentModal === 'function') {
             console.log('[ACCOUNT] Opening payment modal...');
-            modalOpened = true; // Mark as opened
-
-            // Clear any pending retry timeouts
-            if (retryTimeout1) clearTimeout(retryTimeout1);
-            if (retryTimeout2) clearTimeout(retryTimeout2);
-
             window.openPaymentModal(priceId, planName, planPrice, checkoutKind);
+          } else if (attemptCount < maxAttempts) {
+            console.log('[ACCOUNT] window.openPaymentModal not ready, will retry...');
+            setTimeout(openModal, 500); // Try again in 500ms
           } else {
-            console.error('[ACCOUNT] window.openPaymentModal function not found, will retry...');
+            console.error('[ACCOUNT] window.openPaymentModal function not found after 3 attempts');
           }
         };
 
-        // Try multiple times with increasing delays to ensure function is loaded
+        // Start first attempt after 500ms
         setTimeout(openModal, 500);
-        retryTimeout1 = setTimeout(openModal, 1000);
-        retryTimeout2 = setTimeout(openModal, 1500);
       }
     }
   }
