@@ -242,7 +242,7 @@
                                 <span class="faq-icon">▼</span>
                             </button>
                             <div class="faq-answer">
-                                <p>Tangent currently partners with OpenAI and uses their ChatGPT models (GPT-4o for Deep Mode and GPT-4o-mini for Fast Mode). Our plan is to offer additional model options in the near future, giving you more choice and flexibility in how you work with AI.</p>
+                                <p>Tangent currently partners with OpenAI and uses their ChatGPT models (GPT-4o for complex reasoning and GPT-4o-mini for simpler tasks). Tangent automatically selects the best model for each query based on complexity—you don't need to manually choose. Our plan is to offer additional model options in the near future, giving you more choice and flexibility in how you work with AI.</p>
                             </div>
                         </div>
 
@@ -567,7 +567,7 @@
                                 <span class="faq-icon">▼</span>
                             </button>
                             <div class="faq-answer">
-                                <p>Yes. Tangent requires an account to manage your subscription, token usage, and settings. You can sign up for a free 7-day trial with no credit card required. After the trial, you'll need to choose a paid plan to continue using Tangent.</p>
+                                <p>Yes. Tangent requires an account to manage your subscription, query usage, and settings. You can sign up for a free 7-day trial with no credit card required. After the trial, you'll need to choose a paid plan to continue using Tangent.</p>
                             </div>
                         </div>
 
@@ -577,14 +577,19 @@
                                 <span class="faq-icon">▼</span>
                             </button>
                             <div class="faq-answer">
-                                <p>The free 7-day trial includes 1,000 queries, which is enough for approximately 7 days of typical use with both Fast and Deep modes.</p>
-                                <p>During the trial, you have access to a limited set of chips to help you learn Tangent:</p>
+                                <p>The free 7-day trial includes 1,000 queries—enough for approximately 140 queries per day of typical use. Your trial is automatically created when you first use Tangent—no credit card required.</p>
+                                <p><strong>What's included in the trial:</strong></p>
                                 <ul>
-                                    <li><strong>T</strong> (New Chat) - Start freeform conversations</li>
-                                    <li><strong>Who is...</strong> - Learn about people</li>
-                                    <li><strong>ELI5</strong> - Get beginner-friendly explanations</li>
+                                    <li>All 20+ built-in Prompt Chips (Summarize, Translate, ELI5, Who is..., First Principles, etc.)</li>
+                                    <li>Freeform chat mode (T chip)</li>
+                                    <li>Page-aware AI responses</li>
+                                    <li>Automatic AI model selection (Tangent picks the best model for each task)</li>
                                 </ul>
-                                <p>Once you subscribe to a paid plan, you unlock all 18 built-in chips, custom chip creation, and unlimited AI model selection (choose Fast or Deep mode per query). Your trial is automatically created when you first use Tangent—no credit card required.</p>
+                                <p><strong>Trial restrictions:</strong></p>
+                                <ul>
+                                    <li>No Custom Prompt Chips (available on paid plans)</li>
+                                    <li>Rate limit: 20 queries/hour</li>
+                                </ul>
                             </div>
                         </div>
 
@@ -616,21 +621,27 @@
                     <div class="faq-accordion">
                         <div class="faq-accordion-item">
                             <button class="faq-question">
-                                What is Fast Mode?
+                                How does automatic model selection work?
                                 <span class="faq-icon">▼</span>
                             </button>
                             <div class="faq-answer">
-                                <p>Fast Mode is Tangent at full speed—quick, responsive, great for summaries, clarifications, rewrites, definitions, or short answers. It uses a highly efficient model (GPT-4o-mini) so it feels instant and lightweight, perfect for the dozens of small interactions you have throughout your day.</p>
+                                <p>Tangent automatically chooses the best AI model for each query based on complexity, context size, and your intent. You don't need to manually select a mode—Tangent handles this intelligently:</p>
+                                <ul>
+                                    <li><strong>Standard queries:</strong> Most tasks (summaries, definitions, clarifications, simple questions) use GPT-4o-mini for speed and efficiency</li>
+                                    <li><strong>Complex queries:</strong> Deeper analysis, image interpretation, multi-step reasoning, and advanced tasks automatically use GPT-4o for better results</li>
+                                </ul>
+                                <p>This automatic routing ensures you get the best model for each task while keeping your monthly allowance efficient. Most queries (~90%) use the standard model, with complex requests automatically escalating when needed.</p>
                             </div>
                         </div>
 
                         <div class="faq-accordion-item">
                             <button class="faq-question">
-                                What is Deep Mode?
+                                Can I analyze images with Tangent?
                                 <span class="faq-icon">▼</span>
                             </button>
                             <div class="faq-answer">
-                                <p>Deep Mode is the more powerful side of Tangent. It allows longer, richer reasoning, handles complicated questions, and even supports advanced tasks like image understanding. It's ideal for moments when you need insight, not just information.</p>
+                                <p>Yes! When you select an image—or drop one into Tangent—the AI automatically switches to GPT-4o (vision-capable model) to analyze it. Tangent can interpret diagrams, charts, UI screenshots, photos, drawings, code screenshots, and more. It provides descriptions, insights, interpretations, and clarifications based on what the image contains.</p>
+                                <p>Image analysis queries use more of your monthly allowance since they require the advanced GPT-4o model with vision capabilities.</p>
                             </div>
                         </div>
 
@@ -670,7 +681,7 @@
                                 <span class="faq-icon">▼</span>
                             </button>
                             <div class="faq-answer">
-                                <p>Yes. When you select an image—or drop one into Tangent—Deep Mode can analyze it. Tangent can interpret diagrams, charts, UI screenshots, photos, drawings, code screenshots, and more. It provides descriptions, insights, interpretations, and clarifications based on what the image contains.</p>
+                                <p>Yes. When you select an image—or drop one into Tangent—the AI automatically uses GPT-4o (vision-capable model) to analyze it. Tangent can interpret diagrams, charts, UI screenshots, photos, drawings, code screenshots, and more. It provides descriptions, insights, interpretations, and clarifications based on what the image contains.</p>
                             </div>
                         </div>
 
@@ -983,9 +994,9 @@
                     </div>
                 </div>
 
-                <!-- TOKEN SYSTEM & BILLING -->
+                <!-- PRICING & BILLING -->
                 <div class="faq-section">
-                    <h2 class="faq-section-title">TOKEN SYSTEM & BILLING</h2>
+                    <h2 class="faq-section-title">PRICING & BILLING</h2>
                     <div class="faq-accordion">
                         <div class="faq-accordion-item">
                             <button class="faq-question">
@@ -995,70 +1006,94 @@
                             <div class="faq-answer">
                                 <p>Tangent offers two subscription tiers to fit different usage levels. All prices and plans are available on our <a href="/signup">Pricing page</a>:</p>
                                 <ul>
-                                    <li><strong>Pro:</strong> $12/month or $120/year ($10/mo, 17% discount) — 6,000 queries per month (~200/day)</li>
-                                    <li><strong>Business Solo:</strong> $30/month or $306/year ($25.50/mo, 15% discount) — 15,000 queries per month (~500/day)</li>
-                                    <!-- TEMPORARILY HIDDEN: Business Teams plan
-                                    <li><strong>Business Teams:</strong> $49/month or $490/year ($40.83/mo) per seat — 25,000 queries per month per user</li>
-                                    -->
+                                    <li><strong>Free Trial:</strong> Free for 7 days — 1,000 AI queries (~140 queries/day)</li>
+                                    <li><strong>Pro:</strong> $12/month or $144/year — 6,000 queries per month (~200/day)</li>
+                                    <li><strong>Business Solo:</strong> $30/month or $306/year (15% discount) — 15,000 queries per month (~500/day)</li>
                                 </ul>
-                                <p>Need more queries? Upgrade your plan or wait for monthly reset.
-                                    <a href="https://buy.stripe.com/YOUR_SMALL_PACK_LINK" target="_blank">Small Pack</a> (1M standard, 250K deep),
-                                    <a href="https://buy.stripe.com/YOUR_MEDIUM_PACK_LINK" target="_blank">Medium Pack</a> (5M standard, 1.25M deep),
-                                    <a href="https://buy.stripe.com/YOUR_LARGE_PACK_LINK" target="_blank">Large Pack</a> (20M standard, 5M deep).
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="faq-accordion-item">
-                            <button class="faq-question">
-                                How do token quotas work?
-                                <span class="faq-icon">▼</span>
-                            </button>
-                            <div class="faq-answer">
-                                <p>Your plan includes a monthly query allowance. Each query uses a variable amount based on complexity and image analysis. Each pool resets automatically every month. When a pool runs out, Tangent simply pauses the tasks that use that pool and lets you decide whether to upgrade or add more tokens.</p>
-                            </div>
-                        </div>
-
-                        <div class="faq-accordion-item">
-                            <button class="faq-question">
-                                Why does Tangent separate Standard Tokens and Deep Tokens?
-                                <span class="faq-icon">▼</span>
-                            </button>
-                            <div class="faq-answer">
-                                <p>Because not all thinking requires the same computational effort. Most tasks—summaries, explanations, small edits—are inexpensive and happen in Fast Mode. More demanding tasks—like big reasoning jumps or interpreting images—use Deep Mode. By separating the pools, Tangent gives you freedom in lightweight moments and control in heavyweight ones.</p>
-                            </div>
-                        </div>
-
-                        <div class="faq-accordion-item">
-                            <button class="faq-question">
-                                What happens if I run out of tokens?
-                                <span class="faq-icon">▼</span>
-                            </button>
-                            <div class="faq-answer">
-                                <p>Tangent never surprises you with overages. You'll receive notifications when you're approaching your limit (at 80% and 90%). When you hit your limit, you can:</p>
+                                <p><strong>Need more queries?</strong> Overage pricing available at $0.01/query (opt-in only). Complex requests may use more of your monthly allowance.</p>
+                                <p>All plans include:</p>
                                 <ul>
-                                    <li>Wait until your next monthly reset (date shown in your account dashboard)</li>
-                                    <li>Upgrade to a higher tier (prorated pricing applies automatically)</li>
-                                    <li>Upgrade to a higher tier or wait for your monthly reset</li>
+                                    <li>Automatic AI model selection (Tangent picks the best model for each task)</li>
+                                    <li>All 20+ built-in Prompt Chips</li>
+                                    <li>Custom Prompt Chips (paid plans only)</li>
+                                    <li>Freeform chat mode</li>
+                                    <li>Page-aware AI responses</li>
                                 </ul>
-                                <p>When your monthly query limit is reached, upgrade your plan or wait for your monthly reset.</p>
                             </div>
                         </div>
 
                         <div class="faq-accordion-item">
                             <button class="faq-question">
-                                How does the free trial token allocation work?
+                                How does the monthly allowance work?
                                 <span class="faq-icon">▼</span>
                             </button>
                             <div class="faq-answer">
-                                <p>The free 7-day trial includes 1,000 queries, which is enough for approximately 7 days of typical use with both Fast and Deep modes.</p>
-                                <p>During the trial, you have access to a limited set of chips to help you learn Tangent:</p>
+                                <p>Your plan includes a monthly query allowance that resets every billing period. Most queries use 1 unit from your allowance, but complex requests (like deep analysis, image processing, or multi-step reasoning) may use more. Tangent automatically selects the best AI model for each task—you don't need to worry about choosing between Fast or Deep modes.</p>
+                                <p><strong>Monthly allowances:</strong></p>
                                 <ul>
-                                    <li><strong>T</strong> (New Chat) - Start freeform conversations</li>
-                                    <li><strong>Who is...</strong> - Learn about people</li>
-                                    <li><strong>ELI5</strong> - Get beginner-friendly explanations</li>
+                                    <li><strong>Free Trial:</strong> 1,000 queries (total for 7-day trial)</li>
+                                    <li><strong>Pro:</strong> 6,000 queries/month</li>
+                                    <li><strong>Business Solo:</strong> 15,000 queries/month</li>
                                 </ul>
-                                <p>Once you subscribe to a paid plan, you unlock all 18 built-in chips, custom chip creation, and unlimited AI model selection (choose Fast or Deep mode per query). Your trial is automatically created when you first use Tangent—no credit card required.</p>
+                                <p>When your allowance runs out, you can wait for your monthly reset or enable optional overage billing at $0.01/query.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                How does Tangent choose which AI model to use?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Tangent automatically selects the best AI model for each task using intelligent routing. You don't need to manually choose between "Fast" or "Deep" modes—Tangent handles this for you based on:</p>
+                                <ul>
+                                    <li><strong>Query complexity:</strong> Simple summaries use GPT-4o-mini, complex analysis uses GPT-4o</li>
+                                    <li><strong>Context size:</strong> Larger page contexts trigger more powerful models</li>
+                                    <li><strong>Chip type:</strong> Certain chips (like "First Principles" or "Critique") always use advanced reasoning</li>
+                                    <li><strong>User intent:</strong> Keywords like "compare," "evaluate," or "analyze" signal deeper thinking</li>
+                                </ul>
+                                <p>Most tasks (~90%) use the standard model (GPT-4o-mini), keeping your monthly allowance efficient. Complex requests automatically use the deep model (GPT-4o) when needed.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What happens if I run out of queries?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Tangent never surprises you with unexpected charges. When you hit your monthly limit, you have three options:</p>
+                                <ul>
+                                    <li><strong>Wait for reset:</strong> Your allowance automatically resets on your next billing date (shown in your account dashboard)</li>
+                                    <li><strong>Upgrade your plan:</strong> Switch to a higher tier (Pro → Business Solo) with prorated pricing</li>
+                                    <li><strong>Enable overage billing:</strong> Opt-in to pay $0.01 per query beyond your limit (you can set spending caps like $5, $10, or $25/month)</li>
+                                </ul>
+                                <p><strong>Note:</strong> Overage billing is optional and requires explicit opt-in. You'll never be charged for overages unless you enable this feature.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button class="faq-question">
+                                What's included in the free trial?
+                                <span class="faq-icon">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>The free 7-day trial includes 1,000 queries—enough for approximately 140 queries per day of typical use. Your trial is automatically created when you first use Tangent—no credit card required.</p>
+                                <p><strong>Trial includes:</strong></p>
+                                <ul>
+                                    <li>All 20+ built-in Prompt Chips (Summarize, Translate, ELI5, Who is..., etc.)</li>
+                                    <li>Freeform chat mode (T chip)</li>
+                                    <li>Page-aware AI responses</li>
+                                    <li>Automatic AI model selection (Tangent picks the best model)</li>
+                                    <li>Rate limit: 20 queries/hour</li>
+                                </ul>
+                                <p><strong>Trial restrictions:</strong></p>
+                                <ul>
+                                    <li>No Custom Prompt Chips (paid plans only)</li>
+                                    <li>No overage billing (hard stop at 1,000 queries)</li>
+                                    <li>One trial per email address</li>
+                                </ul>
+                                <p>When you upgrade to a paid plan, you unlock custom chip creation and higher query limits.</p>
                             </div>
                         </div>
 
@@ -1068,12 +1103,12 @@
                                 <span class="faq-icon">▼</span>
                             </button>
                             <div class="faq-answer">
-                                <p>Annual plans are available for both tiers:</p>
+                                <p>Annual plans offer the same monthly query allowance as monthly plans but with discounted pricing:</p>
                                 <ul>
-                                    <li><strong>Pro Annual</strong> - $120/year ($10/month, 17% discount)</li>
-                                    <li><strong>Business Solo Annual</strong> - $306/year ($25.50/month, 15% discount)</li>
+                                    <li><strong>Pro:</strong> $12/month or $144/year (same total cost, annual billing convenience)</li>
+                                    <li><strong>Business Solo:</strong> $30/month or $306/year ($25.50/month, 15% discount)</li>
                                 </ul>
-                                <p>Both options provide the same monthly query quota and features. Annual subscribers get the full year's allocation divided into 12 monthly resets, so you're never paying for unused queries upfront.</p>
+                                <p>Both monthly and annual plans provide identical features and query quotas. Your allowance resets every month on your billing anniversary, not once per year. This means you get 6,000 queries/month every month regardless of which billing cycle you choose.</p>
                             </div>
                         </div>
 
@@ -1083,7 +1118,8 @@
                                 <span class="faq-icon">▼</span>
                             </button>
                             <div class="faq-answer">
-                                <p>Yes! Tangent includes a 7-day free trial with 1,000 queries—enough for approximately 7 days of typical use. During the trial, you can use Fast Mode (GPT-4o-mini) with a limited set of starter chips. When you subscribe to a paid plan, you unlock all 18 built-in chips, custom chip creation, and unlimited AI model selection (Fast or Deep mode per query). No credit card required to start your trial.</p>
+                                <p>Yes! Tangent includes a 7-day free trial with 1,000 queries—enough for approximately 140 queries per day of typical use. No credit card required to start your trial.</p>
+                                <p>The trial includes all 20+ built-in Prompt Chips, freeform chat mode, and automatic AI model selection. When you subscribe to a paid plan, you unlock custom chip creation, higher query limits, and optional overage billing.</p>
                             </div>
                         </div>
 
@@ -1093,7 +1129,7 @@
                                 <span class="faq-icon">▼</span>
                             </button>
                             <div class="faq-answer">
-                                <p>Absolutely. You can cancel your Tangent subscription at any time from your account dashboard or through the Stripe billing portal. There are no cancellation fees or penalties. Your access and token quota will continue until the end of your current billing period, then your subscription will not renew. You remain in control.</p>
+                                <p>Absolutely. You can cancel your Tangent subscription at any time from your account dashboard or through the Stripe billing portal. There are no cancellation fees or penalties. Your access and query allowance will continue until the end of your current billing period, then your subscription will not renew. You remain in control.</p>
                             </div>
                         </div>
                     </div>
@@ -1226,7 +1262,7 @@
                                 <p>Yes! Under GDPR Article 20 (right to data portability), you can export all your personal data from your account dashboard. Your export includes:</p>
                                 <ul>
                                     <li>User profile information</li>
-                                    <li>Token quota history</li>
+                                    <li>Query quota history</li>
                                     <li>Subscription records</li>
                                     <li>Usage logs (with timestamps and models used)</li>
                                     <li>Feedback submissions</li>
@@ -1242,7 +1278,7 @@
                                 <span class="faq-icon">▼</span>
                             </button>
                             <div class="faq-answer">
-                                <p>When you cancel your subscription, we immediately set your token quota to zero, preventing further API usage. Your account profile and historical usage data (metadata like tokens consumed and timestamps—not conversation content) are retained for compliance and business records purposes.</p>
+                                <p>When you cancel your subscription, we immediately set your query quota to zero, preventing further API usage. Your account profile and historical usage data (metadata like queries consumed and timestamps—not conversation content) are retained for compliance and business records purposes.</p>
                                 <p>Chat history stored locally in your browser is not affected by cancellation and remains under your control. If you want complete account deletion for GDPR or privacy reasons, you can use the account deletion feature described above.</p>
                             </div>
                         </div>
