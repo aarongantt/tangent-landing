@@ -1296,12 +1296,15 @@
     }
 
     async function renderPlan() {
+      console.log('[renderPlan] Starting to render plan...');
       // Re-query navRoot in case header was loaded after initial page load
       const navRoot = document.getElementById("navRoot");
 
       try {
+        console.log('[renderPlan] Getting session from supabaseClient...');
         const { data: session } = await supabaseClient.auth.getSession();
         const token = session?.session?.access_token;
+        console.log('[renderPlan] Token:', token ? 'present' : 'missing');
         if (!token) {
           // CLEAR any existing warning banners when logged out
           const existingBanner = document.querySelector('.token-exhausted-banner');
@@ -1315,7 +1318,9 @@
           if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
           return;
         }
+        console.log('[renderPlan] Fetching plan info...');
         const info = await fetchPlan(token);
+        console.log('[renderPlan] Plan info received:', info);
         const plan = info.plan_code || "Unknown plan";
         const quota = info.quota || {};
 
