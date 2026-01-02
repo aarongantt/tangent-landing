@@ -22,11 +22,23 @@ const checkReady = setInterval(() => {
       const planPrice = urlParams.get('planPrice');
       const checkoutKind = urlParams.get('kind') || 'subscription';
 
-      if (priceId && planName && planPrice && typeof openPaymentModal === 'function') {
-        // Wait a bit for page to fully render, then open modal
-        setTimeout(() => {
-          openPaymentModal(priceId, planName, planPrice, checkoutKind);
-        }, 500);
+      console.log('[ACCOUNT] Auto-checkout detected:', { priceId, planName, planPrice, checkoutKind });
+
+      if (priceId && planName && planPrice) {
+        // Wait for page to fully render and openPaymentModal to be defined
+        const openModal = () => {
+          if (typeof window.openPaymentModal === 'function') {
+            console.log('[ACCOUNT] Opening payment modal...');
+            window.openPaymentModal(priceId, planName, planPrice, checkoutKind);
+          } else {
+            console.error('[ACCOUNT] window.openPaymentModal function not found');
+          }
+        };
+
+        // Try multiple times with increasing delays to ensure function is loaded
+        setTimeout(openModal, 500);
+        setTimeout(openModal, 1000);
+        setTimeout(openModal, 1500);
       }
     }
   }

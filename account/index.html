@@ -1369,8 +1369,8 @@
     let currentPriceId = null;
     let currentCheckoutKind = "subscription";
 
-    // Open payment modal
-    async function openPaymentModal(priceId, planName, planPrice, checkoutKind = "subscription") {
+    // Open payment modal (make globally accessible)
+    window.openPaymentModal = async function(priceId, planName, planPrice, checkoutKind = "subscription") {
       // Get modal elements (lazy selection - modal HTML is below this script)
       const paymentModal = document.getElementById("tangent-payment-modal");
       const paymentClose = document.querySelector(".tg-payment-close");
