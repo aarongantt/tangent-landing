@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #050915;
+      color: #e5e7eb;
+      padding: 24px;
+      min-height: 100vh;
+    }
+
+    .payment-container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .payment-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .payment-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .payment-subtitle {
+      font-size: 16px;
+      color: #94a3b8;
+    }
+
+    .email-field {
+      margin-bottom: 20px;
+    }
+
+    .email-field label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .email-field input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(5,6,10,0.7);
+      color: #e5e7eb;
+      font-size: 14px;
+    }
+
+    .email-field input:focus {
+      outline: none;
+      border-color: #2a8fd5;
+    }
+
+    .error-text {
+      color: #f87171;
+      font-size: 13px;
+      margin-top: 4px;
+      display: none;
+    }
+
+    #payment-element {
+      margin-bottom: 20px;
+    }
+
+    .submit-button {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, #2a8fd5 0%, #1d6ba0 100%);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 120ms ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .submit-button:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(42, 143, 213, 0.4);
+    }
+
+    .submit-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .payment-errors {
+      color: #f87171;
+      font-size: 14px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+    }
+
+    .success-message {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .success-subtitle {
+      font-size: 14px;
+      color: #94a3b8;
+      margin-bottom: 24px;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <div class="payment-container">
+    <div id="loading-state" class="loading-state">
+      <div style="margin: 0 auto 12px; width: 40px; height: 40px;">
+        <div class="spinner" style="display: block; width: 40px; height: 40px; border-width: 3px;"></div>
+      </div>
+      <p>Loading payment form...</p>
+    </div>
+
+    <div id="form-state" style="display: none;">
+      <div class="payment-header">
+        <h1 class="payment-title" id="payment-title">Upgrade to Pro</h1>
+        <p class="payment-subtitle" id="payment-subtitle">$12/month</p>
+      </div>
+
+      <div class="email-field" id="email-wrapper" style="display: none;">
+        <label for="email-input">Email</label>
+        <input type="email" id="email-input" placeholder="your@email.com" autocomplete="email">
+        <div class="error-text" id="email-error">Please enter a valid email</div>
+      </div>
+
+      <div id="payment-element"></div>
+
+      <button type="button" id="submit-button" class="submit-button" disabled>
+        <span class="spinner" id="spinner"></span>
+        <span id="button-text">Subscribe Now</span>
+      </button>
+
+      <div class="payment-errors" id="payment-errors"></div>
+    </div>
+
+    <div id="success-state" class="success-state">
+      <div class="success-icon">✓</div>
+      <h2 class="success-message" id="success-message">Payment successful!</h2>
+      <p class="success-subtitle">Your subscription is now active.</p>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
+    const API_BASE = "https://api.tangentapp.co";
+    const STRIPE_PUBLISHABLE_KEY = "pk_live_51SSu7dFYbfjZcbAUM0AOm5Gp46bwFIxa4ypSHGNuSmmJtijAqxPPHtKXjswuewj3ska3BTiFPFCNCKzSeJzybyRq005zzonyRd";
+
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: true }
+    });
+
+    const stripeInstance = Stripe(STRIPE_PUBLISHABLE_KEY);
+    let paymentElement = null;
+    let elements = null;
+
+    // Parse URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const priceId = params.get('priceId');
+    const planName = params.get('planName') || 'Pro';
+    const planPrice = params.get('planPrice') || '$12/month';
+    const checkoutKind = params.get('kind') || 'subscription'; // subscription or payment
+    const parentToken = params.get('token'); // Optional: auth token from extension
+
+    async function init() {
+      if (!priceId) {
+        showError('Missing price information');
+        return;
+      }
+
+      try {
+        // Update UI
+        document.getElementById('payment-title').textContent = `Upgrade to ${planName}`;
+        document.getElementById('payment-subtitle').textContent = planPrice;
+        document.getElementById('button-text').textContent = checkoutKind === 'subscription' ? 'Subscribe Now' : 'Purchase';
+
+        // Check authentication
+        let token = parentToken;
+        if (!token) {
+          const { data: session } = await supabaseClient.auth.getSession();
+          token = session?.session?.access_token;
+        }
+
+        const isLoggedIn = !!token;
+
+        // Show/hide email field
+        if (!isLoggedIn) {
+          document.getElementById('email-wrapper').style.display = 'block';
+        }
+
+        // Create checkout session
+        const endpoint = checkoutKind === 'subscription'
+          ? `${API_BASE}/api/create-subscription`
+          : `${API_BASE}/api/create-payment-intent`;
+
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+
+        const body = { priceId };
+        if (!isLoggedIn) {
+          // Email will be added on submit
+          body.email = '';
+        }
+
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(body)
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          throw new Error(errorData.error || `HTTP ${res.status}`);
+        }
+
+        const data = await res.json();
+        const clientSecret = data.clientSecret;
+
+        if (!clientSecret) {
+          throw new Error('No client secret received');
+        }
+
+        // Initialize Payment Element
+        const appearance = {
+          theme: 'night',
+          variables: {
+            colorPrimary: '#2a8fd5',
+            colorBackground: '#050915',
+            colorText: '#e5e7eb',
+            colorDanger: '#f87171',
+            fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+            borderRadius: '8px'
+          }
+        };
+
+        elements = stripeInstance.elements({ clientSecret, appearance });
+        paymentElement = elements.create('payment');
+        paymentElement.mount('#payment-element');
+
+        // Enable submit button when ready
+        paymentElement.on('ready', () => {
+          document.getElementById('submit-button').disabled = false;
+          document.getElementById('loading-state').style.display = 'none';
+          document.getElementById('form-state').style.display = 'block';
+        });
+
+        // Handle form submission
+        document.getElementById('submit-button').addEventListener('click', handleSubmit);
+
+      } catch (error) {
+        console.error('Init error:', error);
+        showError(error.message || 'Failed to initialize payment form');
+        document.getElementById('loading-state').style.display = 'none';
+        document.getElementById('form-state').style.display = 'block';
+      }
+    }
+
+    async function handleSubmit() {
+      const submitBtn = document.getElementById('submit-button');
+      const spinner = document.getElementById('spinner');
+      const buttonText = document.getElementById('button-text');
+      const errorsDiv = document.getElementById('payment-errors');
+
+      // Validate email if not logged in
+      const emailWrapper = document.getElementById('email-wrapper');
+      if (emailWrapper.style.display !== 'none') {
+        const emailInput = document.getElementById('email-input');
+        const emailError = document.getElementById('email-error');
+        const email = emailInput.value.trim();
+
+        if (!email || !email.includes('@')) {
+          emailError.style.display = 'block';
+          emailInput.focus();
+          return;
+        }
+        emailError.style.display = 'none';
+      }
+
+      // Show loading state
+      submitBtn.disabled = true;
+      spinner.style.display = 'block';
+      buttonText.textContent = 'Processing...';
+      errorsDiv.style.display = 'none';
+
+      try {
+        const { error } = await stripeInstance.confirmPayment({
+          elements,
+          confirmParams: {
+            return_url: `${window.location.origin}/account?payment=success`
+          },
+          redirect: 'if_required'
+        });
+
+        if (error) {
+          throw error;
+        }
+
+        // Payment succeeded
+        showSuccess();
+
+        // Notify parent window (extension)
+        if (window.parent !== window) {
+          window.parent.postMessage({
+            type: 'TANGENT_PAYMENT_SUCCESS',
+            priceId,
+            planName
+          }, '*');
+        }
+
+      } catch (error) {
+        console.error('Payment error:', error);
+        showError(error.message || 'Payment failed');
+        submitBtn.disabled = false;
+        spinner.style.display = 'none';
+        buttonText.textContent = checkoutKind === 'subscription' ? 'Subscribe Now' : 'Purchase';
+      }
+    }
+
+    function showError(message) {
+      const errorsDiv = document.getElementById('payment-errors');
+      errorsDiv.textContent = message;
+      errorsDiv.style.display = 'block';
+    }
+
+    function showSuccess() {
+      document.getElementById('form-state').style.display = 'none';
+      document.getElementById('success-state').style.display = 'block';
+
+      // Auto-close after 3 seconds
+      setTimeout(() => {
+        if (window.parent !== window) {
+          window.parent.postMessage({ type: 'TANGENT_PAYMENT_CLOSE' }, '*');
+        }
+      }, 3000);
+    }
+
+    // Initialize on load
+    init();
+  </script>
+</body>
+</html>
