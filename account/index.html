@@ -653,6 +653,14 @@
     const plansContainer = document.getElementById("plans-container");
 
     function setNavLoggedIn() {
+      // Re-query nav elements in case header was loaded after initial page load
+      const pricingLink = document.getElementById("navPricing");
+      const navSignOut = document.getElementById("navSignOut");
+      const loginLink = document.getElementById("navLogin");
+      const signupBtn = document.getElementById("navSignup");
+      const accountLink = document.getElementById("navAccount");
+      const navSubscribe = document.getElementById("navSubscribe");
+
       if (pricingLink) pricingLink.style.display = "none";
       if (navSignOut) {
         navSignOut.style.display = "inline-flex";
@@ -660,6 +668,7 @@
       }
       if (loginLink) loginLink.style.display = "none";
       if (signupBtn) signupBtn.style.display = "none";
+      if (navSubscribe) navSubscribe.style.display = "none";
       if (accountLink) {
         accountLink.style.display = "inline-flex";
         accountLink.onclick = null;
@@ -671,6 +680,14 @@
     }
 
     function setNavLoggedOut() {
+      // Re-query nav elements in case header was loaded after initial page load
+      const pricingLink = document.getElementById("navPricing");
+      const navSignOut = document.getElementById("navSignOut");
+      const loginLink = document.getElementById("navLogin");
+      const signupBtn = document.getElementById("navSignup");
+      const accountLink = document.getElementById("navAccount");
+      const navSubscribe = document.getElementById("navSubscribe");
+
       if (pricingLink) {
         pricingLink.style.display = "inline-flex";
         pricingLink.href = "/signup";
@@ -679,6 +696,7 @@
         navSignOut.style.display = "none";
         navSignOut.onclick = null;
       }
+      if (accountLink) accountLink.style.display = "none";
       if (loginLink) {
         loginLink.style.display = "inline-flex";
         loginLink.href = "javascript:void(0)";
@@ -690,6 +708,9 @@
       signupBtn.onclick = null;
       signupBtn.classList.add("nav-link-cta");
     }
+      if (navSubscribe) {
+        navSubscribe.style.display = "inline-flex";
+      }
       if (accountLink) {
         accountLink.style.display = "none";
       }
