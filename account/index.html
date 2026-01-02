@@ -1111,6 +1111,9 @@
     }
 
     async function renderPlan() {
+      // Re-query navRoot in case header was loaded after initial page load
+      const navRoot = document.getElementById("navRoot");
+
       try {
         const { data: session } = await supabaseClient.auth.getSession();
         const token = session?.session?.access_token;
