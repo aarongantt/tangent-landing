@@ -66,48 +66,10 @@
             border-radius: 2px;
         }
 
-        /* Tutorial banner at top */
-        .tutorial-banner {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, #2a8fd5 0%, #1d6ba0 100%);
-            color: white;
-            padding: 12px 20px;
-            text-align: center;
-            font-size: 14px;
-            font-weight: 600;
-            z-index: 2147483640;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .tutorial-banner-content {
-            max-width: 960px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
-
-        .tutorial-banner-icon {
-            font-size: 18px;
-        }
-
-        body.tutorial-active {
-            padding-top: 80px; /* Account for fixed banner */
-        }
+        /* Tutorial banner removed */
     </style>
 </head>
 <body>
-    <div class="tutorial-banner" id="tutorial-banner" style="display: none;">
-        <div class="tutorial-banner-content">
-            <span class="tutorial-banner-icon">🎓</span>
-            <span>TANGENT Tutorial Mode Active</span>
-        </div>
-    </div>
-
     <div class="container">
         <h1>Understanding Modern Artificial Intelligence</h1>
 
@@ -165,11 +127,7 @@
             console.log('[Demo Page] ✅ TANGENT tutorial ready signal received:', e.detail);
             tutorialReady = true;
 
-            // Show banner and start tutorial
-            document.getElementById('tutorial-banner').style.display = 'block';
-            document.body.classList.add('tutorial-active');
-
-            // Start tutorial via event bridge
+            // Start tutorial via event bridge (banner removed)
             window.dispatchEvent(new CustomEvent('TangentTutorialCommand', {
                 detail: { command: 'start' }
             }));
@@ -181,10 +139,7 @@
         setTimeout(() => {
             if (!tutorialReady) {
                 console.error('[Demo Page] ❌ TANGENT extension not detected after 5 seconds.');
-                const banner = document.getElementById('tutorial-banner');
-                banner.style.display = 'block';
-                banner.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
-                banner.innerHTML = '<div class="tutorial-banner-content"><span style="font-size:18px;">⚠️</span><span>TANGENT extension not detected. Please install the extension to run the tutorial.</span></div>';
+                // Error banner removed - extension not detected is silent
             }
         }, 5000);
     </script>
