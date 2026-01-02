@@ -749,6 +749,170 @@
       openSecureStripeUrl(body.url);
     }
 
+    // Modal functions for subscription management
+    async function openSubscriptionDetailsModal() {
+      const modal = document.getElementById('subscriptionDetailsModal');
+      const body = document.getElementById('subscriptionDetailsBody');
+      modal.style.display = 'flex';
+
+      try {
+        const { data: session } = await supabaseClient.auth.getSession();
+        const token = session?.session?.access_token;
+
+        const res = await fetch(`${API_BASE}/api/subscription-details`, {
+          method: 'GET',
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          throw new Error(errorData.error || 'Failed to load subscription details');
+        }
+
+        const data = await res.json();
+
+        // Format the period end date
+        const periodEndDate = new Date(data.currentPeriodEnd * 1000);
+        const formattedDate = periodEndDate.toLocaleString(undefined, {
+          dateStyle: 'medium',
+          timeStyle: 'short'
+        });
+
+        // Build the details HTML
+        let detailsHtml = `
+          <div class="subscription-info">
+            <div class="subscription-info-row">
+              <span class="subscription-info-label">Plan:</span>
+              <span class="subscription-info-value">${data.planName}</span>
+            </div>
+            <div class="subscription-info-row">
+              <span class="subscription-info-label">Status:</span>
+              <span class="subscription-info-value">${data.status === 'active' ? 'Active' : data.status}</span>
+            </div>
+            <div class="subscription-info-row">
+              <span class="subscription-info-label">Amount:</span>
+              <span class="subscription-info-value">${data.currency} $${data.amount}/${data.interval}</span>
+            </div>
+            <div class="subscription-info-row">
+              <span class="subscription-info-label">${data.cancelAtPeriodEnd ? 'Access Until:' : 'Next Billing Date:'}:</span>
+              <span class="subscription-info-value">${formattedDate}</span>
+            </div>
+        `;
+
+        if (data.cancelAtPeriodEnd) {
+          detailsHtml += `
+            <div class="subscription-info-row">
+              <span class="subscription-info-label">Renewal Status:</span>
+              <span class="subscription-info-value" style="color: #f87171;">Will not auto-renew</span>
+            </div>
+          `;
+        }
+
+        detailsHtml += '</div>';
+        body.innerHTML = detailsHtml;
+
+      } catch (error) {
+        console.error('[openSubscriptionDetailsModal] Error:', error);
+        body.innerHTML = `
+          <div style="color: #f87171; text-align: center; padding: 40px 20px;">
+            <p><strong>Error loading subscription details</strong></p>
+            <p style="margin-top: 8px; font-size: 14px;">${error.message}</p>
+          </div>
+        `;
+      }
+    }
+
+    function closeSubscriptionDetailsModal() {
+      const modal = document.getElementById('subscriptionDetailsModal');
+      modal.style.display = 'none';
+    }
+
+    async function openCancelConfirmationModal() {
+      const modal = document.getElementById('cancelConfirmationModal');
+      const periodEndEl = document.getElementById('cancelPeriodEnd');
+      modal.style.display = 'flex';
+
+      try {
+        const { data: session } = await supabaseClient.auth.getSession();
+        const token = session?.session?.access_token;
+
+        const res = await fetch(`${API_BASE}/api/subscription-details`, {
+          method: 'GET',
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (!res.ok) {
+          throw new Error('Failed to load subscription details');
+        }
+
+        const data = await res.json();
+        const periodEndDate = new Date(data.currentPeriodEnd * 1000);
+        const formattedDate = periodEndDate.toLocaleString(undefined, {
+          dateStyle: 'medium',
+          timeStyle: 'short'
+        });
+
+        periodEndEl.textContent = formattedDate;
+
+      } catch (error) {
+        console.error('[openCancelConfirmationModal] Error:', error);
+        periodEndEl.textContent = 'Unable to determine billing period end';
+      }
+    }
+
+    function closeCancelConfirmationModal() {
+      const modal = document.getElementById('cancelConfirmationModal');
+      modal.style.display = 'none';
+    }
+
+    async function confirmCancelSubscription() {
+      const confirmBtn = event.target;
+      const originalText = confirmBtn.textContent;
+      confirmBtn.textContent = 'Cancelling...';
+      confirmBtn.disabled = true;
+
+      try {
+        const { data: session } = await supabaseClient.auth.getSession();
+        const token = session?.session?.access_token;
+
+        const res = await fetch(`${API_BASE}/api/cancel-subscription`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          throw new Error(errorData.error || 'Failed to cancel subscription');
+        }
+
+        const data = await res.json();
+
+        // Close modal and show success message
+        closeCancelConfirmationModal();
+        alert('Subscription cancelled successfully. You will retain access until the end of your billing period.');
+
+        // Refresh the page to update UI
+        window.location.reload();
+
+      } catch (error) {
+        console.error('[confirmCancelSubscription] Error:', error);
+        alert(`Error: ${error.message}`);
+        confirmBtn.textContent = originalText;
+        confirmBtn.disabled = false;
+      }
+    }
+
+    async function openStripeBillingPortal() {
+      try {
+        const { data: session } = await supabaseClient.auth.getSession();
+        const token = session?.session?.access_token;
+        await openBillingPortal(token);
+      } catch (error) {
+        console.error('[openStripeBillingPortal] Error:', error);
+        alert(`Error: ${error.message}`);
+      }
+    }
+
     let loginModal;
     function ensureModal() {
       if (loginModal) return loginModal;
@@ -1176,10 +1340,27 @@
         renderTokensAndPlans(plan);
         // Event listeners for plan buttons are now attached inside renderTokensAndPlans()
         // no status line
-        billingBtn.disabled = false;
-        billingBtn.onclick = () => openBillingPortal(token).catch(() => {});
-        cancelBtn.disabled = false;
-        cancelBtn.onclick = () => openBillingPortal(token).catch(() => {});
+
+        // Check if user is on Free Trial
+        const isTrial = (plan || '').toLowerCase() === 'free_trial';
+
+        if (isTrial) {
+          // Hide buttons for Free Trial users
+          if (billingBtn) billingBtn.style.display = 'none';
+          if (cancelBtn) cancelBtn.style.display = 'none';
+        } else {
+          // Show and enable buttons for paid subscribers with custom modals
+          if (billingBtn) {
+            billingBtn.style.display = '';
+            billingBtn.disabled = false;
+            billingBtn.onclick = () => openSubscriptionDetailsModal().catch(err => console.error(err));
+          }
+          if (cancelBtn) {
+            cancelBtn.style.display = '';
+            cancelBtn.disabled = false;
+            cancelBtn.onclick = () => openCancelConfirmationModal().catch(err => console.error(err));
+          }
+        }
         setNavLoggedIn();
         if (navRoot) { navRoot.classList.remove("nav-guard"); navRoot.style.visibility = "visible"; navRoot.style.opacity = "1"; }
       } catch (e) {
@@ -1829,6 +2010,184 @@
       </div>
     </div>
   </div>
+
+  <!-- Subscription Details Modal -->
+  <div id="subscriptionDetailsModal" class="billing-modal" style="display: none;">
+    <div class="billing-modal-content">
+      <div class="billing-modal-header">
+        <h2>Subscription Details</h2>
+        <button class="billing-modal-close" onclick="closeSubscriptionDetailsModal()">&times;</button>
+      </div>
+      <div class="billing-modal-body" id="subscriptionDetailsBody">
+        <div class="billing-loading">Loading subscription details...</div>
+      </div>
+      <div class="billing-modal-footer">
+        <button class="cta-button secondary" onclick="closeSubscriptionDetailsModal()">Close</button>
+        <button class="cta-button" onclick="openStripeBillingPortal()">Manage in Stripe Portal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cancel Confirmation Modal -->
+  <div id="cancelConfirmationModal" class="billing-modal" style="display: none;">
+    <div class="billing-modal-content">
+      <div class="billing-modal-header">
+        <h2>Cancel Subscription</h2>
+        <button class="billing-modal-close" onclick="closeCancelConfirmationModal()">&times;</button>
+      </div>
+      <div class="billing-modal-body" id="cancelConfirmationBody">
+        <div class="cancel-warning">
+          <p><strong>Are you sure you want to cancel your subscription?</strong></p>
+          <p>Your subscription will remain active until the end of your current billing period:</p>
+          <p id="cancelPeriodEnd" style="font-weight: 600; margin: 12px 0;"></p>
+          <p>After this date, you will lose access to:</p>
+          <ul style="margin: 12px 0; padding-left: 24px;">
+            <li>Monthly token allowance</li>
+            <li>All premium features</li>
+            <li>Priority support</li>
+          </ul>
+          <p style="margin-top: 16px;">You can reactivate your subscription anytime before it expires.</p>
+        </div>
+      </div>
+      <div class="billing-modal-footer">
+        <button class="cta-button secondary" onclick="closeCancelConfirmationModal()">Keep Subscription</button>
+        <button class="cta-button" style="background: #ef4444;" onclick="confirmCancelSubscription()">Cancel Subscription</button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Billing Modal Styles */
+    .billing-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .billing-modal-content {
+      background: #1a1d2e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      animation: modalSlideIn 0.2s ease-out;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .billing-modal-header {
+      padding: 24px 24px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .billing-modal-header h2 {
+      margin: 0;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .billing-modal-close {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 28px;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: all 120ms ease;
+    }
+
+    .billing-modal-close:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    .billing-modal-body {
+      padding: 24px;
+      color: #e5e7eb;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .billing-modal-footer {
+      padding: 16px 24px 24px;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .billing-loading {
+      text-align: center;
+      padding: 40px 20px;
+      color: #94a3b8;
+    }
+
+    .subscription-info {
+      display: grid;
+      gap: 16px;
+    }
+
+    .subscription-info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .subscription-info-row:last-child {
+      border-bottom: none;
+    }
+
+    .subscription-info-label {
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    .subscription-info-value {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .cancel-warning {
+      line-height: 1.6;
+    }
+
+    .cancel-warning ul {
+      list-style-type: disc;
+    }
+
+    .cancel-warning li {
+      margin: 6px 0;
+    }
+  </style>
 
   <script src="/load-header.js"></script>
   <script>
