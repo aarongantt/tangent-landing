@@ -12,7 +12,7 @@
     FINGERPRINT_ENABLED: true,
     CAPTCHA_ENABLED: true,
     CAPTCHA_SITE_KEY: '0x4AAAAAACH4XH54xTTzYasF', // ✅ Production Cloudflare Turnstile key
-    PHONE_VERIFICATION_ENABLED: false // Set to true if you want to require phone verification for signups
+    PHONE_VERIFICATION_ENABLED: true // ✅ ENABLED - Phone verification required for all new signups
   };
 
   // Global state

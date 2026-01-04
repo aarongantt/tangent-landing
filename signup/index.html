@@ -1370,6 +1370,272 @@
                 }
             }
 
+            // ========================================
+            // PHONE VERIFICATION MODAL
+            // ========================================
+            var phoneVerificationModal = null;
+            var phoneVerificationState = {
+                userId: null,
+                phoneNumber: null,
+                codeSent: false,
+                verifying: false
+            };
+
+            function showPhoneVerificationModal(userId) {
+                phoneVerificationState.userId = userId;
+                phoneVerificationState.codeSent = false;
+                phoneVerificationState.phoneNumber = null;
+
+                if (phoneVerificationModal) {
+                    phoneVerificationModal.remove();
+                }
+
+                phoneVerificationModal = document.createElement("div");
+                phoneVerificationModal.id = "tgPhoneVerifyModal";
+                phoneVerificationModal.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:99999;display:flex;align-items:center;justify-content:center;";
+                phoneVerificationModal.innerHTML = `
+                    <div style="background:#0b1220;border-radius:16px;padding:32px;max-width:420px;width:90%;border:1px solid rgba(255,255,255,0.15);box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+                        <h2 style="color:#e5e7eb;font-size:22px;font-weight:700;margin:0 0 12px 0;">Verify Your Phone Number</h2>
+                        <p style="color:#94a3b8;font-size:14px;margin:0 0 24px 0;">To prevent abuse, we need to verify your phone number before activating your free trial.</p>
+
+                        <div id="phoneInputStep" style="display:block;">
+                            <label style="display:block;color:#cbd5e1;font-size:13px;font-weight:600;margin-bottom:6px;">Phone Number</label>
+                            <input
+                                type="tel"
+                                id="tgPhoneInput"
+                                placeholder="+1 (555) 123-4567"
+                                style="width:100%;padding:12px 14px;background:#0b1220;color:#e5e7eb;border:1px solid rgba(255,255,255,0.25);border-radius:10px;font-size:15px;margin-bottom:16px;"
+                            />
+                            <button
+                                id="tgPhoneSendCode"
+                                class="cta-button"
+                                style="width:100%;padding:12px;background:#3b82f6;color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer;"
+                            >
+                                Send Verification Code
+                            </button>
+                        </div>
+
+                        <div id="codeInputStep" style="display:none;">
+                            <p style="color:#94a3b8;font-size:13px;margin:0 0 16px 0;">Enter the 6-digit code sent to <strong id="phoneDisplay" style="color:#e5e7eb;"></strong></p>
+                            <label style="display:block;color:#cbd5e1;font-size:13px;font-weight:600;margin-bottom:6px;">Verification Code</label>
+                            <input
+                                type="text"
+                                id="tgCodeInput"
+                                placeholder="123456"
+                                maxlength="6"
+                                style="width:100%;padding:12px 14px;background:#0b1220;color:#e5e7eb;border:1px solid rgba(255,255,255,0.25);border-radius:10px;font-size:15px;margin-bottom:16px;text-align:center;letter-spacing:4px;font-weight:600;"
+                            />
+                            <button
+                                id="tgPhoneVerify"
+                                class="cta-button"
+                                style="width:100%;padding:12px;background:#10b981;color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer;"
+                            >
+                                Verify Phone
+                            </button>
+                            <button
+                                id="tgPhoneResend"
+                                class="cta-button secondary"
+                                style="width:100%;padding:10px;margin-top:10px;background:#64748b;color:#e5e7eb;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;"
+                            >
+                                Resend Code
+                            </button>
+                        </div>
+
+                        <p id="tgPhoneStatus" style="min-height:18px;font-size:13px;margin-top:12px;color:#cbd5e1;"></p>
+                    </div>
+                `;
+
+                document.body.appendChild(phoneVerificationModal);
+
+                // Event listeners
+                var phoneInput = phoneVerificationModal.querySelector("#tgPhoneInput");
+                var sendCodeBtn = phoneVerificationModal.querySelector("#tgPhoneSendCode");
+                var codeInput = phoneVerificationModal.querySelector("#tgCodeInput");
+                var verifyBtn = phoneVerificationModal.querySelector("#tgPhoneVerify");
+                var resendBtn = phoneVerificationModal.querySelector("#tgPhoneResend");
+
+                sendCodeBtn.addEventListener("click", function() { sendVerificationCode(); });
+                verifyBtn.addEventListener("click", function() { verifyPhoneCode(); });
+                resendBtn.addEventListener("click", function() { sendVerificationCode(); });
+
+                phoneInput.addEventListener("keydown", function(e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        sendVerificationCode();
+                    }
+                });
+
+                codeInput.addEventListener("keydown", function(e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        verifyPhoneCode();
+                    }
+                });
+
+                // Auto-focus phone input
+                phoneInput.focus();
+            }
+
+            function setPhoneStatus(msg, isError) {
+                var statusEl = phoneVerificationModal && phoneVerificationModal.querySelector("#tgPhoneStatus");
+                if (!statusEl) return;
+                statusEl.textContent = msg || "";
+                statusEl.style.color = isError ? "#f87171" : "#cbd5e1";
+            }
+
+            async function sendVerificationCode() {
+                var phoneInput = phoneVerificationModal.querySelector("#tgPhoneInput");
+                var phoneNumber = phoneInput.value.trim();
+
+                if (!phoneNumber) {
+                    setPhoneStatus("Please enter your phone number.", true);
+                    return;
+                }
+
+                // Normalize phone number (add +1 if needed)
+                if (!/^\+/.test(phoneNumber)) {
+                    phoneNumber = phoneNumber.replace(/\D/g, '');
+                    if (phoneNumber.length === 10) {
+                        phoneNumber = '+1' + phoneNumber;
+                    } else if (phoneNumber.length === 11 && phoneNumber[0] === '1') {
+                        phoneNumber = '+' + phoneNumber;
+                    } else {
+                        phoneNumber = '+' + phoneNumber;
+                    }
+                }
+
+                phoneVerificationState.phoneNumber = phoneNumber;
+                setPhoneStatus("Sending verification code...", false);
+
+                try {
+                    // Get current auth token
+                    var session = await client.auth.getSession();
+                    if (!session?.data?.session?.access_token) {
+                        throw new Error("Not authenticated");
+                    }
+
+                    var token = session.data.session.access_token;
+
+                    var response = await fetch("https://api.tangentapp.co/api/phone-verify", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + token
+                        },
+                        body: JSON.stringify({
+                            operation: "send",
+                            phoneNumber: phoneNumber
+                        })
+                    });
+
+                    var data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.error || "Failed to send code");
+                    }
+
+                    // Success - show code input step
+                    phoneVerificationState.codeSent = true;
+                    phoneVerificationModal.querySelector("#phoneInputStep").style.display = "none";
+                    phoneVerificationModal.querySelector("#codeInputStep").style.display = "block";
+                    phoneVerificationModal.querySelector("#phoneDisplay").textContent = phoneNumber;
+                    phoneVerificationModal.querySelector("#tgCodeInput").focus();
+                    setPhoneStatus("Code sent! Check your phone.", false);
+
+                } catch (err) {
+                    console.error("[Phone Verify] Send error:", err);
+                    var errorMsg = err.message || "Failed to send code";
+
+                    if (errorMsg.includes("already used")) {
+                        errorMsg = "This phone number has already been used for a free trial.";
+                    } else if (errorMsg.includes("Too many")) {
+                        errorMsg = "Too many attempts. Please try again later.";
+                    }
+
+                    setPhoneStatus(errorMsg, true);
+                }
+            }
+
+            async function verifyPhoneCode() {
+                var codeInput = phoneVerificationModal.querySelector("#tgCodeInput");
+                var code = codeInput.value.trim();
+
+                if (!code || code.length !== 6) {
+                    setPhoneStatus("Please enter the 6-digit code.", true);
+                    return;
+                }
+
+                setPhoneStatus("Verifying...", false);
+                phoneVerificationState.verifying = true;
+
+                try {
+                    // Get current auth token
+                    var session = await client.auth.getSession();
+                    if (!session?.data?.session?.access_token) {
+                        throw new Error("Not authenticated");
+                    }
+
+                    var token = session.data.session.access_token;
+
+                    var response = await fetch("https://api.tangentapp.co/api/phone-verify", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + token
+                        },
+                        body: JSON.stringify({
+                            operation: "verify",
+                            phoneNumber: phoneVerificationState.phoneNumber,
+                            verificationCode: code
+                        })
+                    });
+
+                    var data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.error || "Verification failed");
+                    }
+
+                    // Success!
+                    setPhoneStatus("Phone verified! Redirecting...", false);
+
+                    setTimeout(function() {
+                        if (phoneVerificationModal) {
+                            phoneVerificationModal.remove();
+                            phoneVerificationModal = null;
+                        }
+
+                        // Redirect to account page or continue checkout
+                        if (window.tgPendingPlanCode) {
+                            var plan = window.tgPendingPlanCode;
+                            window.tgPendingPlanCode = null;
+                            if (window.tgStartCheckout) {
+                                window.tgStartCheckout(plan);
+                            }
+                        } else {
+                            window.location.href = "/account";
+                        }
+                    }, 1000);
+
+                } catch (err) {
+                    console.error("[Phone Verify] Verify error:", err);
+                    phoneVerificationState.verifying = false;
+
+                    var errorMsg = err.message || "Verification failed";
+
+                    if (errorMsg.includes("Invalid")) {
+                        errorMsg = "Invalid code. Please try again.";
+                    } else if (errorMsg.includes("Too many")) {
+                        errorMsg = "Too many attempts. Please try again later.";
+                    }
+
+                    setPhoneStatus(errorMsg, true);
+                }
+            }
+
+            // Make function globally available
+            window.showPhoneVerificationModal = showPhoneVerificationModal;
+
             client.auth.getSession().then(function (res) {
                 var data = res && res.data;
                 if (data && data.session && data.session.access_token) {
