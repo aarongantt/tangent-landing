@@ -83,12 +83,15 @@
             display: none;
             gap: 9px; /* 6px * 1.5 */
             padding: 9px 21px; /* Restored to original height */
-            background: #dcdcdc; /* Light grey background */
+            /* Match original gradient from reference images */
+            background: linear-gradient(
+                to bottom,
+                #dce4ea 0%,
+                #b8c4ce 100%
+            );
             border: 3px solid rgba(109, 109, 109, 0.494); /* Thicker border */
             border-radius: 21px; /* Set to 21px */
             box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
-            backdrop-filter: blur(10px) saturate(120%);
-            -webkit-backdrop-filter: blur(10px) saturate(120%);
             opacity: 0;
             transform: translateY(-10px);
             transition: opacity 0.3s ease, transform 0.3s ease;
@@ -191,9 +194,8 @@
 
         #email-input:focus {
             border-color: #669fc3;
-            box-shadow: 0 0 8px 2px rgba(102, 159, 195, 0.25),
-                        0 0 20px 4px rgba(102, 159, 195, 0.3),
-                        0 0 35px 6px rgba(102, 159, 195, 0.15);
+            box-shadow: 0 0 6px 1px rgba(102, 159, 195, 0.25),
+                        0 0 12px 2px rgba(102, 159, 195, 0.2);
         }
 
         #email-input::placeholder {
@@ -256,7 +258,7 @@
             opacity: 1;
         }
 
-        /* Tangent Panel - MUCH larger but screen-aware */
+        /* Tangent Panel - EXACT match to mockup image */
         #tangent-panel {
             position: fixed;
             bottom: 0;
@@ -265,21 +267,214 @@
             z-index: 50;
             opacity: 0;
             transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+
+            /* Matches mockup proportions - VERY WIDE */
+            width: 1920px;
+            max-width: 98vw;
+            height: 900px;
+            overflow: hidden;
+
+            /* Darker blue-gray gradient matching chip bank */
+            background: linear-gradient(
+                to bottom,
+                #c8d4dc 0%,
+                #a0b0bc 100%
+            );
+
+            /* Bevel effect - NO white glow */
+            box-shadow:
+                /* Inner top highlight for bevel */
+                inset 0 3px 0 0 rgba(255, 255, 255, 0.6),
+                /* Deep shadow below */
+                0 -12px 48px rgba(0, 0, 0, 0.35),
+                /* Side depth */
+                -4px 0 12px rgba(0, 0, 0, 0.2),
+                4px 0 12px rgba(0, 0, 0, 0.2);
+
+            border-radius: 32px 32px 0 0;
+            border: 3px solid rgba(180, 180, 180, 0.7);
+            border-bottom: none;
+
+            display: flex;
+            flex-direction: column;
+
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
         }
 
         #tangent-panel.visible {
-            transform: translateX(-50%) translateY(0);
+            transform: translateX(-50%) translateY(calc(100% - 220px));
             opacity: 1;
         }
 
-        #tangent-panel img {
+        /* Header - matches mockup proportions */
+        .tangent-panel__header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 50px 80px;
+            flex-shrink: 0;
+            background: transparent;
+        }
+
+        /* Pin button - left side, gray - 20% BIGGER */
+        .tangent-pin {
+            position: absolute !important;
+            left: 60px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+
+            width: 96px; /* 80px * 1.2 */
+            height: 96px;
+            padding: 0;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.6;
+        }
+
+        .tangent-pin img {
+            width: 77px; /* 64px * 1.2 */
+            height: 77px;
             display: block;
+            filter: grayscale(100%) brightness(0.5);
+        }
+
+        /* Logo - GIGANTIC blue TANGENT */
+        .tangent-header-logo {
+            height: 120px;
             width: auto;
-            height: auto;
-            /* Much larger scaling - nearly full width */
-            max-width: 95vw;
-            max-height: 75vh; /* Take up to 75% of viewport height */
-            filter: drop-shadow(0 -20px 60px rgba(0, 0, 0, 0.5));
+            display: block;
+        }
+
+        /* Header buttons - right side, gray simple icons - 20% BIGGER */
+        .tangent-panel__btns {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .tangent-panel__btns > button {
+            width: 72px; /* 60px * 1.2 */
+            height: 72px;
+            padding: 0;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.5;
+        }
+
+        .tangent-panel__btns > button img {
+            width: 58px; /* 48px * 1.2 */
+            height: 58px;
+            filter: grayscale(100%) brightness(0.4);
+        }
+
+        /* Body - scrollable message area */
+        .tangent-panel__body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 10px 10px 0 10px;
+            position: relative;
+        }
+
+        /* Stream - where messages appear */
+        .tangent-panel__stream {
+            height: 100%;
+            overflow: auto;
+            background: transparent;
+            padding: 10px 10px 6px 10px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(150, 150, 150, 0.4) transparent;
+        }
+
+        /* Webkit scrollbar styling */
+        .tangent-panel__stream::-webkit-scrollbar {
+            width: 8px;
+            background: transparent;
+        }
+
+        .tangent-panel__stream::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .tangent-panel__stream::-webkit-scrollbar-thumb {
+            background-color: rgba(180, 180, 180, 0.5);
+            border-radius: 4px;
+            transition: background-color 0.25s ease;
+        }
+
+        .tangent-panel__stream:hover::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.25);
+        }
+
+        /* Message styles - matching real TANGENT extension */
+        .tg-msg {
+            margin-bottom: 16px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* User messages - dark bubble on right */
+        .tg-msg.tg-user {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .tg-msg.tg-user .tg-user__bubble {
+            background: rgb(46, 50, 59);
+            color: #7f95b6;
+            padding: 10px 14px;
+            border-radius: 12px;
+            display: inline-block;
+            max-width: 80%;
+        }
+
+        /* AI messages - left-aligned, no bubble */
+        .tg-msg.tg-ai {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .tg-msg.tg-ai .tg-ai__content {
+            padding: 10px 0;
+            color: var(--tg-fg);
+            max-width: 100%;
+        }
+
+        .tg-msg.tg-ai .tg-ai__content p {
+            margin: 0 0 12px 0;
+        }
+
+        .tg-msg.tg-ai .tg-ai__content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .tg-msg.tg-ai .tg-ai__content ol,
+        .tg-msg.tg-ai .tg-ai__content ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .tg-msg.tg-ai .tg-ai__content li {
+            margin-bottom: 4px;
+        }
+
+        .tg-msg.tg-ai .tg-ai__content strong {
+            font-weight: 600;
+            color: var(--tg-fg);
         }
 
         /* Success Modal */
@@ -383,9 +578,28 @@
         </div>
     </div>
 
-    <!-- Tangent Panel (rises from bottom) -->
+    <!-- Tangent Panel (rises from bottom) - ZOOMED IN header only -->
     <div id="tangent-panel">
-        <img src="images/tangent_panel_giant.png" alt="TANGENT Panel">
+        <!-- Panel Header - MASSIVE scale -->
+        <div class="tangent-panel__header">
+            <!-- Pin Button (left) - HUGE -->
+            <button class="tangent-pin" title="Pin panel">
+                <img src="images/pin_icon.png" alt="Pin">
+            </button>
+
+            <!-- Logo (center) - MASSIVE -->
+            <img src="images/tangent_logo_waitlist.png" alt="TANGENT" class="tangent-header-logo">
+
+            <!-- Header Buttons (right) - HUGE -->
+            <div class="tangent-panel__btns">
+                <button title="Minimize">
+                    <img src="images/minimize_icon.png" alt="Minimize">
+                </button>
+                <button title="Close">
+                    <img src="images/close_icon.png" alt="Close">
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Success Modal -->
