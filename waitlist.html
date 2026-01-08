@@ -153,15 +153,20 @@
             display: block;
         }
 
-        /* Chevron */
+        /* Chevron - CSS based */
         #chevron-chip {
             padding: 9px; /* 6px * 1.5 */
+            position: relative;
         }
 
-        #chevron-chip img {
-            width: 27px; /* 18px * 1.5 */
-            height: 27px;
+        #chevron-chip::after {
+            content: '';
             display: block;
+            width: 12px; /* Arrow width */
+            height: 12px; /* Arrow height */
+            border-right: 2px solid #111;
+            border-bottom: 2px solid #111;
+            transform: rotate(45deg);
         }
 
         /* Email Input State - 1.5x larger */
@@ -177,7 +182,7 @@
             width: 100%;
             padding: 15px 54px 15px 18px; /* 10px * 1.5, extra right padding for send button, 12px * 1.5 */
             border-radius: 33px; /* 22px * 1.5 */
-            border: 2.25px solid #777777; /* 1.5px * 1.5 */
+            border: 2.25px solid #555555; /* Dark grey instead of #777777 */
             background: rgba(255, 255, 255, 1);
             color: #1f2937;
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
@@ -194,6 +199,7 @@
         #email-input::placeholder {
             color: #9aa3b2;
             font-style: italic;
+            font-size: 15.75px; /* 21px reduced by 25% */
         }
 
         #send-btn {
@@ -204,7 +210,7 @@
             width: 42px; /* 28px * 1.5 */
             height: 42px;
             border-radius: 50%;
-            border: 2px solid #000000; /* Black border */
+            border: 2px solid #555555; /* Dark grey border */
             background: #ffffff; /* WHITE background */
             color: #2a8fd5;
             cursor: pointer;
@@ -228,6 +234,24 @@
             width: 21px; /* 14px * 1.5 */
             height: 21px;
             display: block;
+            transition: opacity 0.15s ease;
+        }
+
+        #send-btn img.default {
+            opacity: 1;
+        }
+
+        #send-btn img.hover {
+            position: absolute;
+            opacity: 0;
+        }
+
+        #send-btn:hover img.default {
+            opacity: 0;
+        }
+
+        #send-btn:hover img.hover {
+            opacity: 1;
         }
 
         /* Tangent Panel - MUCH larger but screen-aware */
@@ -251,8 +275,8 @@
             width: auto;
             height: auto;
             /* Much larger scaling - nearly full width */
-            max-width: 95vw;
-            max-height: 75vh; /* Take up to 75% of viewport height */
+            max-width: 98vw;
+            max-height: 85vh; /* Take up to 85% of viewport height */
             filter: drop-shadow(0 -20px 60px rgba(0, 0, 0, 0.5));
         }
 
@@ -321,7 +345,7 @@
 <body>
     <!-- Main Text -->
     <div id="main-text">
-        <span id="highlight-text">Stay in the flow</span>, or go on a Tangent.
+        Stay in the flow, or go on a <span id="highlight-text">Tangent</span>.
     </div>
 
     <!-- Animated Cursor -->
@@ -339,9 +363,7 @@
             <button class="chip">Context</button>
             <button class="chip">Who is...</button>
             <button class="chip">Summarize</button>
-            <button class="chip chip-icon" id="chevron-chip">
-                <img src="images/chevron_down.png" alt="More">
-            </button>
+            <button class="chip chip-icon" id="chevron-chip"></button>
         </div>
 
         <!-- Email State: T Icon + Email Input + Send Button -->
@@ -351,7 +373,8 @@
             </button>
             <input type="email" id="email-input" placeholder="Enter Your Email Address for Early Access" required>
             <button id="send-btn">
-                <img src="images/tangent_enter_button_blue.png" alt="Send">
+                <img src="images/tangent_enter_button.png" class="default" alt="Send">
+                <img src="images/tangent_enter_button_blue.png" class="hover" alt="Send">
             </button>
         </div>
     </div>
