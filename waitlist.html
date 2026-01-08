@@ -755,27 +755,32 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* Background - Use viewport units that Safari respects */
-            html, body {
+            /* Background - RECOMMENDED iOS FIX: Use fixed pseudo-element with dvh */
+            html {
                 height: 100%;
-                min-height: 100vh;
-                min-height: -webkit-fill-available;
             }
 
             body {
+                height: 100%;
+                min-height: 100vh;
+                min-height: 100dvh; /* Dynamic viewport height - adapts to Safari toolbar */
                 background-image: none !important;
                 position: relative;
             }
 
-            /* Wrapper div approach - spans beyond viewport */
-            body::after {
+            /* Fixed background pseudo-element - THE RECOMMENDED APPROACH */
+            body::before {
                 content: '';
-                position: absolute; /* Absolute instead of fixed */
-                top: -100px; /* Extend 100px above */
+                position: fixed; /* Fixed works better with dvh */
+                top: 0;
                 left: 0;
                 right: 0;
-                bottom: -100px; /* Extend 100px below */
+                bottom: 0;
+                width: 100vw;
+                height: 100vh;
+                height: 100dvh; /* Dynamic viewport height for Safari */
                 background: url('images/tangent_wave_bg.png') center center / cover no-repeat;
+                background-size: cover;
                 z-index: -1;
             }
 
