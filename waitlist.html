@@ -537,7 +537,7 @@
         }
 
         .modal-logo {
-            width: 192px; /* 20% larger than 160px */
+            width: 259px; /* 35% larger than 192px (192 * 1.35 = 259.2) */
             height: auto;
             margin: 0 auto 30px;
             display: block;
@@ -550,7 +550,7 @@
             background: transparent;
             border: none;
             font-size: 28px;
-            color: #0f141a;
+            color: rgba(0, 0, 0, 0.4); /* Match panel close button darkness */
             cursor: pointer;
             padding: 4px 8px;
             line-height: 1;
@@ -558,7 +558,7 @@
         }
 
         .modal-close-btn:hover {
-            color: #59636f;
+            color: rgba(0, 0, 0, 0.6); /* Slightly darker on hover */
         }
 
         .modal-content h2 {
@@ -569,14 +569,14 @@
         }
 
         .modal-content p {
-            font-size: 18px;
+            font-size: 17px; /* Reduced by 1pt from 18px */
             line-height: 1.6;
             color: #0f141a;
             margin-bottom: 16px;
         }
 
         .modal-content p.modal-subtitle {
-            font-size: 17px;
+            font-size: 16px; /* Reduced by 2pt from 18px */
             font-style: italic;
         }
 
