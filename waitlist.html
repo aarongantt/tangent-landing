@@ -755,12 +755,30 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* Background - spread it out to cover full mobile viewport */
+            /* Background - extend it for Safari's incompetence */
             body {
-                background-size: cover;
+                background-size: auto 120%; /* Extend background vertically by 20% */
                 background-position: center center;
                 min-height: 100vh;
                 min-height: -webkit-fill-available; /* iOS Safari fix */
+                background-attachment: scroll; /* Override fixed on mobile */
+            }
+
+            /* Alternative: use a taller background area */
+            body::before {
+                content: '';
+                position: fixed;
+                top: -10%;
+                left: -10%;
+                right: -10%;
+                bottom: -10%;
+                background: url('images/tangent_wave_bg.png') center center / cover no-repeat;
+                z-index: -1;
+            }
+
+            /* Hide the original background on mobile, use the ::before instead */
+            body {
+                background-image: none !important;
             }
 
             /* Cursor - reduce size by 35% */
