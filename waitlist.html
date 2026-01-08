@@ -760,7 +760,7 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* RECOMMENDED iOS FIX: Use <img> tag with position: fixed + object-fit: cover */
+            /* iOS FIX: Use <img> tag with svh (small viewport height) for zoomed-out view */
             html, body {
                 height: 100%;
                 overflow-x: hidden;
@@ -771,7 +771,7 @@
                 position: relative;
             }
 
-            /* Mobile background image - BEST PRACTICE for Safari iOS */
+            /* Mobile background image - Use svh for Safari's zoomed-out view */
             #mobile-bg {
                 display: block;
                 position: fixed;
@@ -779,8 +779,10 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                width: 100%;
-                height: 100%;
+                width: 100vw;
+                height: 100vh;
+                height: 100svh; /* Small viewport height - accounts for Safari UI when fully visible */
+                min-height: 100svh;
                 object-fit: cover; /* Cover viewport without distortion */
                 object-position: center center;
                 z-index: -1;
