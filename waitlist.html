@@ -755,14 +755,28 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* Background - SCREW SAFARI - just make it taller */
-            body {
-                /* Override desktop fixed background */
-                background: url('images/tangent_wave_bg.png') center center no-repeat scroll !important;
-                background-size: 100% 150% !important; /* Make it 50% taller vertically */
-                background-attachment: scroll !important;
+            /* Background - Use viewport units that Safari respects */
+            html, body {
+                height: 100%;
                 min-height: 100vh;
                 min-height: -webkit-fill-available;
+            }
+
+            body {
+                background-image: none !important;
+                position: relative;
+            }
+
+            /* Wrapper div approach - spans beyond viewport */
+            body::after {
+                content: '';
+                position: absolute; /* Absolute instead of fixed */
+                top: -100px; /* Extend 100px above */
+                left: 0;
+                right: 0;
+                bottom: -100px; /* Extend 100px below */
+                background: url('images/tangent_wave_bg.png') center center / cover no-repeat;
+                z-index: -1;
             }
 
             /* Cursor - reduce size by 35% */
