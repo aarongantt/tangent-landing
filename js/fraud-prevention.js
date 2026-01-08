@@ -160,14 +160,14 @@
    */
   async function requestPhoneVerification(phoneNumber, authToken) {
     try {
-      const response = await fetch(`${CONFIG.API_BASE_URL}/api/phone-verification`, {
+      const response = await fetch(`${CONFIG.API_BASE_URL}/api/phone-verify`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${authToken}`
         },
         body: JSON.stringify({
-          action: 'create',
+          action: 'send',
           phoneNumber: phoneNumber
         })
       });
@@ -191,14 +191,14 @@
    */
   async function verifyPhoneCode(phoneNumber, code, authToken) {
     try {
-      const response = await fetch(`${CONFIG.API_BASE_URL}/api/phone-verification`, {
+      const response = await fetch(`${CONFIG.API_BASE_URL}/api/phone-verify`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${authToken}`
         },
         body: JSON.stringify({
-          action: 'verify',
+          action: 'check',
           phoneNumber: phoneNumber,
           code: code
         })
