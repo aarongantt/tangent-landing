@@ -755,34 +755,14 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* Background - NUCLEAR OPTION for Safari's BS */
-            html {
-                height: 100%;
-                min-height: 100vh;
-                min-height: -webkit-fill-available;
-            }
-
+            /* Background - SCREW SAFARI - just make it taller */
             body {
-                height: 100%;
+                /* Override desktop fixed background */
+                background: url('images/tangent_wave_bg.png') center center no-repeat scroll !important;
+                background-size: 100% 150% !important; /* Make it 50% taller vertically */
+                background-attachment: scroll !important;
                 min-height: 100vh;
                 min-height: -webkit-fill-available;
-                background-image: none !important; /* Remove original background */
-                position: relative;
-            }
-
-            /* Create a background layer with EXTREME extension */
-            body::before {
-                content: '';
-                position: fixed;
-                top: -50vh; /* Extend 50vh beyond top */
-                left: -50vw; /* Extend 50vw beyond left */
-                width: 200vw; /* 2x viewport width */
-                height: 200vh; /* 2x viewport height */
-                background: url('images/tangent_wave_bg.png') center center no-repeat;
-                background-size: cover;
-                z-index: -1;
-                transform: translate(0, 0); /* Force GPU acceleration */
-                will-change: transform;
             }
 
             /* Cursor - reduce size by 35% */
