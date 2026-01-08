@@ -760,29 +760,29 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* iOS FIX: Use <img> tag with svh (small viewport height) for zoomed-out view */
+            /* iOS FIX: Lock scrolling and extend background beyond viewport */
             html, body {
                 height: 100%;
-                overflow-x: hidden;
+                overflow: hidden; /* NO SCROLL - lock it */
+                position: fixed; /* Lock body position */
+                width: 100%;
             }
 
             body {
                 background-image: none !important; /* Remove CSS background on mobile */
-                position: relative;
             }
 
-            /* Mobile background image - Use svh for Safari's zoomed-out view */
+            /* Mobile background image - Extend beyond viewport to prevent cutoff */
             #mobile-bg {
                 display: block;
                 position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                width: 100vw;
-                height: 100vh;
-                height: 100svh; /* Small viewport height - accounts for Safari UI when fully visible */
-                min-height: 100svh;
+                top: -10%; /* Extend above viewport */
+                left: -5%;
+                right: -5%;
+                bottom: -10%; /* Extend below viewport */
+                width: 110vw;
+                height: 120vh;
+                min-height: 120vh;
                 object-fit: cover; /* Cover viewport without distortion */
                 object-position: center center;
                 z-index: -1;
