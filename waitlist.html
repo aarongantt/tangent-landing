@@ -302,7 +302,7 @@
         }
 
         #tangent-panel.visible {
-            transform: translateX(-50%) translateY(calc(100% - 220px));
+            transform: translateX(-50%) translateY(calc(100% - 275px)); /* Raised by 25% (220px * 1.25 = 275px) */
             opacity: 1;
         }
 
@@ -345,7 +345,7 @@
 
         /* Logo - GIGANTIC blue TANGENT */
         .tangent-header-logo {
-            height: 120px;
+            height: 159px; /* 15% larger than 138px (138 * 1.15 = 158.7) */
             width: auto;
             display: block;
         }
@@ -606,6 +606,130 @@
         #toast.visible {
             transform: translateX(-50%) translateY(0);
             opacity: 1;
+        }
+
+        /* Responsive Design - Shrink logo and adjust spacing as viewport narrows */
+        @media (max-width: 1600px) {
+            .tangent-header-logo {
+                height: 140px; /* Slightly smaller */
+            }
+            .tangent-pin {
+                left: 50px !important;
+            }
+            .tangent-panel__btns {
+                right: 50px;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 1400px) {
+            .tangent-header-logo {
+                height: 120px; /* More reduction */
+            }
+            .tangent-pin {
+                left: 40px !important;
+            }
+            .tangent-panel__btns {
+                right: 40px;
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .tangent-header-logo {
+                height: 100px; /* Significant shrink */
+            }
+            .tangent-pin {
+                left: 30px !important;
+                width: 80px;
+                height: 80px;
+            }
+            .tangent-pin img {
+                width: 64px;
+                height: 64px;
+            }
+            .tangent-panel__btns {
+                right: 30px;
+                gap: 20px;
+            }
+            .tangent-panel__btns > button {
+                width: 60px;
+                height: 60px;
+            }
+            .tangent-panel__btns > button img {
+                width: 48px;
+                height: 48px;
+            }
+            /* Chip bar adjustments */
+            #chip-bar {
+                max-width: calc(100vw - 60px);
+            }
+            #email-input {
+                min-width: 350px; /* Narrower */
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .tangent-header-logo {
+                height: 80px; /* Very compact */
+            }
+            .tangent-panel__header {
+                padding: 40px 60px;
+            }
+            /* Chip bar wraps or scales down */
+            .chip {
+                font-size: 1.3em; /* Slightly smaller chips */
+                padding: 8px 13px;
+            }
+            .chip-icon img {
+                width: 24px;
+                height: 24px;
+            }
+            #chevron-chip img {
+                width: 20px;
+                height: 20px;
+            }
+            #email-input {
+                min-width: 300px;
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .tangent-header-logo {
+                height: 70px; /* Mobile-friendly size */
+            }
+            .tangent-pin {
+                left: 20px !important;
+                width: 64px;
+                height: 64px;
+            }
+            .tangent-pin img {
+                width: 52px;
+                height: 52px;
+            }
+            .tangent-panel__btns {
+                right: 20px;
+                gap: 15px;
+            }
+            .tangent-panel__btns > button {
+                width: 50px;
+                height: 50px;
+            }
+            .tangent-panel__btns > button img {
+                width: 40px;
+                height: 40px;
+            }
+            /* Chip bar further adjustments */
+            .chip {
+                font-size: 1.1em;
+                padding: 7px 11px;
+            }
+            #email-input {
+                min-width: 250px;
+                font-size: 16px;
+                padding: 12px 48px 12px 16px;
+            }
         }
     </style>
 </head>
