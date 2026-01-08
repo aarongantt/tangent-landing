@@ -732,16 +732,27 @@
             }
         }
 
+        /* Hide mobile line break on desktop */
+        .mobile-break {
+            display: none;
+        }
+
         /* MOBILE-ONLY STYLES - Cell phones (768px and below) */
         @media (max-width: 768px) {
+            /* Show mobile line break */
+            .mobile-break {
+                display: inline;
+            }
+
             /* Main text - split into two lines - MUCH SMALLER */
             #main-text {
                 font-size: 1.4em; /* Significantly reduced from 2.5em */
-                line-height: 1.3;
+                line-height: 1.4; /* Slightly more space between lines */
                 white-space: normal; /* Allow wrapping */
                 text-align: center;
                 width: 90%;
                 margin: 0 auto;
+                padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
             /* Panel shows LESS (not more) - only peek at top */
@@ -866,7 +877,7 @@
 <body>
     <!-- Main Text -->
     <div id="main-text">
-        Stay in the flow, or go on a <span id="highlight-text">Tangent</span>.
+        Stay in the flow,<br class="mobile-break"> or go on a <span id="highlight-text">Tangent</span>.
     </div>
 
     <!-- Animated Cursor -->
