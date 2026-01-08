@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tangent – Thinking shouldn't have to stop to continue.</title>
-    <meta name="description" content="Built by someone who couldn't tolerate losing the thread anymore.">
+    <title>Tangent – Join the Waitlist</title>
+    <meta name="description" content="AI that meets you where your attention already is.">
     <link rel="icon" type="image/png" href="images/tangent_t_logo.png">
     <style>
         * {
@@ -13,368 +13,568 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --tg-fg: #0f141a;
-            --tg-fg-muted: #59636f;
-            --tg-bg: #ffffff;
-            --tg-border: #777777;
-            --tg-accent: #2a8fd5;
-            --tg-accent-strong: #1d6ba0;
-            --tg-focus: #669fc3;
-            --tg-input-bg: #ffffff;
-            --tg-input-fg: #1f2937;
-            --tg-input-border: #777777;
-            --tg-surface: #fafafa;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --tg-fg: #e9eef5;
-                --tg-fg-muted: #9aa3b2;
-                --tg-bg: #121418;
-                --tg-border: #777777;
-                --tg-accent: #2a8fd5;
-                --tg-accent-strong: #1d6ba0;
-                --tg-focus: #669fc3;
-                --tg-input-bg: #1b1f27;
-                --tg-input-fg: #e6e6e6;
-                --tg-input-border: #777777;
-                --tg-surface: rgba(255, 255, 255, 0.04);
-            }
-        }
-
         body {
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
-            font-size: 14px;
-            background: var(--tg-bg);
-            color: var(--tg-fg);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
+            font-family: Arial, sans-serif;
+            background: url('images/tangent_wave_bg.png') center center / cover no-repeat fixed;
+            min-height: 100vh;
+            overflow: hidden; /* No scrolling */
+            position: relative;
         }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .section {
-            margin-bottom: 60px;
-        }
-
-        .logo {
-            width: 160px;
-            height: auto;
-            margin: 0 auto 40px;
-            display: block;
-        }
-
-        h1 {
-            font-size: 22px;
-            font-weight: 600;
-            line-height: 1.5;
-            margin-bottom: 12px;
-            text-align: center;
-        }
-
-        .subhead {
-            font-size: 16px;
-            color: var(--tg-fg);
-            text-align: center;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .built-for {
-            font-size: 14px;
-            color: var(--tg-fg-muted);
-            text-align: center;
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
-
-        .cta-block {
-            background: var(--tg-surface);
-            border: 1px solid var(--tg-border);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 60px;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        input[type="email"] {
-            flex: 1;
-            padding: 10px 12px;
-            border-radius: 8px;
-            border: 1px solid var(--tg-input-border);
-            background: var(--tg-input-bg);
-            color: var(--tg-input-fg);
-            font-family: inherit;
-            font-size: 14px;
-            transition: border-color 0.15s ease, box-shadow 0.15s ease;
-        }
-
-        input[type="email"]:focus {
-            outline: none;
-            border-color: var(--tg-focus);
-            box-shadow: 0 0 0 3px rgba(102, 159, 195, 0.25);
-        }
-
-        input[type="email"]::placeholder {
-            color: var(--tg-fg-muted);
-        }
-
-        button {
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: none;
-            background: var(--tg-accent);
+        /* Main text container */
+        #main-text {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 48px;
+            font-weight: bold;
             color: #ffffff;
-            font-family: inherit;
-            font-size: 14px;
+            text-align: center;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        #main-text span {
+            position: relative;
+            color: #ffffff;
+        }
+
+        /* Highlight effect - slides left to right */
+        #main-text span.highlighted::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0%;
+            background: #4A9FDB;
+            border-radius: 0px;
+            z-index: -1;
+            transition: width 0.5s ease-out;
+        }
+
+        #main-text span.highlighted.active::before {
+            width: 100%;
+        }
+
+        #main-text span.highlighted.active {
+            color: #FFFFFF;
+        }
+
+        /* Animated Cursor */
+        #demo-cursor {
+            position: absolute;
+            pointer-events: none;
+            z-index: 300;
+            display: none;
+            transition: left 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
+                        top 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
+                        opacity 0.3s ease-out;
+        }
+
+        #demo-cursor img {
+            width: 40px;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Chip Bar */
+        #chip-bar {
+            position: absolute;
+            z-index: 100;
+            display: none;
+            gap: 6px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.743);
+            border: 1px solid rgba(109, 109, 109, 0.494);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(10px) saturate(120%);
+            -webkit-backdrop-filter: blur(10px) saturate(120%);
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #chip-bar.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #chip-bar.initial-state {
+            display: flex;
+            align-items: center;
+        }
+
+        #chip-bar.email-state {
+            display: flex;
+            align-items: center;
+            padding: 6px 6px 6px 14px;
+        }
+
+        /* Chip Bar - Initial State Elements */
+        .chip {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
             font-weight: 600;
+            font-size: 1em;
+            line-height: 1.2;
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(109, 109, 109, 0.494);
+            background: rgba(255, 255, 255, 0.743);
+            color: #111;
             cursor: pointer;
+            user-select: none;
             transition: background 0.15s ease, transform 0.08s ease;
         }
 
-        button:hover {
-            background: var(--tg-accent-strong);
+        .chip:hover {
+            background: rgba(255, 255, 255, 0.96);
         }
 
-        button:active {
+        .chip:active {
             transform: translateY(1px);
         }
 
-        button:focus {
+        .chip-icon {
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            border-radius: 6px;
+        }
+
+        .chip-icon img {
+            width: 18px;
+            height: 18px;
+            display: block;
+        }
+
+        /* Chevron */
+        #chevron-chip {
+            padding: 6px;
+        }
+
+        #chevron-chip img {
+            width: 18px;
+            height: 18px;
+            display: block;
+        }
+
+        /* Email Input State */
+        #email-container {
+            display: none;
+            flex: 1;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #email-input {
+            flex: 1;
+            padding: 10px 12px;
+            border-radius: 22px;
+            border: 1.5px solid #777777;
+            background: rgba(255, 255, 255, 1);
+            color: #1f2937;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+            font-size: 14px;
             outline: none;
+            min-width: 300px;
+        }
+
+        #email-input:focus {
+            border-color: #669fc3;
             box-shadow: 0 0 0 3px rgba(102, 159, 195, 0.25);
         }
 
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+        #email-input::placeholder {
+            color: #9aa3b2;
         }
 
-        .subtext {
-            font-size: 12px;
-            color: var(--tg-fg-muted);
-            text-align: center;
-            line-height: 1.6;
-        }
-
-        .message {
-            font-size: 14px;
-            text-align: center;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            display: none;
-        }
-
-        .message.success {
-            background: rgba(42, 143, 213, 0.12);
-            color: var(--tg-fg);
-            display: block;
-        }
-
-        .message.error {
-            background: rgba(255, 59, 48, 0.12);
-            color: var(--tg-fg);
-            display: block;
-        }
-
-        h2 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        p {
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-
-        ul {
-            list-style: none;
+        #send-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: #2a8fd5;
+            color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s ease, transform 0.08s ease;
             padding: 0;
         }
 
-        li {
-            padding-left: 20px;
-            position: relative;
-            margin-bottom: 8px;
+        #send-btn:hover {
+            background: #1d6ba0;
         }
 
-        li::before {
-            content: "—";
-            position: absolute;
+        #send-btn:active {
+            transform: translateY(1px);
+        }
+
+        #send-btn img {
+            width: 18px;
+            height: 18px;
+            display: block;
+        }
+
+        /* Tangent Panel - Rising from bottom */
+        #tangent-panel {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            z-index: 50;
+            max-width: 90vw;
+            opacity: 0;
+            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+        }
+
+        #tangent-panel.visible {
+            transform: translateX(-50%) translateY(20px);
+            opacity: 1;
+        }
+
+        #tangent-panel img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 -20px 60px rgba(0, 0, 0, 0.5));
+        }
+
+        /* Success Modal */
+        #success-modal {
+            position: fixed;
+            top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 400;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .for-list li::before {
-            color: var(--tg-accent);
+        #success-modal.visible {
+            display: flex;
+            opacity: 1;
         }
 
-        .not-for-list li::before {
-            color: var(--tg-fg-muted);
-        }
-
-        .proof {
-            font-size: 14px;
-            color: var(--tg-fg-muted);
+        .modal-content {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
             text-align: center;
-            font-style: italic;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
         }
 
-        .closing-cta {
-            text-align: center;
+        #success-modal.visible .modal-content {
+            transform: scale(1);
         }
 
-        .closing-cta button {
-            margin-bottom: 12px;
+        .modal-logo {
+            width: 160px;
+            height: auto;
+            margin: 0 auto 30px;
+            display: block;
         }
 
-        .closing-text {
-            font-size: 14px;
-            color: var(--tg-fg-muted);
+        .modal-content h2 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #0f141a;
+        }
+
+        .modal-content p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #59636f;
+            margin-bottom: 16px;
+        }
+
+        .modal-content p:last-child {
+            margin-bottom: 0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- HERO -->
-        <section class="section">
-            <img src="images/tangent_logo_light.png" alt="TANGENT" class="logo">
-            <h1>Thinking shouldn't have to stop to continue.</h1>
-            <p class="subhead">AI that meets you where your attention already is.</p>
-            <p class="built-for">Built for researchers, writers, and anyone who can't afford to lose the thread.</p>
-        </section>
+    <!-- Main Text -->
+    <div id="main-text">
+        <span id="highlight-text">Stay in the flow</span>, or go on a Tangent.
+    </div>
 
-        <!-- WAITLIST CTA BLOCK -->
-        <div class="cta-block">
-            <div id="message" class="message"></div>
-            <form id="waitlist-form">
-                <div class="input-group">
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Email address"
-                        required
-                        autocomplete="email"
-                        aria-label="Email address">
-                    <button type="submit" id="submit-btn">Join Waitlist</button>
-                </div>
-            </form>
-            <p class="subtext">If this sounds excessive, it's probably not for you.</p>
+    <!-- Animated Cursor -->
+    <div id="demo-cursor">
+        <img id="cursor-img" src="images/i_beam.png" alt="">
+    </div>
+
+    <!-- Chip Bar (transforms from chips to email input) -->
+    <div id="chip-bar" class="initial-state">
+        <!-- Initial State: Chips -->
+        <div id="chips-container" style="display: flex; gap: 6px; align-items: center;">
+            <button class="chip chip-icon" id="t-chip">
+                <img src="images/tangent_fab.png" alt="T">
+            </button>
+            <button class="chip">Context</button>
+            <button class="chip">Who is...</button>
+            <button class="chip">Summarize</button>
+            <button class="chip chip-icon" id="chevron-chip">
+                <img src="images/chevron_down.png" alt="More">
+            </button>
         </div>
 
-        <!-- PROBLEM -->
-        <section class="section">
-            <h2>The real cost of context switching</h2>
-            <p>Every time you leave what you're reading to ask a question, you lose momentum. You open a new tab. You rephrase your thought. You wait for an answer. Then you reconstruct where you were.</p>
-            <p>That's not thinking. That's managing interruptions.</p>
-        </section>
+        <!-- Email State: T Icon + Email Input + Send Button -->
+        <div id="email-container">
+            <button class="chip chip-icon" id="t-chip-email" style="flex-shrink: 0;">
+                <img src="images/tangent_fab.png" alt="T">
+            </button>
+            <input type="email" id="email-input" placeholder="Enter Your Email Address for Early Access" required>
+            <button id="send-btn">
+                <img src="images/tangent_enter_button.svg" alt="Send">
+            </button>
+        </div>
+    </div>
 
-        <!-- REFRAME -->
-        <section class="section">
-            <h2>Centralization isn't clarity</h2>
-            <p>Most tools want to be your workspace. They want you to bring everything to them—your documents, your notes, your attention. Tangent does the opposite.</p>
-            <p>It appears when summoned. It answers in place. It disappears when dismissed.</p>
-        </section>
+    <!-- Tangent Panel (rises from bottom) -->
+    <div id="tangent-panel">
+        <img src="images/tangent_panel_giant.png" alt="TANGENT Panel">
+    </div>
 
-        <!-- WHAT IT IS -->
-        <section class="section">
-            <h2>What Tangent is</h2>
-            <p>Tangent is AI that lives on every page you open. Select text. Choose a question. Get an answer without leaving. No tabs. No context switching. No central hub demanding your workflow conform to its structure.</p>
-        </section>
-
-        <!-- WHO IT'S FOR / NOT FOR -->
-        <section class="section">
-            <h2>Who this is for</h2>
-            <ul class="for-list">
-                <li>People who read deeply and need answers without breaking focus</li>
-                <li>People suspicious of tools that demand attention</li>
-                <li>People who value autonomy over automation</li>
-            </ul>
-
-            <h2 style="margin-top: 20px;">Who this is not for</h2>
-            <ul class="not-for-list">
-                <li>People looking for an all-in-one workspace</li>
-                <li>People who want AI to take over tasks</li>
-                <li>People who prefer central hubs over distributed tools</li>
-            </ul>
-        </section>
-
-        <!-- PROOF -->
-        <section class="section">
-            <p class="proof">Built by someone who couldn't tolerate losing the thread anymore.</p>
-        </section>
-
-        <!-- CLOSING CTA -->
-        <section class="closing-cta">
-            <button id="closing-btn">Join Waitlist</button>
-            <p class="closing-text">Limited early access.</p>
-        </section>
+    <!-- Success Modal -->
+    <div id="success-modal">
+        <div class="modal-content">
+            <img src="images/tangent_logo_light.png" alt="TANGENT" class="modal-logo">
+            <h2>Welcome.</h2>
+            <p>Tangent exists to support thinking, not replace it.</p>
+            <p>We're opening early access deliberately.</p>
+            <p>You'll hear from us when it's time.</p>
+        </div>
     </div>
 
     <script>
-        const form = document.getElementById('waitlist-form');
-        const emailInput = document.getElementById('email');
-        const submitBtn = document.getElementById('submit-btn');
-        const closingBtn = document.getElementById('closing-btn');
-        const message = document.getElementById('message');
+        // Elements
+        const mainText = document.getElementById('main-text');
+        const highlightText = document.getElementById('highlight-text');
+        const cursor = document.getElementById('demo-cursor');
+        const cursorImg = document.getElementById('cursor-img');
+        const chipBar = document.getElementById('chip-bar');
+        const chipsContainer = document.getElementById('chips-container');
+        const emailContainer = document.getElementById('email-container');
+        const tChip = document.getElementById('t-chip');
+        const emailInput = document.getElementById('email-input');
+        const sendBtn = document.getElementById('send-btn');
+        const tangentPanel = document.getElementById('tangent-panel');
+        const successModal = document.getElementById('success-modal');
 
+        // Utility: Wait
+        function wait(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Move cursor to position
+        function moveCursor(x, y) {
+            cursor.style.left = x + 'px';
+            cursor.style.top = y + 'px';
+        }
+
+        // Show cursor
+        function showCursor() {
+            cursor.style.display = 'block';
+            cursor.style.opacity = '0';
+            setTimeout(() => {
+                cursor.style.opacity = '1';
+            }, 50);
+        }
+
+        // Hide cursor
+        function hideCursor() {
+            cursor.style.opacity = '0';
+            setTimeout(() => {
+                cursor.style.display = 'none';
+            }, 300);
+        }
+
+        // Change cursor type
+        function setCursorType(type) {
+            if (type === 'normal') {
+                cursorImg.src = 'images/cursor.png';
+            } else {
+                cursorImg.src = 'images/i_beam.png';
+            }
+        }
+
+        // Position chip bar below highlighted text
+        function positionChipBar() {
+            const textRect = highlightText.getBoundingClientRect();
+            chipBar.style.left = (textRect.left + textRect.width / 2 - chipBar.offsetWidth / 2) + 'px';
+            chipBar.style.top = (textRect.bottom + 12) + 'px';
+        }
+
+        // Animation Sequence
+        async function playIntro() {
+            // 1. Show cursor at starting position (right side)
+            const startX = window.innerWidth - 200;
+            const startY = window.innerHeight / 2;
+            moveCursor(startX, startY);
+            showCursor();
+            setCursorType('i_beam');
+
+            await wait(500);
+
+            // 2. Move cursor to start of "Stay in the flow"
+            const textRect = highlightText.getBoundingClientRect();
+            const startTextX = textRect.left - 30;
+            const startTextY = textRect.top + textRect.height / 2;
+            moveCursor(startTextX, startTextY);
+
+            await wait(800);
+
+            // 3. Highlight the text (slide left to right)
+            highlightText.classList.add('highlighted');
+            await wait(50);
+            highlightText.classList.add('active');
+
+            // Move cursor to end of highlight as it forms
+            const endTextX = textRect.right + 2;
+            const endTextY = textRect.top + textRect.height / 2;
+            moveCursor(endTextX, endTextY);
+
+            await wait(600);
+
+            // 4. Show chip bar
+            chipBar.style.display = 'flex';
+            positionChipBar();
+            await wait(50);
+            chipBar.classList.add('visible');
+
+            // 5. Move cursor to chip bar
+            await wait(300);
+            const chipBarRect = chipBar.getBoundingClientRect();
+            const chipBarCenterX = chipBarRect.left + chipBarRect.width / 2;
+            const chipBarTopY = chipBarRect.top - 10;
+            moveCursor(chipBarCenterX, chipBarTopY);
+
+            await wait(150);
+            setCursorType('normal');
+
+            // 6. Move cursor to T chip
+            await wait(200);
+            const tChipRect = tChip.getBoundingClientRect();
+            const tChipCenterX = tChipRect.left + tChipRect.width / 2;
+            const tChipCenterY = tChipRect.top + tChipRect.height / 2;
+            moveCursor(tChipCenterX, tChipCenterY);
+
+            await wait(500);
+
+            // 7. Click T chip (visual feedback)
+            tChip.style.transform = 'scale(0.95)';
+            await wait(100);
+            tChip.style.transform = '';
+
+            // 8. Start panel rise animation FIRST
+            tangentPanel.classList.add('visible');
+
+            await wait(300);
+
+            // 9. Transform chip bar to email input
+            chipsContainer.style.display = 'none';
+            emailContainer.style.display = 'flex';
+            chipBar.classList.remove('initial-state');
+            chipBar.classList.add('email-state');
+
+            // Reposition chip bar after transformation
+            positionChipBar();
+
+            await wait(100);
+
+            // Hide cursor
+            hideCursor();
+        }
+
+        // Handle email submission
         async function handleSubmit(e) {
-            if (e) e.preventDefault();
+            e.preventDefault();
 
             const email = emailInput.value.trim();
             if (!email) return;
 
-            submitBtn.disabled = true;
-            closingBtn.disabled = true;
-            submitBtn.textContent = 'Joining...';
-            closingBtn.textContent = 'Joining...';
-            message.style.display = 'none';
+            sendBtn.disabled = true;
+            emailInput.disabled = true;
 
             try {
+                // Get referrer
+                const referrer = document.referrer || 'Direct';
+
                 const response = await fetch('/api/waitlist', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ email })
+                    body: JSON.stringify({
+                        email,
+                        referrer
+                    })
                 });
 
                 if (response.ok) {
-                    message.className = 'message success';
-                    message.textContent = 'Added to waitlist.';
-                    message.style.display = 'block';
+                    // Show success modal
+                    successModal.classList.add('visible');
+
+                    // Reset input
                     emailInput.value = '';
                 } else {
-                    throw new Error('Failed to join waitlist');
+                    alert('Failed to join waitlist. Please try again.');
                 }
             } catch (error) {
-                message.className = 'message error';
-                message.textContent = 'Failed to join. Try again.';
-                message.style.display = 'block';
+                console.error('Error:', error);
+                alert('Failed to join waitlist. Please try again.');
             } finally {
-                submitBtn.disabled = false;
-                closingBtn.disabled = false;
-                submitBtn.textContent = 'Join Waitlist';
-                closingBtn.textContent = 'Join Waitlist';
+                sendBtn.disabled = false;
+                emailInput.disabled = false;
             }
         }
 
-        form.addEventListener('submit', handleSubmit);
-        closingBtn.addEventListener('click', () => {
-            emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(() => emailInput.focus(), 300);
+        // Close modal on click outside
+        successModal.addEventListener('click', (e) => {
+            if (e.target === successModal) {
+                successModal.classList.remove('visible');
+            }
+        });
+
+        // Send button click
+        sendBtn.addEventListener('click', handleSubmit);
+
+        // Email input submit on Enter
+        emailInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleSubmit(e);
+            }
+        });
+
+        // Start animation on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                playIntro();
+            }, 500);
+        });
+
+        // Reposition chip bar on window resize
+        window.addEventListener('resize', () => {
+            if (chipBar.classList.contains('visible')) {
+                positionChipBar();
+            }
         });
     </script>
 </body>
