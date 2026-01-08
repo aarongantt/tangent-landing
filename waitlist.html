@@ -499,12 +499,34 @@
         }
 
         .modal-content {
-            background: #ffffff;
+            /* Match Tangent panel gradient */
+            background: linear-gradient(
+                to bottom,
+                #c8d4dc 0%,
+                #a0b0bc 100%
+            );
+
+            /* Glass effect with 75% opacity and blur */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
             border-radius: 16px;
             padding: 40px;
             max-width: 500px;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+
+            /* 3D bevel effect matching panel */
+            box-shadow:
+                /* Inner top highlight for bevel */
+                inset 0 3px 0 0 rgba(255, 255, 255, 0.6),
+                /* Deep shadow below */
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                /* Side depth */
+                -4px 0 12px rgba(0, 0, 0, 0.2),
+                4px 0 12px rgba(0, 0, 0, 0.2);
+
+            border: 5px solid rgba(180, 180, 180, 0.7);
+
             transform: scale(0.9);
             transition: transform 0.3s ease;
         }
@@ -530,12 +552,36 @@
         .modal-content p {
             font-size: 18px;
             line-height: 1.6;
-            color: #59636f;
+            color: #0f141a;
             margin-bottom: 16px;
         }
 
         .modal-content p:last-child {
             margin-bottom: 0;
+        }
+
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(46, 50, 59, 0.95);
+            color: #e9eef5;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 500;
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        #toast.visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
     </style>
 </head>
@@ -570,7 +616,7 @@
             <button class="chip chip-icon" id="t-chip-email" style="flex-shrink: 0;">
                 <img src="images/tangent_t_logo.png" alt="T">
             </button>
-            <input type="email" id="email-input" placeholder="Enter Your Email Address for Early Access" required>
+            <input type="email" id="email-input" placeholder="Enter Your Email Address for Early Access">
             <button id="send-btn">
                 <img src="images/tangent_enter_button.png" class="default" alt="Send">
                 <img src="images/tangent_enter_button_blue.png" class="hover" alt="Send">
@@ -605,13 +651,14 @@
     <!-- Success Modal -->
     <div id="success-modal">
         <div class="modal-content">
-            <img src="images/tangent_logo_light.png" alt="TANGENT" class="modal-logo">
-            <h2>Welcome.</h2>
-            <p>Tangent exists to support thinking, not replace it.</p>
-            <p>We're opening early access deliberately.</p>
-            <p>You'll hear from us when it's time.</p>
+            <img src="images/welcome_logo.png" alt="Welcome" class="modal-logo">
+            <p><em>Tangent exists to support thinking, not replace it.</em></p>
+            <p>Keep an eye on your inbox. We're beginning early access soon.</p>
         </div>
     </div>
+
+    <!-- Toast Notification -->
+    <div id="toast"></div>
 
     <script>
         // Elements
@@ -627,10 +674,20 @@
         const sendBtn = document.getElementById('send-btn');
         const tangentPanel = document.getElementById('tangent-panel');
         const successModal = document.getElementById('success-modal');
+        const toast = document.getElementById('toast');
 
         // Utility: Wait
         function wait(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('visible');
+            setTimeout(() => {
+                toast.classList.remove('visible');
+            }, 3000);
         }
 
         // Move cursor to position
@@ -787,7 +844,18 @@
             e.preventDefault();
 
             const email = emailInput.value.trim();
-            if (!email) return;
+
+            // Validate email format
+            if (!email) {
+                showToast('Please enter an email address');
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('Please enter a valid email address');
+                return;
+            }
 
             sendBtn.disabled = true;
             emailInput.disabled = true;
@@ -814,11 +882,11 @@
                     // Reset input
                     emailInput.value = '';
                 } else {
-                    alert('Failed to join waitlist. Please try again.');
+                    showToast('Failed to join waitlist. Please try again.');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Failed to join waitlist. Please try again.');
+                showToast('Failed to join waitlist. Please try again.');
             } finally {
                 sendBtn.disabled = false;
                 emailInput.disabled = false;
