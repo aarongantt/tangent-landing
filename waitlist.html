@@ -751,6 +751,7 @@
 
             /* Main text - split into two lines - MUCH SMALLER */
             #main-text {
+                top: 160px; /* Moved down from 120px to prevent cutoff */
                 font-size: 1.625em; /* Increased by 3pt from 1.4em (roughly +0.225em) */
                 line-height: 1.4; /* Slightly more space between lines */
                 white-space: normal; /* Allow wrapping */
@@ -760,29 +761,27 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* iOS FIX: Lock scrolling and extend background beyond viewport */
-            html, body {
+            /* iOS FIX: Lock scrolling and extend beyond Safari bars */
+            html {
                 height: 100%;
-                overflow: hidden; /* NO SCROLL - lock it */
-                position: fixed; /* Lock body position */
-                width: 100%;
+                overflow: hidden;
             }
 
             body {
+                height: 100%;
+                overflow: hidden; /* NO SCROLL - lock it */
+                width: 100%;
                 background-image: none !important; /* Remove CSS background on mobile */
             }
 
-            /* Mobile background image - Extend beyond viewport to prevent cutoff */
+            /* Mobile background image - Extend beyond Safari UI to bleed into white bars */
             #mobile-bg {
                 display: block;
                 position: fixed;
-                top: -10%; /* Extend above viewport */
-                left: -5%;
-                right: -5%;
-                bottom: -10%; /* Extend below viewport */
-                width: 110vw;
-                height: 120vh;
-                min-height: 120vh;
+                top: -60px; /* Bleed into top Safari bar */
+                left: 0;
+                width: 100vw;
+                height: calc(100vh + 120px); /* Extend beyond top and bottom bars */
                 object-fit: cover; /* Cover viewport without distortion */
                 object-position: center center;
                 z-index: -1;
