@@ -755,30 +755,25 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* Background - extend it for Safari's incompetence */
-            body {
-                background-size: auto 120%; /* Extend background vertically by 20% */
-                background-position: center center;
-                min-height: 100vh;
-                min-height: -webkit-fill-available; /* iOS Safari fix */
-                background-attachment: scroll; /* Override fixed on mobile */
+            /* Background - AGGRESSIVE fix for Safari cutoff */
+            html, body {
+                height: 100%;
+                min-height: 100%;
+                background-image: none !important; /* Remove original background */
             }
 
-            /* Alternative: use a taller background area */
+            /* Create a background layer that extends way beyond viewport */
             body::before {
                 content: '';
                 position: fixed;
-                top: -10%;
-                left: -10%;
-                right: -10%;
-                bottom: -10%;
+                top: -25%; /* Extend 25% beyond top */
+                left: -25%; /* Extend 25% beyond left */
+                right: -25%; /* Extend 25% beyond right */
+                bottom: -25%; /* Extend 25% beyond bottom */
+                width: 150vw;
+                height: 150vh;
                 background: url('images/tangent_wave_bg.png') center center / cover no-repeat;
                 z-index: -1;
-            }
-
-            /* Hide the original background on mobile, use the ::before instead */
-            body {
-                background-image: none !important;
             }
 
             /* Cursor - reduce size by 35% */
@@ -854,36 +849,36 @@
             }
 
             .chip {
-                font-size: 0.75em;
-                padding: 4px 8px; /* Tighter padding */
+                font-size: 0.9em; /* Increased from 0.75em - bigger text */
+                padding: 6px 10px; /* Increased from 4px 8px - more padding */
                 border-width: 2px;
                 white-space: nowrap;
             }
 
-            /* T icon - make it square */
+            /* T icon - make it square and bigger */
             .chip-icon {
-                min-width: 28px; /* Square dimensions */
-                min-height: 28px;
-                padding: 4px; /* Equal padding all sides */
+                min-width: 32px; /* Increased from 28px */
+                min-height: 32px;
+                padding: 5px; /* Increased from 4px */
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
 
             .chip-icon img {
-                width: 16px; /* Smaller, square icon */
-                height: 16px;
+                width: 20px; /* Increased from 16px */
+                height: 20px;
             }
 
             #chevron-chip {
-                padding: 4px;
-                min-width: 28px; /* Match T icon size */
-                min-height: 28px;
+                padding: 5px; /* Increased from 4px */
+                min-width: 32px; /* Increased from 28px - match T icon */
+                min-height: 32px;
             }
 
             #chevron-chip img {
-                width: 14px;
-                height: 14px;
+                width: 18px; /* Increased from 14px */
+                height: 18px;
             }
 
             /* Email input - properly scaled from desktop */
