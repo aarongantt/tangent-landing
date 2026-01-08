@@ -774,14 +774,18 @@
                 background-image: none !important; /* Remove CSS background on mobile */
             }
 
-            /* Mobile background image - Extend beyond Safari UI to bleed into white bars */
+            /* Mobile background image - HUGE to always cover everything */
             #mobile-bg {
                 display: block;
                 position: fixed;
-                top: -60px; /* Bleed into top Safari bar */
-                left: 0;
-                width: 100vw;
-                height: calc(100vh + 120px); /* Extend beyond top and bottom bars */
+                top: -200px; /* Massive bleed upward */
+                left: -100px; /* Bleed left */
+                right: -100px; /* Bleed right */
+                bottom: -200px; /* Massive bleed downward */
+                width: calc(100vw + 200px); /* Extra wide */
+                height: calc(100vh + 400px); /* Extra tall */
+                min-width: calc(100vw + 200px);
+                min-height: calc(100vh + 400px);
                 object-fit: cover; /* Cover viewport without distortion */
                 object-position: center center;
                 z-index: -1;
