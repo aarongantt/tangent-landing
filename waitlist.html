@@ -804,38 +804,54 @@
                 height: 22px;
             }
 
-            /* Chip bar - scaled down and centered for mobile */
+            /* Chip bar - scaled down and properly centered for mobile */
             #chip-bar {
-                max-width: 90%; /* Reduce overall size */
-                padding: 5px 12px; /* Slightly smaller */
-                gap: 5px;
+                max-width: 90%;
+                padding: 4px 10px; /* Tighter padding */
+                gap: 3px; /* Much tighter gap between chips */
                 border-radius: 12px;
                 border-width: 2px;
-                left: 50% !important; /* Center horizontally */
-                transform: translateX(-50%); /* Center horizontally */
+            }
+
+            /* Override chip bar positioning to actually center it */
+            #chip-bar.visible,
+            #chip-bar.initial-state,
+            #chip-bar.email-state {
+                left: 50% !important;
+                transform: translateX(-50%) !important;
             }
 
             .chip {
-                font-size: 0.75em; /* Reduced font size to make chips uniform */
-                padding: 5px 9px; /* Slightly tighter padding */
+                font-size: 0.75em;
+                padding: 4px 8px; /* Tighter padding */
                 border-width: 2px;
-                white-space: nowrap; /* Prevent text wrapping */
+                white-space: nowrap;
+            }
+
+            /* T icon - make it square */
+            .chip-icon {
+                min-width: 28px; /* Square dimensions */
+                min-height: 28px;
+                padding: 4px; /* Equal padding all sides */
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .chip-icon img {
-                width: 18px; /* Proportional to desktop (27px scaled by ~0.67) */
-                height: 18px;
+                width: 16px; /* Smaller, square icon */
+                height: 16px;
             }
 
             #chevron-chip {
-                padding: 5px; /* Proportional to desktop (7.65px scaled by ~0.67) */
-                min-width: 27px; /* Proportional to desktop (40.8px scaled by ~0.67) */
-                min-height: 27px;
+                padding: 4px;
+                min-width: 28px; /* Match T icon size */
+                min-height: 28px;
             }
 
             #chevron-chip img {
-                width: 15px; /* Proportional to desktop (22.95px scaled by ~0.67) */
-                height: 15px;
+                width: 14px;
+                height: 14px;
             }
 
             /* Email input - properly scaled from desktop */
