@@ -746,7 +746,7 @@
 
             /* Main text - split into two lines - MUCH SMALLER */
             #main-text {
-                font-size: 1.4em; /* Significantly reduced from 2.5em */
+                font-size: 1.625em; /* Increased by 3pt from 1.4em (roughly +0.225em) */
                 line-height: 1.4; /* Slightly more space between lines */
                 white-space: normal; /* Allow wrapping */
                 text-align: center;
@@ -804,19 +804,22 @@
                 height: 22px;
             }
 
-            /* Chip bar - scaled down proportionally from desktop */
+            /* Chip bar - scaled down and centered for mobile */
             #chip-bar {
-                max-width: calc(100vw - 40px);
-                padding: 6px 14px; /* Proportional to desktop (9px 21px scaled by ~0.67) */
-                gap: 6px; /* Proportional to desktop (9px scaled by ~0.67) */
-                border-radius: 14px; /* Proportional to desktop (21px scaled by ~0.67) */
-                border-width: 2px; /* Proportional to desktop (3px scaled by ~0.67) */
+                max-width: 90%; /* Reduce overall size */
+                padding: 5px 12px; /* Slightly smaller */
+                gap: 5px;
+                border-radius: 12px;
+                border-width: 2px;
+                left: 50% !important; /* Center horizontally */
+                transform: translateX(-50%); /* Center horizontally */
             }
 
             .chip {
-                font-size: 1em; /* Keep desktop size - will scale with parent */
-                padding: 6px 10px; /* Proportional to desktop (9px 15px scaled by ~0.67) */
-                border-width: 2px; /* Proportional to desktop (3px scaled by ~0.67) */
+                font-size: 0.75em; /* Reduced font size to make chips uniform */
+                padding: 5px 9px; /* Slightly tighter padding */
+                border-width: 2px;
+                white-space: nowrap; /* Prevent text wrapping */
             }
 
             .chip-icon img {
@@ -837,15 +840,15 @@
 
             /* Email input - properly scaled from desktop */
             #email-input {
-                min-width: 300px; /* Proportional to desktop (450px scaled by ~0.67) */
-                font-size: 14px; /* Proportional to desktop (21px scaled by ~0.67) */
-                padding: 10px 36px 10px 12px; /* Proportional to desktop (15px 54px 15px 18px scaled by ~0.67) */
-                border-radius: 22px; /* Proportional to desktop (33px scaled by ~0.67) */
-                border-width: 1.5px; /* Proportional to desktop (2.25px scaled by ~0.67) */
+                min-width: 240px; /* Reduced to fit with smaller chip bar */
+                font-size: 12px; /* Slightly smaller for mobile */
+                padding: 8px 32px 8px 10px; /* Tighter padding */
+                border-radius: 18px; /* Smaller radius */
+                border-width: 1.5px;
             }
 
             #email-input::placeholder {
-                font-size: 13px; /* Proportional to desktop (19.5px scaled by ~0.67) */
+                font-size: 11px; /* Smaller to match reduced input size */
             }
 
             #send-btn {
