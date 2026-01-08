@@ -833,11 +833,12 @@
 
             /* Chip bar - scaled down and properly centered for mobile */
             #chip-bar {
-                max-width: 90%;
-                padding: 4px 10px; /* Tighter padding */
-                gap: 3px; /* Much tighter gap between chips */
+                max-width: 92%; /* Increased from 90% to fit chevron */
+                padding: 4px 10px;
+                gap: 3px;
                 border-radius: 12px;
                 border-width: 2px;
+                overflow: visible; /* Ensure chevron doesn't get cut off */
             }
 
             /* Override chip bar positioning to actually center it */
@@ -855,43 +856,61 @@
                 white-space: nowrap;
             }
 
-            /* T icon - make it square and bigger */
+            /* Email input - increased height and properly scaled */
+            #email-input {
+                min-width: 240px;
+                font-size: 13px; /* Slightly bigger */
+                padding: 10px 38px 10px 12px; /* Increased vertical padding for taller input */
+                border-radius: 20px;
+                border-width: 1.5px;
+                height: 40px; /* Explicit height to match T icon */
+                line-height: 1.2;
+            }
+
+            /* T icon in email state - match input height */
+            #email-container .chip-icon {
+                min-width: 40px; /* Match input height */
+                min-height: 40px;
+                padding: 6px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #email-container .chip-icon img {
+                width: 24px; /* Bigger icon for taller chip */
+                height: 24px;
+            }
+
+            /* T icon in initial state - smaller */
             .chip-icon {
-                min-width: 32px; /* Increased from 28px */
+                min-width: 32px;
                 min-height: 32px;
-                padding: 5px; /* Increased from 4px */
+                padding: 5px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
 
             .chip-icon img {
-                width: 20px; /* Increased from 16px */
+                width: 20px;
                 height: 20px;
             }
 
             #chevron-chip {
-                padding: 5px; /* Increased from 4px */
-                min-width: 32px; /* Increased from 28px - match T icon */
+                padding: 5px;
+                min-width: 32px;
                 min-height: 32px;
+                flex-shrink: 0; /* Prevent chevron from shrinking */
             }
 
             #chevron-chip img {
-                width: 18px; /* Increased from 14px */
+                width: 18px;
                 height: 18px;
             }
 
-            /* Email input - properly scaled from desktop */
-            #email-input {
-                min-width: 240px; /* Reduced to fit with smaller chip bar */
-                font-size: 12px; /* Slightly smaller for mobile */
-                padding: 8px 32px 8px 10px; /* Tighter padding */
-                border-radius: 18px; /* Smaller radius */
-                border-width: 1.5px;
-            }
-
             #email-input::placeholder {
-                font-size: 11px; /* Smaller to match reduced input size */
+                font-size: 12px; /* Updated to match taller input */
             }
 
             #send-btn {
