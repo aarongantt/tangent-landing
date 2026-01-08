@@ -514,11 +514,12 @@
             padding: 40px;
             max-width: 500px;
             text-align: center;
+            position: relative;
 
-            /* 3D bevel effect matching panel */
+            /* 3D bevel effect matching panel - slightly less thick */
             box-shadow:
-                /* Inner top highlight for bevel */
-                inset 0 3px 0 0 rgba(255, 255, 255, 0.6),
+                /* Inner top highlight for bevel (reduced from 3px to 2px) */
+                inset 0 2px 0 0 rgba(255, 255, 255, 0.6),
                 /* Deep shadow below */
                 0 20px 60px rgba(0, 0, 0, 0.4),
                 /* Side depth */
@@ -536,10 +537,28 @@
         }
 
         .modal-logo {
-            width: 160px;
+            width: 192px; /* 20% larger than 160px */
             height: auto;
             margin: 0 auto 30px;
             display: block;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            font-size: 28px;
+            color: #0f141a;
+            cursor: pointer;
+            padding: 4px 8px;
+            line-height: 1;
+            transition: color 0.15s ease;
+        }
+
+        .modal-close-btn:hover {
+            color: #59636f;
         }
 
         .modal-content h2 {
@@ -554,6 +573,11 @@
             line-height: 1.6;
             color: #0f141a;
             margin-bottom: 16px;
+        }
+
+        .modal-content p.modal-subtitle {
+            font-size: 17px;
+            font-style: italic;
         }
 
         .modal-content p:last-child {
@@ -651,9 +675,10 @@
     <!-- Success Modal -->
     <div id="success-modal">
         <div class="modal-content">
+            <button class="modal-close-btn" onclick="closeModal()">×</button>
             <img src="images/welcome_logo.png" alt="Welcome" class="modal-logo">
-            <p><em>Tangent exists to support thinking, not replace it.</em></p>
-            <p>Keep an eye on your inbox. We're beginning early access soon.</p>
+            <p><strong>Tangent exists to support thinking, not replace it.</strong></p>
+            <p class="modal-subtitle">Keep an eye on your inbox.<br>Early access begins soon.</p>
         </div>
     </div>
 
@@ -688,6 +713,11 @@
             setTimeout(() => {
                 toast.classList.remove('visible');
             }, 3000);
+        }
+
+        // Close modal
+        function closeModal() {
+            successModal.classList.remove('visible');
         }
 
         // Move cursor to position
