@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tangent – Thinking shouldn't have to stop to continue.</title>
+    <meta name="description" content="Built by someone who couldn't tolerate losing the thread anymore.">
+    <link rel="icon" type="image/png" href="images/tangent_t_logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --tg-fg: #0f141a;
+            --tg-fg-muted: #59636f;
+            --tg-bg: #ffffff;
+            --tg-border: #777777;
+            --tg-accent: #2a8fd5;
+            --tg-accent-strong: #1d6ba0;
+            --tg-focus: #669fc3;
+            --tg-input-bg: #ffffff;
+            --tg-input-fg: #1f2937;
+            --tg-input-border: #777777;
+            --tg-surface: #fafafa;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --tg-fg: #e9eef5;
+                --tg-fg-muted: #9aa3b2;
+                --tg-bg: #121418;
+                --tg-border: #777777;
+                --tg-accent: #2a8fd5;
+                --tg-accent-strong: #1d6ba0;
+                --tg-focus: #669fc3;
+                --tg-input-bg: #1b1f27;
+                --tg-input-fg: #e6e6e6;
+                --tg-input-border: #777777;
+                --tg-surface: rgba(255, 255, 255, 0.04);
+            }
+        }
+
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+            font-size: 14px;
+            background: var(--tg-bg);
+            color: var(--tg-fg);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .logo {
+            width: 160px;
+            height: auto;
+            margin: 0 auto 40px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .subhead {
+            font-size: 16px;
+            color: var(--tg-fg);
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .built-for {
+            font-size: 14px;
+            color: var(--tg-fg-muted);
+            text-align: center;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .cta-block {
+            background: var(--tg-surface);
+            border: 1px solid var(--tg-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 60px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        input[type="email"] {
+            flex: 1;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--tg-input-border);
+            background: var(--tg-input-bg);
+            color: var(--tg-input-fg);
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: var(--tg-focus);
+            box-shadow: 0 0 0 3px rgba(102, 159, 195, 0.25);
+        }
+
+        input[type="email"]::placeholder {
+            color: var(--tg-fg-muted);
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            background: var(--tg-accent);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s ease, transform 0.08s ease;
+        }
+
+        button:hover {
+            background: var(--tg-accent-strong);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 159, 195, 0.25);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .subtext {
+            font-size: 12px;
+            color: var(--tg-fg-muted);
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .message {
+            font-size: 14px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: none;
+        }
+
+        .message.success {
+            background: rgba(42, 143, 213, 0.12);
+            color: var(--tg-fg);
+            display: block;
+        }
+
+        .message.error {
+            background: rgba(255, 59, 48, 0.12);
+            color: var(--tg-fg);
+            display: block;
+        }
+
+        h2 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+        }
+
+        .for-list li::before {
+            color: var(--tg-accent);
+        }
+
+        .not-for-list li::before {
+            color: var(--tg-fg-muted);
+        }
+
+        .proof {
+            font-size: 14px;
+            color: var(--tg-fg-muted);
+            text-align: center;
+            font-style: italic;
+        }
+
+        .closing-cta {
+            text-align: center;
+        }
+
+        .closing-cta button {
+            margin-bottom: 12px;
+        }
+
+        .closing-text {
+            font-size: 14px;
+            color: var(--tg-fg-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HERO -->
+        <section class="section">
+            <img src="images/tangent_logo_light.png" alt="TANGENT" class="logo">
+            <h1>Thinking shouldn't have to stop to continue.</h1>
+            <p class="subhead">AI that meets you where your attention already is.</p>
+            <p class="built-for">Built for researchers, writers, and anyone who can't afford to lose the thread.</p>
+        </section>
+
+        <!-- WAITLIST CTA BLOCK -->
+        <div class="cta-block">
+            <div id="message" class="message"></div>
+            <form id="waitlist-form">
+                <div class="input-group">
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Email address"
+                        required
+                        autocomplete="email"
+                        aria-label="Email address">
+                    <button type="submit" id="submit-btn">Join Waitlist</button>
+                </div>
+            </form>
+            <p class="subtext">If this sounds excessive, it's probably not for you.</p>
+        </div>
+
+        <!-- PROBLEM -->
+        <section class="section">
+            <h2>The real cost of context switching</h2>
+            <p>Every time you leave what you're reading to ask a question, you lose momentum. You open a new tab. You rephrase your thought. You wait for an answer. Then you reconstruct where you were.</p>
+            <p>That's not thinking. That's managing interruptions.</p>
+        </section>
+
+        <!-- REFRAME -->
+        <section class="section">
+            <h2>Centralization isn't clarity</h2>
+            <p>Most tools want to be your workspace. They want you to bring everything to them—your documents, your notes, your attention. Tangent does the opposite.</p>
+            <p>It appears when summoned. It answers in place. It disappears when dismissed.</p>
+        </section>
+
+        <!-- WHAT IT IS -->
+        <section class="section">
+            <h2>What Tangent is</h2>
+            <p>Tangent is AI that lives on every page you open. Select text. Choose a question. Get an answer without leaving. No tabs. No context switching. No central hub demanding your workflow conform to its structure.</p>
+        </section>
+
+        <!-- WHO IT'S FOR / NOT FOR -->
+        <section class="section">
+            <h2>Who this is for</h2>
+            <ul class="for-list">
+                <li>People who read deeply and need answers without breaking focus</li>
+                <li>People suspicious of tools that demand attention</li>
+                <li>People who value autonomy over automation</li>
+            </ul>
+
+            <h2 style="margin-top: 20px;">Who this is not for</h2>
+            <ul class="not-for-list">
+                <li>People looking for an all-in-one workspace</li>
+                <li>People who want AI to take over tasks</li>
+                <li>People who prefer central hubs over distributed tools</li>
+            </ul>
+        </section>
+
+        <!-- PROOF -->
+        <section class="section">
+            <p class="proof">Built by someone who couldn't tolerate losing the thread anymore.</p>
+        </section>
+
+        <!-- CLOSING CTA -->
+        <section class="closing-cta">
+            <button id="closing-btn">Join Waitlist</button>
+            <p class="closing-text">Limited early access.</p>
+        </section>
+    </div>
+
+    <script>
+        const form = document.getElementById('waitlist-form');
+        const emailInput = document.getElementById('email');
+        const submitBtn = document.getElementById('submit-btn');
+        const closingBtn = document.getElementById('closing-btn');
+        const message = document.getElementById('message');
+
+        async function handleSubmit(e) {
+            if (e) e.preventDefault();
+
+            const email = emailInput.value.trim();
+            if (!email) return;
+
+            submitBtn.disabled = true;
+            closingBtn.disabled = true;
+            submitBtn.textContent = 'Joining...';
+            closingBtn.textContent = 'Joining...';
+            message.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/waitlist', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                });
+
+                if (response.ok) {
+                    message.className = 'message success';
+                    message.textContent = 'Added to waitlist.';
+                    message.style.display = 'block';
+                    emailInput.value = '';
+                } else {
+                    throw new Error('Failed to join waitlist');
+                }
+            } catch (error) {
+                message.className = 'message error';
+                message.textContent = 'Failed to join. Try again.';
+                message.style.display = 'block';
+            } finally {
+                submitBtn.disabled = false;
+                closingBtn.disabled = false;
+                submitBtn.textContent = 'Join Waitlist';
+                closingBtn.textContent = 'Join Waitlist';
+            }
+        }
+
+        form.addEventListener('submit', handleSubmit);
+        closingBtn.addEventListener('click', () => {
+            emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => emailInput.focus(), 300);
+        });
+    </script>
+</body>
+</html>
