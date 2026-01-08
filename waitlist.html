@@ -80,17 +80,17 @@
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
 
-        /* Chip Bar - 5x larger (2.5x * 2 = 5x total) */
+        /* Chip Bar - 3.25x larger (5x reduced by 35%) */
         #chip-bar {
             position: absolute;
             z-index: 100;
             display: none;
-            gap: 30px; /* 6px * 5 */
-            padding: 50px 70px; /* 10px * 5, 14px * 5 */
+            gap: 19.5px; /* 6px * 3.25 */
+            padding: 32.5px 45.5px; /* 10px * 3.25, 14px * 3.25 */
             background: rgba(255, 255, 255, 0.743);
-            border: 5px solid rgba(109, 109, 109, 0.494);
-            border-radius: 60px; /* 12px * 5 */
-            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.35);
+            border: 3.25px solid rgba(109, 109, 109, 0.494);
+            border-radius: 39px; /* 12px * 3.25 */
+            box-shadow: 0 26px 78px rgba(0, 0, 0, 0.35);
             backdrop-filter: blur(10px) saturate(120%);
             -webkit-backdrop-filter: blur(10px) saturate(120%);
             opacity: 0;
@@ -111,18 +111,18 @@
         #chip-bar.email-state {
             display: flex;
             align-items: center;
-            padding: 30px 30px 30px 70px; /* Adjusted for email state - 5x */
+            padding: 19.5px 19.5px 19.5px 45.5px; /* Adjusted for email state - 3.25x */
         }
 
-        /* Chip Bar - Initial State Elements - 5x larger */
+        /* Chip Bar - Initial State Elements - 3.25x larger */
         .chip {
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
             font-weight: 600;
-            font-size: 5em; /* 1em * 5 */
+            font-size: 3.25em; /* 1em * 3.25 */
             line-height: 1.2;
-            padding: 30px 50px; /* 6px * 5, 10px * 5 */
+            padding: 19.5px 32.5px; /* 6px * 3.25, 10px * 3.25 */
             border-radius: 999px;
-            border: 5px solid rgba(109, 109, 109, 0.494);
+            border: 3.25px solid rgba(109, 109, 109, 0.494);
             background: rgba(255, 255, 255, 0.743);
             color: #111;
             cursor: pointer;
@@ -135,60 +135,60 @@
         }
 
         .chip:active {
-            transform: translateY(2px);
+            transform: translateY(1.3px);
         }
 
         .chip-icon {
-            padding: 30px; /* 6px * 5 */
+            padding: 19.5px; /* 6px * 3.25 */
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 160px; /* 32px * 5 */
-            border-radius: 30px; /* 6px * 5 */
+            min-width: 104px; /* 32px * 3.25 */
+            border-radius: 19.5px; /* 6px * 3.25 */
         }
 
         .chip-icon img {
-            width: 90px; /* 18px * 5 */
-            height: 90px;
+            width: 58.5px; /* 18px * 3.25 */
+            height: 58.5px;
             display: block;
         }
 
         /* Chevron */
         #chevron-chip {
-            padding: 30px; /* 6px * 5 */
+            padding: 19.5px; /* 6px * 3.25 */
         }
 
         #chevron-chip img {
-            width: 90px; /* 18px * 5 */
-            height: 90px;
+            width: 58.5px; /* 18px * 3.25 */
+            height: 58.5px;
             display: block;
         }
 
-        /* Email Input State - 5x larger */
+        /* Email Input State - 3.25x larger */
         #email-container {
             display: none;
             flex: 1;
             align-items: center;
-            gap: 40px; /* 8px * 5 */
+            gap: 26px; /* 8px * 3.25 */
             position: relative;
         }
 
         #email-input {
             width: 100%;
-            padding: 50px 180px 50px 60px; /* 10px * 5, extra right padding for send button, 12px * 5 */
-            border-radius: 110px; /* 22px * 5 */
-            border: 7.5px solid #777777; /* 1.5px * 5 */
+            padding: 32.5px 117px 32.5px 39px; /* 10px * 3.25, extra right padding for send button, 12px * 3.25 */
+            border-radius: 71.5px; /* 22px * 3.25 */
+            border: 4.875px solid #777777; /* 1.5px * 3.25 */
             background: rgba(255, 255, 255, 1);
             color: #1f2937;
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
-            font-size: 70px; /* 14px * 5 */
+            font-size: 45.5px; /* 14px * 3.25 */
             outline: none;
-            min-width: 1500px; /* 300px * 5 */
+            min-width: 975px; /* 300px * 3.25 */
         }
 
         #email-input:focus {
             border-color: #669fc3;
-            box-shadow: 0 0 0 15px rgba(102, 159, 195, 0.25);
+            box-shadow: 0 0 0 9.75px rgba(102, 159, 195, 0.25);
         }
 
         #email-input::placeholder {
@@ -198,13 +198,13 @@
 
         #send-btn {
             position: absolute;
-            right: 20px;
+            right: 13px;
             top: 50%;
             transform: translateY(-50%);
-            width: 140px; /* 28px * 5 */
-            height: 140px;
+            width: 91px; /* 28px * 3.25 */
+            height: 91px;
             border-radius: 50%;
-            border: none;
+            border: 2px solid #000000; /* Black border */
             background: #ffffff; /* WHITE background */
             color: #2a8fd5;
             cursor: pointer;
@@ -213,7 +213,7 @@
             justify-content: center;
             transition: background 0.15s ease, transform 0.08s ease;
             padding: 0;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2.6px 10.4px rgba(0, 0, 0, 0.1);
         }
 
         #send-btn:hover {
@@ -225,8 +225,8 @@
         }
 
         #send-btn img {
-            width: 70px; /* 14px * 5 */
-            height: 70px;
+            width: 45.5px; /* 14px * 3.25 */
+            height: 45.5px;
             display: block;
         }
 
@@ -332,7 +332,7 @@
     <!-- Chip Bar (transforms from chips to email input) -->
     <div id="chip-bar" class="initial-state">
         <!-- Initial State: Chips -->
-        <div id="chips-container" style="display: flex; gap: 30px; align-items: center;">
+        <div id="chips-container" style="display: flex; gap: 19.5px; align-items: center;">
             <button class="chip chip-icon" id="t-chip">
                 <img src="images/tangent_t_logo.png" alt="T">
             </button>
@@ -351,7 +351,7 @@
             </button>
             <input type="email" id="email-input" placeholder="Enter Your Email Address for Early Access" required>
             <button id="send-btn">
-                <img src="images/tangent_enter_button.svg" alt="Send">
+                <img src="images/tangent_enter_button_blue.png" alt="Send">
             </button>
         </div>
     </div>
