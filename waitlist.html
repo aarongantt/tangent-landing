@@ -80,17 +80,17 @@
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
 
-        /* Chip Bar - 2.5x larger */
+        /* Chip Bar - 5x larger (2.5x * 2 = 5x total) */
         #chip-bar {
             position: absolute;
             z-index: 100;
             display: none;
-            gap: 15px; /* 6px * 2.5 */
-            padding: 25px 35px; /* 10px * 2.5, 14px * 2.5 */
+            gap: 30px; /* 6px * 5 */
+            padding: 50px 70px; /* 10px * 5, 14px * 5 */
             background: rgba(255, 255, 255, 0.743);
-            border: 2.5px solid rgba(109, 109, 109, 0.494);
-            border-radius: 30px; /* 12px * 2.5 */
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+            border: 5px solid rgba(109, 109, 109, 0.494);
+            border-radius: 60px; /* 12px * 5 */
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.35);
             backdrop-filter: blur(10px) saturate(120%);
             -webkit-backdrop-filter: blur(10px) saturate(120%);
             opacity: 0;
@@ -111,18 +111,18 @@
         #chip-bar.email-state {
             display: flex;
             align-items: center;
-            padding: 15px 15px 15px 35px; /* Adjusted for email state */
+            padding: 30px 30px 30px 70px; /* Adjusted for email state - 5x */
         }
 
-        /* Chip Bar - Initial State Elements - 2.5x larger */
+        /* Chip Bar - Initial State Elements - 5x larger */
         .chip {
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
             font-weight: 600;
-            font-size: 2.5em; /* 1em * 2.5 */
+            font-size: 5em; /* 1em * 5 */
             line-height: 1.2;
-            padding: 15px 25px; /* 6px * 2.5, 10px * 2.5 */
+            padding: 30px 50px; /* 6px * 5, 10px * 5 */
             border-radius: 999px;
-            border: 2.5px solid rgba(109, 109, 109, 0.494);
+            border: 5px solid rgba(109, 109, 109, 0.494);
             background: rgba(255, 255, 255, 0.743);
             color: #111;
             cursor: pointer;
@@ -135,65 +135,60 @@
         }
 
         .chip:active {
-            transform: translateY(1px);
+            transform: translateY(2px);
         }
 
         .chip-icon {
-            padding: 15px; /* 6px * 2.5 */
+            padding: 30px; /* 6px * 5 */
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 80px; /* 32px * 2.5 */
-            border-radius: 15px; /* 6px * 2.5 */
+            min-width: 160px; /* 32px * 5 */
+            border-radius: 30px; /* 6px * 5 */
         }
 
         .chip-icon img {
-            width: 45px; /* 18px * 2.5 */
-            height: 45px;
+            width: 90px; /* 18px * 5 */
+            height: 90px;
             display: block;
         }
 
         /* Chevron */
         #chevron-chip {
-            padding: 15px; /* 6px * 2.5 */
+            padding: 30px; /* 6px * 5 */
         }
 
         #chevron-chip img {
-            width: 45px; /* 18px * 2.5 */
-            height: 45px;
+            width: 90px; /* 18px * 5 */
+            height: 90px;
             display: block;
         }
 
-        /* Email Input State - 2.5x larger */
+        /* Email Input State - 5x larger */
         #email-container {
             display: none;
             flex: 1;
             align-items: center;
-            gap: 20px; /* 8px * 2.5 */
+            gap: 40px; /* 8px * 5 */
             position: relative;
-        }
-
-        #email-input-wrapper {
-            position: relative;
-            flex: 1;
         }
 
         #email-input {
             width: 100%;
-            padding: 25px 100px 25px 30px; /* 10px * 2.5, extra right padding for send button, 12px * 2.5 */
-            border-radius: 55px; /* 22px * 2.5 */
-            border: 3.75px solid #777777; /* 1.5px * 2.5 */
+            padding: 50px 180px 50px 60px; /* 10px * 5, extra right padding for send button, 12px * 5 */
+            border-radius: 110px; /* 22px * 5 */
+            border: 7.5px solid #777777; /* 1.5px * 5 */
             background: rgba(255, 255, 255, 1);
             color: #1f2937;
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
-            font-size: 35px; /* 14px * 2.5 */
+            font-size: 70px; /* 14px * 5 */
             outline: none;
-            min-width: 750px; /* 300px * 2.5 */
+            min-width: 1500px; /* 300px * 5 */
         }
 
         #email-input:focus {
             border-color: #669fc3;
-            box-shadow: 0 0 0 7.5px rgba(102, 159, 195, 0.25);
+            box-shadow: 0 0 0 15px rgba(102, 159, 195, 0.25);
         }
 
         #email-input::placeholder {
@@ -203,11 +198,11 @@
 
         #send-btn {
             position: absolute;
-            right: 10px;
+            right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            width: 80px; /* 32px * 2.5 */
-            height: 80px;
+            width: 140px; /* 28px * 5 */
+            height: 140px;
             border-radius: 50%;
             border: none;
             background: #ffffff; /* WHITE background */
@@ -218,7 +213,7 @@
             justify-content: center;
             transition: background 0.15s ease, transform 0.08s ease;
             padding: 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
 
         #send-btn:hover {
@@ -230,12 +225,12 @@
         }
 
         #send-btn img {
-            width: 45px; /* 18px * 2.5 */
-            height: 45px;
+            width: 70px; /* 14px * 5 */
+            height: 70px;
             display: block;
         }
 
-        /* Tangent Panel - 3x larger but screen-aware */
+        /* Tangent Panel - MUCH larger but screen-aware */
         #tangent-panel {
             position: fixed;
             bottom: 0;
@@ -255,9 +250,9 @@
             display: block;
             width: auto;
             height: auto;
-            /* 3x scaling but constrained to screen */
-            max-width: min(90vw, 2400px); /* 3x typical panel width (~800px * 3) */
-            max-height: 60vh; /* Never take more than 60% of viewport height */
+            /* Much larger scaling - nearly full width */
+            max-width: 95vw;
+            max-height: 75vh; /* Take up to 75% of viewport height */
             filter: drop-shadow(0 -20px 60px rgba(0, 0, 0, 0.5));
         }
 
@@ -337,7 +332,7 @@
     <!-- Chip Bar (transforms from chips to email input) -->
     <div id="chip-bar" class="initial-state">
         <!-- Initial State: Chips -->
-        <div id="chips-container" style="display: flex; gap: 6px; align-items: center;">
+        <div id="chips-container" style="display: flex; gap: 30px; align-items: center;">
             <button class="chip chip-icon" id="t-chip">
                 <img src="images/tangent_t_logo.png" alt="T">
             </button>
