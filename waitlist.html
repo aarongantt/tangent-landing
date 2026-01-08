@@ -732,6 +732,11 @@
             }
         }
 
+        /* Hide mobile background image on desktop */
+        #mobile-bg {
+            display: none;
+        }
+
         /* Hide mobile line break on desktop */
         .mobile-break {
             display: none;
@@ -755,32 +760,29 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* Background - RECOMMENDED iOS FIX: Use fixed pseudo-element with dvh */
-            html {
+            /* RECOMMENDED iOS FIX: Use <img> tag with position: fixed + object-fit: cover */
+            html, body {
                 height: 100%;
+                overflow-x: hidden;
             }
 
             body {
-                height: 100%;
-                min-height: 100vh;
-                min-height: 100dvh; /* Dynamic viewport height - adapts to Safari toolbar */
-                background-image: none !important;
+                background-image: none !important; /* Remove CSS background on mobile */
                 position: relative;
             }
 
-            /* Fixed background pseudo-element - THE RECOMMENDED APPROACH */
-            body::before {
-                content: '';
-                position: fixed; /* Fixed works better with dvh */
+            /* Mobile background image - BEST PRACTICE for Safari iOS */
+            #mobile-bg {
+                display: block;
+                position: fixed;
                 top: 0;
                 left: 0;
                 right: 0;
                 bottom: 0;
-                width: 100vw;
-                height: 100vh;
-                height: 100dvh; /* Dynamic viewport height for Safari */
-                background: url('images/tangent_wave_bg.png') center center / cover no-repeat;
-                background-size: cover;
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* Cover viewport without distortion */
+                object-position: center center;
                 z-index: -1;
             }
 
@@ -968,6 +970,9 @@
     </style>
 </head>
 <body>
+    <!-- Mobile background image (only shows on mobile) -->
+    <img id="mobile-bg" src="images/tangent_wave_bg.png" alt="" aria-hidden="true">
+
     <!-- Main Text -->
     <div id="main-text">
         Stay in the flow,<br class="mobile-break"> or go on a <span id="highlight-text">Tangent</span>.
