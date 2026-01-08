@@ -755,25 +755,34 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* Background - AGGRESSIVE fix for Safari cutoff */
-            html, body {
+            /* Background - NUCLEAR OPTION for Safari's BS */
+            html {
                 height: 100%;
-                min-height: 100%;
-                background-image: none !important; /* Remove original background */
+                min-height: 100vh;
+                min-height: -webkit-fill-available;
             }
 
-            /* Create a background layer that extends way beyond viewport */
+            body {
+                height: 100%;
+                min-height: 100vh;
+                min-height: -webkit-fill-available;
+                background-image: none !important; /* Remove original background */
+                position: relative;
+            }
+
+            /* Create a background layer with EXTREME extension */
             body::before {
                 content: '';
                 position: fixed;
-                top: -25%; /* Extend 25% beyond top */
-                left: -25%; /* Extend 25% beyond left */
-                right: -25%; /* Extend 25% beyond right */
-                bottom: -25%; /* Extend 25% beyond bottom */
-                width: 150vw;
-                height: 150vh;
-                background: url('images/tangent_wave_bg.png') center center / cover no-repeat;
+                top: -50vh; /* Extend 50vh beyond top */
+                left: -50vw; /* Extend 50vw beyond left */
+                width: 200vw; /* 2x viewport width */
+                height: 200vh; /* 2x viewport height */
+                background: url('images/tangent_wave_bg.png') center center no-repeat;
+                background-size: cover;
                 z-index: -1;
+                transform: translate(0, 0); /* Force GPU acceleration */
+                will-change: transform;
             }
 
             /* Cursor - reduce size by 35% */
