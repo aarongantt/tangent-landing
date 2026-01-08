@@ -199,7 +199,7 @@
         #email-input::placeholder {
             color: #9aa3b2;
             font-style: italic;
-            font-size: 15.75px; /* 21px reduced by 25% */
+            font-size: 18px; /* Split the difference between 21px and 15.75px */
         }
 
         #send-btn {
@@ -272,11 +272,10 @@
 
         #tangent-panel img {
             display: block;
-            width: auto;
+            /* Force much larger size - use width instead of max-width */
+            width: 95vw;
             height: auto;
-            /* Much larger scaling - nearly full width */
-            max-width: 98vw;
-            max-height: 85vh; /* Take up to 85% of viewport height */
+            max-height: 88vh; /* Increased max height */
             filter: drop-shadow(0 -20px 60px rgba(0, 0, 0, 0.5));
         }
 
