@@ -87,7 +87,7 @@
             background: linear-gradient(
                 to bottom,
                 #dce4ea 0%,
-                #b8c4ce 100%
+                #c4ced6 100%
             );
             border: 3px solid rgba(109, 109, 109, 0.494); /* Thicker border */
             border-radius: 21px; /* Set to 21px */
@@ -268,9 +268,9 @@
             opacity: 0;
             transition: transform 0.6s ease-out, opacity 0.6s ease-out;
 
-            /* Matches mockup proportions - VERY WIDE */
-            width: 1920px;
-            max-width: 98vw;
+            /* Matches mockup proportions - VERY WIDE with breathing room */
+            width: 1800px;
+            max-width: calc(100vw - 200px); /* 100px margin on each side */
             height: 900px;
             overflow: hidden;
 
