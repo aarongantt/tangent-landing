@@ -734,110 +734,113 @@
 
         /* MOBILE-ONLY STYLES - Cell phones (768px and below) */
         @media (max-width: 768px) {
-            /* Main text - split into two lines */
+            /* Main text - split into two lines - MUCH SMALLER */
             #main-text {
-                font-size: 2.5em; /* Slightly smaller for mobile */
-                line-height: 1.3; /* Tighter line height */
+                font-size: 1.4em; /* Significantly reduced from 2.5em */
+                line-height: 1.3;
                 white-space: normal; /* Allow wrapping */
                 text-align: center;
-                width: 90%; /* Keep some margin */
+                width: 90%;
                 margin: 0 auto;
             }
 
-            /* Panel rises higher to show more of itself */
+            /* Panel shows LESS (not more) - only peek at top */
             #tangent-panel.visible {
-                transform: translateX(-50%) translateY(calc(100% - 400px)); /* Show more panel (275px → 400px) */
+                transform: translateX(-50%) translateY(calc(100% - 180px)); /* Show LESS (180px instead of 400px) */
             }
 
             /* Panel adjustments for mobile real estate */
             #tangent-panel {
-                max-width: calc(100vw - 40px); /* Less margin on sides */
-                height: 900px; /* Keep same height */
+                max-width: calc(100vw - 20px); /* Less margin */
+                height: 900px;
             }
 
-            /* Chip bar - ensure it fits */
-            #chip-bar {
-                max-width: calc(100vw - 40px);
-                padding: 8px 16px;
-                gap: 8px;
+            /* Panel header - much tighter spacing */
+            .tangent-panel__header {
+                padding: 20px 30px; /* Much tighter from 35px 50px */
             }
 
-            .chip {
-                font-size: 1em;
-                padding: 6px 10px;
-            }
-
-            .chip-icon img {
-                width: 20px;
-                height: 20px;
-            }
-
-            #chevron-chip {
-                padding: 6px;
-                min-width: 36px;
-                min-height: 36px;
-            }
-
-            #chevron-chip img {
-                width: 18px;
-                height: 18px;
-            }
-
-            /* Email input - mobile friendly */
-            #email-input {
-                min-width: 200px;
-                font-size: 14px;
-                padding: 10px 44px 10px 14px;
-            }
-
-            #email-input::placeholder {
-                font-size: 13px;
-            }
-
-            #send-btn {
-                width: 38px;
-                height: 38px;
-                right: 8px;
-            }
-
-            #send-btn img {
-                width: 18px;
-                height: 18px;
-            }
-
-            /* Logo and header buttons - mobile scale */
+            /* Logo - MUCH SMALLER */
             .tangent-header-logo {
-                height: 60px;
+                height: 35px; /* Dramatically reduced from 60px */
             }
 
+            /* Pin button - MUCH SMALLER */
             .tangent-pin {
-                left: 15px !important;
-                width: 56px;
-                height: 56px;
+                left: 10px !important;
+                width: 32px; /* Reduced from 56px */
+                height: 32px;
             }
 
             .tangent-pin img {
-                width: 46px;
-                height: 46px;
+                width: 26px; /* Reduced from 46px */
+                height: 26px;
             }
 
+            /* Header buttons (minimize/close) - MUCH SMALLER */
             .tangent-panel__btns {
-                right: 15px;
-                gap: 12px;
+                right: 10px;
+                gap: 8px; /* Tighter gap */
             }
 
             .tangent-panel__btns > button {
-                width: 44px;
-                height: 44px;
+                width: 28px; /* Reduced from 44px */
+                height: 28px;
             }
 
             .tangent-panel__btns > button img {
-                width: 36px;
-                height: 36px;
+                width: 22px; /* Reduced from 36px */
+                height: 22px;
             }
 
-            .tangent-panel__header {
-                padding: 35px 50px;
+            /* Chip bar - MUCH SMALLER and properly sized */
+            #chip-bar {
+                max-width: calc(100vw - 30px);
+                padding: 4px 8px; /* Much tighter */
+                gap: 4px;
+            }
+
+            .chip {
+                font-size: 0.65em; /* Much smaller */
+                padding: 4px 8px;
+            }
+
+            .chip-icon img {
+                width: 14px; /* Much smaller */
+                height: 14px;
+            }
+
+            #chevron-chip {
+                padding: 4px;
+                min-width: 24px;
+                min-height: 24px;
+            }
+
+            #chevron-chip img {
+                width: 12px;
+                height: 12px;
+            }
+
+            /* Email input - properly sized for mobile */
+            #email-input {
+                min-width: 150px;
+                font-size: 11px; /* Much smaller */
+                padding: 6px 32px 6px 10px; /* Tighter */
+            }
+
+            #email-input::placeholder {
+                font-size: 10px;
+            }
+
+            #send-btn {
+                width: 26px;
+                height: 26px;
+                right: 6px;
+            }
+
+            #send-btn img {
+                width: 13px;
+                height: 13px;
             }
 
             /* Success modal - mobile adjustments */
@@ -847,7 +850,7 @@
             }
 
             .modal-logo {
-                width: 200px; /* Smaller on mobile */
+                width: 200px;
             }
 
             .modal-content p {
