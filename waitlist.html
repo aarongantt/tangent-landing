@@ -804,54 +804,60 @@
                 height: 22px;
             }
 
-            /* Chip bar - MUCH SMALLER and properly sized */
+            /* Chip bar - scaled down proportionally from desktop */
             #chip-bar {
-                max-width: calc(100vw - 30px);
-                padding: 4px 8px; /* Much tighter */
-                gap: 4px;
+                max-width: calc(100vw - 40px);
+                padding: 6px 14px; /* Proportional to desktop (9px 21px scaled by ~0.67) */
+                gap: 6px; /* Proportional to desktop (9px scaled by ~0.67) */
+                border-radius: 14px; /* Proportional to desktop (21px scaled by ~0.67) */
+                border-width: 2px; /* Proportional to desktop (3px scaled by ~0.67) */
             }
 
             .chip {
-                font-size: 0.65em; /* Much smaller */
-                padding: 4px 8px;
+                font-size: 1em; /* Keep desktop size - will scale with parent */
+                padding: 6px 10px; /* Proportional to desktop (9px 15px scaled by ~0.67) */
+                border-width: 2px; /* Proportional to desktop (3px scaled by ~0.67) */
             }
 
             .chip-icon img {
-                width: 14px; /* Much smaller */
-                height: 14px;
+                width: 18px; /* Proportional to desktop (27px scaled by ~0.67) */
+                height: 18px;
             }
 
             #chevron-chip {
-                padding: 4px;
-                min-width: 24px;
-                min-height: 24px;
+                padding: 5px; /* Proportional to desktop (7.65px scaled by ~0.67) */
+                min-width: 27px; /* Proportional to desktop (40.8px scaled by ~0.67) */
+                min-height: 27px;
             }
 
             #chevron-chip img {
-                width: 12px;
-                height: 12px;
+                width: 15px; /* Proportional to desktop (22.95px scaled by ~0.67) */
+                height: 15px;
             }
 
-            /* Email input - properly sized for mobile */
+            /* Email input - properly scaled from desktop */
             #email-input {
-                min-width: 150px;
-                font-size: 11px; /* Much smaller */
-                padding: 6px 32px 6px 10px; /* Tighter */
+                min-width: 300px; /* Proportional to desktop (450px scaled by ~0.67) */
+                font-size: 14px; /* Proportional to desktop (21px scaled by ~0.67) */
+                padding: 10px 36px 10px 12px; /* Proportional to desktop (15px 54px 15px 18px scaled by ~0.67) */
+                border-radius: 22px; /* Proportional to desktop (33px scaled by ~0.67) */
+                border-width: 1.5px; /* Proportional to desktop (2.25px scaled by ~0.67) */
             }
 
             #email-input::placeholder {
-                font-size: 10px;
+                font-size: 13px; /* Proportional to desktop (19.5px scaled by ~0.67) */
             }
 
             #send-btn {
-                width: 26px;
-                height: 26px;
-                right: 6px;
+                width: 28px; /* Proportional to desktop (42px scaled by ~0.67) */
+                height: 28px;
+                right: 7px; /* Proportional to desktop (10px scaled by ~0.67) */
+                border-width: 1.5px; /* Proportional to desktop (2.5px scaled by ~0.67) */
             }
 
             #send-btn img {
-                width: 13px;
-                height: 13px;
+                width: 14px; /* Proportional to desktop (21px scaled by ~0.67) */
+                height: 14px;
             }
 
             /* Success modal - mobile adjustments */
