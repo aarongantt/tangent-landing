@@ -831,14 +831,17 @@
                 height: 22px;
             }
 
-            /* Chip bar - scaled down and properly centered for mobile */
+            /* Chip bar - FIXED SIZE that never changes */
             #chip-bar {
-                max-width: 92%; /* Increased from 90% to fit chevron */
-                padding: 4px 10px;
-                gap: 3px;
-                border-radius: 12px;
-                border-width: 2px;
-                overflow: visible; /* Ensure chevron doesn't get cut off */
+                width: 92vw !important; /* Fixed width instead of max-width */
+                max-width: 92vw !important;
+                min-width: 92vw !important;
+                padding: 4px 10px !important;
+                gap: 3px !important;
+                border-radius: 12px !important;
+                border-width: 2px !important;
+                overflow: visible !important;
+                box-sizing: border-box !important;
             }
 
             /* Override chip bar positioning to actually center it */
@@ -847,6 +850,14 @@
             #chip-bar.email-state {
                 left: 50% !important;
                 transform: translateX(-50%) !important;
+                width: 92vw !important; /* Force same width in all states */
+                padding: 4px 10px !important; /* Force same padding in all states */
+            }
+
+            /* Email container should not expand chip bar */
+            #email-container {
+                max-width: 100% !important;
+                overflow: hidden !important; /* Hide overflow if email input is too wide */
             }
 
             .chip {
@@ -856,15 +867,18 @@
                 white-space: nowrap;
             }
 
-            /* Email input - increased height and properly scaled */
+            /* Email input - fit within fixed chip bar width */
             #email-input {
-                min-width: 240px;
-                font-size: 13px; /* Slightly bigger */
-                padding: 10px 38px 10px 12px; /* Increased vertical padding for taller input */
+                width: 100%; /* Take available space */
+                min-width: 0; /* Allow shrinking */
+                max-width: 100%;
+                font-size: 13px;
+                padding: 10px 38px 10px 12px;
                 border-radius: 20px;
                 border-width: 1.5px;
                 height: 40px; /* Explicit height to match T icon */
                 line-height: 1.2;
+                box-sizing: border-box;
             }
 
             /* T icon in email state - match input height */
