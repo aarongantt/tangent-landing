@@ -48,14 +48,10 @@
             top: 0;
             bottom: 0;
             width: 0%;
-            background: #4A9FDB;
+            background: #6eb6fe;
             border-radius: 0px;
             z-index: -1;
-            transition: width 0.5s ease-out;
-        }
-
-        #main-text span.highlighted.active::before {
-            width: 100%;
+            /* No transition - will animate with JS for letter-by-letter effect */
         }
 
         #main-text span.highlighted.active {
@@ -68,8 +64,8 @@
             pointer-events: none;
             z-index: 300;
             display: none;
-            transition: left 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
-                        top 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
+            transition: left 0.5s ease-out,
+                        top 0.5s ease-out,
                         opacity 0.3s ease-out;
         }
 
@@ -86,10 +82,10 @@
             z-index: 100;
             display: none;
             gap: 9px; /* 6px * 1.5 */
-            padding: 15px 21px; /* 10px * 1.5, 14px * 1.5 */
-            background: rgba(255, 255, 255, 0.743);
-            border: 1.5px solid rgba(109, 109, 109, 0.494);
-            border-radius: 18px; /* 12px * 1.5 */
+            padding: 9px 21px; /* Restored to original height */
+            background: #dcdcdc; /* Light grey background */
+            border: 3px solid rgba(109, 109, 109, 0.494); /* Thicker border */
+            border-radius: 21px; /* Set to 21px */
             box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
             backdrop-filter: blur(10px) saturate(120%);
             -webkit-backdrop-filter: blur(10px) saturate(120%);
@@ -111,7 +107,7 @@
         #chip-bar.email-state {
             display: flex;
             align-items: center;
-            padding: 9px 9px 9px 21px; /* Adjusted for email state - 1.5x */
+            padding: 9px 21px; /* Match restored padding */
         }
 
         /* Chip Bar - Initial State Elements - 1.5x larger */
@@ -122,8 +118,8 @@
             line-height: 1.2;
             padding: 9px 15px; /* 6px * 1.5, 10px * 1.5 */
             border-radius: 999px;
-            border: 1.5px solid rgba(109, 109, 109, 0.494);
-            background: rgba(255, 255, 255, 0.743);
+            border: 3px solid rgba(109, 109, 109, 0.494); /* Thicker border */
+            background: rgba(255, 255, 255, 1); /* Full opacity */
             color: #111;
             cursor: pointer;
             user-select: none;
@@ -153,20 +149,22 @@
             display: block;
         }
 
-        /* Chevron - CSS based */
+        /* Chevron - Image based */
         #chevron-chip {
-            padding: 9px; /* 6px * 1.5 */
+            padding: 7.65px; /* Reduced by 15% from 9px */
             position: relative;
+            min-width: 40.8px; /* Reduced by 15% from 48px */
+            min-height: 40.8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        #chevron-chip::after {
-            content: '';
+        #chevron-chip img {
+            width: 22.95px; /* Reduced by 15% from 27px */
+            height: 22.95px;
             display: block;
-            width: 12px; /* Arrow width */
-            height: 12px; /* Arrow height */
-            border-right: 2px solid #111;
-            border-bottom: 2px solid #111;
-            transform: rotate(45deg);
+            margin: auto; /* Force centering */
         }
 
         /* Email Input State - 1.5x larger */
@@ -180,9 +178,9 @@
 
         #email-input {
             width: 100%;
-            padding: 15px 54px 15px 18px; /* 10px * 1.5, extra right padding for send button, 12px * 1.5 */
+            padding: 15px 54px 15px 18px; /* ORIGINAL padding restored */
             border-radius: 33px; /* 22px * 1.5 */
-            border: 2.25px solid #555555; /* Dark grey instead of #777777 */
+            border: 2.25px solid #787878; /* Medium grey border */
             background: rgba(255, 255, 255, 1);
             color: #1f2937;
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
@@ -193,24 +191,26 @@
 
         #email-input:focus {
             border-color: #669fc3;
-            box-shadow: 0 0 0 4.5px rgba(102, 159, 195, 0.25);
+            box-shadow: 0 0 8px 2px rgba(102, 159, 195, 0.25),
+                        0 0 20px 4px rgba(102, 159, 195, 0.3),
+                        0 0 35px 6px rgba(102, 159, 195, 0.15);
         }
 
         #email-input::placeholder {
             color: #9aa3b2;
             font-style: italic;
-            font-size: 18px; /* Split the difference between 21px and 15.75px */
+            font-size: 19.5px; /* Reduced by 1.5pt from 21px */
         }
 
         #send-btn {
             position: absolute;
-            right: 6px;
+            right: 10px; /* Shifted left from 6px */
             top: 50%;
             transform: translateY(-50%);
             width: 42px; /* 28px * 1.5 */
             height: 42px;
             border-radius: 50%;
-            border: 2px solid #555555; /* Dark grey border */
+            border: 2.5px solid #787878; /* Medium grey border - split difference */
             background: #ffffff; /* WHITE background */
             color: #2a8fd5;
             cursor: pointer;
@@ -224,10 +224,12 @@
 
         #send-btn:hover {
             background: #f5f5f5;
+            border-color: #4895db; /* Tangent Blue when hover state shows blue arrow */
         }
 
         #send-btn:active {
             transform: translateY(-50%) scale(0.95);
+            border-color: #4895db; /* Tangent Blue when active state shows blue arrow */
         }
 
         #send-btn img {
@@ -272,10 +274,11 @@
 
         #tangent-panel img {
             display: block;
-            /* Force much larger size - use width instead of max-width */
-            width: 95vw;
+            width: auto;
             height: auto;
-            max-height: 88vh; /* Increased max height */
+            /* Much larger scaling - nearly full width */
+            max-width: 95vw;
+            max-height: 75vh; /* Take up to 75% of viewport height */
             filter: drop-shadow(0 -20px 60px rgba(0, 0, 0, 0.5));
         }
 
@@ -362,7 +365,9 @@
             <button class="chip">Context</button>
             <button class="chip">Who is...</button>
             <button class="chip">Summarize</button>
-            <button class="chip chip-icon" id="chevron-chip"></button>
+            <button class="chip chip-icon" id="chevron-chip">
+                <img src="images/chevron_down_arrow.png" alt="More">
+            </button>
         </div>
 
         <!-- Email State: T Icon + Email Input + Send Button -->
@@ -455,68 +460,93 @@
 
         // Animation Sequence
         async function playIntro() {
-            // 1. Show cursor at starting position (right side)
+            // 1. Show cursor at starting position (right side) - NORMAL ARROW
             const startX = window.innerWidth - 200;
             const startY = window.innerHeight / 2;
             moveCursor(startX, startY);
             showCursor();
-            setCursorType('i_beam');
+            setCursorType('normal'); // Start with normal arrow cursor
 
             await wait(500);
 
-            // 2. Move cursor to start of "Stay in the flow"
+            // 2. Move cursor to start of text AND start panel rising
             const textRect = highlightText.getBoundingClientRect();
             const startTextX = textRect.left - 30;
             const startTextY = textRect.top + textRect.height / 2;
             moveCursor(startTextX, startTextY);
 
-            await wait(800);
-
-            // 3. Highlight the text (slide left to right)
-            highlightText.classList.add('highlighted');
-            await wait(50);
-            highlightText.classList.add('active');
-
-            // Move cursor to end of highlight as it forms
-            const endTextX = textRect.right + 2;
-            const endTextY = textRect.top + textRect.height / 2;
-            moveCursor(endTextX, endTextY);
+            // Start giant panel rising as cursor moves toward text
+            tangentPanel.classList.add('visible');
 
             await wait(600);
 
-            // 4. Show chip bar
+            // Switch to I-beam when over text
+            setCursorType('i_beam');
+
+            await wait(200);
+
+            // 3. Highlight the text (letter-by-letter) AND show chip bar simultaneously
+            highlightText.classList.add('highlighted');
+            await wait(50);
+
+            // Show chip bar as highlight starts
             chipBar.style.display = 'flex';
             positionChipBar();
             await wait(50);
             chipBar.classList.add('visible');
 
-            // 5. Move cursor to chip bar
-            await wait(300);
-            const chipBarRect = chipBar.getBoundingClientRect();
-            const chipBarCenterX = chipBarRect.left + chipBarRect.width / 2;
-            const chipBarTopY = chipBarRect.top - 10;
-            moveCursor(chipBarCenterX, chipBarTopY);
+            // Animate highlight letter-by-letter AND move cursor simultaneously
+            const text = highlightText.textContent;
+            const textLength = text.length;
+            const stepDuration = 500 / textLength; // 500ms total duration divided by character count
 
-            await wait(150);
+            // Start cursor movement to end
+            const endTextX = textRect.right + 2;
+            const endTextY = textRect.top + textRect.height / 2;
+            moveCursor(endTextX, endTextY);
+
+            // Create persistent style element for highlight animation
+            const highlightStyle = document.createElement('style');
+            highlightStyle.id = 'highlight-animation-style';
+            document.head.appendChild(highlightStyle);
+
+            // Animate highlight in discrete steps (letter-by-letter)
+            for (let i = 0; i <= textLength; i++) {
+                const percent = (i / textLength) * 100;
+                // Use !important to ensure style takes precedence
+                highlightStyle.textContent = `
+                    #highlight-text.highlighted::before {
+                        width: ${percent}% !important;
+                    }
+                `;
+                await wait(stepDuration);
+            }
+
+            // Keep the style element so highlight stays at 100%
+            // (Don't remove it - we want the highlight to persist)
+
+            await wait(100);
+
+            // PAUSE to let user see the highlight, chip bar, and all chips
+            await wait(700);
+
+            // 5. Switch to normal cursor and move directly to T chip
             setCursorType('normal');
 
-            // 6. Move cursor to T chip
-            await wait(200);
             const tChipRect = tChip.getBoundingClientRect();
             const tChipCenterX = tChipRect.left + tChipRect.width / 2;
             const tChipCenterY = tChipRect.top + tChipRect.height / 2;
             moveCursor(tChipCenterX, tChipCenterY);
 
-            await wait(500);
+            // Wait for cursor to FULLY arrive at T chip before clicking (increased timing)
+            await wait(800);
 
-            // 7. Click T chip (visual feedback)
+            // 6. Click T chip (visual feedback) - cursor is NOW over the button
             tChip.style.transform = 'scale(0.95)';
             await wait(100);
             tChip.style.transform = '';
 
-            // 8. Start panel rise animation FIRST
-            tangentPanel.classList.add('visible');
-
+            // 8. Panel already visible from earlier, proceed to transform chip bar
             await wait(300);
 
             // 9. Transform chip bar to email input
@@ -532,6 +562,10 @@
 
             // Hide cursor
             hideCursor();
+
+            // Auto-focus email input so cursor is blinking and ready
+            await wait(300);
+            emailInput.focus();
         }
 
         // Handle email submission
@@ -548,7 +582,7 @@
                 // Get referrer
                 const referrer = document.referrer || 'Direct';
 
-                const response = await fetch('/api/waitlist', {
+                const response = await fetch('https://tangent-backend-aaron-gantts-projects.vercel.app/api/waitlist', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
