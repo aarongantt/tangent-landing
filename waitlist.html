@@ -1151,20 +1151,15 @@
 
             await wait(200);
 
-            // 3. Highlight the text (letter-by-letter) AND show chip bar simultaneously
+            // 3. Highlight the text (letter-by-letter)
             highlightText.classList.add('highlighted');
             await wait(50);
-
-            // Show chip bar as highlight starts
-            chipBar.style.display = 'flex';
-            positionChipBar();
-            await wait(50);
-            chipBar.classList.add('visible');
 
             // Animate highlight letter-by-letter AND move cursor simultaneously
             const text = highlightText.textContent;
             const textLength = text.length;
             const stepDuration = 500 / textLength; // 500ms total duration divided by character count
+            const halfwayPoint = Math.floor(textLength / 2);
 
             // Start cursor movement to end
             const endTextX = textRect.right + 2;
@@ -1185,6 +1180,14 @@
                         width: ${percent}% !important;
                     }
                 `;
+
+                // Show chip bar when halfway through highlighting
+                if (i === halfwayPoint) {
+                    chipBar.style.display = 'flex';
+                    positionChipBar();
+                    setTimeout(() => chipBar.classList.add('visible'), 50);
+                }
+
                 await wait(stepDuration);
             }
 
@@ -1193,7 +1196,7 @@
 
             await wait(100);
 
-            // PAUSE to let user see the highlight, chip bar, and all chips
+            // PAUSE to let user see the chip bar and all chips
             await wait(700);
 
             // 5. Switch to normal cursor and move directly to T chip
