@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Tangent – Join the Waitlist</title>
     <meta name="description" content="AI that meets you where your attention already is.">
     <link rel="icon" type="image/png" href="images/tangent_t_logo.png">
@@ -761,32 +761,33 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* iOS FIX: Lock scrolling and extend beyond Safari bars */
+            /* iOS FIX: Lock scrolling and use fill-available */
             html {
                 height: 100%;
+                height: -webkit-fill-available; /* iOS Safari fix */
                 overflow: hidden;
             }
 
             body {
                 height: 100%;
+                height: -webkit-fill-available; /* iOS Safari fix */
                 overflow: hidden; /* NO SCROLL - lock it */
                 width: 100%;
+                position: relative; /* Changed to relative for absolute children */
                 background-image: none !important; /* Remove CSS background on mobile */
             }
 
-            /* Mobile background image - HUGE to always cover everything */
+            /* Mobile background image - Use absolute positioning with safe areas */
             #mobile-bg {
                 display: block;
-                position: fixed;
-                top: -200px; /* Massive bleed upward */
-                left: -100px; /* Bleed left */
-                right: -100px; /* Bleed right */
-                bottom: -200px; /* Massive bleed downward */
-                width: calc(100vw + 200px); /* Extra wide */
-                height: calc(100vh + 400px); /* Extra tall */
-                min-width: calc(100vw + 200px);
-                min-height: calc(100vh + 400px);
-                object-fit: cover; /* Cover viewport without distortion */
+                position: absolute; /* Changed from fixed to absolute */
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                min-height: 100vh;
+                min-height: -webkit-fill-available; /* iOS Safari specific */
+                object-fit: cover;
                 object-position: center center;
                 z-index: -1;
             }
