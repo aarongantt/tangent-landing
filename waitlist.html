@@ -1138,7 +1138,7 @@
             // 2. Move cursor to start of text AND start panel rising
             const textRect = highlightText.getBoundingClientRect();
             const startTextX = textRect.left - 30;
-            const startTextY = textRect.top + textRect.height / 2;
+            const startTextY = textRect.top + (textRect.height / 2) - 5; // Raised 5px higher
             moveCursor(startTextX, startTextY);
 
             // Start giant panel rising as cursor moves toward text
@@ -1168,7 +1168,7 @@
 
             // Start cursor movement to end
             const endTextX = textRect.right + 2;
-            const endTextY = textRect.top + textRect.height / 2;
+            const endTextY = textRect.top + (textRect.height / 2) - 5; // Raised 5px higher
             moveCursor(endTextX, endTextY);
 
             // Create persistent style element for highlight animation
