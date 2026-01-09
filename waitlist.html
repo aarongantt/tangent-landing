@@ -774,14 +774,14 @@
                 background-image: none !important; /* Remove CSS background on mobile */
             }
 
-            /* Mobile background image - Fixed position with dvh */
+            /* Mobile background image - EXTEND BEYOND viewport to bleed into Safari UI */
             #mobile-bg {
                 display: block;
                 position: fixed;
-                top: 0;
+                top: -100px; /* Bleed upward into Safari's top bar */
                 left: 0;
                 width: 100vw;
-                height: 100dvh; /* Dynamic viewport height - adjusts for Safari UI */
+                height: calc(100dvh + 200px); /* Extend past top AND bottom Safari bars */
                 object-fit: cover;
                 object-position: center center;
                 z-index: -1;
