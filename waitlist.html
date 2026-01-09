@@ -760,30 +760,28 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* iOS FIX: Use dvh + safe-area-inset (GPT's solution) */
+            /* iOS FIX: Use HEIGHT (not min-height) with dvh */
             html {
-                height: 100%;
+                height: 100dvh;
                 overflow: hidden;
             }
 
             body {
-                min-height: 100vh; /* Fallback */
-                min-height: 100dvh; /* Dynamic viewport height - CORRECT on iOS */
+                height: 100dvh; /* MUST be height, not min-height */
                 overflow: hidden;
                 margin: 0;
                 padding: 0;
-                background-image: none !important; /* Remove CSS background on mobile */
+                background-image: none !important;
             }
 
-            /* Mobile background image - Use dvh and extend into safe areas */
+            /* Mobile background image - MUST use height not min-height */
             #mobile-bg {
                 display: block;
                 position: fixed;
                 top: 0;
                 left: 0;
                 width: 100vw;
-                min-height: 100vh; /* Fallback */
-                min-height: 100dvh; /* Dynamic viewport height */
+                height: 100dvh; /* MUST be height, not min-height */
                 object-fit: cover;
                 object-position: center center;
                 z-index: -1;
