@@ -758,6 +758,10 @@
 
             /* Main text - split into two lines - MUCH SMALLER */
             #main-text {
+                position: absolute;
+                top: 120px;
+                left: 50%;
+                transform: translateX(-50%);
                 font-size: 1.625em; /* Increased by 3pt from 1.4em (roughly +0.225em) */
                 line-height: 1.4; /* Slightly more space between lines */
                 white-space: normal; /* Allow wrapping */
@@ -765,40 +769,44 @@
                 width: 90%;
                 margin: 0 auto;
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
+                z-index: 10;
             }
 
-            /* iOS FIX: Edge-to-edge layout with proper viewport units */
+            /* iOS FIX: True edge-to-edge with aggressive positioning */
             html {
+                width: 100%;
                 height: 100%;
-                overflow-x: hidden;
+                position: fixed;
+                overflow: hidden;
             }
 
             body {
-                /* Use 100svh (Small Viewport Height) for stable foreground content */
-                /* This equals the visible area when Safari UI is SHOWN (safe on load) */
-                min-height: 100svh;
-                height: 100svh;
-                overflow-x: hidden;
-                margin: 0;
-                padding: 0;
-                background-image: none !important;
-                /* Prevent white overscroll gaps */
-                background-color: #1a1a2e;
-                overscroll-behavior-y: none;
-                /* Safe area padding - keeps content away from notch and home indicator */
-                padding-top: env(safe-area-inset-top);
-                padding-bottom: env(safe-area-inset-bottom);
-            }
-
-            /* Mobile background image - extends BEHIND Safari UI using 100lvh */
-            #mobile-bg {
-                display: block;
+                /* Force body to fill the ENTIRE screen */
                 position: fixed;
                 top: 0;
                 left: 0;
-                width: 100vw;
-                /* Use 100lvh (Large Viewport Height) for background to extend behind UI */
-                height: 100lvh;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overflow-y: auto;
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
+                background-image: none !important;
+                background-color: #1a1a2e;
+                overscroll-behavior: none;
+            }
+
+            /* Mobile background image - absolute positioning to fill entire body */
+            #mobile-bg {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
                 object-fit: cover;
                 object-position: center center;
                 z-index: -1;
@@ -1321,28 +1329,34 @@
             }
         });
 
-        // iOS Safari viewport fix - ONLY used as fallback for ancient browsers
-        // Modern browsers (iOS 15.4+, Chrome 108+) will use CSS svh/lvh units instead
+        // iOS Safari viewport fix - Force exact viewport height
         function setVH() {
-            // Check if browser supports the modern viewport units
-            if (!CSS.supports('height', '100svh')) {
-                // Fallback for very old browsers: use JavaScript-based height
+            if (window.innerWidth <= 768) {
+                // Get the ACTUAL visible viewport height
                 const vv = window.visualViewport;
                 const h = (vv ? vv.height : window.innerHeight);
-                document.documentElement.style.setProperty('--real-vh', `${h}px`);
 
-                // Apply to body on mobile only
-                if (window.innerWidth <= 768) {
-                    document.body.style.height = `${h}px`;
-                }
+                // Force body and html to this exact height
+                document.documentElement.style.height = `${h}px`;
+                document.body.style.height = `${h}px`;
+
+                // Also set CSS variable for other elements if needed
+                document.documentElement.style.setProperty('--vh', `${h * 0.01}px`);
             }
-            // Otherwise, CSS svh/lvh units handle everything automatically
         }
 
+        // Run immediately
         setVH();
+
+        // Re-run on any size change
         window.addEventListener('resize', setVH);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(setVH, 100); // Delay slightly after orientation change
+        });
+
         if (window.visualViewport) {
             window.visualViewport.addEventListener('resize', setVH);
+            window.visualViewport.addEventListener('scroll', setVH);
         }
 
         // Start animation on page load
