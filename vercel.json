@@ -6,57 +6,7 @@
       "permanent": false
     },
     {
-      "source": "/pricing.html",
-      "destination": "/",
-      "permanent": false
-    },
-    {
-      "source": "/faq.html",
-      "destination": "/",
-      "permanent": false
-    },
-    {
-      "source": "/how-it-works.html",
-      "destination": "/",
-      "permanent": false
-    },
-    {
       "source": "/demo-tutorial.html",
-      "destination": "/",
-      "permanent": false
-    },
-    {
-      "source": "/payment-embed.html",
-      "destination": "/",
-      "permanent": false
-    },
-    {
-      "source": "/privacy.html",
-      "destination": "/",
-      "permanent": false
-    },
-    {
-      "source": "/terms.html",
-      "destination": "/",
-      "permanent": false
-    },
-    {
-      "source": "/test.html",
-      "destination": "/",
-      "permanent": false
-    },
-    {
-      "source": "/signup-success.html",
-      "destination": "/",
-      "permanent": false
-    },
-    {
-      "source": "/signup-canceled.html",
-      "destination": "/",
-      "permanent": false
-    },
-    {
-      "source": "/waitlist.html",
       "destination": "/",
       "permanent": false
     }
