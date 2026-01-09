@@ -274,6 +274,7 @@
             z-index: 50;
             opacity: 0;
             transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+            cursor: pointer;
 
             /* Matches mockup proportions - VERY WIDE with breathing room */
             width: 1800px;
@@ -313,6 +314,16 @@
             opacity: 1;
         }
 
+        #tangent-panel.visible:hover:not(.expanded) {
+            transform: translateX(-50%) translateY(calc(100% - 315px)); /* Peek up by 40px on hover */
+        }
+
+        #tangent-panel.expanded {
+            transform: translateX(-50%) translateY(25%); /* Reduced expansion by 25% */
+            cursor: default;
+            z-index: 150; /* Above chip bar */
+        }
+
         /* Header - matches mockup proportions */
         .tangent-panel__header {
             display: flex;
@@ -322,6 +333,13 @@
             padding: 50px 80px;
             flex-shrink: 0;
             background: transparent;
+            transition: padding 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        /* Shrink header when expanded */
+        #tangent-panel.expanded .tangent-panel__header {
+            padding: 40px 64px; /* 20% smaller (50px -> 40px, 80px -> 64px) */
+            transform: scale(0.8); /* Also scale down logo and buttons by 20% */
         }
 
         /* Pin button - left side, gray - 20% BIGGER */
@@ -341,6 +359,12 @@
             align-items: center;
             justify-content: center;
             opacity: 0.6;
+            transition: none; /* Don't scale with header */
+        }
+
+        /* Keep pin in place when header shrinks */
+        #tangent-panel.expanded .tangent-pin {
+            transform: translateY(-50%) scale(1.25) !important; /* Compensate for header scale(0.8): 1 / 0.8 = 1.25 */
         }
 
         .tangent-pin img {
@@ -366,6 +390,12 @@
             display: inline-flex;
             gap: 40px;
             align-items: center;
+            transition: none; /* Don't scale with header */
+        }
+
+        /* Keep buttons in place when header shrinks */
+        #tangent-panel.expanded .tangent-panel__btns {
+            transform: translateY(-50%) scale(1.25) !important; /* Compensate for header scale(0.8): 1 / 0.8 = 1.25 */
         }
 
         .tangent-panel__btns > button {
@@ -613,6 +643,138 @@
         #toast.visible {
             transform: translateX(-50%) translateY(0);
             opacity: 1;
+        }
+
+        /* Tutorial Section Inside Panel */
+        .tutorial-content {
+            padding: 40px 80px 60px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        /* Scrollbar styling for tutorial content */
+        .tutorial-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .tutorial-content::-webkit-scrollbar-track {
+            background: transparent; /* Invisible background */
+        }
+
+        .tutorial-content::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+
+        .tutorial-content::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Firefox scrollbar */
+        .tutorial-content {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+        }
+
+        .tutorial-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow: visible; /* Allow videos to expand beyond grid */
+            position: relative;
+            isolation: isolate; /* Create new stacking context */
+        }
+
+        .tutorial-step {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: start;
+            overflow: visible; /* Allow video to expand beyond step */
+            position: relative;
+            isolation: isolate;
+        }
+
+        .tutorial-step:hover {
+            z-index: 100; /* Bring entire step forward when hovering */
+        }
+
+        .step-content {
+            overflow: visible; /* Critical for hover expansion */
+            width: 100%;
+            position: relative;
+        }
+
+        /* Row with number and title */
+        .step-header {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .step-number img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .step-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .step-content h3 {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #0f141a;
+            margin: 0;
+            text-align: left;
+            flex: 1; /* Take remaining space next to number */
+        }
+
+        .step-content .video-placeholder {
+            width: 100%; /* Spans full width of step (under both number and title) */
+        }
+
+        .step-content p {
+            font-size: 0.95rem;
+            color: #374151;
+            line-height: 1.5;
+            margin: 0;
+            text-align: left;
+            width: 100%; /* Spans full width */
+        }
+
+        .step-content video {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 12px;
+            border: 2px solid rgba(109, 109, 109, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-content video:hover {
+            transform: scale(2.5);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+            z-index: 1000; /* Bring to front above everything */
         }
 
         /* Responsive Design - Shrink logo and adjust spacing as viewport narrows */
@@ -992,6 +1154,52 @@
             .modal-content p.modal-subtitle {
                 font-size: 14px;
             }
+
+            /* Tutorial content responsive */
+            .tutorial-content {
+                padding: 20px 20px 40px;
+            }
+
+            .tutorial-steps {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .tutorial-step {
+                gap: 15px;
+            }
+
+            .step-header {
+                gap: 15px;
+            }
+
+            .step-number {
+                width: 60px;
+                height: 60px;
+            }
+
+            .step-header h3 {
+                font-size: 1.3rem;
+                text-align: left;
+            }
+
+            .step-content p {
+                font-size: 0.95rem;
+                text-align: left;
+            }
+
+            .video-placeholder {
+                font-size: 0.9rem;
+            }
+
+            /* Panel cursor not needed on mobile */
+            #tangent-panel {
+                cursor: default;
+            }
+
+            #tangent-panel.expanded {
+                transform: translateX(-50%) translateY(25%);
+            }
         }
     </style>
 </head>
@@ -1059,6 +1267,62 @@
                 </button>
             </div>
         </div>
+
+        <!-- Tutorial Content (hidden until panel expands) -->
+        <div class="tutorial-content" style="display: none;">
+            <div class="tutorial-steps">
+                <!-- Step 1 -->
+                <div class="tutorial-step">
+                    <div class="step-header">
+                        <div class="step-number">
+                            <img src="images/step_01.png" alt="Step 1">
+                        </div>
+                        <h3>Select text on any webpage</h3>
+                    </div>
+                    <div class="step-content">
+                        <video autoplay loop muted playsinline preload="auto">
+                            <source src="images/step_01.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p>Highlight anything—a paragraph, a sentence, a single word. Tangent's chip bar appears instantly, ready to help.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="tutorial-step">
+                    <div class="step-header">
+                        <div class="step-number">
+                            <img src="images/step_02.png" alt="Step 2">
+                        </div>
+                        <h3>Choose an action or ask a question</h3>
+                    </div>
+                    <div class="step-content">
+                        <video autoplay loop muted playsinline preload="auto">
+                            <source src="images/step_02.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p>Click a pre-built chip (Summarize, Explain, Translate) or type your own question in the chat panel.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="tutorial-step">
+                    <div class="step-header">
+                        <div class="step-number">
+                            <img src="images/step_03.png" alt="Step 3">
+                        </div>
+                        <h3>Get intelligent, context-aware responses</h3>
+                    </div>
+                    <div class="step-content">
+                        <video autoplay loop muted playsinline preload="auto">
+                            <source src="images/step_03.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p>Tangent analyzes the entire page and responds based on what you're looking at—with clickable references that scroll to specific sections.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Success Modal -->
@@ -1084,11 +1348,19 @@
         const chipsContainer = document.getElementById('chips-container');
         const emailContainer = document.getElementById('email-container');
         const tChip = document.getElementById('t-chip');
+        const tChipEmail = document.getElementById('t-chip-email');
         const emailInput = document.getElementById('email-input');
         const sendBtn = document.getElementById('send-btn');
         const tangentPanel = document.getElementById('tangent-panel');
+        const panelHeader = document.querySelector('.tangent-panel__header');
+        const minimizeBtn = document.querySelector('.tangent-panel__btns button[title="Minimize"]');
+        const closeBtn = document.querySelector('.tangent-panel__btns button[title="Close"]');
+        const tutorialContent = document.querySelector('.tutorial-content');
         const successModal = document.getElementById('success-modal');
         const toast = document.getElementById('toast');
+
+        // Panel expansion state
+        let panelExpanded = false;
 
         // Utility: Wait
         function wait(ms) {
@@ -1236,10 +1508,10 @@
             await wait(100);
             tChip.style.transform = '';
 
-            // 8. Panel already visible from earlier, proceed to transform chip bar
+            // 7. Panel already visible from earlier, proceed to transform chip bar
             await wait(300);
 
-            // 9. Transform chip bar to email input
+            // 8. Transform chip bar to email input
             chipsContainer.style.display = 'none';
             emailContainer.style.display = 'flex';
             chipBar.classList.remove('initial-state');
@@ -1311,6 +1583,91 @@
                 emailInput.disabled = false;
             }
         }
+
+        // Collapse panel function
+        function collapsePanel() {
+            panelExpanded = false;
+            tangentPanel.classList.remove('expanded');
+            tutorialContent.style.display = 'none';
+        }
+
+        // Panel click handler - expand to show tutorial
+        tangentPanel.addEventListener('click', (e) => {
+            // If clicking buttons or header when expanded, don't do anything here
+            if (e.target.closest('.tangent-panel__btns') ||
+                (panelExpanded && e.target.closest('.tangent-panel__header'))) {
+                return;
+            }
+
+            // Don't expand if clicking inside tutorial content or if already expanded
+            if (panelExpanded || e.target.closest('.tutorial-content')) {
+                return;
+            }
+
+            // Expand panel
+            panelExpanded = true;
+            tangentPanel.classList.add('expanded');
+            tutorialContent.style.display = 'block';
+        });
+
+        // Click header to collapse when expanded
+        panelHeader.addEventListener('click', (e) => {
+            // Only handle if panel is expanded
+            if (panelExpanded) {
+                e.stopPropagation();
+                collapsePanel();
+            }
+        });
+
+        // Minimize button - collapse panel when expanded
+        minimizeBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Always prevent bubbling
+            if (panelExpanded) {
+                collapsePanel();
+            }
+        });
+
+        // Close button - collapse panel when expanded
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Always prevent bubbling
+            if (panelExpanded) {
+                collapsePanel();
+            }
+        });
+
+        // T icon toggle (both in initial and email state)
+        function toggleChipBarState() {
+            const isEmailState = chipBar.classList.contains('email-state');
+
+            if (isEmailState) {
+                // Switch back to initial chip state
+                emailContainer.style.display = 'none';
+                chipsContainer.style.display = 'flex';
+                chipBar.classList.remove('email-state');
+                chipBar.classList.add('initial-state');
+            } else {
+                // Switch to email state
+                chipsContainer.style.display = 'none';
+                emailContainer.style.display = 'flex';
+                chipBar.classList.remove('initial-state');
+                chipBar.classList.add('email-state');
+                emailInput.focus();
+            }
+
+            // Reposition chip bar after transformation
+            positionChipBar();
+        }
+
+        // Add click handlers to both T icons
+        tChip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleChipBarState();
+        });
+
+        tChipEmail.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleChipBarState();
+        });
 
         // Close modal on click outside
         successModal.addEventListener('click', (e) => {
