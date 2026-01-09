@@ -760,28 +760,29 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* iOS FIX: Use JavaScript-calculated real viewport height */
+            /* iOS FIX: Make page TALLER than viewport to trigger Safari scroll-to-hide UI */
             html {
-                height: var(--real-vh, 100vh);
-                overflow: hidden;
+                height: 100%;
+                overflow-y: auto; /* Allow scrolling */
+                overflow-x: hidden;
             }
 
             body {
-                height: var(--real-vh, 100vh); /* Use JS-calculated actual viewport */
-                overflow: hidden;
+                min-height: calc(100vh + 1px); /* TALLER than viewport to enable scroll */
+                overflow-x: hidden;
                 margin: 0;
                 padding: 0;
                 background-image: none !important;
             }
 
-            /* Mobile background image - Use JS-calculated real viewport */
+            /* Mobile background image - FIXED to viewport, not scrolling */
             #mobile-bg {
                 display: block;
                 position: fixed;
                 top: 0;
                 left: 0;
                 width: 100vw;
-                height: var(--real-vh, 100vh); /* Use JS-calculated actual viewport */
+                height: 100vh;
                 object-fit: cover;
                 object-position: center center;
                 z-index: -1;
