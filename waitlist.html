@@ -760,28 +760,28 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* iOS FIX: Use HEIGHT (not min-height) with dvh */
+            /* iOS FIX: Use JavaScript-calculated real viewport height */
             html {
-                height: 100dvh;
+                height: var(--real-vh, 100vh);
                 overflow: hidden;
             }
 
             body {
-                height: 100dvh; /* MUST be height, not min-height */
+                height: var(--real-vh, 100vh); /* Use JS-calculated actual viewport */
                 overflow: hidden;
                 margin: 0;
                 padding: 0;
                 background-image: none !important;
             }
 
-            /* Mobile background image - MUST use height not min-height */
+            /* Mobile background image - Use JS-calculated real viewport */
             #mobile-bg {
                 display: block;
                 position: fixed;
                 top: 0;
                 left: 0;
                 width: 100vw;
-                height: 100dvh; /* MUST be height, not min-height */
+                height: var(--real-vh, 100vh); /* Use JS-calculated actual viewport */
                 object-fit: cover;
                 object-position: center center;
                 z-index: -1;
@@ -1303,6 +1303,19 @@
                 handleSubmit(e);
             }
         });
+
+        // iOS Safari viewport fix - use visualViewport to get ACTUAL height
+        function setVH() {
+            const vv = window.visualViewport;
+            const h = (vv ? vv.height : window.innerHeight);
+            document.documentElement.style.setProperty('--real-vh', `${h}px`);
+        }
+
+        setVH();
+        window.addEventListener('resize', setVH);
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', setVH);
+        }
 
         // Start animation on page load
         window.addEventListener('load', () => {
