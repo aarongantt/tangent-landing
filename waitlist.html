@@ -761,27 +761,27 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* iOS FIX: Use dvh (dynamic viewport height) for mobile */
+            /* iOS FIX: Use lvh (large viewport height) to cover EVERYTHING including Safari bars */
             html {
-                height: 100dvh; /* Dynamic viewport height - includes Safari UI */
+                height: 100lvh; /* Large viewport height - FULL screen including UI bars */
                 overflow: hidden;
             }
 
             body {
-                height: 100dvh; /* Dynamic viewport height */
+                height: 100lvh; /* Large viewport height - FULL screen */
                 overflow: hidden; /* NO SCROLL - lock it */
                 width: 100%;
                 background-image: none !important; /* Remove CSS background on mobile */
             }
 
-            /* Mobile background image - EXTEND BEYOND viewport to bleed into Safari UI */
+            /* Mobile background image - Use lvh to fill ENTIRE screen */
             #mobile-bg {
                 display: block;
                 position: fixed;
-                top: -100px; /* Bleed upward into Safari's top bar */
+                top: 0;
                 left: 0;
                 width: 100vw;
-                height: calc(100dvh + 200px); /* Extend past top AND bottom Safari bars */
+                height: 100lvh; /* Large viewport height - covers Safari UI bars */
                 object-fit: cover;
                 object-position: center center;
                 z-index: -1;
