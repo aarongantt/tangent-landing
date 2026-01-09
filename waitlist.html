@@ -751,7 +751,6 @@
 
             /* Main text - split into two lines - MUCH SMALLER */
             #main-text {
-                top: 160px; /* Moved down from 120px to prevent cutoff */
                 font-size: 1.625em; /* Increased by 3pt from 1.4em (roughly +0.225em) */
                 line-height: 1.4; /* Slightly more space between lines */
                 white-space: normal; /* Allow wrapping */
@@ -761,23 +760,30 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* iOS FIX: Nuclear option - make background ABSURDLY large */
-            html, body {
-                height: 100vh;
+            /* iOS FIX: Use dvh + safe-area-inset (GPT's solution) */
+            html {
+                height: 100%;
+                overflow: hidden;
+            }
+
+            body {
+                min-height: 100vh; /* Fallback */
+                min-height: 100dvh; /* Dynamic viewport height - CORRECT on iOS */
                 overflow: hidden;
                 margin: 0;
                 padding: 0;
-                background-image: none !important;
+                background-image: none !important; /* Remove CSS background on mobile */
             }
 
-            /* Mobile background image - RIDICULOUSLY oversized */
+            /* Mobile background image - Use dvh and extend into safe areas */
             #mobile-bg {
                 display: block;
                 position: fixed;
-                top: -50vh; /* Extend 50% viewport ABOVE */
-                left: -50vw; /* Extend 50% viewport LEFT */
-                width: 200vw; /* Double width */
-                height: 200vh; /* Double height */
+                top: 0;
+                left: 0;
+                width: 100vw;
+                min-height: 100vh; /* Fallback */
+                min-height: 100dvh; /* Dynamic viewport height */
                 object-fit: cover;
                 object-position: center center;
                 z-index: -1;
