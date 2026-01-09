@@ -17,8 +17,15 @@
             font-family: Arial, sans-serif;
             background: url('images/tangent_wave_bg.png') center center / cover no-repeat fixed;
             min-height: 100vh;
+            /* Fallback for older Safari (pre iOS 15.4) */
+            min-height: -webkit-fill-available;
             overflow: hidden; /* No scrolling */
             position: relative;
+        }
+
+        /* Fallback for older Safari: Ensure html height is available-based */
+        html {
+            height: -webkit-fill-available;
         }
 
         /* Main text container */
@@ -760,29 +767,38 @@
                 padding-bottom: 25px; /* Extra space below text so chip bar doesn't cover it */
             }
 
-            /* iOS FIX: Make page TALLER than viewport to trigger Safari scroll-to-hide UI */
+            /* iOS FIX: Edge-to-edge layout with proper viewport units */
             html {
                 height: 100%;
-                overflow-y: auto; /* Allow scrolling */
                 overflow-x: hidden;
             }
 
             body {
-                min-height: calc(100vh + 1px); /* TALLER than viewport to enable scroll */
+                /* Use 100svh (Small Viewport Height) for stable foreground content */
+                /* This equals the visible area when Safari UI is SHOWN (safe on load) */
+                min-height: 100svh;
+                height: 100svh;
                 overflow-x: hidden;
                 margin: 0;
                 padding: 0;
                 background-image: none !important;
+                /* Prevent white overscroll gaps */
+                background-color: #1a1a2e;
+                overscroll-behavior-y: none;
+                /* Safe area padding - keeps content away from notch and home indicator */
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
             }
 
-            /* Mobile background image - FIXED to viewport, not scrolling */
+            /* Mobile background image - extends BEHIND Safari UI using 100lvh */
             #mobile-bg {
                 display: block;
                 position: fixed;
                 top: 0;
                 left: 0;
                 width: 100vw;
-                height: 100vh;
+                /* Use 100lvh (Large Viewport Height) for background to extend behind UI */
+                height: 100lvh;
                 object-fit: cover;
                 object-position: center center;
                 z-index: -1;
@@ -1305,11 +1321,22 @@
             }
         });
 
-        // iOS Safari viewport fix - use visualViewport to get ACTUAL height
+        // iOS Safari viewport fix - ONLY used as fallback for ancient browsers
+        // Modern browsers (iOS 15.4+, Chrome 108+) will use CSS svh/lvh units instead
         function setVH() {
-            const vv = window.visualViewport;
-            const h = (vv ? vv.height : window.innerHeight);
-            document.documentElement.style.setProperty('--real-vh', `${h}px`);
+            // Check if browser supports the modern viewport units
+            if (!CSS.supports('height', '100svh')) {
+                // Fallback for very old browsers: use JavaScript-based height
+                const vv = window.visualViewport;
+                const h = (vv ? vv.height : window.innerHeight);
+                document.documentElement.style.setProperty('--real-vh', `${h}px`);
+
+                // Apply to body on mobile only
+                if (window.innerWidth <= 768) {
+                    document.body.style.height = `${h}px`;
+                }
+            }
+            // Otherwise, CSS svh/lvh units handle everything automatically
         }
 
         setVH();
