@@ -695,7 +695,7 @@
             align-items: start;
             overflow: visible; /* Allow video to expand beyond step */
             position: relative;
-            isolation: isolate;
+            /* Remove isolation to allow videos to break out to higher z-index */
         }
 
         .tutorial-step:hover {
@@ -706,6 +706,7 @@
             overflow: visible; /* Critical for hover expansion */
             width: 100%;
             position: relative;
+            /* Remove isolation to allow video to escape */
         }
 
         /* Row with number and title */
@@ -767,16 +768,23 @@
             border: 6px solid #ffffff; /* Thicker white border */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s;
+            transition: all 0.3s ease;
             position: relative;
             z-index: 1;
-            transform-origin: center center; /* Ensure scaling from center */
         }
 
         .step-content video:hover {
-            transform: scale(2.0); /* Slightly smaller enlarged state */
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
-            z-index: 999999; /* Maximum z-index - above everything */
+            position: fixed; /* Break out of all parent containers */
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) scale(2.0) !important; /* Center and scale */
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+            z-index: 9999999; /* Maximum z-index - above everything */
+            border-radius: 20px; /* Maintain rounded corners */
+            border: 6px solid #ffffff; /* Maintain white border */
+            width: auto; /* Allow natural sizing */
+            max-width: 80vw; /* Don't exceed viewport */
+            max-height: 80vh;
         }
 
         /* Responsive Design - Shrink logo and adjust spacing as viewport narrows */
