@@ -768,7 +768,9 @@
             border: 6px solid #4a90e2; /* Tangent blue border */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        z-index 0s;
             position: relative;
             z-index: 1;
         }
@@ -777,14 +779,14 @@
             position: fixed; /* Break out of all parent containers */
             top: 50% !important;
             left: 50% !important;
-            transform: translate(-50%, -50%) scale(2.0) !important; /* Center and scale */
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+            transform: translate(-50%, -50%) scale(1.4) !important; /* Smaller, more subtle enlargement */
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             z-index: 9999999; /* Maximum z-index - above everything */
             border-radius: 20px; /* Maintain rounded corners */
             border: 6px solid #4a90e2; /* Tangent blue border */
             width: auto; /* Allow natural sizing */
-            max-width: 80vw; /* Don't exceed viewport */
-            max-height: 80vh;
+            max-width: 70vw; /* Smaller max width */
+            max-height: 70vh;
         }
 
         /* Responsive Design - Shrink logo and adjust spacing as viewport narrows */
@@ -1287,7 +1289,7 @@
                         <div class="step-number">
                             <img src="images/step_01.png" alt="Step 1">
                         </div>
-                        <h3>Select text on any webpage</h3>
+                        <h3>SELECT TEXT ON ANY WEBPAGE</h3>
                     </div>
                     <div class="step-content">
                         <video autoplay loop muted playsinline preload="auto">
@@ -1304,7 +1306,7 @@
                         <div class="step-number">
                             <img src="images/step_02.png" alt="Step 2">
                         </div>
-                        <h3>Choose an action or ask a question</h3>
+                        <h3>CHOOSE A PROMPT CHIP OR ASK A QUESTION</h3>
                     </div>
                     <div class="step-content">
                         <video autoplay loop muted playsinline preload="auto">
@@ -1321,7 +1323,7 @@
                         <div class="step-number">
                             <img src="images/step_03.png" alt="Step 3">
                         </div>
-                        <h3>Get intelligent, context-aware responses</h3>
+                        <h3>INTELLIGENT, CONTEXT-AWARE RESPONSES</h3>
                     </div>
                     <div class="step-content">
                         <video autoplay loop muted playsinline preload="auto">
