@@ -763,17 +763,18 @@
         .step-content video {
             width: 100%;
             aspect-ratio: 16 / 9;
-            border-radius: 12px;
-            border: 4px solid #ffffff; /* Thick white border */
+            border-radius: 20px; /* Increased rounded corners */
+            border: 6px solid #ffffff; /* Thicker white border */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s;
             position: relative;
             z-index: 1;
+            transform-origin: center center; /* Ensure scaling from center */
         }
 
         .step-content video:hover {
-            transform: scale(2.5);
+            transform: scale(2.0); /* Slightly smaller enlarged state */
             box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
             z-index: 999999; /* Maximum z-index - above everything */
         }
