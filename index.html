@@ -280,7 +280,7 @@
             width: 1800px;
             max-width: calc(100vw - 200px); /* 100px margin on each side */
             height: 900px;
-            overflow: hidden;
+            overflow: visible; /* Allow videos to expand beyond panel */
 
             /* Darker blue-gray gradient matching chip bank */
             background: linear-gradient(
@@ -649,6 +649,7 @@
         .tutorial-content {
             padding: 40px 80px 60px;
             overflow-y: auto;
+            overflow-x: visible; /* Allow horizontal overflow for videos */
             flex: 1;
         }
 
@@ -763,7 +764,7 @@
             width: 100%;
             aspect-ratio: 16 / 9;
             border-radius: 12px;
-            border: 2px solid rgba(109, 109, 109, 0.3);
+            border: 4px solid #ffffff; /* Thick white border */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s;
@@ -774,7 +775,7 @@
         .step-content video:hover {
             transform: scale(2.5);
             box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
-            z-index: 1000; /* Bring to front above everything */
+            z-index: 999999; /* Maximum z-index - above everything */
         }
 
         /* Responsive Design - Shrink logo and adjust spacing as viewport narrows */
