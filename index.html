@@ -1809,10 +1809,8 @@ The deeper implication is that the primary constraint of modern knowledge work i
             if (isDemoPaused || isInteractive) return;
 
             // STEP 2: Click Context chip
-            await fadeStepIndicator(stepIndicator1, 'images/step_01.png');
-            stepIndicator1.classList.remove('active');
-            await fadeStepIndicator(stepIndicator2, 'images/step_02_blue.png');
-            stepIndicator2.classList.add('active');
+            toggleStepIndicator(stepIndicator1, false);
+            toggleStepIndicator(stepIndicator2, true);
 
             // Cursor should already be visible at end of text
             // Animate cursor moving from current position to Context chip
@@ -1893,10 +1891,8 @@ The "cost" being described is therefore not the time spent searching for informa
             await typewriterEffect(aiMsg, aiResponse, 0.5);
 
             // After typing is complete, switch to step 3 icon
-            await fadeStepIndicator(stepIndicator2, 'images/step_02.png');
-            stepIndicator2.classList.remove('active');
-            await fadeStepIndicator(stepIndicator3, 'images/step_03_blue.png');
-            stepIndicator3.classList.add('active');
+            toggleStepIndicator(stepIndicator2, false);
+            toggleStepIndicator(stepIndicator3, true);
 
             // Hide cursor after panel content is complete
             interactiveCursor.style.display = 'none';
@@ -1970,9 +1966,9 @@ The "cost" being described is therefore not the time spent searching for informa
                         clearTimeout(demoLoopTimeout);
 
                         // Keep all indicators blue in interactive mode
-                        stepIndicator1.src = 'images/step_01_blue.png';
-                        stepIndicator2.src = 'images/step_02_blue.png';
-                        stepIndicator3.src = 'images/step_03_blue.png';
+                        toggleStepIndicator(stepIndicator1, true);
+                        toggleStepIndicator(stepIndicator2, true);
+                        toggleStepIndicator(stepIndicator3, true);
                     }
                 }, 2000);
             }
@@ -2050,9 +2046,9 @@ The "cost" being described is therefore not the time spent searching for informa
                 interactiveCursor.style.display = 'none';
 
                 // Keep all step indicators blue in interactive mode
-                stepIndicator1.src = 'images/step_01_blue.png';
-                stepIndicator2.src = 'images/step_02_blue.png';
-                stepIndicator3.src = 'images/step_03_blue.png';
+                toggleStepIndicator(stepIndicator1, true);
+                toggleStepIndicator(stepIndicator2, true);
+                toggleStepIndicator(stepIndicator3, true);
 
                 // Visual click effect
                 chip.style.transform = 'translateY(2px)';
@@ -2216,9 +2212,9 @@ Each interruption introduces a *subtle cognitive cost*—not in the time spent a
             interactiveCursor.style.display = 'none';
 
             // Keep all step indicators blue in interactive mode
-            stepIndicator1.src = 'images/step_01_blue.png';
-            stepIndicator2.src = 'images/step_02_blue.png';
-            stepIndicator3.src = 'images/step_03_blue.png';
+            toggleStepIndicator(stepIndicator1, true);
+            toggleStepIndicator(stepIndicator2, true);
+            toggleStepIndicator(stepIndicator3, true);
 
             // Check position after a brief delay to see if something else changed it
             setTimeout(() => {
