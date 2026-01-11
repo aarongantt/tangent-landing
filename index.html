@@ -933,6 +933,81 @@
             border-radius: 2px;
             z-index: -1;
         }
+
+        /* MOBILE Tutorial Content Styles */
+        .mobile-tutorial-content {
+            padding: 0px 20px 30px;
+            overflow-y: auto;
+            max-height: 100%;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+        }
+
+        .mobile-tutorial-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .mobile-tutorial-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .mobile-tutorial-content::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+
+        .mobile-tutorial-content::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Mobile Step Indicators */
+        .mobile-step-indicators {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        .mobile-step-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .mobile-step-base,
+        .mobile-step-blue {
+            height: auto;
+            max-height: clamp(35px, 8vw, 55px);
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .mobile-step-blue {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .mobile-step-blue.active {
+            opacity: 1;
+        }
+
+        /* Mobile demo highlight text animation */
+        #mobile-demo-highlight-text.highlighting::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0%;
+            background: #6eb6fe;
+            border-radius: 2px;
+            z-index: -1;
+        }
     </style>
 </head>
 <body>
@@ -1049,6 +1124,94 @@ The deeper implication is that the primary constraint of modern knowledge work i
                         When technology works this way, expectations change. People stop asking whether something is possible and start asking what else they can do. Work becomes more ambitious. Learning becomes more expansive. Creativity stretches beyond familiar boundaries. That's the real promise here—not faster answers, but new possibilities. When intelligence becomes intuitive, personal, and inspiring, people don't just move quicker. They move further.
                     </p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE Tutorial Content (shown only on mobile devices) -->
+    <div class="mobile-tutorial-content" style="display: none; position: relative; height: 100%; overflow: hidden;">
+        <!-- Step indicators (3 images in a row) -->
+        <div class="mobile-step-indicators">
+            <div class="mobile-step-wrapper">
+                <img class="mobile-step-base" src="images/step_01.png" alt="Step 1">
+                <img id="mobile-step-indicator-1" class="mobile-step-blue" src="images/step_01_blue.png" alt="Step 1 Active">
+            </div>
+            <div class="mobile-step-wrapper">
+                <img class="mobile-step-base" src="images/step_02.png" alt="Step 2">
+                <img id="mobile-step-indicator-2" class="mobile-step-blue" src="images/step_02_blue.png" alt="Step 2 Active">
+            </div>
+            <div class="mobile-step-wrapper">
+                <img class="mobile-step-base" src="images/step_03.png" alt="Step 3">
+                <img id="mobile-step-indicator-3" class="mobile-step-blue" src="images/step_03_blue.png" alt="Step 3 Active">
+            </div>
+        </div>
+
+        <!-- Scrollable demo area (mobile optimized) -->
+        <div id="mobile-demo-scroll-area" style="position: relative; height: calc(100% - 60px); overflow-y: scroll; overflow-x: hidden; padding: 0 20px; scrollbar-width: none; -ms-overflow-style: none;">
+            <style>
+                #mobile-demo-scroll-area::-webkit-scrollbar {
+                    display: none;
+                }
+            </style>
+
+            <!-- Simplified article content for mobile -->
+            <div id="mobile-demo-content-container" style="max-width: 100%; margin: 0 auto; padding: 60px 0; position: relative;">
+                <p style="font-size: 18px; line-height: 1.6; color: #4b5563; text-align: left; margin-bottom: 20px; font-weight: 400;">
+                    In practice, progress is driven less by speed than by continuity—the ability to remain oriented within a developing line of thought while integrating new information without losing one's place.
+                </p>
+
+                <p style="font-size: 18px; line-height: 1.6; color: #4b5563; text-align: left; margin-bottom: 20px; font-weight: 400;">
+                    <span id="mobile-demo-highlight-text" style="position: relative; display: inline;">Subtle cognitive cost</span> appears at precisely this moment. The standard response is to leave the page in search of clarification. But at the level of sustained thought, each departure fragments attention and imposes a hidden tax.
+                </p>
+
+                <p style="font-size: 18px; line-height: 1.6; color: #4b5563; text-align: left; margin-bottom: 20px; font-weight: 400;">
+                    When technology works this way, expectations change. People stop asking whether something is possible and start asking what else they can do. That's the real promise here—not faster answers, but new possibilities.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile demo cursor (fixed positioning) -->
+    <div id="mobile-demo-cursor" class="demo-cursor" style="display: none; position: fixed; pointer-events: none; z-index: 10000;">
+        <img src="images/cursor.png" alt="Cursor">
+    </div>
+
+    <!-- Mobile demo chip bar (fixed positioning) -->
+    <div id="mobile-chip-bar" class="chip-bar" style="display: none; position: fixed; z-index: 9999; transform: scale(1.0); transform-origin: center; border-radius: 14px;">
+        <div style="display: flex; gap: 6px; align-items: center;">
+            <button class="chip chip-icon" style="padding: 5px; min-width: 28px;">
+                <img src="images/tangent_t_logo.png" alt="T" style="width: 16px; height: 16px;">
+            </button>
+            <button class="chip" id="mobile-context-chip" style="font-size: 0.9em; padding: 5px 9px;">What is...</button>
+            <button class="chip" style="font-size: 0.9em; padding: 5px 9px;">Context</button>
+            <button class="chip" style="font-size: 0.9em; padding: 5px 9px;">Summarize</button>
+            <button class="chip chip-icon chevron-chip" style="padding: 4px; min-width: 24px; min-height: 24px;">
+                <img src="images/chevron_down_arrow.png" alt="More" style="width: 13px; height: 13px;">
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile demo Tangent panel (fixed positioning) -->
+    <div id="mobile-tangent-panel" style="display: none; position: fixed; width: 90%; max-width: 340px; height: 380px; margin-top: 20px; background: linear-gradient(to bottom, #dce4ea 0%, #c4ced6 100%) !important; border-radius: 12px; border-top: 4px solid rgba(255, 255, 255, 0.9) !important; border-left: 4px solid rgba(255, 255, 255, 0.9) !important; border-right: 4px solid rgba(0, 0, 0, 0.35) !important; border-bottom: 4px solid rgba(0, 0, 0, 0.35) !important; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Inter, sans-serif; color: #0f141a; z-index: 9998; overflow: hidden;">
+        <!-- Flexbox container for proper layout -->
+        <div style="display: flex; flex-direction: column; height: 100%; position: relative;">
+            <!-- Header -->
+            <div style="padding: 10px; text-align: center; flex-shrink: 0;">
+                <img src="images/tangent_logo_waitlist.png" alt="TANGENT" style="height: 24px; width: auto;">
+            </div>
+
+            <!-- Chat messages (flex: 1 to fill available space) -->
+            <div id="mobile-chat-body" style="padding: 16px; overflow-y: auto; flex: 1;">
+                <!-- Messages added via JS -->
+            </div>
+
+            <!-- Input area (flush to bottom) -->
+            <div style="padding: 10px 14px; flex-shrink: 0; position: relative;">
+                <input type="text" id="mobile-chat-input" placeholder="Go on a Tangent..." readonly style="width: 100%; padding: 12px 50px 12px 14px; border-radius: 24px; border: 2px solid #4a90e2; background: rgba(255, 255, 255, 0.9); font-size: 13px; font-style: italic; outline: none; box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);">
+
+                <button id="mobile-chat-send" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; border-radius: 50%; border: 2px solid #787878; background: transparent; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);">
+                    <img id="mobile-chat-send-icon" src="images/tangent_enter_button.png" alt="Send" style="width: 16px; height: 16px;">
+                </button>
             </div>
         </div>
     </div>
@@ -2329,6 +2492,218 @@ Each interruption introduces a *subtle cognitive cost*—not in the time spent a
                 }
             }, true);
         }
+
+        // ======================================================================
+        // MOBILE DEMO CODE (SEPARATE FROM DESKTOP - DO NOT MODIFY DESKTOP CODE)
+        // ======================================================================
+
+        // Mobile detection
+        function isMobileDevice() {
+            return window.innerWidth <= 768;
+        }
+
+        // Mobile demo elements
+        const mobileTutorialContent = document.querySelector('.mobile-tutorial-content');
+        const mobileStepIndicator1 = document.getElementById('mobile-step-indicator-1');
+        const mobileStepIndicator2 = document.getElementById('mobile-step-indicator-2');
+        const mobileStepIndicator3 = document.getElementById('mobile-step-indicator-3');
+        const mobileDemoHighlightText = document.getElementById('mobile-demo-highlight-text');
+        const mobileDemoCursor = document.getElementById('mobile-demo-cursor');
+        const mobileChipBar = document.getElementById('mobile-chip-bar');
+        const mobileContextChip = document.getElementById('mobile-context-chip');
+        const mobileTangentPanel = document.getElementById('mobile-tangent-panel');
+        const mobileChatBody = document.getElementById('mobile-chat-body');
+        const mobileChatInput = document.getElementById('mobile-chat-input');
+        const mobileChatSend = document.getElementById('mobile-chat-send');
+        const mobileChatSendIcon = document.getElementById('mobile-chat-send-icon');
+
+        let mobilePanelExpanded = false;
+
+        // Mobile step indicator toggle (same crossfade effect as desktop)
+        function toggleMobileStepIndicator(stepElement, active) {
+            if (!stepElement) {
+                console.error('[toggleMobileStepIndicator] stepElement is null or undefined');
+                return;
+            }
+            if (active) {
+                stepElement.classList.add('active');
+            } else {
+                stepElement.classList.remove('active');
+            }
+        }
+
+        // Mobile demo animation
+        async function playMobileDemo() {
+            if (!isMobileDevice() || !mobilePanelExpanded) return;
+
+            console.log('Starting mobile demo animation...');
+            await wait(500);
+
+            // STEP 1: Highlight text and show chip bar
+            toggleMobileStepIndicator(mobileStepIndicator1, true);
+
+            const highlightTextElement = mobileDemoHighlightText;
+            const textRect = highlightTextElement.getBoundingClientRect();
+            const textLeft = textRect.left;
+            const textTop = textRect.top;
+            const textHeight = textRect.height;
+            const textWidth = textRect.width;
+
+            const textStartX = textLeft - 15;
+            const textStartY = textTop + (textHeight / 2);
+            const textEndX = textLeft + textWidth + 3;
+            const textEndY = textTop + (textHeight / 2);
+
+            // Show cursor
+            mobileDemoCursor.querySelector('img').src = 'images/cursor.png';
+            mobileDemoCursor.style.left = (textStartX - 50) + 'px';
+            mobileDemoCursor.style.top = textStartY + 'px';
+            mobileDemoCursor.style.display = 'block';
+            mobileDemoCursor.style.transition = 'left 0.8s ease-out, top 0.8s ease-out';
+
+            await wait(100);
+
+            // Move to start of text
+            mobileDemoCursor.style.left = textStartX + 'px';
+            mobileDemoCursor.style.top = textStartY + 'px';
+            await wait(900);
+
+            // Change to I-beam
+            mobileDemoCursor.querySelector('img').src = 'images/i_beam.png';
+            await wait(150);
+
+            // Highlight animation
+            mobileDemoHighlightText.classList.add('highlighting');
+            mobileDemoHighlightText.style.padding = '0 3px';
+
+            mobileDemoCursor.style.left = textEndX + 'px';
+            mobileDemoCursor.style.top = textEndY + 'px';
+
+            const text = mobileDemoHighlightText.textContent;
+            const textLength = text.length;
+            const stepDuration = 600 / textLength;
+
+            const mobileHighlightStyle = document.createElement('style');
+            mobileHighlightStyle.id = 'mobile-highlight-animation-style';
+            document.head.appendChild(mobileHighlightStyle);
+
+            for (let i = 0; i <= textLength; i++) {
+                const percent = (i / textLength) * 100;
+                mobileHighlightStyle.textContent = `
+                    #mobile-demo-highlight-text.highlighting::before {
+                        width: ${percent}% !important;
+                    }
+                `;
+                await wait(stepDuration);
+            }
+
+            await wait(150);
+
+            // Change back to regular cursor
+            mobileDemoCursor.querySelector('img').src = 'images/cursor.png';
+            await wait(80);
+
+            // Show chip bar
+            mobileChipBar.style.display = 'flex';
+            mobileChipBar.style.opacity = '0';
+            await wait(80);
+
+            const chipBarRect = mobileChipBar.getBoundingClientRect();
+            const chipBarWidth = chipBarRect.width;
+
+            const chipBarLeft = textLeft + (textWidth / 2) - (chipBarWidth / 2);
+            const chipBarTop = textTop + textHeight + 8;
+
+            mobileChipBar.style.left = chipBarLeft + 'px';
+            mobileChipBar.style.top = chipBarTop + 'px';
+            mobileChipBar.style.opacity = '1';
+            await wait(400);
+
+            // STEP 2: Click Context chip
+            toggleMobileStepIndicator(mobileStepIndicator1, false);
+            toggleMobileStepIndicator(mobileStepIndicator2, true);
+
+            const chipRect = mobileContextChip.getBoundingClientRect();
+            const targetX = chipRect.left + chipRect.width / 2;
+            const targetY = chipRect.top + chipRect.height / 2;
+
+            mobileDemoCursor.style.transition = 'left 0.8s ease-out, top 0.8s ease-out';
+            mobileDemoCursor.style.left = targetX + 'px';
+            mobileDemoCursor.style.top = targetY + 'px';
+            await wait(900);
+
+            // Click effect
+            mobileContextChip.style.transform = 'translateY(2px)';
+            await wait(80);
+            mobileContextChip.style.transform = '';
+
+            // STEP 3: Show panel
+            toggleMobileStepIndicator(mobileStepIndicator2, false);
+            toggleMobileStepIndicator(mobileStepIndicator3, true);
+
+            // Position panel in center of screen
+            const panelRect = mobileTangentPanel.getBoundingClientRect();
+            const panelLeft = (window.innerWidth - panelRect.width) / 2;
+            const panelTop = chipBarTop + 60;
+
+            mobileTangentPanel.style.left = panelLeft + 'px';
+            mobileTangentPanel.style.top = panelTop + 'px';
+            mobileTangentPanel.style.display = 'block';
+
+            await wait(300);
+
+            // Hide chip bar and cursor
+            mobileChipBar.style.opacity = '0';
+            mobileDemoCursor.style.opacity = '0';
+            await wait(300);
+            mobileChipBar.style.display = 'none';
+            mobileDemoCursor.style.display = 'none';
+
+            // Add AI response
+            await wait(200);
+
+            const aiMsg = document.createElement('div');
+            aiMsg.className = 'tg-msg tg-ai';
+            aiMsg.innerHTML = '<div class="tg-ai__content"></div>';
+            mobileChatBody.appendChild(aiMsg);
+
+            const response = 'In this context, "subtle cognitive cost" refers to the mental effort required when encountering gaps in understanding while reading. Each time you need to look something up, you must pause your current thinking, search for information, and then rebuild your mental model of what you were learning. This reconstruction takes mental energy and can make deep work feel more exhausting than it actually is.';
+
+            // Typewriter effect
+            const aiContent = aiMsg.querySelector('.tg-ai__content');
+            await typewriterEffect(aiContent, response, 0.5);
+
+            console.log('Mobile demo complete!');
+        }
+
+        // Mobile panel expansion (SEPARATE - does not interfere with desktop)
+        // On mobile, intercept panel clicks ONLY if screen width <= 768px
+        tangentPanel.addEventListener('click', function(e) {
+            // Only intercept on mobile devices
+            if (!isMobileDevice()) return;
+
+            // Don't intercept button clicks
+            if (e.target.closest('.tangent-panel__btns') || e.target.closest('.tangent-pin')) {
+                return;
+            }
+
+            // Prevent desktop handler from running on mobile
+            e.stopImmediatePropagation();
+
+            mobilePanelExpanded = true;
+            tangentPanel.classList.add('expanded');
+            mobileTutorialContent.style.display = 'block';
+            mainText.classList.add('shifted-up');
+            chipBar.classList.add('scaled-down');
+
+            setTimeout(() => {
+                playMobileDemo();
+            }, 800);
+        }, true); // Use capture phase to intercept before desktop handler
+
+        // ======================================================================
+        // END MOBILE DEMO CODE
+        // ======================================================================
 
         // Old step demo functions (kept for compatibility but not used)
         async function playStep1Demo() {
