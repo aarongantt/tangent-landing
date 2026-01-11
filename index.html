@@ -534,30 +534,17 @@
             padding: 0 20px;  /* Prevent icons from touching edges on narrow screens */
         }
 
-        .step-indicator-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .step-indicator-base,
-        .step-indicator-blue {
+        .step-indicators img {
             height: auto;
             max-height: clamp(45px, 5.5vw, 69px);  /* Flexible size: 45px min, 69px max, scales with viewport */
             width: auto;
             object-fit: contain;
-            display: block;
+            transition: filter 0.3s ease, max-height 0.3s ease, opacity 0.6s ease;
         }
 
-        .step-indicator-blue {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
-
-        .step-indicator-blue.active {
-            opacity: 1;
+        /* No glow effect on step icons */
+        .step-indicators img.active {
+            /* Glow removed per user request */
         }
 
         /* Move cursor only on panel header hover */
@@ -1001,18 +988,9 @@
         <div class="tutorial-content" style="display: none; position: relative; height: 100%; overflow: hidden;">
             <!-- Step indicators (3 images in a row) -->
             <div class="step-indicators">
-                <div class="step-indicator-wrapper">
-                    <img class="step-indicator-base" src="images/step_01.png" alt="Step 1">
-                    <img id="step-indicator-1" class="step-indicator-blue" src="images/step_01_blue.png" alt="Step 1 Active">
-                </div>
-                <div class="step-indicator-wrapper">
-                    <img class="step-indicator-base" src="images/step_02.png" alt="Step 2">
-                    <img id="step-indicator-2" class="step-indicator-blue" src="images/step_02_blue.png" alt="Step 2 Active">
-                </div>
-                <div class="step-indicator-wrapper">
-                    <img class="step-indicator-base" src="images/step_03.png" alt="Step 3">
-                    <img id="step-indicator-3" class="step-indicator-blue" src="images/step_03_blue.png" alt="Step 3 Active">
-                </div>
+                <img id="step-indicator-1" src="images/step_01.png" alt="Step 1">
+                <img id="step-indicator-2" src="images/step_02.png" alt="Step 2">
+                <img id="step-indicator-3" src="images/step_03.png" alt="Step 3">
             </div>
 
             <!-- Scrollable demo area -->
@@ -1554,9 +1532,12 @@ The deeper implication is that the primary constraint of modern knowledge work i
             interactiveChatInput.value = '';
 
             // Reset all step indicators to inactive
-            setStepIndicator(stepIndicator1, false);
-            setStepIndicator(stepIndicator2, false);
-            setStepIndicator(stepIndicator3, false);
+            stepIndicator1.src = 'images/step_01.png';
+            stepIndicator2.src = 'images/step_02.png';
+            stepIndicator3.src = 'images/step_03.png';
+            stepIndicator1.classList.remove('active');
+            stepIndicator2.classList.remove('active');
+            stepIndicator3.classList.remove('active');
 
             // Remove any dynamic highlight style element
             const existingStyle = document.getElementById('demo-highlight-animation-style');
@@ -1611,13 +1592,17 @@ The deeper implication is that the primary constraint of modern knowledge work i
             return html;
         }
 
-        // Helper function to activate/deactivate step indicators with crossfade
-        function setStepIndicator(stepElement, isActive) {
-            if (isActive) {
-                stepElement.classList.add('active');
-            } else {
-                stepElement.classList.remove('active');
-            }
+        // Helper function to fade transition step indicator images
+        async function fadeStepIndicator(imgElement, newSrc) {
+            // Fade out
+            imgElement.style.opacity = '0';
+            await new Promise(resolve => setTimeout(resolve, 600)); // Match CSS transition duration
+
+            // Swap image
+            imgElement.src = newSrc;
+
+            // Fade in
+            imgElement.style.opacity = '1';
         }
 
         // Global flag to stop typewriter effect
@@ -1682,7 +1667,8 @@ The deeper implication is that the primary constraint of modern knowledge work i
             await wait(500);
 
             // STEP 1: Highlight text and show chip bar
-            setStepIndicator(stepIndicator1, true);
+            await fadeStepIndicator(stepIndicator1, 'images/step_01_blue.png');
+            stepIndicator1.classList.add('active');
 
             // Get FINAL text position (where it will be AFTER scroll completes)
             const scrollArea = document.getElementById('demo-scroll-area');
@@ -1809,8 +1795,10 @@ The deeper implication is that the primary constraint of modern knowledge work i
             if (isDemoPaused || isInteractive) return;
 
             // STEP 2: Click Context chip
-            setStepIndicator(stepIndicator1, false);
-            setStepIndicator(stepIndicator2, true);
+            await fadeStepIndicator(stepIndicator1, 'images/step_01.png');
+            stepIndicator1.classList.remove('active');
+            await fadeStepIndicator(stepIndicator2, 'images/step_02_blue.png');
+            stepIndicator2.classList.add('active');
 
             // Cursor should already be visible at end of text
             // Animate cursor moving from current position to Context chip
@@ -1891,8 +1879,10 @@ The "cost" being described is therefore not the time spent searching for informa
             await typewriterEffect(aiMsg, aiResponse, 0.5);
 
             // After typing is complete, switch to step 3 icon
-            setStepIndicator(stepIndicator2, false);
-            setStepIndicator(stepIndicator3, true);
+            await fadeStepIndicator(stepIndicator2, 'images/step_02.png');
+            stepIndicator2.classList.remove('active');
+            await fadeStepIndicator(stepIndicator3, 'images/step_03_blue.png');
+            stepIndicator3.classList.add('active');
 
             // Hide cursor after panel content is complete
             interactiveCursor.style.display = 'none';
@@ -1966,9 +1956,9 @@ The "cost" being described is therefore not the time spent searching for informa
                         clearTimeout(demoLoopTimeout);
 
                         // Keep all indicators blue in interactive mode
-                        setStepIndicator(stepIndicator1, true);
-                        setStepIndicator(stepIndicator2, true);
-                        setStepIndicator(stepIndicator3, true);
+                        stepIndicator1.src = 'images/step_01_blue.png';
+                        stepIndicator2.src = 'images/step_02_blue.png';
+                        stepIndicator3.src = 'images/step_03_blue.png';
                     }
                 }, 2000);
             }
@@ -2031,38 +2021,6 @@ The "cost" being described is therefore not the time spent searching for informa
             }, true);
         }
 
-        // Pin button toggle
-        const interactivePinBtn = document.getElementById('interactive-pin-btn');
-        let isPinned = false;
-        if (interactivePinBtn) {
-            const pinImg = interactivePinBtn.querySelector('img');
-
-            // Prevent mousedown from triggering drag FIRST (capture phase)
-            interactivePinBtn.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-            }, true);
-
-            // Handle pin button click
-            interactivePinBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-
-                // Toggle pinned state
-                isPinned = !isPinned;
-
-                if (isPinned) {
-                    // Apply blue filter (TANGENT brand blue)
-                    pinImg.style.filter = 'brightness(0) saturate(100%) invert(46%) sepia(96%) saturate(2482%) hue-rotate(196deg) brightness(102%) contrast(101%)';
-                } else {
-                    // Remove filter (back to grey)
-                    pinImg.style.filter = '';
-                }
-            }, true);
-        }
-
         // Make ALL chips in the chip bar clickable to open the panel
         const allDemoChips = interactiveChipBar.querySelectorAll('.chip:not(.chevron-chip)');
         allDemoChips.forEach(chip => {
@@ -2078,9 +2036,9 @@ The "cost" being described is therefore not the time spent searching for informa
                 interactiveCursor.style.display = 'none';
 
                 // Keep all step indicators blue in interactive mode
-                setStepIndicator(stepIndicator1, true);
-                setStepIndicator(stepIndicator2, true);
-                setStepIndicator(stepIndicator3, true);
+                stepIndicator1.src = 'images/step_01_blue.png';
+                stepIndicator2.src = 'images/step_02_blue.png';
+                stepIndicator3.src = 'images/step_03_blue.png';
 
                 // Visual click effect
                 chip.style.transform = 'translateY(2px)';
@@ -2244,9 +2202,9 @@ Each interruption introduces a *subtle cognitive cost*—not in the time spent a
             interactiveCursor.style.display = 'none';
 
             // Keep all step indicators blue in interactive mode
-            setStepIndicator(stepIndicator1, true);
-            setStepIndicator(stepIndicator2, true);
-            setStepIndicator(stepIndicator3, true);
+            stepIndicator1.src = 'images/step_01_blue.png';
+            stepIndicator2.src = 'images/step_02_blue.png';
+            stepIndicator3.src = 'images/step_03_blue.png';
 
             // Check position after a brief delay to see if something else changed it
             setTimeout(() => {
