@@ -536,7 +536,7 @@
 
         .step-indicators img {
             height: auto;
-            max-height: 60px;  /* Increased by 20% from 50px */
+            max-height: 69px;  /* Increased by 15% from 60px */
             width: auto;
             object-fit: contain;
             transition: filter 0.3s ease;
@@ -664,13 +664,34 @@
             padding: 20px;
         }
 
-        .tangent-chat-body::-webkit-scrollbar {
-            width: 6px;
+        .tangent-chat-body::-webkit-scrollbar,
+        #interactive-chat-body::-webkit-scrollbar {
+            width: 12px;
         }
 
-        .tangent-chat-body::-webkit-scrollbar-thumb {
+        .tangent-chat-body::-webkit-scrollbar-track,
+        #interactive-chat-body::-webkit-scrollbar-track {
+            background: transparent;
+            margin-right: 4px;
+        }
+
+        .tangent-chat-body::-webkit-scrollbar-thumb,
+        #interactive-chat-body::-webkit-scrollbar-thumb {
             background-color: rgba(0, 0, 0, 0.2);
             border-radius: 3px;
+            border-right: 4px solid transparent;
+            background-clip: padding-box;
+        }
+
+        /* Minimized panel state - hide everything except header */
+        #interactive-tangent-panel.minimized #interactive-chat-body,
+        #interactive-tangent-panel.minimized > div > div:nth-child(2),
+        #interactive-tangent-panel.minimized > div > div:nth-child(3) {
+            display: none !important;
+        }
+
+        #interactive-tangent-panel.minimized {
+            overflow: visible !important;  /* Allow header to show fully */
         }
 
         .tg-msg {
@@ -997,55 +1018,6 @@
                     <p style="font-size: 32px; line-height: 1.8; color: #4b5563; text-align: justify; margin-bottom: 40px; font-weight: 400;">
                         When technology works this way, expectations change. People stop asking whether something is possible and start asking what else they can do. Work becomes more ambitious. Learning becomes more expansive. Creativity stretches beyond familiar boundaries. That's the real promise here—not faster answers, but new possibilities. When intelligence becomes intuitive, personal, and inspiring, people don't just move quicker. They move further.
                     </p>
-
-                    <!-- Demo Tangent panel -->
-                    <div id="interactive-tangent-panel" style="display: none; position: fixed; left: 50%; transform: translateX(-50%); width: 370px; height: 410px; max-width: 90%; margin-top: 20px; background: linear-gradient(to bottom, #dce4ea 0%, #c4ced6 100%) !important; border-radius: 12px; border-top: 4px solid rgba(255, 255, 255, 0.9) !important; border-left: 4px solid rgba(255, 255, 255, 0.9) !important; border-right: 4px solid rgba(0, 0, 0, 0.35) !important; border-bottom: 4px solid rgba(0, 0, 0, 0.35) !important; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Inter, sans-serif; color: #0f141a; z-index: 9998; overflow: hidden;">
-                        <!-- Pin button (top left, shifted inward and down) -->
-                        <div id="interactive-pin-btn" style="position: absolute; left: 16px; top: 14px; width: 20px; height: 20px; cursor: pointer; z-index: 10; transition: filter 0.2s ease;">
-                            <img src="images/pin_icon.png" alt="Pin" style="width: 20px; height: 20px;">
-                        </div>
-
-                        <!-- Control buttons (top right) -->
-                        <div style="position: absolute; right: 8px; top: 8px; display: flex; gap: 6px; z-index: 10;">
-                            <button id="interactive-minimize-btn" style="width: 20px; height: 20px; border: none; background: transparent; cursor: pointer; padding: 0;">
-                                <img src="images/minimize_icon.png" alt="Minimize" style="width: 20px; height: 20px;">
-                            </button>
-                            <button id="interactive-close-btn" style="width: 20px; height: 20px; border: none; background: transparent; cursor: pointer; padding: 0;">
-                                <img src="images/close_icon.png" alt="Close" style="width: 20px; height: 20px;">
-                            </button>
-                        </div>
-
-                        <!-- Flexbox container for proper layout -->
-                        <div style="display: flex; flex-direction: column; height: 100%; position: relative;">
-                            <!-- Header -->
-                            <div id="interactive-panel-header" style="padding: 12px; text-align: center; flex-shrink: 0;">
-                                <img src="images/tangent_logo_waitlist.png" alt="TANGENT" style="height: 28px; width: auto;">
-                            </div>
-
-                            <!-- Chat messages (flex: 1 to fill available space) -->
-                            <div id="interactive-chat-body" style="padding: 20px; overflow-y: auto; flex: 1;">
-                                <!-- Messages added via JS -->
-                            </div>
-
-                            <!-- Input area (flush to bottom) -->
-                            <div style="padding: 12px 16px; flex-shrink: 0; position: relative;">
-                                <input type="text" id="interactive-chat-input" placeholder="Go on a Tangent..." readonly style="width: 100%; padding: 14px 100px 14px 16px; border-radius: 24px; border: 2px solid #4a90e2; background: rgba(255, 255, 255, 0.9); font-size: 14px; font-style: italic; outline: none; box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);">
-
-                                <!-- Three-dot menu toggle (right of text box, left of send button) -->
-                                <button class="tangent-menu-toggle" aria-label="Menu" style="position: absolute; right: 64px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border: none; background: transparent; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; opacity: 0.6; transition: opacity 0.2s;">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" style="color: #4a4a4a;">
-                                        <circle cx="10" cy="4" r="1.5"/>
-                                        <circle cx="10" cy="10" r="1.5"/>
-                                        <circle cx="10" cy="16" r="1.5"/>
-                                    </svg>
-                                </button>
-
-                                <button id="interactive-chat-send" style="position: absolute; right: 22px; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; border: 2px solid #787878; background: transparent; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);">
-                                    <img src="images/tangent_enter_button.png" alt="Send" style="width: 18px; height: 18px;">
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1063,6 +1035,49 @@
 
     <!-- Toast Notification -->
     <div id="toast"></div>
+
+    <!-- Demo Tangent panel (OUTSIDE .tutorial-content for true fixed positioning) -->
+    <div id="interactive-tangent-panel" style="display: none; position: fixed; width: 370px; height: 410px; max-width: 90%; margin-top: 20px; background: linear-gradient(to bottom, #dce4ea 0%, #c4ced6 100%) !important; border-radius: 12px; border-top: 4px solid rgba(255, 255, 255, 0.9) !important; border-left: 4px solid rgba(255, 255, 255, 0.9) !important; border-right: 4px solid rgba(0, 0, 0, 0.35) !important; border-bottom: 4px solid rgba(0, 0, 0, 0.35) !important; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Inter, sans-serif; color: #0f141a; z-index: 9998; overflow: hidden;">
+        <!-- Pin button (top left, shifted inward and down) -->
+        <div id="interactive-pin-btn" style="position: absolute; left: 16px; top: 14px; width: 20px; height: 20px; cursor: pointer; z-index: 10; transition: filter 0.2s ease;">
+            <img src="images/pin_icon.png" alt="Pin" style="width: 20px; height: 20px;">
+        </div>
+
+        <!-- Control buttons (top right) -->
+        <div style="position: absolute; right: 8px; top: 8px; display: flex; gap: 6px; z-index: 10;">
+            <button id="interactive-minimize-btn" style="width: 20px; height: 20px; border: none; background: transparent; cursor: pointer; padding: 0;">
+                <img src="images/minimize_icon.png" alt="Minimize" style="width: 20px; height: 20px;">
+            </button>
+            <button id="interactive-close-btn" style="width: 20px; height: 20px; border: none; background: transparent; cursor: pointer; padding: 0;">
+                <img src="images/close_icon.png" alt="Close" style="width: 20px; height: 20px;">
+            </button>
+        </div>
+
+        <!-- Flexbox container for proper layout -->
+        <div style="display: flex; flex-direction: column; height: 100%; position: relative;">
+            <!-- Header -->
+            <div id="interactive-panel-header" style="padding: 12px; text-align: center; flex-shrink: 0;">
+                <img src="images/tangent_logo_waitlist.png" alt="TANGENT" style="height: 28px; width: auto;">
+            </div>
+
+            <!-- Chat messages (flex: 1 to fill available space) -->
+            <div id="interactive-chat-body" style="padding: 20px; overflow-y: auto; flex: 1;">
+                <!-- Messages added via JS -->
+            </div>
+
+            <!-- Input area (flush to bottom) -->
+            <div style="padding: 12px 16px; flex-shrink: 0; position: relative;">
+                <input type="text" id="interactive-chat-input" placeholder="Go on a Tangent..." readonly style="width: 100%; padding: 14px 60px 14px 16px; border-radius: 24px; border: 2px solid #4a90e2; background: rgba(255, 255, 255, 0.9); font-size: 14px; font-style: italic; outline: none; box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);">
+
+                <button id="interactive-chat-send" style="position: absolute; right: 22px; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; border: 2px solid #787878; background: transparent; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);">
+                    <img src="images/tangent_enter_button.png" alt="Send" style="width: 18px; height: 18px;">
+                </button>
+            </div>
+        </div>
+
+        <!-- Resize handle (bottom-right corner) -->
+        <div id="interactive-resize-handle" style="position: absolute; bottom: 0; right: 0; width: 20px; height: 20px; cursor: nwse-resize; z-index: 11;"></div>
+    </div>
 
     <!-- Demo cursor (OUTSIDE transformed panel for true fixed positioning) -->
     <div id="interactive-demo-cursor" class="demo-cursor" style="display: none; position: fixed; pointer-events: none; z-index: 10000;">
@@ -1106,6 +1121,17 @@
         const toast = document.getElementById('toast');
 
         let panelExpanded = false;
+
+        // Saved chip bar state (before panel expansion)
+        let savedChipBarState = {
+            position: '',
+            left: '',
+            top: '',
+            transform: '',
+            width: '',
+            display: '',
+            classes: []
+        };
 
         // Utility functions
         function wait(ms) {
@@ -1300,33 +1326,32 @@
             tangentPanel.classList.remove('expanded');
             tutorialContent.style.display = 'none';
 
-            // Hide chip bar with fade-out animation
-            if (chipBar.classList.contains('visible')) {
-                chipBar.classList.remove('visible');
-                setTimeout(() => {
-                    chipBar.style.display = 'none';
-                }, 300); // Wait for fade-out transition
+            // ONLY hide interactive demo panel and chip bar (NOT the main intro chip bar!)
+            const interactiveTangentPanel = document.getElementById('interactive-tangent-panel');
+            const interactiveChipBar = document.getElementById('interactive-chip-bar');
+            if (interactiveTangentPanel) {
+                interactiveTangentPanel.style.display = 'none';
             }
+            if (interactiveChipBar) {
+                interactiveChipBar.style.display = 'none';
+            }
+            // NOTE: We do NOT hide the main intro chip bar (chipBar variable) - that stays visible!
 
             // Reset main text position
             mainText.classList.remove('shifted-up');
-            chipBar.classList.remove('scaled-down');
 
-            // Reset highlight
-            highlightText.classList.remove('highlighted');
+            // Keep highlight on "Tangent" text when panel collapses
+            // (highlighting remains from before panel expansion)
 
-            // Remove highlight animation style if it exists
-            const highlightStyle = document.getElementById('highlight-animation-style');
-            if (highlightStyle) {
-                highlightStyle.remove();
-            }
-
-            // Reset chip bar to initial state
-            emailContainer.style.display = 'none';
-            chipsContainer.style.display = 'flex';
-            chipBar.classList.remove('email-state');
-            chipBar.classList.add('initial-state');
-            emailInput.value = '';
+            // RESTORE chip bar to its exact pre-expansion state
+            chipBar.className = ''; // Clear all classes
+            savedChipBarState.classes.forEach(cls => chipBar.classList.add(cls)); // Restore saved classes
+            chipBar.style.position = savedChipBarState.position;
+            chipBar.style.left = savedChipBarState.left;
+            chipBar.style.top = savedChipBarState.top;
+            chipBar.style.transform = savedChipBarState.transform;
+            chipBar.style.width = savedChipBarState.width;
+            chipBar.style.display = savedChipBarState.display;
 
             // Reset first loop flag when collapsing
             firstLoopComplete = false;
@@ -1350,6 +1375,15 @@
             if (panelExpanded || e.target.closest('.tutorial-content')) {
                 return;
             }
+
+            // SAVE chip bar state BEFORE expansion
+            savedChipBarState.position = chipBar.style.position;
+            savedChipBarState.left = chipBar.style.left;
+            savedChipBarState.top = chipBar.style.top;
+            savedChipBarState.transform = chipBar.style.transform;
+            savedChipBarState.width = chipBar.style.width;
+            savedChipBarState.display = chipBar.style.display;
+            savedChipBarState.classes = Array.from(chipBar.classList);
 
             panelExpanded = true;
             tangentPanel.classList.add('expanded');
@@ -1748,23 +1782,40 @@
             stepIndicator3.classList.add('active');
 
             // Position panel at ABSOLUTE TOP of tutorial content (above step indicators)
-            // BUT ONLY if user hasn't manually moved it
-            if (!userHasMovedPanel) {
+            // BUT ONLY if user hasn't manually moved it AND demo isn't paused AND scroll listener not disabled
+            if (!userHasMovedPanel && !isDemoPaused && !isInteractive && !scrollListenerDisabled) {
                 const chipBarRectForPanel = interactiveChipBar.getBoundingClientRect();
                 const tutorialContent = document.querySelector('.tutorial-content');
                 const tutorialContentRect = tutorialContent.getBoundingClientRect();
 
-                // Position panel at the VERY TOP of the tutorial content area (HIGHER!)
-                interactiveTangentPanel.style.left = (chipBarRectForPanel.left + 150) + 'px';  // More to the right, closer to center
-                interactiveTangentPanel.style.top = (tutorialContentRect.top - 80) + 'px';  // MUCH HIGHER - negative offset pulls it up!
-                interactiveTangentPanel.style.transform = 'none';  // Remove the default translateX(-50%)
+                // DOUBLE CHECK right before modifying styles (in case flags changed during getBoundingClientRect calls)
+                if (!userHasMovedPanel && !isDemoPaused && !isInteractive && !scrollListenerDisabled) {
+                    // Position panel to the right of chip bar and near top of tutorial content
+                    // Now that panel is outside .tutorial-content, position: fixed works correctly!
+                    const calculatedLeft = (chipBarRectForPanel.left + 530);  // Adjusted from 150 (was compensating for old offset)
+                    const calculatedTop = (tutorialContentRect.top + 120);  // Adjusted from -80 (was compensating for old offset)
 
-                console.log('Tangent panel positioned at top of tutorial content:', {
-                    chipBarRect: chipBarRectForPanel,
-                    tutorialContentRect: tutorialContentRect,
-                    panelLeft: (chipBarRectForPanel.left + 150) + 'px',
-                    panelTop: (tutorialContentRect.top - 80) + 'px'
-                });
+                    interactiveTangentPanel.style.left = calculatedLeft + 'px';
+                    interactiveTangentPanel.style.top = calculatedTop + 'px';
+                    interactiveTangentPanel.style.transform = 'none';
+
+                    // IMMEDIATELY check what getBoundingClientRect returns
+                    const verifyRect = interactiveTangentPanel.getBoundingClientRect();
+
+                    console.log('Tangent panel positioned at top of tutorial content:', {
+                        chipBarRect: chipBarRectForPanel,
+                        tutorialContentRect: tutorialContentRect,
+                        calculatedLeft: calculatedLeft,
+                        calculatedTop: calculatedTop,
+                        inlineStyleLeft: interactiveTangentPanel.style.left,
+                        inlineStyleTop: interactiveTangentPanel.style.top,
+                        ACTUAL_rectLeft: verifyRect.left,
+                        ACTUAL_rectTop: verifyRect.top,
+                        MISMATCH: verifyRect.left !== calculatedLeft ? `YES! ${verifyRect.left} !== ${calculatedLeft}` : 'NO'
+                    });
+                } else {
+                    console.log('🛑 Positioning BLOCKED - flags changed during execution!');
+                }
             }
             interactiveTangentPanel.style.display = 'block';
             // Opacity controlled by inline CSS background rgba values (0.7 alpha = 70% transparent for glass blur)
@@ -1787,21 +1838,21 @@ The article mentions this **twice**:
 1. In the *Natural Language Processing* section: "discussions about these systems sometimes go on a tangent regarding whether they truly 'understand' language"
 2. In the *Ethical Considerations* section: "Discussions about AI governance occasionally venture on a tangent concerning whether current regulatory frameworks adequately address emerging technological capabilities"
 **Interestingly**, you're using TANGENT—a browser extension that helps you understand content on web pages by providing instant AI-powered context, just like this! The name is a play on words: while reading can sometimes send you on tangents (digressions), TANGENT helps you stay on track by clarifying confusing terms and concepts.`;
-            await typewriterEffect(aiMsg, aiResponse, 2);  // Using faster speed (2ms)
+            await typewriterEffect(aiMsg, aiResponse, 1);  // Using faster speed (1ms - twice as fast)
 
             // Hide cursor after panel content is complete
             interactiveCursor.style.display = 'none';
             interactiveCursor.style.transition = '';
 
-            await wait(8000);  // INCREASED from 2000ms to 8000ms - linger MUCH longer on final state
+            await wait(8000);  // Linger on final state
 
             if (isDemoPaused || isInteractive) return;
 
             // Mark first loop as complete
             firstLoopComplete = true;
 
-            // Loop again
-            demoLoopTimeout = setTimeout(playInteractiveDemo, 3000);  // Increased pause between loops
+            // Wait at least 30 seconds before looping (30000ms total - 8000ms already waited = 22000ms more)
+            demoLoopTimeout = setTimeout(playInteractiveDemo, 22000);
         }
 
         // Scroll handler - keep chip bar locked to "Tangent" text position
@@ -1829,13 +1880,21 @@ The article mentions this **twice**:
 
                     // Also update Tangent panel position if it's visible (at top of tutorial content)
                     // BUT ONLY if user has NOT manually moved it and is NOT currently dragging it!
-                    if (interactiveTangentPanel.style.display === 'block' && !isDraggingPanel && !userHasMovedPanel) {
-                        const updatedChipBarRect = interactiveChipBar.getBoundingClientRect();
-                        const updatedTutorialContent = document.querySelector('.tutorial-content');
-                        const updatedTutorialContentRect = updatedTutorialContent.getBoundingClientRect();
-                        interactiveTangentPanel.style.left = (updatedChipBarRect.left + 150) + 'px';
-                        interactiveTangentPanel.style.top = (updatedTutorialContentRect.top - 80) + 'px';  // MUCH HIGHER - negative offset
-                    }
+                    // Use requestAnimationFrame to defer until after mousedown completes
+                    // ALSO check scrollListenerDisabled flag (nuclear option)
+                    requestAnimationFrame(() => {
+                        if (scrollListenerDisabled) {
+                            console.log('🚫 Scroll listener disabled - not repositioning panel');
+                            return;
+                        }
+                        if (interactiveTangentPanel.style.display === 'block' && !isDraggingPanel && !userHasMovedPanel) {
+                            const updatedChipBarRect = interactiveChipBar.getBoundingClientRect();
+                            const updatedTutorialContent = document.querySelector('.tutorial-content');
+                            const updatedTutorialContentRect = updatedTutorialContent.getBoundingClientRect();
+                            interactiveTangentPanel.style.left = (updatedChipBarRect.left + 530) + 'px';  // Match new positioning
+                            interactiveTangentPanel.style.top = (updatedTutorialContentRect.top + 120) + 'px';  // Match new positioning
+                        }
+                    });
                 }
             });
         }
@@ -1900,7 +1959,21 @@ The article mentions this **twice**:
                 e.stopPropagation();
                 e.stopImmediatePropagation();
                 console.log('Minimize button clicked');
-                interactiveTangentPanel.style.display = 'none';
+
+                // Toggle minimized state
+                const isMinimized = interactiveTangentPanel.classList.contains('minimized');
+
+                if (isMinimized) {
+                    // Expand back to full size
+                    interactiveTangentPanel.classList.remove('minimized');
+                    interactiveTangentPanel.style.height = '410px';
+                    interactiveTangentPanel.style.width = '370px';
+                } else {
+                    // Minimize to just header bar
+                    interactiveTangentPanel.classList.add('minimized');
+                    interactiveTangentPanel.style.height = '52px';  // Just tall enough for header
+                    interactiveTangentPanel.style.width = '252px';  // Match reference width
+                }
             }, true);
         }
 
@@ -1960,6 +2033,29 @@ The article mentions this **twice**:
         let panelDragOffsetY = 0;
         let savedPanelLeft = 0;  // Save position at mousedown
         let savedPanelTop = 0;
+        let lockPositionLoop = null;  // RAF loop to continuously lock position
+        let scrollListenerDisabled = false;  // NUCLEAR option to completely disable scroll repositioning
+        let lastHeaderClickTime = 0;  // For double-click detection
+
+        // Double-click header to minimize
+        interactiveTangentPanel.addEventListener('dblclick', (e) => {
+            if (e.target.closest('#interactive-panel-header')) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Trigger minimize toggle
+                const isMinimized = interactiveTangentPanel.classList.contains('minimized');
+                if (isMinimized) {
+                    interactiveTangentPanel.classList.remove('minimized');
+                    interactiveTangentPanel.style.height = '410px';
+                    interactiveTangentPanel.style.width = '370px';
+                } else {
+                    interactiveTangentPanel.classList.add('minimized');
+                    interactiveTangentPanel.style.height = '52px';
+                    interactiveTangentPanel.style.width = '252px';
+                }
+            }
+        });
 
         interactiveTangentPanel.addEventListener('mousedown', (e) => {
             // ONLY allow dragging from the header area - must be inside header
@@ -1974,20 +2070,66 @@ The article mentions this **twice**:
                 return;
             }
 
+            // NUCLEAR: Disable scroll listener FIRST, before anything else
+            scrollListenerDisabled = true;
+            console.log('💣 SCROLL LISTENER DISABLED');
+
+            console.log('🎯 MOUSEDOWN START');
+
             // CRITICAL: Capture current position IMMEDIATELY before anything else
             const panelRect = interactiveTangentPanel.getBoundingClientRect();
             savedPanelLeft = panelRect.left;
             savedPanelTop = panelRect.top;
 
+            // Check inline styles AND computed styles
+            const computedStyle = window.getComputedStyle(interactiveTangentPanel);
+            console.log('📍 Captured position:', {
+                rectLeft: savedPanelLeft,
+                rectTop: savedPanelTop,
+                inlineLeft: interactiveTangentPanel.style.left,
+                inlineTop: interactiveTangentPanel.style.top,
+                computedLeft: computedStyle.left,
+                computedTop: computedStyle.top,
+                computedTransform: computedStyle.transform,
+                mouseX: e.clientX,
+                mouseY: e.clientY,
+                DIFF: `inline ${interactiveTangentPanel.style.left} → rect ${savedPanelLeft}px = +${(savedPanelLeft - parseFloat(interactiveTangentPanel.style.left)).toFixed(1)}px mystery offset!`
+            });
+
+            // 🔍 DEBUG: Check if any ancestor creates containing block for position:fixed
+            let ancestorEl = interactiveTangentPanel;
+            console.log('🔍 CHECKING ALL ANCESTORS FOR CONTAINING BLOCK:');
+            while (ancestorEl = ancestorEl.parentElement) {
+                const ancestorComputed = window.getComputedStyle(ancestorEl);
+                const elementName = ancestorEl.id || ancestorEl.className || ancestorEl.tagName;
+                if (ancestorComputed.transform !== 'none' ||
+                    ancestorComputed.perspective !== 'none' ||
+                    ancestorComputed.filter !== 'none' ||
+                    ancestorComputed.backdropFilter !== 'none' ||
+                    ancestorComputed.willChange !== 'auto') {
+                    console.log('⚠️ CONTAINING BLOCK FOUND:', {
+                        element: elementName,
+                        transform: ancestorComputed.transform,
+                        perspective: ancestorComputed.perspective,
+                        filter: ancestorComputed.filter,
+                        backdropFilter: ancestorComputed.backdropFilter,
+                        willChange: ancestorComputed.willChange,
+                        position: ancestorComputed.position
+                    });
+                } else if (elementName.includes('tutorial')) {
+                    console.log(`✓ Ancestor: ${elementName} (position: ${ancestorComputed.position}, overflow: ${ancestorComputed.overflow})`);
+                }
+            }
+
             // Calculate offset from mouse to panel's current position
             panelDragOffsetX = e.clientX - savedPanelLeft;
             panelDragOffsetY = e.clientY - savedPanelTop;
 
-            // NOW set flags to prevent repositioning
+            // Set flags to indicate ready to drag
             isDraggingPanel = true;
             userHasMovedPanel = true;
 
-            // PAUSE THE DEMO immediately when starting to drag
+            // PAUSE THE DEMO immediately
             isDemoPaused = true;
             isInteractive = true;
             clearTimeout(demoLoopTimeout);
@@ -2000,10 +2142,14 @@ The article mentions this **twice**:
             stepIndicator2.src = 'images/step_02_blue.png';
             stepIndicator3.src = 'images/step_03_blue.png';
 
-            // Force panel to stay at saved position
-            interactiveTangentPanel.style.left = savedPanelLeft + 'px';
-            interactiveTangentPanel.style.top = savedPanelTop + 'px';
-            interactiveTangentPanel.style.transform = 'none';
+            // Check position after a brief delay to see if something else changed it
+            setTimeout(() => {
+                const checkRect = interactiveTangentPanel.getBoundingClientRect();
+                console.log('⏱️ Position after 10ms:', { left: checkRect.left, top: checkRect.top });
+                if (Math.abs(checkRect.left - savedPanelLeft) > 1 || Math.abs(checkRect.top - savedPanelTop) > 1) {
+                    console.error('❌ POSITION CHANGED! Something else moved it!');
+                }
+            }, 10);
 
             // Change cursor to grabbing on the whole panel while dragging
             interactiveTangentPanel.style.cursor = 'grabbing';
@@ -2029,6 +2175,51 @@ The article mentions this **twice**:
                 isDraggingPanel = false;
                 // Reset cursor to default (will show move cursor when hovering over header)
                 interactiveTangentPanel.style.cursor = '';
+            }
+        });
+
+        // Resize functionality
+        const interactiveResizeHandle = document.getElementById('interactive-resize-handle');
+        let isResizing = false;
+        let resizeStartX = 0;
+        let resizeStartY = 0;
+        let resizeStartWidth = 0;
+        let resizeStartHeight = 0;
+
+        if (interactiveResizeHandle) {
+            interactiveResizeHandle.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                isResizing = true;
+                resizeStartX = e.clientX;
+                resizeStartY = e.clientY;
+                resizeStartWidth = interactiveTangentPanel.offsetWidth;
+                resizeStartHeight = interactiveTangentPanel.offsetHeight;
+
+                document.body.style.cursor = 'nwse-resize';
+                document.body.style.userSelect = 'none';
+            });
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+
+            const deltaX = e.clientX - resizeStartX;
+            const deltaY = e.clientY - resizeStartY;
+
+            const newWidth = Math.max(300, resizeStartWidth + deltaX);  // Min width 300px
+            const newHeight = Math.max(250, resizeStartHeight + deltaY);  // Min height 250px
+
+            interactiveTangentPanel.style.width = newWidth + 'px';
+            interactiveTangentPanel.style.height = newHeight + 'px';
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isResizing) {
+                isResizing = false;
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
             }
         });
 
