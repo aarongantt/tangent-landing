@@ -1069,8 +1069,8 @@ The deeper implication is that the primary constraint of modern knowledge work i
     <!-- Demo Tangent panel (OUTSIDE .tutorial-content for true fixed positioning) -->
     <div id="interactive-tangent-panel" style="display: none; position: fixed; width: 370px; height: 410px; max-width: 90%; margin-top: 20px; background: linear-gradient(to bottom, #dce4ea 0%, #c4ced6 100%) !important; border-radius: 12px; border-top: 4px solid rgba(255, 255, 255, 0.9) !important; border-left: 4px solid rgba(255, 255, 255, 0.9) !important; border-right: 4px solid rgba(0, 0, 0, 0.35) !important; border-bottom: 4px solid rgba(0, 0, 0, 0.35) !important; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Inter, sans-serif; color: #0f141a; z-index: 9998; overflow: hidden;">
         <!-- Pin button (top left, shifted inward and down) -->
-        <div id="interactive-pin-btn" style="position: absolute; left: 16px; top: 14px; width: 20px; height: 20px; cursor: pointer; z-index: 10; transition: filter 0.2s ease;">
-            <img src="images/pin_icon.png" alt="Pin" style="width: 20px; height: 20px;">
+        <div id="interactive-pin-btn" style="position: absolute; left: 16px; top: 14px; width: 20px; height: 20px; cursor: pointer; z-index: 10;">
+            <img src="images/pin_icon.png" alt="Pin" style="width: 20px; height: 20px; transition: filter 0.3s ease;">
         </div>
 
         <!-- Control buttons (top right) -->
@@ -2027,6 +2027,38 @@ The "cost" being described is therefore not the time spent searching for informa
                     interactiveTangentPanel.classList.add('minimized');
                     interactiveTangentPanel.style.height = '52px';  // Just tall enough for header
                     interactiveTangentPanel.style.width = '252px';  // Match reference width
+                }
+            }, true);
+        }
+
+        // Pin button toggle
+        const interactivePinBtn = document.getElementById('interactive-pin-btn');
+        let isPinned = false;
+        if (interactivePinBtn) {
+            const pinImg = interactivePinBtn.querySelector('img');
+
+            // Prevent mousedown from triggering drag FIRST (capture phase)
+            interactivePinBtn.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+            }, true);
+
+            // Handle pin button click
+            interactivePinBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+
+                // Toggle pinned state
+                isPinned = !isPinned;
+
+                if (isPinned) {
+                    // Apply blue filter (TANGENT brand blue)
+                    pinImg.style.filter = 'brightness(0) saturate(100%) invert(46%) sepia(96%) saturate(2482%) hue-rotate(196deg) brightness(102%) contrast(101%)';
+                } else {
+                    // Remove filter (back to grey)
+                    pinImg.style.filter = '';
                 }
             }, true);
         }
