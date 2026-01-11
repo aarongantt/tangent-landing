@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tangent Interactive Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* EXACT MATCH with Giant Tangent Panel gradient from index.html */
+            background: linear-gradient(
+                to bottom,
+                #c8d4dc 0%,
+                #a0b0bc 100%
+            );
+            color: #1a1a1a;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.8;
+            padding: 60px 80px;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* Fade overlays */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            left: 0;
+            right: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        body::before {
+            top: 0;
+            height: 150px;
+            background: linear-gradient(
+                to bottom,
+                #c8d4dc 0%,
+                #c8d4dc 40%,
+                rgba(200, 212, 220, 0.5) 70%,
+                rgba(200, 212, 220, 0) 100%
+            );
+        }
+
+        body::after {
+            bottom: 0;
+            height: 150px;
+            background: linear-gradient(
+                to top,
+                #a0b0bc 0%,
+                #a0b0bc 40%,
+                rgba(160, 176, 188, 0.5) 70%,
+                rgba(160, 176, 188, 0) 100%
+            );
+        }
+
+        .container {
+            max-width: 960px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0;
+            background-color: transparent;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            font-weight: 600;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            color: #2a2a2a;
+            letter-spacing: -0.3px;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            color: #3a3a3a;
+            text-align: justify;
+        }
+
+        /* Text highlight for demo */
+        .highlight-demo {
+            position: relative;
+            background: #6eb6fe;
+            padding: 0 4px;
+            border-radius: 2px;
+        }
+
+        /* Step indicators at top */
+        .step-indicators {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+            z-index: 100;
+        }
+
+        .step-indicators img {
+            height: 60px;
+            width: auto;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Chip Bar */
+        .chip-bar {
+            position: fixed;
+            z-index: 150;
+            display: none;
+            gap: 9px;
+            padding: 9px 21px;
+            background: linear-gradient(to bottom, #dce4ea 0%, #c4ced6 100%);
+            border: 3px solid rgba(109, 109, 109, 0.494);
+            border-radius: 21px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .chip-bar.visible {
+            display: flex;
+            opacity: 1;
+        }
+
+        .chip {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+            font-weight: 600;
+            font-size: 1.5em;
+            line-height: 1.2;
+            padding: 9px 15px;
+            border-radius: 999px;
+            border: 3px solid rgba(109, 109, 109, 0.494);
+            background: rgba(255, 255, 255, 1);
+            color: #111;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.15s ease;
+        }
+
+        .chip:hover {
+            background: rgba(255, 255, 255, 0.96);
+        }
+
+        .chip-icon {
+            padding: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 48px;
+        }
+
+        .chip-icon img {
+            width: 27px;
+            height: 27px;
+        }
+
+        /* Tangent Chat Panel */
+        .tangent-panel {
+            position: fixed;
+            left: 50%;
+            bottom: -100%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 500px;
+            background: linear-gradient(to bottom, #c8d4dc 0%, #a0b0bc 100%);
+            border-radius: 16px;
+            border: 3px solid rgba(109, 109, 109, 0.494);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transition: bottom 0.6s ease, opacity 0.6s ease;
+        }
+
+        .tangent-panel.visible {
+            bottom: 50px;
+            opacity: 1;
+        }
+
+        .tangent-panel.interactive {
+            cursor: move;
+        }
+
+        .tangent-panel__header {
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .tangent-panel__header img {
+            height: 80px;
+            width: auto;
+        }
+
+        .tangent-panel__btns {
+            display: flex;
+            gap: 15px;
+        }
+
+        .tangent-panel__btns button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .tangent-panel__btns button:hover {
+            opacity: 1;
+        }
+
+        .tangent-panel__btns button img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .tangent-panel__body {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .tangent-message {
+            margin-bottom: 20px;
+        }
+
+        .tangent-message.user {
+            text-align: right;
+        }
+
+        .tangent-message.ai {
+            text-align: left;
+        }
+
+        .tangent-message__bubble {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 12px;
+            max-width: 80%;
+        }
+
+        .tangent-message.user .tangent-message__bubble {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1a1a1a;
+        }
+
+        .tangent-message.ai .tangent-message__bubble {
+            background: rgba(0, 0, 0, 0.05);
+            color: #2a2a2a;
+        }
+
+        .tangent-panel__input {
+            padding: 20px 30px;
+            border-top: 2px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 10px;
+        }
+
+        .tangent-panel__input input {
+            flex: 1;
+            padding: 12px 18px;
+            border-radius: 24px;
+            border: 2px solid rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            outline: none;
+        }
+
+        .tangent-panel__input button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.9);
+            cursor: pointer;
+        }
+
+        /* Cursor */
+        .demo-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+
+        .demo-cursor img {
+            width: 40px;
+            height: auto;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .demo-cursor.visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Step indicators -->
+    <div class="step-indicators">
+        <img id="step1-indicator" src="images/step_01.png" alt="Step 1">
+        <img id="step2-indicator" src="images/step_02.png" alt="Step 2">
+        <img id="step3-indicator" src="images/step_03.png" alt="Step 3">
+    </div>
+
+    <!-- Article content -->
+    <div class="container">
+        <h1>Understanding Modern Artificial Intelligence</h1>
+
+        <p>Artificial intelligence has evolved from theoretical computer science concepts into practical systems that influence numerous aspects of daily life. From voice assistants to recommendation algorithms, AI technologies demonstrate <span id="demo-highlight">remarkable capabilities in pattern recognition, natural language processing, and decision-making</span> tasks. The fundamental architecture underlying many modern AI systems relies on neural networks—computational models inspired by biological neural structures that process information through interconnected layers of artificial neurons.</p>
+
+        <h2>The Evolution of Machine Learning</h2>
+
+        <p>Machine learning represents a subset of artificial intelligence focused on systems that improve through experience without explicit programming for every scenario. Traditional programming requires developers to specify exact rules and logic, whereas machine learning algorithms discover patterns and relationships within data autonomously.</p>
+
+        <p>The progression from rule-based systems to statistical learning methods marked a fundamental transformation in computational problem-solving approaches. Early AI researchers believed that encoding human knowledge into logical rules would suffice for creating intelligent systems.</p>
+
+        <h2>Neural Networks and Deep Learning</h2>
+
+        <p>Deep neural networks consist of multiple processing layers that transform input data through successive mathematical operations. Each layer extracts increasingly abstract features—initial layers might detect edges and textures in images, while deeper layers recognize shapes, objects, and semantic concepts.</p>
+
+        <p>The training process for neural networks involves iteratively adjusting millions of connection weights to minimize prediction errors. During training, the network processes examples from a dataset, compares its outputs against known correct answers, and modifies its internal parameters to improve future predictions.</p>
+    </div>
+
+    <!-- Chip bar -->
+    <div id="chip-bar" class="chip-bar">
+        <button class="chip chip-icon">
+            <img src="images/tangent_t_logo.png" alt="T">
+        </button>
+        <button class="chip" id="context-chip">Context</button>
+        <button class="chip">Who is...</button>
+        <button class="chip">Summarize</button>
+    </div>
+
+    <!-- Tangent panel -->
+    <div id="tangent-panel" class="tangent-panel">
+        <div class="tangent-panel__header">
+            <img src="images/tangent_logo_waitlist.png" alt="TANGENT">
+            <div class="tangent-panel__btns">
+                <button id="minimize-btn"><img src="images/minimize_icon.png" alt="Minimize"></button>
+                <button id="close-btn"><img src="images/close_icon.png" alt="Close"></button>
+            </div>
+        </div>
+        <div class="tangent-panel__body" id="panel-body">
+            <!-- Messages will be added here -->
+        </div>
+        <div class="tangent-panel__input">
+            <input type="text" placeholder="Ask a question..." readonly>
+            <button><img src="images/tangent_enter_button.png" alt="Send"></button>
+        </div>
+    </div>
+
+    <!-- Demo cursor -->
+    <div id="demo-cursor" class="demo-cursor">
+        <img src="images/cursor.png" alt="Cursor">
+    </div>
+
+    <script>
+        // State
+        let animationLoop = null;
+        let isInteractive = false;
+        let isPaused = false;
+        let dragState = null;
+
+        // Elements
+        const chipBar = document.getElementById('chip-bar');
+        const tangentPanel = document.getElementById('tangent-panel');
+        const demoCursor = document.getElementById('demo-cursor');
+        const demoHighlight = document.getElementById('demo-highlight');
+        const step1Indicator = document.getElementById('step1-indicator');
+        const step2Indicator = document.getElementById('step2-indicator');
+        const step3Indicator = document.getElementById('step3-indicator');
+        const contextChip = document.getElementById('context-chip');
+        const panelBody = document.getElementById('panel-body');
+        const closeBtn = document.getElementById('close-btn');
+        const minimizeBtn = document.getElementById('minimize-btn');
+
+        // Demo sequence
+        async function playDemoSequence() {
+            if (isPaused || isInteractive) return;
+
+            // Reset
+            resetDemo();
+
+            await sleep(1000);
+
+            // STEP 1: Highlight text and show chip bar
+            step1Indicator.src = 'images/step_01_blue.png';
+            demoHighlight.classList.add('highlight-demo');
+            await sleep(800);
+
+            const rect = demoHighlight.getBoundingClientRect();
+            chipBar.style.left = rect.left + 'px';
+            chipBar.style.top = (rect.bottom + 10) + 'px';
+            chipBar.classList.add('visible');
+            await sleep(1500);
+
+            if (isPaused || isInteractive) return;
+
+            // STEP 2: Click Context chip
+            step1Indicator.src = 'images/step_01.png';
+            step2Indicator.src = 'images/step_02_blue.png';
+
+            // Animate cursor to Context chip
+            const chipRect = contextChip.getBoundingClientRect();
+            demoCursor.classList.add('visible');
+            demoCursor.style.left = chipRect.left + chipRect.width / 2 + 'px';
+            demoCursor.style.top = chipRect.top + chipRect.height / 2 + 'px';
+            await sleep(600);
+
+            // Click effect
+            contextChip.style.transform = 'translateY(2px)';
+            await sleep(100);
+            contextChip.style.transform = '';
+            await sleep(800);
+
+            if (isPaused || isInteractive) return;
+
+            // STEP 3: Show Tangent panel
+            step2Indicator.src = 'images/step_02.png';
+            step3Indicator.src = 'images/step_03_blue.png';
+
+            tangentPanel.classList.add('visible');
+            demoCursor.classList.remove('visible');
+
+            // Add messages
+            await sleep(500);
+            addMessage('user', 'Tell me more about this.');
+            await sleep(800);
+            addMessage('ai', 'AI technologies demonstrate remarkable capabilities in pattern recognition, natural language processing, and decision-making through neural networks. These systems learn from data rather than following pre-programmed rules, enabling them to adapt and improve over time.');
+
+            await sleep(3000);
+
+            if (isPaused || isInteractive) return;
+
+            // Loop
+            animationLoop = setTimeout(playDemoSequence, 2000);
+        }
+
+        function resetDemo() {
+            demoHighlight.classList.remove('highlight-demo');
+            chipBar.classList.remove('visible');
+            tangentPanel.classList.remove('visible');
+            demoCursor.classList.remove('visible');
+            panelBody.innerHTML = '';
+            step1Indicator.src = 'images/step_01.png';
+            step2Indicator.src = 'images/step_02.png';
+            step3Indicator.src = 'images/step_03.png';
+        }
+
+        function addMessage(type, text) {
+            const msg = document.createElement('div');
+            msg.className = `tangent-message ${type}`;
+            msg.innerHTML = `<div class="tangent-message__bubble">${text}</div>`;
+            panelBody.appendChild(msg);
+            panelBody.scrollTop = panelBody.scrollHeight;
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Mouse hover detection
+        document.addEventListener('mousemove', () => {
+            if (!isInteractive && !isPaused) {
+                isPaused = true;
+                // Let current animation finish, then enable interaction
+                setTimeout(() => {
+                    isInteractive = true;
+                    tangentPanel.classList.add('interactive');
+                    clearTimeout(animationLoop);
+                }, 2000);
+            }
+        });
+
+        // Panel dragging
+        tangentPanel.addEventListener('mousedown', (e) => {
+            if (!isInteractive) return;
+            if (e.target.closest('.tangent-panel__btns')) return;
+
+            dragState = {
+                startX: e.clientX - tangentPanel.offsetLeft,
+                startY: e.clientY - tangentPanel.offsetTop
+            };
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!dragState) return;
+            tangentPanel.style.left = (e.clientX - dragState.startX) + 'px';
+            tangentPanel.style.top = (e.clientY - dragState.startY) + 'px';
+            tangentPanel.style.transform = 'none';
+        });
+
+        document.addEventListener('mouseup', () => {
+            dragState = null;
+        });
+
+        // Close button
+        closeBtn.addEventListener('click', () => {
+            if (!isInteractive) return;
+            tangentPanel.classList.remove('visible');
+        });
+
+        // Minimize button
+        minimizeBtn.addEventListener('click', () => {
+            if (!isInteractive) return;
+            tangentPanel.style.height = '80px';
+            tangentPanel.querySelector('.tangent-panel__body').style.display = 'none';
+            tangentPanel.querySelector('.tangent-panel__input').style.display = 'none';
+        });
+
+        // Reopen via chip
+        contextChip.addEventListener('click', () => {
+            if (!isInteractive) return;
+            tangentPanel.classList.add('visible');
+            tangentPanel.style.height = '500px';
+            tangentPanel.querySelector('.tangent-panel__body').style.display = 'block';
+            tangentPanel.querySelector('.tangent-panel__input').style.display = 'flex';
+        });
+
+        // Start demo on load
+        window.addEventListener('load', () => {
+            setTimeout(playDemoSequence, 1000);
+        });
+    </script>
+</body>
+</html>
