@@ -44,7 +44,7 @@
 
         #main-text.shifted-up {
             top: 40px;
-            font-size: 40.8px;  /* 48px reduced by 15% = 40.8px */
+            font-size: 40.8px;
         }
 
         #main-text span {
@@ -219,9 +219,9 @@
         }
 
         .demo-section .chevron-chip {
-            padding: 3px 5px 2px 5px;  /* Further reduced padding to decrease height */
+            padding: 3px 5px 2px 5px;
             min-width: 27px;
-            min-height: 18px;  /* Further reduced from 22px to make button even shorter */
+            min-height: 18px;
         }
 
         .chevron-chip img {
@@ -527,19 +527,19 @@
         /* Step indicators - 3 images in a row */
         .step-indicators {
             display: flex;
-            justify-content: center;
+            justify-content: space-evenly;  /* Automatically distributes space evenly - fully dynamic! */
             align-items: center;
-            gap: 150px;  /* Increased from 120px to spread them out more */
             margin-top: 20px;
             margin-bottom: 30px;
+            padding: 0 20px;  /* Prevent icons from touching edges on narrow screens */
         }
 
         .step-indicators img {
             height: auto;
-            max-height: 69px;  /* Increased by 15% from 60px */
+            max-height: clamp(45px, 5.5vw, 69px);  /* Flexible size: 45px min, 69px max, scales with viewport */
             width: auto;
             object-fit: contain;
-            transition: filter 0.3s ease;
+            transition: filter 0.3s ease, max-height 0.3s ease;
         }
 
         /* No glow effect on step icons */
@@ -1069,7 +1069,7 @@
             <div style="padding: 12px 16px; flex-shrink: 0; position: relative;">
                 <input type="text" id="interactive-chat-input" placeholder="Go on a Tangent..." readonly style="width: 100%; padding: 14px 60px 14px 16px; border-radius: 24px; border: 2px solid #4a90e2; background: rgba(255, 255, 255, 0.9); font-size: 14px; font-style: italic; outline: none; box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);">
 
-                <button id="interactive-chat-send" style="position: absolute; right: 22px; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; border: 2px solid #787878; background: transparent; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);">
+                <button id="interactive-chat-send" style="position: absolute; right: 22px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 50%; border: 2px solid #787878; background: transparent; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);">
                     <img src="images/tangent_enter_button.png" alt="Send" style="width: 18px; height: 18px;">
                 </button>
             </div>
@@ -1326,7 +1326,7 @@
             tangentPanel.classList.remove('expanded');
             tutorialContent.style.display = 'none';
 
-            // ONLY hide interactive demo panel and chip bar (NOT the main intro chip bar!)
+            // Hide interactive demo elements
             const interactiveTangentPanel = document.getElementById('interactive-tangent-panel');
             const interactiveChipBar = document.getElementById('interactive-chip-bar');
             if (interactiveTangentPanel) {
@@ -1335,17 +1335,13 @@
             if (interactiveChipBar) {
                 interactiveChipBar.style.display = 'none';
             }
-            // NOTE: We do NOT hide the main intro chip bar (chipBar variable) - that stays visible!
 
             // Reset main text position
             mainText.classList.remove('shifted-up');
 
-            // Keep highlight on "Tangent" text when panel collapses
-            // (highlighting remains from before panel expansion)
-
-            // RESTORE chip bar to its exact pre-expansion state
-            chipBar.className = ''; // Clear all classes
-            savedChipBarState.classes.forEach(cls => chipBar.classList.add(cls)); // Restore saved classes
+            // Restore chip bar to pre-expansion state
+            chipBar.className = '';
+            savedChipBarState.classes.forEach(cls => chipBar.classList.add(cls));
             chipBar.style.position = savedChipBarState.position;
             chipBar.style.left = savedChipBarState.left;
             chipBar.style.top = savedChipBarState.top;
@@ -1376,7 +1372,7 @@
                 return;
             }
 
-            // SAVE chip bar state BEFORE expansion
+            // Save chip bar state before expansion
             savedChipBarState.position = chipBar.style.position;
             savedChipBarState.left = chipBar.style.left;
             savedChipBarState.top = chipBar.style.top;
