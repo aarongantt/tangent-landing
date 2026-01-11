@@ -1613,6 +1613,10 @@ The deeper implication is that the primary constraint of modern knowledge work i
 
         // Helper to toggle step indicators (crossfade between grey and blue)
         function toggleStepIndicator(stepElement, active) {
+            if (!stepElement) {
+                console.error('[toggleStepIndicator] stepElement is null or undefined');
+                return;
+            }
             if (active) {
                 stepElement.classList.add('active');
             } else {
