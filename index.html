@@ -1573,6 +1573,11 @@ The deeper implication is that the primary constraint of modern knowledge work i
                 return;
             }
 
+            // Check if mobile - if so, skip desktop logic (mobile handler will run)
+            if (window.innerWidth <= 768) {
+                return;
+            }
+
             // Save chip bar state before expansion
             savedChipBarState.position = chipBar.style.position;
             savedChipBarState.left = chipBar.style.left;
