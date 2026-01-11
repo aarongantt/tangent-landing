@@ -940,8 +940,8 @@
             <button class="chip chip-icon" id="t-chip">
                 <img src="images/tangent_t_logo.png" alt="T">
             </button>
+            <button class="chip">What is...</button>
             <button class="chip">Context</button>
-            <button class="chip">Who is...</button>
             <button class="chip">Summarize</button>
             <button class="chip chip-icon chevron-chip" id="chevron-chip">
                 <img src="images/chevron_down_arrow.png" alt="More">
@@ -1004,15 +1004,23 @@
                 <!-- Article content (large text block) -->
                 <div id="demo-content-container" style="max-width: 900px; margin: 0 auto; padding: 120px 0 120px 0; position: relative;">
                     <p style="font-size: 32px; line-height: 1.8; color: #4b5563; text-align: justify; margin-bottom: 40px; font-weight: 400;">
-                        Technology only matters when it unlocks something fundamentally new—when it removes a limitation people didn't even realize they were living with. Too much modern software adds complexity instead of dissolving it, power instead of clarity. Real innovation does the opposite. It takes something impossibly sophisticated and makes it feel obvious, even inevitable. The goal isn't to impress users with what technology can do, but to empower them to do things they simply couldn't do before.
+                        In practice, progress is driven less by speed than by continuity—the ability to remain oriented within a developing line of thought while integrating new information without losing one's place. Knowledge work advances not because individual steps are efficient in isolation, but because each step remains coherently connected to the last. This coherence depends on a fragile internal structure: a working mental model that keeps track of what question is being addressed, what assumptions are active, what has already been established, and why the current passage matters. When this structure holds, complexity feels navigable. When it degrades, even simple material can feel resistant.
                     </p>
 
                     <p style="font-size: 32px; line-height: 1.8; color: #4b5563; text-align: justify; margin-bottom: 40px; font-weight: 400;">
-                        Artificial intelligence is one of the most powerful tools ever created, but raw power alone isn't the point. Power without intuition creates distance. Power without humanity creates friction. What people actually want is the feeling of momentum—ideas flowing without interruption, curiosity turning into understanding without effort. The best tools disappear into the background and let the user step forward, confident, capable, and focused on what matters.
+                        Disruptions to this process rarely come from lack of intelligence or motivation. More often, they arise from small gaps in context: an unfamiliar term, an implicit reference, or an assumption left unstated by the author. These gaps are minor in absolute terms, but they introduce local uncertainty that the reader cannot simply ignore. Progress pauses not because the reader has disengaged, but because coherence has been compromised.
+                    </p>
+
+                    <p style="font-size: 32px; line-height: 1.8; color: #4b5563; text-align: justify; margin-bottom: 40px; font-weight: 400;">
+                        <span id="demo-highlight-text" style="position: relative; display: inline;">Subtle cognitive cost</span> appears at precisely this moment. The standard response is to leave the page in search of clarification. In isolation, this is rational and often necessary. But at the level of sustained thought, each departure fragments attention and imposes a hidden tax. The reader must suspend the current line of reasoning, shift into a different informational frame, acquire the missing detail, and then return to the original material. What follows is not a clean continuation but an act of reconstruction: rebuilding the internal state that made the work intelligible in the first place.
                     </p>
 
                     <p id="tangent-paragraph" style="font-size: 32px; line-height: 1.8; color: #4b5563; text-align: justify; margin-bottom: 40px; font-weight: 400;">
-                        This is where <span id="demo-highlight-text" style="position: relative; display: inline;">Tangent</span> exists, not as a feature or an overlay, but as a rethinking of how people interact with intelligence itself. Midway through using it, something clicks: Tangent takes raw AI capability and reshapes it into something personal, immediate, and almost invisible. It doesn't ask users to learn a new system or adapt their thinking. It adapts to them, meeting their curiosity exactly where it lives and turning moments of uncertainty into moments of discovery.
+                        That reconstruction involves reassembling several things at once: what was being argued or explored, why it mattered, how far the thinking had progressed, where the new information belongs. The deeper and more intricate the original mental model, the more expensive this reconstruction becomes. Importantly, the cost is nonlinear. A series of small interruptions can be more damaging than a single large one, because each switch partially collapses the internal structure that supports continuity. Over time, this erosion manifests as declining momentum, weakened confidence in the thread, and a growing sense that the work is heavier than it should be.
+
+This state is often mistaken for fatigue or loss of interest. In reality, it is a structural failure. The mind is being forced to repeatedly rebuild a partially collapsed framework, and what feels like exhaustion is often just cumulative reconstruction effort. The work has not become harder; the conditions that allow sustained thought have been undermined.
+
+The deeper implication is that the primary constraint of modern knowledge work is not information access or processing speed, but context preservation. Tools, texts, and systems that optimize for volume, immediacy, or breadth while ignoring continuity impose hidden costs on thinking. They may increase local efficiency, but they do so by quietly taxing the very structures that make deep, sustained understanding possible. Until this tradeoff is taken seriously, most attempts to improve knowledge work will continue to optimize the surface of the process while eroding its foundation.
                     </p>
 
                     <p style="font-size: 32px; line-height: 1.8; color: #4b5563; text-align: justify; margin-bottom: 40px; font-weight: 400;">
@@ -1070,8 +1078,16 @@
                 <input type="text" id="interactive-chat-input" placeholder="Go on a Tangent..." readonly style="width: 100%; padding: 14px 60px 14px 16px; border-radius: 24px; border: 2px solid #4a90e2; background: rgba(255, 255, 255, 0.9); font-size: 14px; font-style: italic; outline: none; box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);">
 
                 <button id="interactive-chat-send" style="position: absolute; right: 22px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 50%; border: 2px solid #787878; background: transparent; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);">
-                    <img src="images/tangent_enter_button.png" alt="Send" style="width: 18px; height: 18px;">
+                    <img id="interactive-chat-send-icon" src="images/tangent_enter_button.png" alt="Send" style="width: 18px; height: 18px;">
                 </button>
+                <style>
+                    /* Make stop icon grey and smaller */
+                    #interactive-chat-send-icon[src*="stop.svg"] {
+                        width: 12px !important;
+                        height: 12px !important;
+                        filter: invert(48%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(95%) contrast(85%);
+                    }
+                </style>
             </div>
         </div>
 
@@ -1090,8 +1106,8 @@
             <button class="chip chip-icon" style="padding: 6px; min-width: 32px;">
                 <img src="images/tangent_t_logo.png" alt="T" style="width: 18px; height: 18px;">
             </button>
-            <button class="chip" id="interactive-context-chip" style="font-size: 1em; padding: 6px 10px;">Context</button>
-            <button class="chip" style="font-size: 1em; padding: 6px 10px;">Who is...</button>
+            <button class="chip" id="interactive-context-chip" style="font-size: 1em; padding: 6px 10px;">What is...</button>
+            <button class="chip" style="font-size: 1em; padding: 6px 10px;">Context</button>
             <button class="chip" style="font-size: 1em; padding: 6px 10px;">Summarize</button>
             <button class="chip chip-icon chevron-chip" style="padding: 5px; min-width: 27px; min-height: 27px;">
                 <img src="images/chevron_down_arrow.png" alt="More" style="width: 15px; height: 15px;">
@@ -1576,8 +1592,16 @@
             return html;
         }
 
+        // Global flag to stop typewriter effect
+        let stopTyping = false;
+
         // Typewriter effect with HTML support
         async function typewriterEffect(element, text, speed = 0.5) {  // Very fast typing - 0.5ms per character
+            // Show stop button
+            const sendImg = document.getElementById('interactive-chat-send-icon');
+            sendImg.src = 'images/stop.svg';
+            stopTyping = false;
+
             const html = parseMarkdown(text);
             element.innerHTML = '';
 
@@ -1600,12 +1624,20 @@
             // Type out character by character
             let currentHTML = '';
             for (let char of text) {
+                if (stopTyping) {
+                    // Complete the text immediately if stopped
+                    element.innerHTML = parseMarkdown(text);
+                    break;
+                }
                 currentHTML += char;
                 const formattedHTML = parseMarkdown(currentHTML);
                 element.innerHTML = formattedHTML;
                 interactiveChatBody.scrollTop = interactiveChatBody.scrollHeight;
                 await wait(speed);
             }
+
+            // Restore send button
+            sendImg.src = 'images/tangent_enter_button.png';
         }
 
         // Main demo sequence
@@ -1627,10 +1659,13 @@
 
             // Get FINAL text position (where it will be AFTER scroll completes)
             const scrollArea = document.getElementById('demo-scroll-area');
-            const tangentParagraph = document.getElementById('tangent-paragraph');
+            const highlightTextElement = document.getElementById('demo-highlight-text');
 
-            // Calculate where "Tangent" text will be after scroll (one more line at top = +60px)
-            const targetScrollPos = tangentParagraph.offsetTop - 160;  // Changed from -100 to -160 for one more line
+            // Position "Subtle cognitive cost" to show one more line above (25% down from top)
+            // Get the parent paragraph's offsetTop since inline span doesn't have reliable offsetTop
+            const highlightParagraph = highlightTextElement.closest('p');
+            const scrollAreaHeight = scrollArea.clientHeight;
+            const targetScrollPos = highlightParagraph.offsetTop - (scrollAreaHeight * 0.25);
             const currentScrollPos = scrollArea.scrollTop;
             const scrollDelta = targetScrollPos - currentScrollPos;
 
@@ -1660,7 +1695,7 @@
 
             // START BOTH ANIMATIONS SIMULTANEOUSLY
             // 1. Start scroll animation
-            if (scrollArea && tangentParagraph) {
+            if (scrollArea && highlightParagraph) {
                 scrollArea.scrollTo({
                     top: Math.max(0, targetScrollPos),
                     behavior: 'smooth'
@@ -1772,11 +1807,6 @@
             if (isDemoPaused || isInteractive) return;
 
             // STEP 3: Show Tangent panel IMMEDIATELY after click
-            stepIndicator2.src = 'images/step_02.png';
-            stepIndicator2.classList.remove('active');
-            stepIndicator3.src = 'images/step_03_blue.png';
-            stepIndicator3.classList.add('active');
-
             // Position panel at ABSOLUTE TOP of tutorial content (above step indicators)
             // BUT ONLY if user hasn't manually moved it AND demo isn't paused AND scroll listener not disabled
             if (!userHasMovedPanel && !isDemoPaused && !isInteractive && !scrollListenerDisabled) {
@@ -1828,13 +1858,22 @@
 
             interactiveChatBody.appendChild(aiMsg);
 
-            const aiResponse = `In this article about artificial intelligence, the word **"tangent"** appears in the context of discussions going off on tangents—meaning when conversations deviate from the main topic.
+            const aiResponse = `In this passage, the author explains that **continuity in reading is fragile**, and that even brief interruptions can weaken a reader's ability to stay oriented within a line of thought. The issue is not *distraction* in the usual sense, but the way attention supports an internal structure of reasoning that degrades when it is broken.
 
-The article mentions this **twice**:
-1. In the *Natural Language Processing* section: "discussions about these systems sometimes go on a tangent regarding whether they truly 'understand' language"
-2. In the *Ethical Considerations* section: "Discussions about AI governance occasionally venture on a tangent concerning whether current regulatory frameworks adequately address emerging technological capabilities"
-**Interestingly**, you're using TANGENT—a browser extension that helps you understand content on web pages by providing instant AI-powered context, just like this! The name is a play on words: while reading can sometimes send you on tangents (digressions), TANGENT helps you stay on track by clarifying confusing terms and concepts.`;
-            await typewriterEffect(aiMsg, aiResponse, 1);  // Using faster speed (1ms - twice as fast)
+The "cost" being described is therefore not the time spent searching for information elsewhere, but the **mental effort required to reconstruct the original reasoning** upon return. The reader must re-establish context, recall what mattered, and rebuild coherence before progress can continue.`;
+
+            // Start typewriter effect (don't await yet)
+            const typewriterPromise = typewriterEffect(aiMsg, aiResponse, 0.5);
+
+            // Wait a bit, then switch to step 3 icon while typing is in progress
+            await wait(800);
+            stepIndicator2.src = 'images/step_02.png';
+            stepIndicator2.classList.remove('active');
+            stepIndicator3.src = 'images/step_03_blue.png';
+            stepIndicator3.classList.add('active');
+
+            // Now wait for typewriter to finish
+            await typewriterPromise;
 
             // Hide cursor after panel content is complete
             interactiveCursor.style.display = 'none';
@@ -2000,27 +2039,47 @@ The article mentions this **twice**:
                 // Show panel if not already visible
                 if (interactiveTangentPanel.style.display !== 'block') {
                     interactiveTangentPanel.style.display = 'block';
-
-                    // Clear and show same AI response
-                    interactiveChatBody.innerHTML = '';
-                    const aiMsg = document.createElement('div');
-                    aiMsg.style.marginBottom = '20px';
-                    aiMsg.style.textAlign = 'left';
-                    aiMsg.style.padding = '0';
-                    aiMsg.style.color = '#2a2a2a';
-                    aiMsg.style.fontSize = '14px';
-                    aiMsg.style.lineHeight = '1.6';
-                    interactiveChatBody.appendChild(aiMsg);
-
-                    const aiResponse = `In this article about artificial intelligence, the word **"tangent"** appears in the context of discussions going off on tangents—meaning when conversations deviate from the main topic.
-
-The article mentions this **twice**:
-1. In the *Natural Language Processing* section: "discussions about these systems sometimes go on a tangent regarding whether they truly 'understand' language"
-2. In the *Ethical Considerations* section: "Discussions about AI governance occasionally venture on a tangent concerning whether current regulatory frameworks adequately address emerging technological capabilities"
-**Interestingly**, you're using TANGENT—a browser extension that helps you understand content on web pages by providing instant AI-powered context, just like this! The name is a play on words: while reading can sometimes send you on tangents (digressions), TANGENT helps you stay on track by clarifying confusing terms and concepts.`;
-                    await typewriterEffect(aiMsg, aiResponse, 2);
                 }
+
+                // Clear and show AI response based on which chip was clicked
+                interactiveChatBody.innerHTML = '';
+                const aiMsg = document.createElement('div');
+                aiMsg.style.marginBottom = '20px';
+                aiMsg.style.textAlign = 'left';
+                aiMsg.style.padding = '0';
+                aiMsg.style.color = '#2a2a2a';
+                aiMsg.style.fontSize = '14px';
+                aiMsg.style.lineHeight = '1.6';
+                interactiveChatBody.appendChild(aiMsg);
+
+                // Determine response based on chip text
+                const chipText = chip.textContent.trim();
+                let aiResponse = '';
+
+                if (chipText === 'What is...') {
+                    aiResponse = `Here, **subtle cognitive cost** refers to the additional mental effort imposed when a continuous line of thought is interrupted. It is not the difficulty of the material itself, but the effort required to recover orientation after disengaging. The cost is subtle because it does not present as confusion or error; it appears as *lost momentum*, a faint resistance to resuming thought.`;
+                } else if (chipText === 'Context') {
+                    aiResponse = `In this passage, the author explains that **continuity in reading is fragile**, and that even brief interruptions can weaken a reader's ability to stay oriented within a line of thought. The issue is not *distraction* in the usual sense, but the way attention supports an internal structure of reasoning that degrades when it is broken.
+
+The "cost" being described is therefore not the time spent searching for information elsewhere, but the **mental effort required to reconstruct the original reasoning** upon return. The reader must re-establish context, recall what mattered, and rebuild coherence before progress can continue.`;
+                } else if (chipText === 'Summarize') {
+                    aiResponse = `Leaving a page to resolve small uncertainties fragments attention by breaking the continuity that sustained understanding depends on. Even when the interruption is brief and purposeful, it **suspends the reader's internal orientation**: the sense of what is being argued, why it matters, and how the current point fits into a larger structure.
+
+Each interruption introduces a *subtle cognitive cost*—not in the time spent away, but in the effort required to reconstruct that orientation when returning. As these costs accumulate, maintaining a coherent line of thought becomes progressively harder, not because the material is more complex, but because **continuity has been repeatedly compromised**.`;
+                }
+
+                await typewriterEffect(aiMsg, aiResponse, 2);
             });
+        });
+
+        // Stop button functionality
+        interactiveChatSend.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const sendImg = document.getElementById('interactive-chat-send-icon');
+            // Check if stop icon is showing (typing in progress)
+            if (sendImg.src.includes('stop.svg')) {
+                stopTyping = true;
+            }
         });
 
         // Drag-to-move functionality for the panel
