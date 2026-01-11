@@ -1862,18 +1862,14 @@ The deeper implication is that the primary constraint of modern knowledge work i
 
 The "cost" being described is therefore not the time spent searching for information elsewhere, but the **mental effort required to reconstruct the original reasoning** upon return. The reader must re-establish context, recall what mattered, and rebuild coherence before progress can continue.`;
 
-            // Start typewriter effect (don't await yet)
-            const typewriterPromise = typewriterEffect(aiMsg, aiResponse, 0.5);
+            // Start typewriter effect and wait for it to complete
+            await typewriterEffect(aiMsg, aiResponse, 0.5);
 
-            // Wait a bit, then switch to step 3 icon while typing is in progress
-            await wait(800);
+            // After typing is complete, switch to step 3 icon
             stepIndicator2.src = 'images/step_02.png';
             stepIndicator2.classList.remove('active');
             stepIndicator3.src = 'images/step_03_blue.png';
             stepIndicator3.classList.add('active');
-
-            // Now wait for typewriter to finish
-            await typewriterPromise;
 
             // Hide cursor after panel content is complete
             interactiveCursor.style.display = 'none';
