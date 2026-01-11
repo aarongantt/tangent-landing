@@ -527,24 +527,37 @@
         /* Step indicators - 3 images in a row */
         .step-indicators {
             display: flex;
-            justify-content: space-evenly;  /* Automatically distributes space evenly - fully dynamic! */
+            justify-content: space-evenly;
             align-items: center;
             margin-top: 20px;
             margin-bottom: 30px;
-            padding: 0 20px;  /* Prevent icons from touching edges on narrow screens */
+            padding: 0 20px;
         }
 
-        .step-indicators img {
+        .step-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .step-base,
+        .step-blue {
             height: auto;
-            max-height: clamp(45px, 5.5vw, 69px);  /* Flexible size: 45px min, 69px max, scales with viewport */
+            max-height: clamp(45px, 5.5vw, 69px);
             width: auto;
             object-fit: contain;
-            transition: filter 0.3s ease, max-height 0.3s ease, opacity 0.6s ease;
+            display: block;
         }
 
-        /* No glow effect on step icons */
-        .step-indicators img.active {
-            /* Glow removed per user request */
+        .step-blue {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .step-blue.active {
+            opacity: 1;
         }
 
         /* Move cursor only on panel header hover */
@@ -988,9 +1001,18 @@
         <div class="tutorial-content" style="display: none; position: relative; height: 100%; overflow: hidden;">
             <!-- Step indicators (3 images in a row) -->
             <div class="step-indicators">
-                <img id="step-indicator-1" src="images/step_01.png" alt="Step 1">
-                <img id="step-indicator-2" src="images/step_02.png" alt="Step 2">
-                <img id="step-indicator-3" src="images/step_03.png" alt="Step 3">
+                <div class="step-wrapper">
+                    <img class="step-base" src="images/step_01.png" alt="Step 1">
+                    <img id="step-indicator-1" class="step-blue" src="images/step_01_blue.png" alt="Step 1 Active">
+                </div>
+                <div class="step-wrapper">
+                    <img class="step-base" src="images/step_02.png" alt="Step 2">
+                    <img id="step-indicator-2" class="step-blue" src="images/step_02_blue.png" alt="Step 2 Active">
+                </div>
+                <div class="step-wrapper">
+                    <img class="step-base" src="images/step_03.png" alt="Step 3">
+                    <img id="step-indicator-3" class="step-blue" src="images/step_03_blue.png" alt="Step 3 Active">
+                </div>
             </div>
 
             <!-- Scrollable demo area -->
@@ -1532,12 +1554,9 @@ The deeper implication is that the primary constraint of modern knowledge work i
             interactiveChatInput.value = '';
 
             // Reset all step indicators to inactive
-            stepIndicator1.src = 'images/step_01.png';
-            stepIndicator2.src = 'images/step_02.png';
-            stepIndicator3.src = 'images/step_03.png';
-            stepIndicator1.classList.remove('active');
-            stepIndicator2.classList.remove('active');
-            stepIndicator3.classList.remove('active');
+            toggleStepIndicator(stepIndicator1, false);
+            toggleStepIndicator(stepIndicator2, false);
+            toggleStepIndicator(stepIndicator3, false);
 
             // Remove any dynamic highlight style element
             const existingStyle = document.getElementById('demo-highlight-animation-style');
@@ -1592,17 +1611,13 @@ The deeper implication is that the primary constraint of modern knowledge work i
             return html;
         }
 
-        // Helper function to fade transition step indicator images
-        async function fadeStepIndicator(imgElement, newSrc) {
-            // Fade out
-            imgElement.style.opacity = '0';
-            await new Promise(resolve => setTimeout(resolve, 600)); // Match CSS transition duration
-
-            // Swap image
-            imgElement.src = newSrc;
-
-            // Fade in
-            imgElement.style.opacity = '1';
+        // Helper to toggle step indicators (crossfade between grey and blue)
+        function toggleStepIndicator(stepElement, active) {
+            if (active) {
+                stepElement.classList.add('active');
+            } else {
+                stepElement.classList.remove('active');
+            }
         }
 
         // Global flag to stop typewriter effect
@@ -1667,8 +1682,7 @@ The deeper implication is that the primary constraint of modern knowledge work i
             await wait(500);
 
             // STEP 1: Highlight text and show chip bar
-            await fadeStepIndicator(stepIndicator1, 'images/step_01_blue.png');
-            stepIndicator1.classList.add('active');
+            toggleStepIndicator(stepIndicator1, true);
 
             // Get FINAL text position (where it will be AFTER scroll completes)
             const scrollArea = document.getElementById('demo-scroll-area');
