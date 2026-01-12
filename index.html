@@ -1220,12 +1220,239 @@
                 height: 12px !important;
             }
         }
+
+        /* Hide mobile-only line break on desktop */
+        .mobile-only-br {
+            display: none;
+        }
+
+        /* ==================== MOBILE RESPONSIVE (768px and below) ==================== */
+        @media (max-width: 768px) {
+            /* Main intro text - split into two lines and resize */
+            #main-text {
+                font-size: 24px !important;
+                white-space: normal !important;
+                max-width: 90vw;
+                line-height: 1.4;
+                top: 80px !important;
+            }
+
+            #main-text.shifted-up {
+                font-size: 20px !important;
+                top: 30px !important;
+            }
+
+            /* Show line break on mobile */
+            .mobile-only-br {
+                display: inline !important;
+            }
+
+            /* Main chip bar - resize for mobile */
+            .chip-bar {
+                transform: scale(0.6) !important;
+                transform-origin: center;
+                padding: 6px 12px !important;
+                gap: 6px !important;
+                border-radius: 14px !important;
+                border: 2px solid rgba(109, 109, 109, 0.494) !important;
+            }
+
+            .chip-bar.scaled-down {
+                transform: scale(0.5) translateY(-20px) !important;
+            }
+
+            .chip {
+                font-size: 0.9em !important;
+                padding: 6px 10px !important;
+                border: 2px solid rgba(109, 109, 109, 0.494) !important;
+            }
+
+            .chip-icon {
+                padding: 6px !important;
+                min-width: 32px !important;
+            }
+
+            .chip-icon img {
+                width: 18px !important;
+                height: 18px !important;
+            }
+
+            .chevron-chip {
+                padding: 4px !important;
+                min-width: 24px !important;
+                min-height: 24px !important;
+            }
+
+            .chevron-chip img {
+                width: 12px !important;
+                height: 12px !important;
+            }
+
+            .email-input {
+                padding: 10px 36px 10px 12px !important;
+                font-size: 14px !important;
+                min-width: 200px !important;
+                border-radius: 22px !important;
+                border: 2px solid #787878 !important;
+            }
+
+            .email-input::placeholder {
+                font-size: 12px !important;
+            }
+
+            .send-btn {
+                width: 24px !important;
+                height: 24px !important;
+                right: 6px !important;
+            }
+
+            .send-btn img {
+                width: 14px !important;
+                height: 14px !important;
+            }
+
+            /* Main tangent panel - resize for mobile */
+            #tangent-panel {
+                width: 95vw !important;
+                max-width: 95vw !important;
+                height: 70vh !important;
+                border-radius: 20px 20px 0 0 !important;
+                border: 3px solid rgba(180, 180, 180, 0.7) !important;
+                border-bottom: none !important;
+            }
+
+            #tangent-panel.visible {
+                transform: translateX(-50%) translateY(calc(100% - 150px)) !important;
+            }
+
+            #tangent-panel.visible:hover:not(.expanded) {
+                transform: translateX(-50%) translateY(calc(100% - 170px)) !important;
+            }
+
+            #tangent-panel.expanded {
+                transform: translateX(-50%) translateY(8%) !important;
+            }
+
+            /* Panel header - resize for mobile */
+            .tangent-panel__header {
+                padding: 16px 40px !important;
+            }
+
+            #tangent-panel.expanded .tangent-panel__header {
+                padding: 12px 32px !important;
+                transform: scale(0.75) !important;
+            }
+
+            .tangent-header-logo {
+                height: 80px !important;
+            }
+
+            #tangent-panel.expanded .tangent-header-logo {
+                height: 70px !important;
+            }
+
+            /* Panel buttons - resize for mobile */
+            .tangent-pin {
+                left: 20px !important;
+                top: 20px !important;
+                width: 48px !important;
+                height: 48px !important;
+            }
+
+            .tangent-pin img {
+                width: 38px !important;
+                height: 38px !important;
+            }
+
+            .tangent-panel__btns {
+                right: 20px !important;
+                top: 20px !important;
+                gap: 20px !important;
+            }
+
+            .tangent-panel__btns > button {
+                width: 36px !important;
+                height: 36px !important;
+            }
+
+            .tangent-panel__btns > button img {
+                width: 29px !important;
+                height: 29px !important;
+            }
+
+            /* Tutorial content - adjust padding for mobile */
+            .tutorial-content {
+                padding: 0px 30px 40px !important;
+            }
+
+            /* Demo scroll area - adjust padding for mobile */
+            #demo-scroll-area {
+                padding: 0 30px !important;
+            }
+
+            #demo-content-container {
+                padding: 60px 0 60px 0 !important;
+            }
+
+            #demo-content-container p {
+                font-size: 20px !important;
+                margin-bottom: 25px !important;
+            }
+        }
+
+        /* Extra small mobile devices (480px and below) */
+        @media (max-width: 480px) {
+            #main-text {
+                font-size: 20px !important;
+                top: 60px !important;
+            }
+
+            #main-text.shifted-up {
+                font-size: 16px !important;
+                top: 20px !important;
+            }
+
+            .chip-bar {
+                transform: scale(0.5) !important;
+            }
+
+            .chip-bar.scaled-down {
+                transform: scale(0.4) translateY(-15px) !important;
+            }
+
+            .email-input {
+                min-width: 150px !important;
+                font-size: 12px !important;
+                padding: 8px 32px 8px 10px !important;
+            }
+
+            .email-input::placeholder {
+                font-size: 11px !important;
+            }
+
+            #tangent-panel {
+                height: 65vh !important;
+            }
+
+            .tangent-header-logo {
+                height: 60px !important;
+            }
+
+            #tangent-panel.expanded .tangent-header-logo {
+                height: 50px !important;
+            }
+
+            #demo-content-container p {
+                font-size: 16px !important;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Main Text -->
     <div id="main-text">
-        Stay in the flow, or go on a <span id="highlight-text">Tangent</span>.
+        <span class="main-text-line">Stay in the flow,</span><br class="mobile-only-br">
+        <span class="main-text-line">or go on a <span id="highlight-text">Tangent</span>.</span>
     </div>
 
     <!-- Animated Cursor (for main intro) -->
