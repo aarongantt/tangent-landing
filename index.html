@@ -965,9 +965,9 @@
             display: flex;
             justify-content: space-evenly;
             align-items: center;
-            margin-top: 15px;
-            margin-bottom: 20px;
-            padding: 0 10px;
+            margin-top: 8px;
+            margin-bottom: 12px;
+            padding: 0 5px;
         }
 
         .mobile-step-wrapper {
@@ -978,7 +978,7 @@
         .mobile-step-base,
         .mobile-step-blue {
             height: auto;
-            max-height: clamp(35px, 8vw, 55px);
+            max-height: clamp(25px, 6vw, 40px);
             width: auto;
             object-fit: contain;
             display: block;
@@ -1147,7 +1147,7 @@ The deeper implication is that the primary constraint of modern knowledge work i
         </div>
 
         <!-- Scrollable demo area (mobile optimized) -->
-        <div id="mobile-demo-scroll-area" style="position: relative; height: calc(100% - 60px); overflow-y: scroll; overflow-x: hidden; padding: 0 20px; scrollbar-width: none; -ms-overflow-style: none;">
+        <div id="mobile-demo-scroll-area" style="position: relative; height: calc(100% - 40px); overflow-y: scroll; overflow-x: hidden; padding: 0 12px; scrollbar-width: none; -ms-overflow-style: none;">
             <style>
                 #mobile-demo-scroll-area::-webkit-scrollbar {
                     display: none;
@@ -1155,17 +1155,17 @@ The deeper implication is that the primary constraint of modern knowledge work i
             </style>
 
             <!-- Simplified article content for mobile -->
-            <div id="mobile-demo-content-container" style="max-width: 100%; margin: 0 auto; padding: 30px 0; position: relative;">
-                <p style="font-size: 14px; line-height: 1.5; color: #4b5563; text-align: left; margin-bottom: 16px; font-weight: 400;">
-                    In practice, progress is driven less by speed than by continuity—the ability to remain oriented within a developing line of thought.
+            <div id="mobile-demo-content-container" style="max-width: 100%; margin: 0 auto; padding: 15px 0; position: relative;">
+                <p style="font-size: 11px; line-height: 1.4; color: #4b5563; text-align: left; margin-bottom: 10px; font-weight: 400;">
+                    Progress is driven less by speed than by continuity—the ability to remain oriented within a developing line of thought.
                 </p>
 
-                <p style="font-size: 14px; line-height: 1.5; color: #4b5563; text-align: left; margin-bottom: 16px; font-weight: 400;">
-                    <span id="mobile-demo-highlight-text" style="position: relative; display: inline;">Subtle cognitive cost</span> appears at precisely this moment. The standard response is to leave the page in search of clarification.
+                <p style="font-size: 11px; line-height: 1.4; color: #4b5563; text-align: left; margin-bottom: 10px; font-weight: 400;">
+                    <span id="mobile-demo-highlight-text" style="position: relative; display: inline;">Subtle cognitive cost</span> appears at precisely this moment. The standard response is to leave the page.
                 </p>
 
-                <p style="font-size: 14px; line-height: 1.5; color: #4b5563; text-align: left; margin-bottom: 16px; font-weight: 400;">
-                    When technology works this way, expectations change. People stop asking whether something is possible and start asking what else they can do.
+                <p style="font-size: 11px; line-height: 1.4; color: #4b5563; text-align: left; margin-bottom: 10px; font-weight: 400;">
+                    When technology works this way, expectations change and new possibilities emerge.
                 </p>
             </div>
         </div>
@@ -1173,44 +1173,44 @@ The deeper implication is that the primary constraint of modern knowledge work i
 
     <!-- Mobile demo cursor (fixed positioning) -->
     <div id="mobile-demo-cursor" class="demo-cursor" style="display: none; position: fixed; pointer-events: none; z-index: 10000;">
-        <img src="images/cursor.png" alt="Cursor" style="width: 24px; height: auto;">
+        <img src="images/cursor.png" alt="Cursor" style="width: 18px; height: auto;">
     </div>
 
     <!-- Mobile demo chip bar (fixed positioning) -->
-    <div id="mobile-chip-bar" class="chip-bar" style="display: none; position: fixed; z-index: 9999; transform: scale(0.75); transform-origin: center; border-radius: 12px;">
-        <div style="display: flex; gap: 4px; align-items: center;">
-            <button class="chip chip-icon" style="padding: 4px; min-width: 24px;">
-                <img src="images/tangent_t_logo.png" alt="T" style="width: 13px; height: 13px;">
+    <div id="mobile-chip-bar" class="chip-bar" style="display: none; position: fixed; z-index: 9999; transform: scale(0.6); transform-origin: center; border-radius: 10px;">
+        <div style="display: flex; gap: 3px; align-items: center;">
+            <button class="chip chip-icon" style="padding: 3px; min-width: 20px;">
+                <img src="images/tangent_t_logo.png" alt="T" style="width: 11px; height: 11px;">
             </button>
-            <button class="chip" id="mobile-context-chip" style="font-size: 11px; padding: 4px 7px;">What is...</button>
-            <button class="chip" style="font-size: 11px; padding: 4px 7px;">Context</button>
-            <button class="chip" style="font-size: 11px; padding: 4px 7px;">Summarize</button>
-            <button class="chip chip-icon chevron-chip" style="padding: 3px; min-width: 20px; min-height: 20px;">
-                <img src="images/chevron_down_arrow.png" alt="More" style="width: 11px; height: 11px;">
+            <button class="chip" id="mobile-context-chip" style="font-size: 10px; padding: 3px 6px;">What is...</button>
+            <button class="chip" style="font-size: 10px; padding: 3px 6px;">Context</button>
+            <button class="chip" style="font-size: 10px; padding: 3px 6px;">Summarize</button>
+            <button class="chip chip-icon chevron-chip" style="padding: 2px; min-width: 18px; min-height: 18px;">
+                <img src="images/chevron_down_arrow.png" alt="More" style="width: 9px; height: 9px;">
             </button>
         </div>
     </div>
 
     <!-- Mobile demo Tangent panel (fixed positioning) -->
-    <div id="mobile-tangent-panel" style="display: none; position: fixed; width: 85%; max-width: 280px; height: 300px; background: linear-gradient(to bottom, #dce4ea 0%, #c4ced6 100%) !important; border-radius: 10px; border-top: 3px solid rgba(255, 255, 255, 0.9) !important; border-left: 3px solid rgba(255, 255, 255, 0.9) !important; border-right: 3px solid rgba(0, 0, 0, 0.35) !important; border-bottom: 3px solid rgba(0, 0, 0, 0.35) !important; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Inter, sans-serif; color: #0f141a; z-index: 9998; overflow: hidden;">
+    <div id="mobile-tangent-panel" style="display: none; position: fixed; width: 90%; max-width: 260px; height: 240px; background: linear-gradient(to bottom, #dce4ea 0%, #c4ced6 100%) !important; border-radius: 8px; border-top: 2px solid rgba(255, 255, 255, 0.9) !important; border-left: 2px solid rgba(255, 255, 255, 0.9) !important; border-right: 2px solid rgba(0, 0, 0, 0.35) !important; border-bottom: 2px solid rgba(0, 0, 0, 0.35) !important; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Inter, sans-serif; color: #0f141a; z-index: 9998; overflow: hidden;">
         <!-- Flexbox container for proper layout -->
         <div style="display: flex; flex-direction: column; height: 100%; position: relative;">
             <!-- Header -->
-            <div style="padding: 8px; text-align: center; flex-shrink: 0;">
-                <img src="images/tangent_logo_waitlist.png" alt="TANGENT" style="height: 20px; width: auto;">
+            <div style="padding: 6px; text-align: center; flex-shrink: 0;">
+                <img src="images/tangent_logo_waitlist.png" alt="TANGENT" style="height: 16px; width: auto;">
             </div>
 
             <!-- Chat messages (flex: 1 to fill available space) -->
-            <div id="mobile-chat-body" style="padding: 12px; overflow-y: auto; flex: 1; font-size: 12px; line-height: 1.4;">
+            <div id="mobile-chat-body" style="padding: 8px; overflow-y: auto; flex: 1; font-size: 10px; line-height: 1.3;">
                 <!-- Messages added via JS -->
             </div>
 
             <!-- Input area (flush to bottom) -->
-            <div style="padding: 8px 10px; flex-shrink: 0; position: relative;">
-                <input type="text" id="mobile-chat-input" placeholder="Go on a Tangent..." readonly style="width: 100%; padding: 10px 45px 10px 12px; border-radius: 20px; border: 2px solid #4a90e2; background: rgba(255, 255, 255, 0.9); font-size: 11px; font-style: italic; outline: none; box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);">
+            <div style="padding: 6px 8px; flex-shrink: 0; position: relative;">
+                <input type="text" id="mobile-chat-input" placeholder="Go on a Tangent..." readonly style="width: 100%; padding: 8px 40px 8px 10px; border-radius: 16px; border: 1.5px solid #4a90e2; background: rgba(255, 255, 255, 0.9); font-size: 10px; font-style: italic; outline: none; box-shadow: 0 0 0 1.5px rgba(74, 144, 226, 0.2);">
 
-                <button id="mobile-chat-send" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border-radius: 50%; border: 2px solid #787878; background: transparent; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);">
-                    <img id="mobile-chat-send-icon" src="images/tangent_enter_button.png" alt="Send" style="width: 14px; height: 14px;">
+                <button id="mobile-chat-send" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #787878; background: transparent; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);">
+                    <img id="mobile-chat-send-icon" src="images/tangent_enter_button.png" alt="Send" style="width: 12px; height: 12px;">
                 </button>
             </div>
         </div>
