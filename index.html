@@ -285,6 +285,7 @@
             color: #9aa3b2;
             font-style: italic;
             font-size: 20px;
+            transition: font-size 0.6s ease-out;
         }
 
         .demo-section .email-input::placeholder {
@@ -1790,15 +1791,15 @@ The deeper implication is that the primary constraint of modern knowledge work i
 
         // CENTRALIZED AI RESPONSES - Single source of truth
         const AI_RESPONSES = {
-            'What is...': `Here, "cognitive cost" refers to the additional mental effort caused by interrupting a line of thought.
+            'What is...': `<br>Here, "cognitive cost" refers to the additional mental effort caused by interrupting a line of thought.
 
 It's the effort required to re-establish focus and understanding after leaving the page.`,
 
-            'Context': `In this passage, the author is describing how even brief interruptions can degrade continuity while reading.
+            'Context': `<br>In this passage, the author is describing how even brief interruptions can degrade continuity while reading.
 
 The "cost" isn't time lost searching, but the effort needed to reconstruct the original reasoning when returning.`,
 
-            'Summarize': `Leaving a page to resolve small uncertainties fragments attention.
+            'Summarize': `<br>Leaving a page to resolve small uncertainties fragments attention.
 
 Each interruption adds mental effort, making it harder to maintain a coherent line of thought over time.`
         };
