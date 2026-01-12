@@ -1344,9 +1344,9 @@ The deeper implication is that the primary constraint of modern knowledge work i
             <button class="chip chip-icon" style="padding: 6px; min-width: 32px;">
                 <img src="images/tangent_t_logo.png" alt="T" style="width: 18px; height: 18px;">
             </button>
-            <button class="chip" id="interactive-context-chip" style="font-size: 1em; padding: 6px 10px;">What is...</button>
-            <button class="chip" style="font-size: 1em; padding: 6px 10px;">Context</button>
-            <button class="chip" style="font-size: 1em; padding: 6px 10px;">Summarize</button>
+            <button class="chip" id="interactive-whatis-chip" style="font-size: 1em; padding: 6px 10px;">What is...</button>
+            <button class="chip" id="interactive-context-chip" style="font-size: 1em; padding: 6px 10px;">Context</button>
+            <button class="chip" id="interactive-summarize-chip" style="font-size: 1em; padding: 6px 10px;">Summarize</button>
             <button class="chip chip-icon chevron-chip" style="padding: 5px; min-width: 27px; min-height: 27px;">
                 <img src="images/chevron_down_arrow.png" alt="More" style="width: 15px; height: 15px;">
             </button>
@@ -1752,7 +1752,9 @@ The deeper implication is that the primary constraint of modern knowledge work i
         const demoHighlightText = document.getElementById('demo-highlight-text');
         const interactiveCursor = document.getElementById('interactive-demo-cursor');
         const interactiveChipBar = document.getElementById('interactive-chip-bar');
+        const interactiveWhatIsChip = document.getElementById('interactive-whatis-chip');
         const interactiveContextChip = document.getElementById('interactive-context-chip');
+        const interactiveSummarizeChip = document.getElementById('interactive-summarize-chip');
         const interactiveTangentPanel = document.getElementById('interactive-tangent-panel');
         const interactiveChatBody = document.getElementById('interactive-chat-body');
         const interactiveChatInput = document.getElementById('interactive-chat-input');
@@ -2091,13 +2093,27 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
 
             if (isDemoPaused || isInteractive) return;
 
-            // STEP 2: Click Context chip
+            // STEP 2: Click the appropriate chip based on pendingChipResponse
             toggleStepIndicator(stepIndicator1, false);
             toggleStepIndicator(stepIndicator2, true);
 
+            // Determine which chip to click based on pendingChipResponse
+            let targetChip;
+            const chipToClick = pendingChipResponse || 'Context'; // Default to Context if not set
+
+            if (chipToClick === 'What is...') {
+                targetChip = interactiveWhatIsChip;
+            } else if (chipToClick === 'Summarize') {
+                targetChip = interactiveSummarizeChip;
+            } else {
+                targetChip = interactiveContextChip;
+            }
+
+            console.log('Demo will click chip:', chipToClick, targetChip);
+
             // Cursor should already be visible at end of text
-            // Animate cursor moving from current position to Context chip
-            const chipRect = interactiveContextChip.getBoundingClientRect();
+            // Animate cursor moving from current position to selected chip
+            const chipRect = targetChip.getBoundingClientRect();
             const targetX = chipRect.left + chipRect.width / 2;
             const targetY = chipRect.top + chipRect.height / 2;
 
@@ -2107,10 +2123,10 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
             interactiveCursor.style.top = targetY + 'px';
             await wait(1100);  // INCREASED to match slower animation (1000ms + 100ms buffer)
 
-            // Click effect
-            interactiveContextChip.style.transform = 'translateY(2px)';
+            // Click effect on selected chip
+            targetChip.style.transform = 'translateY(2px)';
             await wait(100);
-            interactiveContextChip.style.transform = '';
+            targetChip.style.transform = '';
 
             if (isDemoPaused || isInteractive) return;
 
