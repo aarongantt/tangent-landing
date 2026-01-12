@@ -416,14 +416,14 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            padding: 50px 80px;
+            padding: 30px 80px;
             flex-shrink: 0;
             background: transparent;
             transition: padding 0.6s ease-out, transform 0.6s ease-out;
         }
 
         #tangent-panel.expanded .tangent-panel__header {
-            padding: 40px 64px;
+            padding: 20px 64px;
             transform: scale(0.8);
         }
 
@@ -558,6 +558,18 @@
 
         .step-blue.active {
             opacity: 1;
+        }
+
+        /* Mask gradient for text fade at top of demo scroll area (giant panel) */
+        #demo-scroll-area {
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 150px, black 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 150px, black 100%);
+        }
+
+        /* Mask gradient for text fade at top of interactive chat body (demo panel) */
+        #interactive-chat-body {
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 50px, black 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 50px, black 100%);
         }
 
         /* Move cursor only on panel header hover */
@@ -709,7 +721,7 @@
 
         .tg-msg {
             margin-bottom: 16px;
-            font-size: 14px;
+            font-size: 19px;
             line-height: 1.6;
         }
 
@@ -765,7 +777,7 @@
             background: rgba(255, 255, 255, 1);
             color: #1f2937;
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
-            font-size: 14px;
+            font-size: 16px;
             outline: none;
         }
 
@@ -1008,6 +1020,47 @@
             border-radius: 2px;
             z-index: -1;
         }
+
+        /* Wide screen layout: step indicators vertical on left, demo on right */
+        @media (min-width: 1400px) {
+            .tutorial-content {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: flex-start !important;
+                gap: 40px !important;
+                padding: 20px 80px 60px !important;
+                overflow: visible !important;
+            }
+
+            .step-indicators {
+                flex-direction: column !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
+                margin-top: 60px !important;
+                margin-bottom: 0 !important;
+                padding: 0 !important;
+                gap: 80px !important;
+                flex-shrink: 0 !important;
+                width: auto !important;
+                order: 1 !important;
+            }
+
+            .step-wrapper {
+                display: block !important;
+            }
+
+            .step-base,
+            .step-blue {
+                max-height: 120px !important;
+            }
+
+            #demo-scroll-area {
+                flex: 1 !important;
+                height: 100% !important;
+                padding: 0 40px !important;
+                order: 2 !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1230,7 +1283,7 @@ The deeper implication is that the primary constraint of modern knowledge work i
     <div id="toast"></div>
 
     <!-- Demo Tangent panel (OUTSIDE .tutorial-content for true fixed positioning) -->
-    <div id="interactive-tangent-panel" style="display: none; position: fixed; width: 370px; height: 410px; max-width: 90%; margin-top: 20px; background: linear-gradient(to bottom, #dce4ea 0%, #c4ced6 100%) !important; border-radius: 12px; border-top: 4px solid rgba(255, 255, 255, 0.9) !important; border-left: 4px solid rgba(255, 255, 255, 0.9) !important; border-right: 4px solid rgba(0, 0, 0, 0.35) !important; border-bottom: 4px solid rgba(0, 0, 0, 0.35) !important; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Inter, sans-serif; color: #0f141a; z-index: 9998; overflow: hidden;">
+    <div id="interactive-tangent-panel" style="display: none; position: fixed; width: 425.5px; height: 471.5px; max-width: 90%; margin-top: 20px; background: linear-gradient(to bottom, #dce4ea 0%, #c4ced6 100%) !important; border-radius: 12px; border-top: 4px solid rgba(255, 255, 255, 0.9) !important; border-left: 4px solid rgba(255, 255, 255, 0.9) !important; border-right: 4px solid rgba(0, 0, 0, 0.35) !important; border-bottom: 4px solid rgba(0, 0, 0, 0.35) !important; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Inter, sans-serif; color: #0f141a; z-index: 9998; overflow: hidden;">
         <!-- Pin button (top left, shifted inward and down) -->
         <div id="interactive-pin-btn" style="position: absolute; left: 16px; top: 14px; width: 20px; height: 20px; cursor: pointer; z-index: 10;">
             <img src="images/pin_icon.png" alt="Pin" style="width: 20px; height: 20px; transition: filter 0.3s ease;">
@@ -1254,13 +1307,13 @@ The deeper implication is that the primary constraint of modern knowledge work i
             </div>
 
             <!-- Chat messages (flex: 1 to fill available space) -->
-            <div id="interactive-chat-body" style="padding: 20px; overflow-y: auto; flex: 1;">
+            <div id="interactive-chat-body" style="padding: 20px; overflow-y: auto; flex: 1; position: relative;">
                 <!-- Messages added via JS -->
             </div>
 
             <!-- Input area (flush to bottom) -->
             <div style="padding: 12px 16px; flex-shrink: 0; position: relative;">
-                <input type="text" id="interactive-chat-input" placeholder="Go on a Tangent..." readonly style="width: 100%; padding: 14px 60px 14px 16px; border-radius: 24px; border: 2px solid #4a90e2; background: rgba(255, 255, 255, 0.9); font-size: 14px; font-style: italic; outline: none; box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);">
+                <input type="text" id="interactive-chat-input" placeholder="Go on a Tangent..." readonly style="width: 100%; padding: 14px 60px 14px 16px; border-radius: 24px; border: 2px solid #4a90e2; background: rgba(255, 255, 255, 0.9); font-size: 16px; font-style: italic; outline: none; box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);">
 
                 <button id="interactive-chat-send" style="position: absolute; right: 22px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 50%; border: 2px solid #787878; background: transparent; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);">
                     <img id="interactive-chat-send-icon" src="images/tangent_enter_button.png" alt="Send" style="width: 18px; height: 18px;">
@@ -1860,11 +1913,11 @@ The deeper implication is that the primary constraint of modern knowledge work i
             const scrollArea = document.getElementById('demo-scroll-area');
             const highlightTextElement = document.getElementById('demo-highlight-text');
 
-            // Position "Subtle cognitive cost" to show one more line above (25% down from top)
+            // Position "Subtle cognitive cost" higher on the page (15% down from top - adjusted to show more text below)
             // Get the parent paragraph's offsetTop since inline span doesn't have reliable offsetTop
             const highlightParagraph = highlightTextElement.closest('p');
             const scrollAreaHeight = scrollArea.clientHeight;
-            const targetScrollPos = highlightParagraph.offsetTop - (scrollAreaHeight * 0.25);
+            const targetScrollPos = highlightParagraph.offsetTop - (scrollAreaHeight * 0.15);
             const currentScrollPos = scrollArea.scrollTop;
             const scrollDelta = targetScrollPos - currentScrollPos;
 
@@ -2016,7 +2069,7 @@ The deeper implication is that the primary constraint of modern knowledge work i
                     // Position panel to the right of chip bar and near top of tutorial content
                     // Now that panel is outside .tutorial-content, position: fixed works correctly!
                     const calculatedLeft = (chipBarRectForPanel.left + 530);  // Adjusted from 150 (was compensating for old offset)
-                    const calculatedTop = (tutorialContentRect.top + 120);  // Adjusted from -80 (was compensating for old offset)
+                    const calculatedTop = (tutorialContentRect.top + 40);  // Raised higher (reduced from 120 to 40)
 
                     interactiveTangentPanel.style.left = calculatedLeft + 'px';
                     interactiveTangentPanel.style.top = calculatedTop + 'px';
@@ -2050,7 +2103,7 @@ The deeper implication is that the primary constraint of modern knowledge work i
             aiMsg.style.textAlign = 'left';
             aiMsg.style.padding = '0';
             aiMsg.style.color = '#2a2a2a';
-            aiMsg.style.fontSize = '14px';
+            aiMsg.style.fontSize = '19px';
             aiMsg.style.lineHeight = '1.6';
 
             interactiveChatBody.appendChild(aiMsg);
@@ -2118,7 +2171,7 @@ The "cost" being described is therefore not the time spent searching for informa
                             const updatedTutorialContent = document.querySelector('.tutorial-content');
                             const updatedTutorialContentRect = updatedTutorialContent.getBoundingClientRect();
                             interactiveTangentPanel.style.left = (updatedChipBarRect.left + 530) + 'px';  // Match new positioning
-                            interactiveTangentPanel.style.top = (updatedTutorialContentRect.top + 120) + 'px';  // Match new positioning
+                            interactiveTangentPanel.style.top = (updatedTutorialContentRect.top + 40) + 'px';  // Match new positioning (raised higher)
                         }
                     });
                 }
