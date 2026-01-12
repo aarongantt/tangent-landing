@@ -1568,45 +1568,62 @@ The deeper implication is that the primary constraint of modern knowledge work i
     </div>
 
     <!-- MOBILE Tutorial Content (shown only on mobile devices) -->
-    <div class="mobile-tutorial-content" style="display: none; position: relative; height: 100%; overflow: hidden;">
-        <!-- Step indicators (3 images in a row) -->
-        <div class="mobile-step-indicators">
-            <div class="mobile-step-wrapper">
-                <img class="mobile-step-base" src="images/step_01.png" alt="Step 1">
-                <img id="mobile-step-indicator-1" class="mobile-step-blue" src="images/step_01_blue.png" alt="Step 1 Active">
-            </div>
-            <div class="mobile-step-wrapper">
-                <img class="mobile-step-base" src="images/step_02.png" alt="Step 2">
-                <img id="mobile-step-indicator-2" class="mobile-step-blue" src="images/step_02_blue.png" alt="Step 2 Active">
-            </div>
-            <div class="mobile-step-wrapper">
-                <img class="mobile-step-base" src="images/step_03.png" alt="Step 3">
-                <img id="mobile-step-indicator-3" class="mobile-step-blue" src="images/step_03_blue.png" alt="Step 3 Active">
-            </div>
+    <div class="mobile-tutorial-content" style="display: none; position: relative; height: 100%; overflow-y: auto; overflow-x: hidden; padding: 20px 16px; scrollbar-width: none; -ms-overflow-style: none;">
+        <style>
+            .mobile-tutorial-content::-webkit-scrollbar {
+                display: none;
+            }
+
+            .mobile-step-item {
+                margin-bottom: 30px;
+            }
+
+            .mobile-step-item:last-child {
+                margin-bottom: 0;
+            }
+
+            .mobile-step-item img.mobile-step-icon {
+                display: block;
+                width: 80px;
+                height: auto;
+                margin: 0 auto 15px;
+            }
+
+            .mobile-step-item video {
+                display: block;
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
+        </style>
+
+        <!-- Step 1 -->
+        <div class="mobile-step-item">
+            <img class="mobile-step-icon" src="images/step_01_blue.png" alt="Step 1">
+            <video autoplay loop muted playsinline preload="auto">
+                <source src="images/step_01.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
 
-        <!-- Scrollable demo area (mobile optimized) -->
-        <div id="mobile-demo-scroll-area" style="position: relative; height: calc(100% - 40px); overflow-y: scroll; overflow-x: hidden; padding: 0 12px; scrollbar-width: none; -ms-overflow-style: none;">
-            <style>
-                #mobile-demo-scroll-area::-webkit-scrollbar {
-                    display: none;
-                }
-            </style>
+        <!-- Step 2 -->
+        <div class="mobile-step-item">
+            <img class="mobile-step-icon" src="images/step_02_blue.png" alt="Step 2">
+            <video autoplay loop muted playsinline preload="auto">
+                <source src="images/step_02.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
 
-            <!-- Simplified article content for mobile -->
-            <div id="mobile-demo-content-container" style="max-width: 100%; margin: 0 auto; padding: 15px 0; position: relative;">
-                <p style="font-size: 11px; line-height: 1.4; color: #4b5563; text-align: left; margin-bottom: 10px; font-weight: 400;">
-                    Progress is driven less by speed than by continuity—the ability to remain oriented within a developing line of thought.
-                </p>
-
-                <p style="font-size: 11px; line-height: 1.4; color: #4b5563; text-align: left; margin-bottom: 10px; font-weight: 400;">
-                    <span id="mobile-demo-highlight-text" style="position: relative; display: inline;">Subtle cognitive cost</span> appears at precisely this moment. The standard response is to leave the page.
-                </p>
-
-                <p style="font-size: 11px; line-height: 1.4; color: #4b5563; text-align: left; margin-bottom: 10px; font-weight: 400;">
-                    When technology works this way, expectations change and new possibilities emerge.
-                </p>
-            </div>
+        <!-- Step 3 -->
+        <div class="mobile-step-item">
+            <img class="mobile-step-icon" src="images/step_03_blue.png" alt="Step 3">
+            <video autoplay loop muted playsinline preload="auto">
+                <source src="images/step_03.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
     </div>
 
@@ -3371,9 +3388,10 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
             mainText.classList.add('shifted-up');
             chipBar.classList.add('scaled-down');
 
-            setTimeout(() => {
-                playMobileDemo();
-            }, 800);
+            // Mobile demo disabled - now showing simple step icons and videos instead
+            // setTimeout(() => {
+            //     playMobileDemo();
+            // }, 800);
         }, true); // Use capture phase to intercept before desktop handler
 
         // ======================================================================
