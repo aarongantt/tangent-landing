@@ -552,7 +552,7 @@
         .step-base,
         .step-blue {
             height: auto;
-            max-height: clamp(45px, 5.5vw, 69px);
+            max-height: clamp(40px, 4vw, 69px);
             width: auto;
             object-fit: contain;
             display: block;
@@ -826,7 +826,9 @@
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0.8);
-            z-index: 400;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 10000;
             display: none;
             align-items: center;
             justify-content: center;
@@ -1032,7 +1034,7 @@
         }
 
         /* Wide screen layout: step indicators vertical on left, demo on right */
-        @media (min-width: 1400px) {
+        @media (min-width: 1700px) {
             .tutorial-content {
                 display: flex !important;
                 flex-direction: row !important;
@@ -1069,6 +1071,153 @@
                 height: 100% !important;
                 padding: 0 40px !important;
                 order: 2 !important;
+            }
+        }
+
+        /* Narrow window: scale down logo and control buttons */
+        @media (max-width: 1200px) {
+            #interactive-panel-header img {
+                height: 24px !important;
+            }
+
+            #interactive-pin-btn {
+                width: 18px !important;
+                height: 18px !important;
+                left: 14px !important;
+                top: 12px !important;
+            }
+
+            #interactive-pin-btn img {
+                width: 18px !important;
+                height: 18px !important;
+            }
+
+            /* Container for minimize/close buttons */
+            #interactive-tangent-panel > div[style*="position: absolute"][style*="right: 8px"] {
+                gap: 5px !important;
+            }
+
+            #interactive-minimize-btn,
+            #interactive-close-btn {
+                width: 18px !important;
+                height: 18px !important;
+            }
+
+            #interactive-minimize-btn img,
+            #interactive-close-btn img {
+                width: 18px !important;
+                height: 18px !important;
+            }
+        }
+
+        /* Very narrow window: scale down even more */
+        @media (max-width: 900px) {
+            #interactive-panel-header img {
+                height: 20px !important;
+            }
+
+            #interactive-pin-btn {
+                width: 16px !important;
+                height: 16px !important;
+                left: 12px !important;
+                top: 10px !important;
+            }
+
+            #interactive-pin-btn img {
+                width: 16px !important;
+                height: 16px !important;
+            }
+
+            /* Container for minimize/close buttons */
+            #interactive-tangent-panel > div[style*="position: absolute"][style*="right: 8px"] {
+                gap: 4px !important;
+                right: 6px !important;
+            }
+
+            #interactive-minimize-btn,
+            #interactive-close-btn {
+                width: 16px !important;
+                height: 16px !important;
+            }
+
+            #interactive-minimize-btn img,
+            #interactive-close-btn img {
+                width: 16px !important;
+                height: 16px !important;
+            }
+        }
+
+        /* Extremely narrow window: prevent overlap */
+        @media (max-width: 600px) {
+            #interactive-panel-header img {
+                height: 16px !important;
+            }
+
+            #interactive-pin-btn {
+                width: 14px !important;
+                height: 14px !important;
+                left: 10px !important;
+                top: 9px !important;
+            }
+
+            #interactive-pin-btn img {
+                width: 14px !important;
+                height: 14px !important;
+            }
+
+            /* Container for minimize/close buttons */
+            #interactive-tangent-panel > div[style*="position: absolute"][style*="right: 8px"] {
+                gap: 3px !important;
+                right: 5px !important;
+            }
+
+            #interactive-minimize-btn,
+            #interactive-close-btn {
+                width: 14px !important;
+                height: 14px !important;
+            }
+
+            #interactive-minimize-btn img,
+            #interactive-close-btn img {
+                width: 14px !important;
+                height: 14px !important;
+            }
+        }
+
+        /* Ultra narrow window: aggressive scaling */
+        @media (max-width: 450px) {
+            #interactive-panel-header img {
+                height: 14px !important;
+            }
+
+            #interactive-pin-btn {
+                width: 12px !important;
+                height: 12px !important;
+                left: 8px !important;
+                top: 8px !important;
+            }
+
+            #interactive-pin-btn img {
+                width: 12px !important;
+                height: 12px !important;
+            }
+
+            /* Container for minimize/close buttons */
+            #interactive-tangent-panel > div[style*="position: absolute"][style*="right: 8px"] {
+                gap: 2px !important;
+                right: 4px !important;
+            }
+
+            #interactive-minimize-btn,
+            #interactive-close-btn {
+                width: 12px !important;
+                height: 12px !important;
+            }
+
+            #interactive-minimize-btn img,
+            #interactive-close-btn img {
+                width: 12px !important;
+                height: 12px !important;
             }
         }
     </style>
@@ -2757,8 +2906,38 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
                 // Toggle blue filter (Tangent blue #4a90e2)
                 if (isPinned) {
                     interactivePinBtn.style.filter = 'brightness(0) saturate(100%) invert(47%) sepia(94%) saturate(1285%) hue-rotate(196deg) brightness(95%) contrast(91%)';
+
+                    // Switch to absolute positioning (scrolls with tutorial-content)
+                    const tutorialContent = document.querySelector('.tutorial-content');
+
+                    // Get current position on screen
+                    const panelRect = interactiveTangentPanel.getBoundingClientRect();
+                    const tutorialRect = tutorialContent.getBoundingClientRect();
+
+                    // Calculate position relative to tutorial-content
+                    const relativeTop = panelRect.top - tutorialRect.top;
+                    const relativeLeft = panelRect.left - tutorialRect.left;
+
+                    interactiveTangentPanel.style.position = 'absolute';
+                    interactiveTangentPanel.style.top = relativeTop + 'px';
+                    interactiveTangentPanel.style.left = relativeLeft + 'px';
+                    interactiveTangentPanel.style.bottom = 'auto';
+
+                    // Move panel inside tutorial-content so it scrolls with content
+                    tutorialContent.appendChild(interactiveTangentPanel);
                 } else {
                     interactivePinBtn.style.filter = 'none';
+
+                    // Switch back to fixed positioning (stays on screen)
+                    const panelRect = interactiveTangentPanel.getBoundingClientRect();
+
+                    interactiveTangentPanel.style.position = 'fixed';
+                    interactiveTangentPanel.style.top = panelRect.top + 'px';
+                    interactiveTangentPanel.style.left = panelRect.left + 'px';
+                    interactiveTangentPanel.style.bottom = 'auto';
+
+                    // Move panel back to body (outside tutorial content)
+                    document.body.appendChild(interactiveTangentPanel);
                 }
             }, true);
         }
@@ -3313,6 +3492,109 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
 
             // Demo complete - old functions kept for compatibility
         }
+
+        // Dynamic responsive scaling for panel header elements
+        function scaleHeaderElements() {
+            const width = window.innerWidth;
+            const logo = document.querySelector('#interactive-panel-header img');
+            const pinBtn = document.getElementById('interactive-pin-btn');
+            const pinImg = pinBtn?.querySelector('img');
+            const btnContainer = document.querySelector('#interactive-tangent-panel > div[style*="position: absolute"][style*="right"]');
+            const minimizeBtn = document.getElementById('interactive-minimize-btn');
+            const minimizeImg = minimizeBtn?.querySelector('img');
+            const closeBtn = document.getElementById('interactive-close-btn');
+            const closeImg = closeBtn?.querySelector('img');
+
+            let logoSize, btnSize, pinSize, containerGap, containerRight, pinLeft, pinTop;
+
+            if (width <= 450) {
+                // Ultra narrow
+                logoSize = 14;
+                btnSize = 12;
+                pinSize = 12;
+                containerGap = 2;
+                containerRight = 4;
+                pinLeft = 8;
+                pinTop = 8;
+            } else if (width <= 600) {
+                // Extremely narrow
+                logoSize = 16;
+                btnSize = 14;
+                pinSize = 14;
+                containerGap = 3;
+                containerRight = 5;
+                pinLeft = 10;
+                pinTop = 9;
+            } else if (width <= 900) {
+                // Very narrow
+                logoSize = 20;
+                btnSize = 16;
+                pinSize = 16;
+                containerGap = 4;
+                containerRight = 6;
+                pinLeft = 12;
+                pinTop = 10;
+            } else if (width <= 1200) {
+                // Narrow
+                logoSize = 24;
+                btnSize = 18;
+                pinSize = 18;
+                containerGap = 5;
+                containerRight = 8;
+                pinLeft = 14;
+                pinTop = 12;
+            } else {
+                // Normal
+                logoSize = 28;
+                btnSize = 20;
+                pinSize = 20;
+                containerGap = 6;
+                containerRight = 8;
+                pinLeft = 16;
+                pinTop = 14;
+            }
+
+            // Apply styles
+            if (logo) logo.style.height = logoSize + 'px';
+
+            if (pinBtn) {
+                pinBtn.style.width = pinSize + 'px';
+                pinBtn.style.height = pinSize + 'px';
+                pinBtn.style.left = pinLeft + 'px';
+                pinBtn.style.top = pinTop + 'px';
+            }
+            if (pinImg) {
+                pinImg.style.width = pinSize + 'px';
+                pinImg.style.height = pinSize + 'px';
+            }
+
+            if (btnContainer) {
+                btnContainer.style.gap = containerGap + 'px';
+                btnContainer.style.right = containerRight + 'px';
+            }
+
+            if (minimizeBtn) {
+                minimizeBtn.style.width = btnSize + 'px';
+                minimizeBtn.style.height = btnSize + 'px';
+            }
+            if (minimizeImg) {
+                minimizeImg.style.width = btnSize + 'px';
+                minimizeImg.style.height = btnSize + 'px';
+            }
+
+            if (closeBtn) {
+                closeBtn.style.width = btnSize + 'px';
+                closeBtn.style.height = btnSize + 'px';
+            }
+            if (closeImg) {
+                closeImg.style.width = btnSize + 'px';
+                closeImg.style.height = btnSize + 'px';
+            }
+        }
+
+        // Run on load and resize
+        window.addEventListener('load', scaleHeaderElements);
+        window.addEventListener('resize', scaleHeaderElements);
     </script>
 </body>
 </html>
