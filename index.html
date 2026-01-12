@@ -1758,6 +1758,65 @@ The deeper implication is that the primary constraint of modern knowledge work i
         const interactiveChatInput = document.getElementById('interactive-chat-input');
         const interactiveChatSend = document.getElementById('interactive-chat-send');
 
+        // CENTRALIZED AI RESPONSES - Single source of truth
+        const AI_RESPONSES = {
+            'What is...': `Here, "cognitive cost" refers to the additional mental effort caused by interrupting a line of thought.
+
+It's the effort required to re-establish focus and understanding after leaving the page.`,
+
+            'Context': `In this passage, the author is describing how even brief interruptions can degrade continuity while reading.
+
+The "cost" isn't time lost searching, but the effort needed to reconstruct the original reasoning when returning.`,
+
+            'Summarize': `Leaving a page to resolve small uncertainties fragments attention.
+
+Each interruption adds mental effort, making it harder to maintain a coherent line of thought over time.`
+        };
+
+        // Helper function to show AI response in demo panel
+        async function showAIResponseInPanel(chipText) {
+            interactiveChatBody.innerHTML = '';
+            const aiMsg = document.createElement('div');
+            aiMsg.style.marginBottom = '20px';
+            aiMsg.style.textAlign = 'left';
+            aiMsg.style.padding = '0';
+            aiMsg.style.color = '#2a2a2a';
+            aiMsg.style.fontSize = '19px';
+            aiMsg.style.lineHeight = '1.6';
+            interactiveChatBody.appendChild(aiMsg);
+
+            const aiResponse = AI_RESPONSES[chipText] || AI_RESPONSES['Context'];
+            await typewriterEffect(aiMsg, aiResponse, 2);
+        }
+
+        // Top chip bar click handlers
+        let pendingChipResponse = null; // Track which chip was clicked
+
+        document.querySelectorAll('#chips-container .chip:not(.chip-icon)').forEach(chip => {
+            chip.addEventListener('click', async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const chipText = chip.textContent.trim();
+                console.log('Top chip clicked:', chipText);
+
+                if (!panelExpanded) {
+                    // Panel is closed - save which chip was clicked, then trigger full demo
+                    pendingChipResponse = chipText;
+                    console.log('Panel closed, triggering expansion with pending response:', chipText);
+                    tangentPanel.click();
+                } else {
+                    // Panel is already open - just show response in small demo panel
+                    if (interactiveTangentPanel.style.display !== 'block') {
+                        interactiveTangentPanel.style.display = 'block';
+                        console.log('Made demo panel visible');
+                    }
+                    console.log('Calling showAIResponseInPanel with:', chipText);
+                    await showAIResponseInPanel(chipText);
+                }
+            });
+        });
+
         // Step indicators
         const stepIndicator1 = document.getElementById('step-indicator-1');
         const stepIndicator2 = document.getElementById('step-indicator-2');
@@ -2107,9 +2166,13 @@ The deeper implication is that the primary constraint of modern knowledge work i
 
             interactiveChatBody.appendChild(aiMsg);
 
-            const aiResponse = `Here, "cognitive cost" refers to the additional mental effort caused by interrupting a line of thought.
+            // Use pending chip response if set, otherwise default to 'Context'
+            const responseKey = pendingChipResponse || 'Context';
+            const aiResponse = AI_RESPONSES[responseKey];
+            console.log('Showing AI response for:', responseKey);
 
-It's the effort required to re-establish focus and understanding after leaving the page.`;
+            // Clear pending response after using it
+            pendingChipResponse = null;
 
             // Start typewriter effect and wait for it to complete
             await typewriterEffect(aiMsg, aiResponse, 0.5);
@@ -2295,23 +2358,9 @@ It's the effort required to re-establish focus and understanding after leaving t
                 aiMsg.style.lineHeight = '1.6';
                 interactiveChatBody.appendChild(aiMsg);
 
-                // Determine response based on chip text
+                // Determine response based on chip text (use centralized responses)
                 const chipText = chip.textContent.trim();
-                let aiResponse = '';
-
-                if (chipText === 'What is...') {
-                    aiResponse = `Here, "cognitive cost" refers to the additional mental effort caused by interrupting a line of thought.
-
-It's the effort required to re-establish focus and understanding after leaving the page.`;
-                } else if (chipText === 'Context') {
-                    aiResponse = `In this passage, the author is describing how even brief interruptions can degrade continuity while reading.
-
-The "cost" isn't time lost searching, but the effort needed to reconstruct the original reasoning when returning.`;
-                } else if (chipText === 'Summarize') {
-                    aiResponse = `Leaving a page to resolve small uncertainties fragments attention.
-
-Each interruption adds mental effort, making it harder to maintain a coherent line of thought over time.`;
-                }
+                const aiResponse = AI_RESPONSES[chipText] || AI_RESPONSES['Context'];  // Fallback to Context
 
                 await typewriterEffect(aiMsg, aiResponse, 2);
             });
