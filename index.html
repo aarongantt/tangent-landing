@@ -253,7 +253,7 @@
             width: 100%;
             padding: 15px 54px 15px 18px;
             border-radius: 33px;
-            border: 2.25px solid #787878;
+            border: 1.75px solid #787878;
             background: rgba(255, 255, 255, 1);
             color: #1f2937;
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
@@ -272,23 +272,32 @@
 
         .email-input:focus {
             border-color: #669fc3;
-            box-shadow: 0 0 6px 1px rgba(102, 159, 195, 0.25),
-                        0 0 12px 2px rgba(102, 159, 195, 0.2);
+            box-shadow: 0 0 4px 1px rgba(102, 159, 195, 0.45),
+                        0 0 8px 1px rgba(102, 159, 195, 0.35);
         }
 
         .demo-section .email-input:focus {
-            box-shadow: 0 0 4px 1px rgba(102, 159, 195, 0.25),
-                        0 0 8px 1px rgba(102, 159, 195, 0.2);
+            box-shadow: 0 0 3px 1px rgba(102, 159, 195, 0.45),
+                        0 0 6px 1px rgba(102, 159, 195, 0.35);
         }
 
         .email-input::placeholder {
             color: #9aa3b2;
             font-style: italic;
-            font-size: 19.5px;
+            font-size: 20px;
         }
 
         .demo-section .email-input::placeholder {
             font-size: 13px;
+        }
+
+        #interactive-email-input::placeholder {
+            font-size: 0.85em;
+        }
+
+        /* Top chip bar placeholder when scaled down (panel expanded) */
+        .chip-bar.scaled-down .email-input::placeholder {
+            font-size: 24px;
         }
 
         .send-btn {
@@ -299,7 +308,7 @@
             width: 42px;
             height: 42px;
             border-radius: 50%;
-            border: 2.5px solid #787878;
+            border: 2px solid #787878;
             background: #ffffff;
             color: #2a8fd5;
             cursor: pointer;
@@ -745,7 +754,7 @@
         }
 
         .tg-msg.tg-ai .tg-ai__content {
-            padding: 10px 0;
+            padding: 70px 0 10px 0;
             color: #2a2a2a;
             max-width: 100%;
         }
@@ -1313,9 +1322,9 @@ The deeper implication is that the primary constraint of modern knowledge work i
 
             <!-- Input area (flush to bottom) -->
             <div style="padding: 12px 16px; flex-shrink: 0; position: relative;">
-                <input type="text" id="interactive-chat-input" placeholder="Go on a Tangent..." readonly style="width: 100%; padding: 14px 60px 14px 16px; border-radius: 24px; border: 2px solid #4a90e2; background: rgba(255, 255, 255, 0.9); font-size: 16px; font-style: italic; outline: none; box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);">
+                <input type="text" id="interactive-chat-input" placeholder="Go on a Tangent..." readonly style="width: 100%; padding: 14px 60px 14px 16px; border-radius: 24px; border: 3px solid #4a90e2; background: rgba(255, 255, 255, 0.9); font-size: 16px; font-style: italic; outline: none; box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);">
 
-                <button id="interactive-chat-send" style="position: absolute; right: 22px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 50%; border: 2px solid #787878; background: transparent; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);">
+                <button id="interactive-chat-send" style="position: absolute; right: 22px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 50%; border: 3px solid #787878; background: transparent; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);">
                     <img id="interactive-chat-send-icon" src="images/tangent_enter_button.png" alt="Send" style="width: 18px; height: 18px;">
                 </button>
                 <style>
@@ -1339,9 +1348,10 @@ The deeper implication is that the primary constraint of modern knowledge work i
     </div>
 
     <!-- Demo chip bar (OUTSIDE transformed panel for true fixed positioning) -->
-    <div id="interactive-chip-bar" class="chip-bar" style="display: none; position: fixed; z-index: 9999; transform: scale(1.15); transform-origin: center; border-radius: 14px;">
-        <div style="display: flex; gap: 6px; align-items: center;">
-            <button class="chip chip-icon" style="padding: 6px; min-width: 32px;">
+    <div id="interactive-chip-bar" class="chip-bar initial-state" style="display: none; position: fixed; z-index: 9999; transform: scale(1.15); transform-origin: center; border-radius: 14px;">
+        <!-- Initial State: Chips -->
+        <div id="interactive-chips-container" style="display: flex; gap: 6px; align-items: center;">
+            <button class="chip chip-icon" id="interactive-t-chip" style="padding: 6px; min-width: 32px;">
                 <img src="images/tangent_t_logo.png" alt="T" style="width: 18px; height: 18px;">
             </button>
             <button class="chip" id="interactive-whatis-chip" style="font-size: 1em; padding: 6px 10px;">What is...</button>
@@ -1349,6 +1359,18 @@ The deeper implication is that the primary constraint of modern knowledge work i
             <button class="chip" id="interactive-summarize-chip" style="font-size: 1em; padding: 6px 10px;">Summarize</button>
             <button class="chip chip-icon chevron-chip" style="padding: 5px; min-width: 27px; min-height: 27px;">
                 <img src="images/chevron_down_arrow.png" alt="More" style="width: 15px; height: 15px;">
+            </button>
+        </div>
+
+        <!-- Email State: T Icon + Email Input + Send Button -->
+        <div id="interactive-email-container" class="email-container" style="display: none; gap: 4px;">
+            <button class="chip chip-icon" id="interactive-t-chip-email" style="flex-shrink: 0; padding: 6px 2px; min-width: 32px;">
+                <img src="images/tangent_t_logo.png" alt="T" style="width: 18px; height: 18px;">
+            </button>
+            <input type="email" id="interactive-email-input" class="email-input" placeholder="Email for early access to Tangent." style="min-width: 0; width: 338px; max-width: 338px; font-size: 1.0em; padding: 7px 38px 10px 14px; border-radius: 50px; height: 37px; border: 1.875px solid #787878;">
+            <button id="interactive-send-btn" class="send-btn" style="position: absolute; right: 8px; width: 27px; height: 27px; padding: 6px; border: 1.875px solid #787878;">
+                <img src="images/tangent_enter_button.png" class="default" alt="Send" style="width: 16px; height: 16px;">
+                <img src="images/tangent_enter_button_blue.png" class="hover" alt="Send" style="width: 16px; height: 16px;">
             </button>
         </div>
     </div>
@@ -1752,6 +1774,12 @@ The deeper implication is that the primary constraint of modern knowledge work i
         const demoHighlightText = document.getElementById('demo-highlight-text');
         const interactiveCursor = document.getElementById('interactive-demo-cursor');
         const interactiveChipBar = document.getElementById('interactive-chip-bar');
+        const interactiveChipsContainer = document.getElementById('interactive-chips-container');
+        const interactiveTChip = document.getElementById('interactive-t-chip');
+        const interactiveTChipEmail = document.getElementById('interactive-t-chip-email');
+        const interactiveEmailContainer = document.getElementById('interactive-email-container');
+        const interactiveEmailInput = document.getElementById('interactive-email-input');
+        const interactiveSendBtn = document.getElementById('interactive-send-btn');
         const interactiveWhatIsChip = document.getElementById('interactive-whatis-chip');
         const interactiveContextChip = document.getElementById('interactive-context-chip');
         const interactiveSummarizeChip = document.getElementById('interactive-summarize-chip');
@@ -1819,21 +1847,135 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
             });
         });
 
+        // Interactive chip bar toggle function
+        function toggleInteractiveChipBar() {
+            const isEmailState = interactiveChipBar.classList.contains('email-state');
+
+            if (isEmailState) {
+                // Switch back to chips
+                interactiveEmailContainer.style.display = 'none';
+                interactiveChipsContainer.style.display = 'flex';
+                interactiveChipBar.classList.remove('email-state');
+                interactiveChipBar.classList.add('initial-state');
+            } else {
+                // Switch to email
+                interactiveChipsContainer.style.display = 'none';
+                interactiveEmailContainer.style.display = 'flex';
+                interactiveChipBar.classList.remove('initial-state');
+                interactiveChipBar.classList.add('email-state');
+                interactiveEmailInput.focus();
+            }
+        }
+
+        // Interactive chip bar T icon click handlers
+        interactiveTChip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleInteractiveChipBar();
+        });
+
+        interactiveTChipEmail.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleInteractiveChipBar();
+        });
+
+        // Interactive email submission
+        async function handleInteractiveEmailSubmit(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const email = interactiveEmailInput.value.trim();
+
+            if (!email) {
+                showToast('Please enter an email address');
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('Please enter a valid email address');
+                return;
+            }
+
+            interactiveSendBtn.disabled = true;
+            interactiveEmailInput.disabled = true;
+
+            try {
+                const referrer = document.referrer || 'Direct';
+
+                const response = await fetch('https://tangent-backend-aaron-gantts-projects.vercel.app/api/waitlist', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        referrer
+                    })
+                });
+
+                if (response.ok) {
+                    successModal.classList.add('visible');
+                    interactiveEmailInput.value = '';
+                    toggleInteractiveChipBar(); // Switch back to chips
+                } else {
+                    showToast('Failed to join waitlist. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Failed to join waitlist. Please try again.');
+            } finally {
+                interactiveSendBtn.disabled = false;
+                interactiveEmailInput.disabled = false;
+            }
+        }
+
+        interactiveSendBtn.addEventListener('click', handleInteractiveEmailSubmit);
+
+        interactiveEmailInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleInteractiveEmailSubmit(e);
+            }
+        });
+
         // Step indicators
         const stepIndicator1 = document.getElementById('step-indicator-1');
         const stepIndicator2 = document.getElementById('step-indicator-2');
         const stepIndicator3 = document.getElementById('step-indicator-3');
 
-        // Reset demo state
+        // Reset demo state - COMPREHENSIVE RESET
         function resetInteractiveDemo() {
+            // Reset highlight text
             demoHighlightText.style.background = 'none';
             demoHighlightText.style.padding = '';
             demoHighlightText.classList.remove('highlighting');
+
+            // Reset cursor
             interactiveCursor.style.display = 'none';
+            interactiveCursor.style.transition = 'none';
+
+            // Reset chip bar (back to chips mode)
             interactiveChipBar.style.display = 'none';
+            interactiveChipBar.style.position = 'fixed';
+            interactiveChipBar.style.transform = 'scale(1.15)';
+            interactiveChipBar.style.transformOrigin = 'center';
+            // Switch back to chips mode if in email mode
+            if (interactiveEmailContainer.style.display === 'flex') {
+                interactiveEmailContainer.style.display = 'none';
+                interactiveChipsContainer.style.display = 'flex';
+                interactiveChipBar.classList.remove('email-state');
+                interactiveChipBar.classList.add('initial-state');
+            }
+
+            // Reset panel
             interactiveTangentPanel.style.display = 'none';
             interactiveChatBody.innerHTML = '';
             interactiveChatInput.value = '';
+
+            // Reset scroll position to original
+            const scrollArea = document.getElementById('demo-scroll-area');
+            if (scrollArea) {
+                scrollArea.scrollTo({ top: 0, behavior: 'auto' });
+            }
 
             // Reset all step indicators to inactive
             toggleStepIndicator(stepIndicator1, false);
@@ -1845,6 +1987,9 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
             if (existingStyle) {
                 existingStyle.remove();
             }
+
+            // Reset panel position flag (allow auto-positioning again)
+            userHasMovedPanel = false;
         }
 
         // Add chat message
@@ -1974,11 +2119,11 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
             const scrollArea = document.getElementById('demo-scroll-area');
             const highlightTextElement = document.getElementById('demo-highlight-text');
 
-            // Position "Subtle cognitive cost" higher on the page (15% down from top - adjusted to show more text below)
+            // Position "Subtle cognitive cost" higher on the page (20% down from top - adjusted to show more text below)
             // Get the parent paragraph's offsetTop since inline span doesn't have reliable offsetTop
             const highlightParagraph = highlightTextElement.closest('p');
             const scrollAreaHeight = scrollArea.clientHeight;
-            const targetScrollPos = highlightParagraph.offsetTop - (scrollAreaHeight * 0.15);
+            const targetScrollPos = highlightParagraph.offsetTop - (scrollAreaHeight * 0.20);
             const currentScrollPos = scrollArea.scrollTop;
             const scrollDelta = targetScrollPos - currentScrollPos;
 
@@ -2099,7 +2244,7 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
 
             // Determine which chip to click based on pendingChipResponse
             let targetChip;
-            const chipToClick = pendingChipResponse || 'Context'; // Default to Context if not set
+            const chipToClick = pendingChipResponse || 'What is...'; // Default to What is... if not set
 
             if (chipToClick === 'What is...') {
                 targetChip = interactiveWhatIsChip;
@@ -2182,8 +2327,8 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
 
             interactiveChatBody.appendChild(aiMsg);
 
-            // Use pending chip response if set, otherwise default to 'Context'
-            const responseKey = pendingChipResponse || 'Context';
+            // Use pending chip response if set, otherwise default to 'What is...'
+            const responseKey = pendingChipResponse || 'What is...';
             const aiResponse = AI_RESPONSES[responseKey];
             console.log('Showing AI response for:', responseKey);
 
@@ -2334,8 +2479,8 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
             }, true);
         }
 
-        // Make ALL chips in the chip bar clickable to open the panel
-        const allDemoChips = interactiveChipBar.querySelectorAll('.chip:not(.chevron-chip)');
+        // Make ALL chips in the chip bar clickable to open the panel (EXCEPT T icon which has its own handler)
+        const allDemoChips = interactiveChipBar.querySelectorAll('.chip:not(.chevron-chip):not(.chip-icon)');
         allDemoChips.forEach(chip => {
             chip.addEventListener('click', async (e) => {
                 e.stopPropagation();
