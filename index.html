@@ -2107,9 +2107,9 @@ The deeper implication is that the primary constraint of modern knowledge work i
 
             interactiveChatBody.appendChild(aiMsg);
 
-            const aiResponse = `In this passage, the author explains that **continuity in reading is fragile**, and that even brief interruptions can weaken a reader's ability to stay oriented within a line of thought. The issue is not *distraction* in the usual sense, but the way attention supports an internal structure of reasoning that degrades when it is broken.
+            const aiResponse = `Here, "cognitive cost" refers to the additional mental effort caused by interrupting a line of thought.
 
-The "cost" being described is therefore not the time spent searching for information elsewhere, but the **mental effort required to reconstruct the original reasoning** upon return. The reader must re-establish context, recall what mattered, and rebuild coherence before progress can continue.`;
+It's the effort required to re-establish focus and understanding after leaving the page.`;
 
             // Start typewriter effect and wait for it to complete
             await typewriterEffect(aiMsg, aiResponse, 0.5);
@@ -2291,7 +2291,7 @@ The "cost" being described is therefore not the time spent searching for informa
                 aiMsg.style.textAlign = 'left';
                 aiMsg.style.padding = '0';
                 aiMsg.style.color = '#2a2a2a';
-                aiMsg.style.fontSize = '14px';
+                aiMsg.style.fontSize = '19px';
                 aiMsg.style.lineHeight = '1.6';
                 interactiveChatBody.appendChild(aiMsg);
 
@@ -2300,15 +2300,17 @@ The "cost" being described is therefore not the time spent searching for informa
                 let aiResponse = '';
 
                 if (chipText === 'What is...') {
-                    aiResponse = `Here, **subtle cognitive cost** refers to the additional mental effort imposed when a continuous line of thought is interrupted. It is not the difficulty of the material itself, but the effort required to recover orientation after disengaging. The cost is subtle because it does not present as confusion or error; it appears as *lost momentum*, a faint resistance to resuming thought.`;
+                    aiResponse = `Here, "cognitive cost" refers to the additional mental effort caused by interrupting a line of thought.
+
+It's the effort required to re-establish focus and understanding after leaving the page.`;
                 } else if (chipText === 'Context') {
-                    aiResponse = `In this passage, the author explains that **continuity in reading is fragile**, and that even brief interruptions can weaken a reader's ability to stay oriented within a line of thought. The issue is not *distraction* in the usual sense, but the way attention supports an internal structure of reasoning that degrades when it is broken.
+                    aiResponse = `In this passage, the author is describing how even brief interruptions can degrade continuity while reading.
 
-The "cost" being described is therefore not the time spent searching for information elsewhere, but the **mental effort required to reconstruct the original reasoning** upon return. The reader must re-establish context, recall what mattered, and rebuild coherence before progress can continue.`;
+The "cost" isn't time lost searching, but the effort needed to reconstruct the original reasoning when returning.`;
                 } else if (chipText === 'Summarize') {
-                    aiResponse = `Leaving a page to resolve small uncertainties fragments attention by breaking the continuity that sustained understanding depends on. Even when the interruption is brief and purposeful, it **suspends the reader's internal orientation**: the sense of what is being argued, why it matters, and how the current point fits into a larger structure.
+                    aiResponse = `Leaving a page to resolve small uncertainties fragments attention.
 
-Each interruption introduces a *subtle cognitive cost*—not in the time spent away, but in the effort required to reconstruct that orientation when returning. As these costs accumulate, maintaining a coherent line of thought becomes progressively harder, not because the material is more complex, but because **continuity has been repeatedly compromised**.`;
+Each interruption adds mental effort, making it harder to maintain a coherent line of thought over time.`;
                 }
 
                 await typewriterEffect(aiMsg, aiResponse, 2);
