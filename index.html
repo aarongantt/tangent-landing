@@ -1213,7 +1213,7 @@
         @media (max-width: 768px) {
             /* Force body to have enough height for scrolling */
             body {
-                min-height: 100vh !important;
+                min-height: 300vh !important;
                 padding-top: 0 !important;
                 position: relative !important;
             }
@@ -1331,12 +1331,12 @@
                 height: 16px !important;
             }
 
-            /* Main tangent panel - WAY BELOW text and chip bar, NO INTERNAL SCROLL */
+            /* Main tangent panel - EXTENDS TO BOTTOM OF PAGE */
             #tangent-panel {
                 width: 95vw !important;
                 max-width: 95vw !important;
                 height: auto !important;
-                min-height: auto !important;
+                min-height: calc(300vh - 550px) !important;
                 border-radius: 20px 20px 0 0 !important;
                 border: 3px solid rgba(180, 180, 180, 0.7) !important;
                 border-bottom: none !important;
@@ -1344,12 +1344,12 @@
                 transform: none !important;
                 left: 50% !important;
                 margin-left: -47.5vw !important;
-                bottom: auto !important;
+                bottom: 0 !important;
                 top: 550px !important;
                 opacity: 1 !important;
                 z-index: 10 !important;
                 overflow: visible !important;
-                padding-bottom: 40px !important;
+                padding-bottom: 60px !important;
             }
 
             #tangent-panel.visible {
@@ -1468,8 +1468,10 @@
             #tangent-panel {
                 position: absolute !important;
                 top: 500px !important;
+                bottom: 0 !important;
                 left: 50% !important;
                 margin-left: -47.5vw !important;
+                min-height: calc(300vh - 500px) !important;
                 z-index: 10 !important;
             }
 
