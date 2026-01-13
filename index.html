@@ -1230,7 +1230,7 @@
         @media (max-width: 768px) {
             /* Main intro text - split into two lines and resize */
             #main-text {
-                font-size: 27px !important;
+                font-size: 29px !important;
                 white-space: normal !important;
                 max-width: 90vw;
                 line-height: 1.4;
@@ -1238,8 +1238,8 @@
             }
 
             #main-text.shifted-up {
-                font-size: 23px !important;
-                top: 50px !important;
+                font-size: 29px !important;
+                top: 120px !important;
             }
 
             /* Show line break on mobile */
@@ -1258,7 +1258,7 @@
             }
 
             .chip-bar.scaled-down {
-                transform: scale(1.0) translateY(-20px) !important;
+                transform: scale(1.15) translateY(0px) !important;
             }
 
             .chip {
@@ -1330,7 +1330,7 @@
             }
 
             #tangent-panel.expanded {
-                transform: translateX(-50%) translateY(8%) !important;
+                transform: translateX(-50%) translateY(calc(100% - 60px)) !important;
             }
 
             /* Panel header - resize for mobile */
@@ -1339,16 +1339,16 @@
             }
 
             #tangent-panel.expanded .tangent-panel__header {
-                padding: 12px 32px !important;
-                transform: scale(0.75) !important;
+                padding: 16px 40px !important;
+                transform: scale(1.0) !important;
             }
 
             .tangent-header-logo {
-                height: 32px !important;
+                height: 64px !important;
             }
 
             #tangent-panel.expanded .tangent-header-logo {
-                height: 28px !important;
+                height: 64px !important;
             }
 
             /* Panel buttons - resize for mobile */
@@ -1403,13 +1403,13 @@
         /* Extra small mobile devices (480px and below) */
         @media (max-width: 480px) {
             #main-text {
-                font-size: 23px !important;
+                font-size: 25px !important;
                 top: 100px !important;
             }
 
             #main-text.shifted-up {
-                font-size: 19px !important;
-                top: 40px !important;
+                font-size: 25px !important;
+                top: 100px !important;
             }
 
             .chip-bar {
@@ -1417,7 +1417,7 @@
             }
 
             .chip-bar.scaled-down {
-                transform: scale(0.85) translateY(-15px) !important;
+                transform: scale(1.0) translateY(0px) !important;
             }
 
             .email-input {
@@ -1435,11 +1435,11 @@
             }
 
             .tangent-header-logo {
-                height: 28px !important;
+                height: 56px !important;
             }
 
             #tangent-panel.expanded .tangent-header-logo {
-                height: 24px !important;
+                height: 56px !important;
             }
 
             #demo-content-container p {
@@ -3371,17 +3371,15 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
         // Mobile panel auto-display (SEPARATE - does not interfere with desktop)
         // On mobile, automatically show tutorial content when panel becomes visible
         if (isMobileDevice()) {
-            // Use MutationObserver to detect when panel becomes visible
+            // Just show the mobile tutorial content when panel becomes visible
+            // NO expansion, NO text shrinking, NO scaling - keep everything static
             const panelObserver = new MutationObserver((mutations) => {
                 mutations.forEach((mutation) => {
                     if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
                         if (tangentPanel.classList.contains('visible') && !mobilePanelExpanded) {
-                            // Panel just became visible - auto-expand and show tutorial content
                             mobilePanelExpanded = true;
-                            tangentPanel.classList.add('expanded');
+                            // Only show tutorial content - don't expand panel or shrink text
                             mobileTutorialContent.style.display = 'block';
-                            mainText.classList.add('shifted-up');
-                            chipBar.classList.add('scaled-down');
                         }
                     }
                 });
