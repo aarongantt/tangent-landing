@@ -1922,6 +1922,32 @@
         // Set current year in footer
         document.getElementById('year').textContent = new Date().getFullYear();
 
+        // Pre-fill email from URL parameter (for extension auth flow)
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const emailParam = urlParams.get('email');
+
+            if (emailParam) {
+                // Wait for modal to exist, then pre-fill email
+                const checkModal = setInterval(() => {
+                    const emailInput = document.querySelector('#tgLoginEmail');
+                    if (emailInput) {
+                        clearInterval(checkModal);
+                        emailInput.value = decodeURIComponent(emailParam);
+
+                        // Auto-open the login modal if email is provided
+                        const freeTrialBtn = document.querySelector('.free-trial-btn');
+                        if (freeTrialBtn) {
+                            freeTrialBtn.click();
+                        }
+                    }
+                }, 100);
+
+                // Stop checking after 5 seconds
+                setTimeout(() => clearInterval(checkModal), 5000);
+            }
+        })();
+
         // Check user's current plan and update buttons
         (async function() {
             // Wait for supabaseClient to be ready
