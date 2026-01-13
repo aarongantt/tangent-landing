@@ -1235,13 +1235,13 @@
                 position: relative !important;
             }
 
-            /* Main intro text - VISIBLE AT TOP */
+            /* Main intro text - VISIBLE AT TOP, TWO LINES */
             #main-text {
                 position: absolute !important;
                 font-size: 31px !important;
                 font-weight: bold !important;
                 white-space: normal !important;
-                max-width: 90vw !important;
+                max-width: 280px !important;
                 line-height: 1.4 !important;
                 top: 120px !important;
                 left: 50% !important;
@@ -1262,6 +1262,11 @@
             /* Show line break on mobile */
             .mobile-only-br {
                 display: inline !important;
+            }
+
+            /* Animated cursor - ABOVE chip bar */
+            .demo-cursor {
+                z-index: 5001 !important;
             }
 
             /* Main chip bar - BELOW TEXT, VISIBLE */
@@ -1450,6 +1455,7 @@
                 left: 50% !important;
                 transform: translateX(-50%) !important;
                 white-space: normal !important;
+                max-width: 240px !important;
                 z-index: 5000 !important;
                 color: #ffffff !important;
                 display: block !important;
@@ -1460,6 +1466,10 @@
             #main-text.shifted-up {
                 font-size: 27px !important;
                 top: 100px !important;
+            }
+
+            .demo-cursor {
+                z-index: 5001 !important;
             }
 
             .chip-bar {
