@@ -958,30 +958,13 @@
             z-index: -1;
         }
 
-        /* MOBILE Tutorial Content Styles */
+        /* MOBILE Tutorial Content Styles - NO INTERNAL SCROLL */
         .mobile-tutorial-content {
             padding: 0px 20px 30px;
-            overflow-y: auto;
-            max-height: 100%;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
-        }
-
-        .mobile-tutorial-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .mobile-tutorial-content::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .mobile-tutorial-content::-webkit-scrollbar-thumb {
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 3px;
-        }
-
-        .mobile-tutorial-content::-webkit-scrollbar-thumb:hover {
-            background-color: rgba(0, 0, 0, 0.3);
+            overflow-y: visible !important;
+            overflow-x: hidden;
+            height: auto !important;
+            max-height: none !important;
         }
 
         /* Mobile Step Indicators */
@@ -1348,12 +1331,12 @@
                 height: 16px !important;
             }
 
-            /* Main tangent panel - WAY BELOW text and chip bar */
+            /* Main tangent panel - WAY BELOW text and chip bar, NO INTERNAL SCROLL */
             #tangent-panel {
                 width: 95vw !important;
                 max-width: 95vw !important;
                 height: auto !important;
-                min-height: 60vh !important;
+                min-height: auto !important;
                 border-radius: 20px 20px 0 0 !important;
                 border: 3px solid rgba(180, 180, 180, 0.7) !important;
                 border-bottom: none !important;
@@ -1365,6 +1348,8 @@
                 top: 550px !important;
                 opacity: 1 !important;
                 z-index: 10 !important;
+                overflow: visible !important;
+                padding-bottom: 40px !important;
             }
 
             #tangent-panel.visible {
@@ -1583,7 +1568,7 @@
         </div>
 
         <!-- MOBILE Tutorial Content (shown only on mobile devices) -->
-        <div class="mobile-tutorial-content" style="display: none; position: relative; height: auto; max-height: calc(100% - 80px); overflow-y: auto; overflow-x: hidden; padding: 20px 16px; scrollbar-width: none; -ms-overflow-style: none;">
+        <div class="mobile-tutorial-content" style="display: none; position: relative; height: auto; overflow: visible; padding: 20px 16px;">
             <style>
                 .mobile-tutorial-content::-webkit-scrollbar {
                     display: none;
