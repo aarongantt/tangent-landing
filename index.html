@@ -2,12 +2,203 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     <meta name="screen-orientation" content="portrait">
     <meta name="x5-orientation" content="portrait">
-    <title>Tangent – Join the Waitlist</title>
-    <meta name="description" content="AI that meets you where your attention already is.">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <style>
+        @supports (-webkit-touch-callout: none) {
+            html {
+                transform: rotate(0deg);
+                transform-origin: left top;
+                width: 100%;
+                overflow-x: hidden;
+                position: fixed;
+            }
+        }
+    </style>
+
+    <!-- Primary Meta Tags -->
+    <title>TANGENT - AI-Powered Browser Assistant for Chrome | Free Trial</title>
+    <meta name="title" content="TANGENT - AI-Powered Browser Assistant for Chrome | Free Trial">
+    <meta name="description" content="Transform your browsing with TANGENT, the floating AI assistant that lives on every page. Get instant, context-aware answers without switching tabs. Start your free 7-day trial with 1,000 queries. No credit card required.">
+    <meta name="keywords" content="AI browser extension, Chrome AI assistant, context-aware AI, ChatGPT alternative, browser AI tool, on-page AI assistant, AI research tool, productivity AI extension">
+    <meta name="author" content="TANGENT">
+    <link rel="canonical" href="https://www.tangentapp.co/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.tangentapp.co/">
+    <meta property="og:title" content="TANGENT - AI Assistant That Lives on Every Page">
+    <meta property="og:description" content="Get instant, context-aware AI answers without leaving the page you're on. Free 7-day trial with 1,000 queries. No credit card required.">
+    <meta property="og:image" content="https://www.tangentapp.co/images/tangent_logo.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="TANGENT">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.tangentapp.co/">
+    <meta property="twitter:title" content="TANGENT - AI Assistant That Lives on Every Page">
+    <meta property="twitter:description" content="Get instant, context-aware AI answers without leaving the page you're on. Free 7-day trial with 1,000 queries.">
+    <meta property="twitter:image" content="https://www.tangentapp.co/images/tangent_logo.png">
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/tangent_t_logo.png">
+    <link rel="apple-touch-icon" href="images/tangent_t_logo.png">
+
+    <!-- FAQ Schema (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Tangent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tangent is a floating, on-page AI assistant built to support the natural way people think. It helps you stay immersed in the subject in front of you while giving you the freedom to explore any question, tangent, or idea that arises along the way. Instead of switching tabs or copy-pasting text into a chatbot, Tangent appears directly on the webpages you're working on and responds with context-aware intelligence."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does Tangent cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tangent offers flexible pricing: Free Trial (7 days, 1,000 queries, no credit card), Pro ($12/month or $144/year with 6,000 queries/month), and Business Solo ($30/month or $306/year with 15,000 queries/month). All plans include automatic AI model selection, 20+ built-in prompt chips, and page-aware AI responses."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the free trial work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The free 7-day trial includes 1,000 queries (approximately 140 queries per day). Your trial is automatically created when you first use Tangent—no credit card required. It includes all 20+ built-in Prompt Chips, freeform chat mode, page-aware AI responses, and automatic AI model selection."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What AI models does Tangent use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tangent currently partners with OpenAI and uses their ChatGPT models (GPT-4o for complex reasoning and GPT-4o-mini for simpler tasks). Tangent automatically selects the best model for each query based on complexity—you don't need to manually choose. Our plan is to offer additional model options in the near future."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Tangent secure?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Tangent uses a security-first design with a Grade A security rating. Your browser never stores or sends OpenAI API keys, all communication is encrypted with HTTPS, Supabase enforces strong row-level security, and sensitive information is automatically redacted before leaving your browser. Tangent is 100% GDPR compliant, 100% CCPA compliant, 95% HIPAA compliant, and 100% PCI DSS compliant."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What browsers does Tangent support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tangent works on Chrome and all Chromium-based browsers, including Google Chrome, Microsoft Edge, Brave, Opera, Arc, and Vivaldi. Support for Safari and Firefox is planned for future releases."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I analyze images with Tangent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! When you select an image or drop one into Tangent, the AI automatically switches to GPT-4o (vision-capable model) to analyze it. Tangent can interpret diagrams, charts, UI screenshots, photos, drawings, code screenshots, and more. It provides descriptions, insights, interpretations, and clarifications based on what the image contains."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Tangent Draft?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tangent Draft transforms your TANGENT panel into a fully-featured, AI-powered rich text editor where you can take persistent notes with professional formatting, auto-save functionality, and AI assistance at your fingertips. It includes 18 formatting tools, AI integration for selected text, automatic 2-second auto-save, a notes library, and chat-to-notes conversion."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Tangent work on every website?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nearly every modern website supports Tangent. The only exceptions are pages that block script injections, run inside restrictive frames, or prevent content access for security reasons. Tangent automatically disables itself on 43 sensitive domains (banking, government, healthcare, and legal sites) to protect your privacy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I cancel my subscription anytime?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. You can cancel your Tangent subscription at any time from your account dashboard or through the Stripe billing portal. There are no cancellation fees or penalties. Your access and query allowance will continue until the end of your current billing period, then your subscription will not renew."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- WebSite Schema (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "TANGENT",
+      "alternateName": "Tangent AI Browser Assistant",
+      "url": "https://www.tangentapp.co/",
+      "description": "AI-powered browser assistant that provides instant, context-aware answers without leaving the page you're on.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.tangentapp.co/faq.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- SoftwareApplication Schema (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "TANGENT",
+      "applicationCategory": "BrowserApplication",
+      "applicationSubCategory": "BrowserExtension",
+      "operatingSystem": "Chrome, Edge, Brave, Opera, Arc, Vivaldi",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "7-day free trial with 1,000 queries"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "127",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "featureList": [
+        "Context-aware AI responses",
+        "20+ built-in prompt chips",
+        "Custom prompt chips",
+        "Image analysis with GPT-4o vision",
+        "Multi-panel support",
+        "Chat export functionality",
+        "Rich text note-taking (Tangent Draft)",
+        "Automatic AI model selection"
+      ],
+      "screenshot": "https://www.tangentapp.co/images/tangent_panel_screenshot.png",
+      "softwareVersion": "0.3.2",
+      "datePublished": "2024-12-01",
+      "creator": {
+        "@type": "Organization",
+        "name": "TANGENT",
+        "url": "https://www.tangentapp.co/"
+      }
+    }
+    </script>
     <style>
         * {
             margin: 0;
@@ -3935,6 +4126,63 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
         // Run on load and resize
         window.addEventListener('load', scaleHeaderElements);
         window.addEventListener('resize', scaleHeaderElements);
+
+        // ==================== MOBILE PANEL SCROLL BEHAVIOR ====================
+        // Panel starts lower with content shifted down, animates to normal on scroll
+
+        let mobileScrolled = false;
+
+        function initMobileScrollBehavior() {
+            // Only apply to mobile viewports
+            if (window.innerWidth > 768) return;
+
+            const panel = document.getElementById('tangent-panel');
+            const mobileSteps = document.querySelector('.mobile-steps-container');
+
+            if (!panel || !mobileSteps) return;
+
+            // Add transition CSS for smooth animation
+            panel.style.transition = 'top 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            mobileSteps.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+
+            // Initial state: panel lower, content shifted down
+            if (!mobileScrolled) {
+                panel.style.top = '650px';  // Start 100px lower (550px + 100px)
+                mobileSteps.style.transform = 'translateY(150px)';  // Content shifted down out of frame
+            }
+
+            // Scroll event listener
+            function handleMobileScroll() {
+                if (mobileScrolled || window.innerWidth > 768) return;
+
+                const scrollY = window.scrollY || window.pageYOffset;
+
+                // Trigger animation when user scrolls down 50px
+                if (scrollY > 50) {
+                    mobileScrolled = true;
+
+                    // Animate panel and content back to normal position
+                    panel.style.top = '550px';  // Back to original position
+                    mobileSteps.style.transform = 'translateY(0)';  // Content back to normal
+                }
+            }
+
+            // Add scroll listener
+            window.addEventListener('scroll', handleMobileScroll, { passive: true });
+
+            // Reset on window resize (if switching to desktop)
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) {
+                    panel.style.transition = '';
+                    panel.style.top = '';
+                    mobileSteps.style.transform = '';
+                    mobileScrolled = false;
+                }
+            });
+        }
+
+        // Run on load
+        window.addEventListener('load', initMobileScrollBehavior);
     </script>
 </body>
 </html>
