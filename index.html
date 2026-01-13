@@ -1230,16 +1230,16 @@
         @media (max-width: 768px) {
             /* Main intro text - split into two lines and resize */
             #main-text {
-                font-size: 24px !important;
+                font-size: 27px !important;
                 white-space: normal !important;
                 max-width: 90vw;
                 line-height: 1.4;
-                top: 80px !important;
+                top: 120px !important;
             }
 
             #main-text.shifted-up {
-                font-size: 20px !important;
-                top: 30px !important;
+                font-size: 23px !important;
+                top: 50px !important;
             }
 
             /* Show line break on mobile */
@@ -1249,66 +1249,66 @@
 
             /* Main chip bar - resize for mobile */
             .chip-bar {
-                transform: scale(1.0) !important;
+                transform: scale(1.15) !important;
                 transform-origin: center;
-                padding: 8px 14px !important;
-                gap: 8px !important;
-                border-radius: 18px !important;
+                padding: 10px 16px !important;
+                gap: 10px !important;
+                border-radius: 20px !important;
                 border: 2px solid rgba(109, 109, 109, 0.494) !important;
             }
 
             .chip-bar.scaled-down {
-                transform: scale(0.85) translateY(-20px) !important;
+                transform: scale(1.0) translateY(-20px) !important;
             }
 
             .chip {
-                font-size: 0.9em !important;
-                padding: 6px 10px !important;
+                font-size: 1.0em !important;
+                padding: 8px 12px !important;
                 border: 2px solid rgba(109, 109, 109, 0.494) !important;
             }
 
             .chip-icon {
-                padding: 6px !important;
-                min-width: 32px !important;
+                padding: 8px !important;
+                min-width: 36px !important;
             }
 
             .chip-icon img {
-                width: 18px !important;
-                height: 18px !important;
+                width: 20px !important;
+                height: 20px !important;
             }
 
             .chevron-chip {
-                padding: 4px !important;
-                min-width: 24px !important;
-                min-height: 24px !important;
+                padding: 6px !important;
+                min-width: 28px !important;
+                min-height: 28px !important;
             }
 
             .chevron-chip img {
-                width: 12px !important;
-                height: 12px !important;
+                width: 14px !important;
+                height: 14px !important;
             }
 
             .email-input {
-                padding: 10px 36px 10px 12px !important;
-                font-size: 14px !important;
-                min-width: 200px !important;
-                border-radius: 22px !important;
+                padding: 12px 40px 12px 14px !important;
+                font-size: 16px !important;
+                min-width: 220px !important;
+                border-radius: 24px !important;
                 border: 2px solid #787878 !important;
             }
 
             .email-input::placeholder {
-                font-size: 12px !important;
+                font-size: 14px !important;
             }
 
             .send-btn {
-                width: 24px !important;
-                height: 24px !important;
-                right: 6px !important;
+                width: 28px !important;
+                height: 28px !important;
+                right: 8px !important;
             }
 
             .send-btn img {
-                width: 14px !important;
-                height: 14px !important;
+                width: 16px !important;
+                height: 16px !important;
             }
 
             /* Main tangent panel - resize for mobile */
@@ -1322,11 +1322,11 @@
             }
 
             #tangent-panel.visible {
-                transform: translateX(-50%) translateY(calc(100% - 100px)) !important;
+                transform: translateX(-50%) translateY(calc(100% - 60px)) !important;
             }
 
             #tangent-panel.visible:hover:not(.expanded) {
-                transform: translateX(-50%) translateY(calc(100% - 120px)) !important;
+                transform: translateX(-50%) translateY(calc(100% - 80px)) !important;
             }
 
             #tangent-panel.expanded {
@@ -1403,31 +1403,31 @@
         /* Extra small mobile devices (480px and below) */
         @media (max-width: 480px) {
             #main-text {
-                font-size: 20px !important;
-                top: 60px !important;
+                font-size: 23px !important;
+                top: 100px !important;
             }
 
             #main-text.shifted-up {
-                font-size: 16px !important;
-                top: 20px !important;
+                font-size: 19px !important;
+                top: 40px !important;
             }
 
             .chip-bar {
-                transform: scale(0.85) !important;
+                transform: scale(1.0) !important;
             }
 
             .chip-bar.scaled-down {
-                transform: scale(0.7) translateY(-15px) !important;
+                transform: scale(0.85) translateY(-15px) !important;
             }
 
             .email-input {
-                min-width: 150px !important;
-                font-size: 12px !important;
-                padding: 8px 32px 8px 10px !important;
+                min-width: 180px !important;
+                font-size: 14px !important;
+                padding: 10px 36px 10px 12px !important;
             }
 
             .email-input::placeholder {
-                font-size: 11px !important;
+                font-size: 13px !important;
             }
 
             #tangent-panel {
@@ -1528,9 +1528,9 @@
 
                 .mobile-step-item img.mobile-step-icon {
                     display: block;
-                    width: 80px;
+                    width: 150px;
                     height: auto;
-                    margin: 0 auto 15px;
+                    margin: 0 auto 20px;
                 }
 
                 .mobile-step-item video {
