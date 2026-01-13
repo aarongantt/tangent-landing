@@ -1233,24 +1233,24 @@
                 min-height: 200vh !important;
             }
 
-            /* Main intro text - readable size, centered, ALWAYS VISIBLE */
+            /* Main intro text - AT THE TOP OF THE PAGE */
             #main-text {
                 position: absolute !important;
                 font-size: 32px !important;
                 white-space: normal !important;
                 max-width: 90vw !important;
                 line-height: 1.4;
-                top: 200px !important;
+                top: 150px !important;
                 left: 50% !important;
                 transform: translateX(-50%) !important;
                 text-align: center !important;
-                z-index: 1000 !important;
+                z-index: 10 !important;
                 color: #ffffff !important;
             }
 
             #main-text.shifted-up {
                 font-size: 32px !important;
-                top: 200px !important;
+                top: 150px !important;
             }
 
             /* Show line break on mobile */
@@ -1258,18 +1258,18 @@
                 display: inline !important;
             }
 
-            /* Main chip bar - LOCKED to page, scrolls with content */
+            /* Main chip bar - DIRECTLY BELOW TEXT */
             .chip-bar {
                 position: absolute !important;
                 left: 50% !important;
                 transform: translateX(-50%) scale(1.0) !important;
                 transform-origin: center;
-                top: 350px !important;
+                top: 300px !important;
                 padding: 8px 12px !important;
                 gap: 6px !important;
                 border-radius: 18px !important;
                 border: 2px solid rgba(109, 109, 109, 0.494) !important;
-                z-index: 999 !important;
+                z-index: 100 !important;
             }
 
             .chip-bar.scaled-down {
@@ -1331,7 +1331,7 @@
                 height: 16px !important;
             }
 
-            /* Main tangent panel - resize for mobile */
+            /* Main tangent panel - BELOW text and chip bar */
             #tangent-panel {
                 width: 95vw !important;
                 max-width: 95vw !important;
@@ -1344,7 +1344,7 @@
                 transform: none !important;
                 left: auto !important;
                 bottom: auto !important;
-                margin: 80vh auto 0 auto !important;
+                margin: 500px auto 0 auto !important;
                 opacity: 1 !important;
             }
 
@@ -1432,24 +1432,29 @@
             #main-text {
                 position: absolute !important;
                 font-size: 28px !important;
-                top: 180px !important;
+                top: 120px !important;
                 left: 50% !important;
                 transform: translateX(-50%) !important;
                 white-space: normal !important;
-                z-index: 1000 !important;
+                z-index: 10 !important;
                 color: #ffffff !important;
             }
 
             #main-text.shifted-up {
                 font-size: 28px !important;
-                top: 180px !important;
+                top: 120px !important;
             }
 
             .chip-bar {
                 position: absolute !important;
-                top: 320px !important;
+                top: 260px !important;
                 left: 50% !important;
                 transform: translateX(-50%) scale(1.0) !important;
+                z-index: 100 !important;
+            }
+
+            #tangent-panel {
+                margin: 450px auto 0 auto !important;
             }
 
             .chip-bar.scaled-down {
