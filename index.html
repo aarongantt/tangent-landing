@@ -1216,6 +1216,8 @@
                 min-height: 200vh !important;
                 padding-top: 0 !important;
                 position: relative !important;
+                background: url('images/tangent_wave_bg.png') center center / 150% auto no-repeat fixed !important;
+                background-attachment: fixed !important;
             }
 
             /* Main intro text - VISIBLE AT TOP, TWO LINES */
@@ -1224,7 +1226,7 @@
                 font-size: 31px !important;
                 font-weight: bold !important;
                 white-space: normal !important;
-                max-width: 340px !important;
+                max-width: 420px !important;
                 line-height: 1.4 !important;
                 top: 120px !important;
                 left: 50% !important;
@@ -1433,6 +1435,11 @@
 
         /* Extra small mobile devices (480px and below) */
         @media (max-width: 480px) {
+            body {
+                background: url('images/tangent_wave_bg.png') center center / 200% auto no-repeat fixed !important;
+                background-attachment: fixed !important;
+            }
+
             #main-text {
                 position: absolute !important;
                 font-size: 27px !important;
@@ -1440,7 +1447,7 @@
                 left: 50% !important;
                 transform: translateX(-50%) !important;
                 white-space: normal !important;
-                max-width: 300px !important;
+                max-width: 360px !important;
                 z-index: 5000 !important;
                 color: #ffffff !important;
                 display: block !important;
