@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
     <title>Tangent – Join the Waitlist</title>
     <meta name="description" content="AI that meets you where your attention already is.">
     <link rel="icon" type="image/png" href="images/tangent_t_logo.png">
@@ -1207,6 +1209,37 @@
         /* Hide mobile-only line break on desktop */
         .mobile-only-br {
             display: none;
+        }
+
+        /* ==================== LANDSCAPE ORIENTATION BLOCK (Mobile Only) ==================== */
+        @media (max-width: 768px) and (orientation: landscape) {
+            body {
+                overflow: hidden !important;
+            }
+
+            body::after {
+                content: 'Please rotate your device to portrait mode';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #2B4A75;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 20px;
+                font-weight: bold;
+                text-align: center;
+                padding: 40px;
+                z-index: 999999;
+            }
+
+            /* Hide all content in landscape */
+            body > *:not(style) {
+                display: none !important;
+            }
         }
 
         /* ==================== MOBILE RESPONSIVE (768px and below) ==================== */
