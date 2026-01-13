@@ -1228,17 +1228,24 @@
 
         /* ==================== MOBILE RESPONSIVE (768px and below) ==================== */
         @media (max-width: 768px) {
-            /* Main intro text - readable size, centered */
+            /* Force body to allow scrolling */
+            body {
+                min-height: 200vh !important;
+            }
+
+            /* Main intro text - readable size, centered, ALWAYS VISIBLE */
             #main-text {
+                position: fixed !important;
                 font-size: 24px !important;
                 white-space: normal !important;
-                max-width: 90vw;
+                max-width: 90vw !important;
                 line-height: 1.4;
                 top: 200px !important;
-                text-align: center;
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                text-align: center !important;
+                z-index: 1000 !important;
+                color: #ffffff !important;
             }
 
             #main-text.shifted-up {
@@ -1251,18 +1258,26 @@
                 display: inline !important;
             }
 
-            /* Main chip bar - resize for mobile */
+            /* Main chip bar - resize for mobile, position below text */
             .chip-bar {
-                transform: scale(1.0) !important;
+                position: fixed !important;
+                left: 50% !important;
+                transform: translateX(-50%) scale(1.0) !important;
                 transform-origin: center;
+                top: 320px !important;
                 padding: 8px 12px !important;
                 gap: 6px !important;
                 border-radius: 18px !important;
                 border: 2px solid rgba(109, 109, 109, 0.494) !important;
+                z-index: 999 !important;
             }
 
             .chip-bar.scaled-down {
-                transform: scale(1.0) translateY(0px) !important;
+                transform: translateX(-50%) scale(1.0) translateY(0px) !important;
+            }
+
+            .chip-bar.visible {
+                transform: translateX(-50%) scale(1.0) !important;
             }
 
             .chip {
@@ -1415,12 +1430,14 @@
         /* Extra small mobile devices (480px and below) */
         @media (max-width: 480px) {
             #main-text {
+                position: fixed !important;
                 font-size: 22px !important;
                 top: 180px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
                 white-space: normal !important;
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
+                z-index: 1000 !important;
+                color: #ffffff !important;
             }
 
             #main-text.shifted-up {
