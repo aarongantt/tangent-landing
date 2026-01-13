@@ -1357,18 +1357,19 @@
                 max-width: 95vw !important;
                 height: auto !important;
                 min-height: calc(200vh - 550px) !important;
-                border-radius: 20px !important;
+                border-radius: 20px 20px 0 0 !important;
                 border: 3px solid rgba(180, 180, 180, 0.7) !important;
+                border-bottom: none !important;
                 position: absolute !important;
                 transform: none !important;
                 left: 50% !important;
                 margin-left: -47.5vw !important;
-                bottom: 0 !important;
+                bottom: -200px !important;
                 top: 550px !important;
                 opacity: 1 !important;
                 z-index: 10 !important;
                 overflow: visible !important;
-                padding-bottom: 120px !important;
+                padding-bottom: 300px !important;
             }
 
             #tangent-panel.visible {
@@ -1498,11 +1499,13 @@
             #tangent-panel {
                 position: absolute !important;
                 top: 500px !important;
-                bottom: 0 !important;
+                bottom: -200px !important;
                 left: 50% !important;
                 margin-left: -47.5vw !important;
                 min-height: calc(200vh - 500px) !important;
-                padding-bottom: 120px !important;
+                padding-bottom: 300px !important;
+                border-radius: 20px 20px 0 0 !important;
+                border-bottom: none !important;
                 z-index: 10 !important;
             }
 
