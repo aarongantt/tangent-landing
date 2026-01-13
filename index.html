@@ -1235,8 +1235,8 @@
 
             /* Main intro text - readable size, centered, ALWAYS VISIBLE */
             #main-text {
-                position: fixed !important;
-                font-size: 24px !important;
+                position: absolute !important;
+                font-size: 32px !important;
                 white-space: normal !important;
                 max-width: 90vw !important;
                 line-height: 1.4;
@@ -1249,7 +1249,7 @@
             }
 
             #main-text.shifted-up {
-                font-size: 24px !important;
+                font-size: 32px !important;
                 top: 200px !important;
             }
 
@@ -1258,13 +1258,13 @@
                 display: inline !important;
             }
 
-            /* Main chip bar - resize for mobile, position below text */
+            /* Main chip bar - LOCKED to page, scrolls with content */
             .chip-bar {
-                position: fixed !important;
+                position: absolute !important;
                 left: 50% !important;
                 transform: translateX(-50%) scale(1.0) !important;
                 transform-origin: center;
-                top: 320px !important;
+                top: 350px !important;
                 padding: 8px 12px !important;
                 gap: 6px !important;
                 border-radius: 18px !important;
@@ -1430,8 +1430,8 @@
         /* Extra small mobile devices (480px and below) */
         @media (max-width: 480px) {
             #main-text {
-                position: fixed !important;
-                font-size: 22px !important;
+                position: absolute !important;
+                font-size: 28px !important;
                 top: 180px !important;
                 left: 50% !important;
                 transform: translateX(-50%) !important;
@@ -1441,12 +1441,15 @@
             }
 
             #main-text.shifted-up {
-                font-size: 22px !important;
+                font-size: 28px !important;
                 top: 180px !important;
             }
 
             .chip-bar {
-                transform: scale(1.0) !important;
+                position: absolute !important;
+                top: 320px !important;
+                left: 50% !important;
+                transform: translateX(-50%) scale(1.0) !important;
             }
 
             .chip-bar.scaled-down {
