@@ -1564,23 +1564,42 @@
                 height: 16px !important;
             }
 
-            /* Main tangent panel - FIXED AT BOTTOM OF VIEWPORT */
+            /* Main tangent panel - STATIC AT BOTTOM OF PAGE */
             #tangent-panel {
                 width: 95vw !important;
                 max-width: 95vw !important;
-                height: 85vh !important;
-                min-height: 85vh !important;
+                height: auto !important;
+                min-height: 950px !important;
                 border-radius: 20px 20px 0 0 !important;
                 border: 3px solid rgba(180, 180, 180, 0.7) !important;
                 border-bottom: none !important;
-                position: fixed !important;
-                bottom: 0 !important;
+                position: absolute !important;
+                transform: none !important;
                 left: 50% !important;
-                transform: translateX(-50%) !important;
+                margin-left: -47.5vw !important;
+                top: 550px !important;
                 opacity: 1 !important;
                 z-index: 10 !important;
-                overflow: hidden !important;
-                padding-bottom: 0 !important;
+                overflow: visible !important;
+                padding-bottom: 60px !important;
+            }
+
+            /* Panel bottom edge styling */
+            #tangent-panel::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 40px;
+                background: linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.95) 0%,
+                    rgba(255, 255, 255, 0.98) 50%,
+                    rgba(255, 255, 255, 1) 100%);
+                border-radius: 0 0 20px 20px;
+                border: 3px solid rgba(180, 180, 180, 0.7);
+                border-top: none;
+                pointer-events: none;
             }
 
             #tangent-panel.visible {
@@ -1708,17 +1727,17 @@
             }
 
             #tangent-panel {
-                position: fixed !important;
-                bottom: 0 !important;
+                position: absolute !important;
+                top: 500px !important;
                 left: 50% !important;
-                transform: translateX(-50%) !important;
-                height: 80vh !important;
-                min-height: 80vh !important;
-                padding-bottom: 0 !important;
+                margin-left: -47.5vw !important;
+                height: auto !important;
+                min-height: 950px !important;
+                padding-bottom: 60px !important;
                 border-radius: 20px 20px 0 0 !important;
                 border-bottom: none !important;
                 z-index: 10 !important;
-                overflow: hidden !important;
+                overflow: visible !important;
             }
 
             .chip-bar.scaled-down {
@@ -4124,58 +4143,6 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
         // Run on load and resize
         window.addEventListener('load', scaleHeaderElements);
         window.addEventListener('resize', scaleHeaderElements);
-
-        // ==================== MOBILE PANEL SCROLL BEHAVIOR ====================
-        // Panel fixed at bottom, content slides UP into view when user scrolls
-
-        let mobileScrolled = false;
-
-        function initMobileScrollBehavior() {
-            // Only apply to mobile viewports
-            if (window.innerWidth > 768) return;
-
-            const panel = document.getElementById('tangent-panel');
-            const mobileContent = document.querySelector('.mobile-tutorial-content');
-
-            if (!panel || !mobileContent) return;
-
-            // Add transition CSS for smooth animation
-            mobileContent.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
-
-            // Initial state: content shifted DOWN (out of frame below)
-            if (!mobileScrolled) {
-                mobileContent.style.transform = 'translateY(300px)';  // Content way down, first step out of frame
-            }
-
-            // Scroll event listener
-            function handleMobileScroll() {
-                if (mobileScrolled || window.innerWidth > 768) return;
-
-                const scrollY = window.scrollY || window.pageYOffset;
-
-                // Trigger animation when user scrolls down 50px
-                if (scrollY > 50) {
-                    mobileScrolled = true;
-
-                    // Slide content UP into view
-                    mobileContent.style.transform = 'translateY(0)';  // Content slides up to normal position
-                }
-            }
-
-            // Add scroll listener
-            window.addEventListener('scroll', handleMobileScroll, { passive: true });
-
-            // Reset on window resize (if switching to desktop)
-            window.addEventListener('resize', () => {
-                if (window.innerWidth > 768) {
-                    mobileContent.style.transform = '';
-                    mobileScrolled = false;
-                }
-            });
-        }
-
-        // Run on load
-        window.addEventListener('load', initMobileScrollBehavior);
     </script>
 </body>
 </html>
