@@ -1228,11 +1228,11 @@
 
         /* ==================== MOBILE RESPONSIVE (768px and below) ==================== */
         @media (max-width: 768px) {
-            /* Main intro text - split into two lines and resize */
+            /* Main intro text - keep on one line */
             #main-text {
-                font-size: 29px !important;
-                white-space: normal !important;
-                max-width: 90vw;
+                font-size: 26px !important;
+                white-space: nowrap !important;
+                max-width: 95vw;
                 line-height: 1.4;
                 top: 120px !important;
             }
@@ -1249,22 +1249,23 @@
 
             /* Main chip bar - resize for mobile */
             .chip-bar {
-                transform: scale(1.15) !important;
+                transform: scale(1.0) !important;
                 transform-origin: center;
-                padding: 10px 16px !important;
-                gap: 10px !important;
-                border-radius: 20px !important;
+                padding: 8px 12px !important;
+                gap: 6px !important;
+                border-radius: 18px !important;
                 border: 2px solid rgba(109, 109, 109, 0.494) !important;
             }
 
             .chip-bar.scaled-down {
-                transform: scale(1.15) translateY(0px) !important;
+                transform: scale(1.0) translateY(0px) !important;
             }
 
             .chip {
-                font-size: 0.85em !important;
-                padding: 6px 10px !important;
+                font-size: 0.75em !important;
+                padding: 5px 8px !important;
                 border: 2px solid rgba(109, 109, 109, 0.494) !important;
+                white-space: nowrap !important;
             }
 
             .chip-icon {
@@ -1315,22 +1316,29 @@
             #tangent-panel {
                 width: 95vw !important;
                 max-width: 95vw !important;
-                height: 70vh !important;
+                height: auto !important;
+                min-height: 60vh !important;
                 border-radius: 20px 20px 0 0 !important;
                 border: 3px solid rgba(180, 180, 180, 0.7) !important;
                 border-bottom: none !important;
+                position: relative !important;
+                transform: none !important;
+                left: auto !important;
+                bottom: auto !important;
+                margin: 100vh auto 0 auto !important;
+                opacity: 1 !important;
             }
 
             #tangent-panel.visible {
-                transform: translateX(-50%) translateY(calc(100% - 60px)) !important;
+                transform: none !important;
             }
 
             #tangent-panel.visible:hover:not(.expanded) {
-                transform: translateX(-50%) translateY(calc(100% - 80px)) !important;
+                transform: none !important;
             }
 
             #tangent-panel.expanded {
-                transform: translateX(-50%) translateY(calc(100% - 60px)) !important;
+                transform: none !important;
             }
 
             /* Panel header - resize for mobile */
@@ -1410,6 +1418,10 @@
             #main-text.shifted-up {
                 font-size: 25px !important;
                 top: 100px !important;
+            }
+
+            #main-text {
+                white-space: nowrap !important;
             }
 
             .chip-bar {
