@@ -1249,7 +1249,7 @@
 
             /* Main chip bar - resize for mobile */
             .chip-bar {
-                transform: scale(0.85) !important;
+                transform: scale(1.0) !important;
                 transform-origin: center;
                 padding: 8px 14px !important;
                 gap: 8px !important;
@@ -1258,7 +1258,7 @@
             }
 
             .chip-bar.scaled-down {
-                transform: scale(0.7) translateY(-20px) !important;
+                transform: scale(0.85) translateY(-20px) !important;
             }
 
             .chip {
@@ -1380,9 +1380,9 @@
                 height: 29px !important;
             }
 
-            /* Tutorial content - adjust padding for mobile */
+            /* Hide desktop tutorial content on mobile */
             .tutorial-content {
-                padding: 0px 30px 40px !important;
+                display: none !important;
             }
 
             /* Demo scroll area - adjust padding for mobile */
@@ -1413,11 +1413,11 @@
             }
 
             .chip-bar {
-                transform: scale(0.7) !important;
+                transform: scale(0.85) !important;
             }
 
             .chip-bar.scaled-down {
-                transform: scale(0.55) translateY(-15px) !important;
+                transform: scale(0.7) translateY(-15px) !important;
             }
 
             .email-input {
@@ -3368,31 +3368,27 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
             console.log('Mobile demo complete!');
         }
 
-        // Mobile panel expansion (SEPARATE - does not interfere with desktop)
-        // On mobile, intercept panel clicks ONLY if screen width <= 768px
-        tangentPanel.addEventListener('click', function(e) {
-            // Only intercept on mobile devices
-            if (!isMobileDevice()) return;
+        // Mobile panel auto-display (SEPARATE - does not interfere with desktop)
+        // On mobile, automatically show tutorial content when panel becomes visible
+        if (isMobileDevice()) {
+            // Use MutationObserver to detect when panel becomes visible
+            const panelObserver = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        if (tangentPanel.classList.contains('visible') && !mobilePanelExpanded) {
+                            // Panel just became visible - auto-expand and show tutorial content
+                            mobilePanelExpanded = true;
+                            tangentPanel.classList.add('expanded');
+                            mobileTutorialContent.style.display = 'block';
+                            mainText.classList.add('shifted-up');
+                            chipBar.classList.add('scaled-down');
+                        }
+                    }
+                });
+            });
 
-            // Don't intercept button clicks
-            if (e.target.closest('.tangent-panel__btns') || e.target.closest('.tangent-pin')) {
-                return;
-            }
-
-            // Prevent desktop handler from running on mobile
-            e.stopImmediatePropagation();
-
-            mobilePanelExpanded = true;
-            tangentPanel.classList.add('expanded');
-            mobileTutorialContent.style.display = 'block';
-            mainText.classList.add('shifted-up');
-            chipBar.classList.add('scaled-down');
-
-            // Mobile demo disabled - now showing simple step icons and videos instead
-            // setTimeout(() => {
-            //     playMobileDemo();
-            // }, 800);
-        }, true); // Use capture phase to intercept before desktop handler
+            panelObserver.observe(tangentPanel, { attributes: true });
+        }
 
         // ======================================================================
         // END MOBILE DEMO CODE
