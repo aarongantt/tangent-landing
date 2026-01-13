@@ -1766,6 +1766,20 @@
                 font-size: 16px !important;
             }
         }
+
+        /* Panel animation: H1(0) → H2(20px) → H3(10px) → H2(20px) → H1(0) → pause */
+        @keyframes panelBounceCue {
+            0% { bottom: 0; }           /* H1: Starting position (closed) */
+            20% { bottom: 20px; }       /* H2: Extended position */
+            28% { bottom: 10px; }       /* H3: Half-way point (faster) */
+            36% { bottom: 20px; }       /* H2: Back to extended (faster) */
+            56% { bottom: 0; }          /* H1: Return to resting (same speed as H1→H2) */
+            100% { bottom: 0; }         /* Pause at H1 */
+        }
+
+        #tangent-panel.bounce-cue {
+            animation: panelBounceCue 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
     </style>
 </head>
 <body>
@@ -2190,6 +2204,30 @@ The deeper implication is that the primary constraint of modern knowledge work i
             moveCursor(startTextX, startTextY);
 
             tangentPanel.classList.add('visible');
+
+            // Add repeating bounce animation to entire giant panel to signal interactivity
+            let bounceInterval;
+            const startPanelBounce = () => {
+                if (!panelExpanded) {
+                    tangentPanel.classList.add('bounce-cue');
+                    setTimeout(() => {
+                        tangentPanel.classList.remove('bounce-cue');
+                    }, 3000); // Match animation duration (3s)
+                }
+            };
+
+            // Start bouncing after panel is visible (wait longer)
+            setTimeout(() => {
+                startPanelBounce();
+                // Repeat every 5 seconds (longer pause between bounces)
+                bounceInterval = setInterval(() => {
+                    if (!panelExpanded) {
+                        startPanelBounce();
+                    } else {
+                        clearInterval(bounceInterval);
+                    }
+                }, 5000);
+            }, 4000); // Wait 4 seconds before first bounce
 
             await wait(600);
 
