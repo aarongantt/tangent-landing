@@ -1262,8 +1262,8 @@
             }
 
             .chip {
-                font-size: 1.0em !important;
-                padding: 8px 12px !important;
+                font-size: 0.85em !important;
+                padding: 6px 10px !important;
                 border: 2px solid rgba(109, 109, 109, 0.494) !important;
             }
 
@@ -1451,8 +1451,7 @@
 <body>
     <!-- Main Text -->
     <div id="main-text">
-        <span class="main-text-line">Stay in the flow,</span><br class="mobile-only-br">
-        <span class="main-text-line">or go on a <span id="highlight-text">Tangent</span>.</span>
+        <span class="main-text-line">Stay in the flow, or go on a <span id="highlight-text">Tangent</span>.</span>
     </div>
 
     <!-- Animated Cursor (for main intro) -->
@@ -1512,7 +1511,7 @@
         </div>
 
         <!-- MOBILE Tutorial Content (shown only on mobile devices) -->
-        <div class="mobile-tutorial-content" style="display: none; position: relative; height: calc(100% - 80px); overflow-y: auto; overflow-x: hidden; padding: 20px 16px; scrollbar-width: none; -ms-overflow-style: none;">
+        <div class="mobile-tutorial-content" style="display: none; position: relative; height: auto; max-height: calc(100% - 80px); overflow-y: auto; overflow-x: hidden; padding: 20px 16px; scrollbar-width: none; -ms-overflow-style: none;">
             <style>
                 .mobile-tutorial-content::-webkit-scrollbar {
                     display: none;
@@ -3368,24 +3367,13 @@ Each interruption adds mental effort, making it harder to maintain a coherent li
             console.log('Mobile demo complete!');
         }
 
-        // Mobile panel auto-display (SEPARATE - does not interfere with desktop)
-        // On mobile, automatically show tutorial content when panel becomes visible
+        // Mobile: Show tutorial content immediately when panel is visible
+        // NO animations, NO expansion, NO observers - just static display
         if (isMobileDevice()) {
-            // Just show the mobile tutorial content when panel becomes visible
-            // NO expansion, NO text shrinking, NO scaling - keep everything static
-            const panelObserver = new MutationObserver((mutations) => {
-                mutations.forEach((mutation) => {
-                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                        if (tangentPanel.classList.contains('visible') && !mobilePanelExpanded) {
-                            mobilePanelExpanded = true;
-                            // Only show tutorial content - don't expand panel or shrink text
-                            mobileTutorialContent.style.display = 'block';
-                        }
-                    }
-                });
-            });
-
-            panelObserver.observe(tangentPanel, { attributes: true });
+            // Show tutorial content immediately (no waiting for panel state changes)
+            if (mobileTutorialContent) {
+                mobileTutorialContent.style.display = 'block';
+            }
         }
 
         // ======================================================================
