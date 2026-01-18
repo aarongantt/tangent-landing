@@ -1104,32 +1104,6 @@
       const packsDisabled = !activePlanCode || planLower === "free_trial";
 
       container.innerHTML = `
-        ${packsDisabled ? '' : `
-        <div class="section-block" style="margin-top:10px;margin-bottom:24px;">
-          <div class="content-narrow">
-            <h3>Additional Tokens</h3>
-            <p class="subhead">Running low? Purchase a one-time token pack and add extra tokens to your balance.</p>
-            <div class="packs-grid">
-              ${[
-                { name: "Small", standard: "1,000,000", deep: "250,000", price: "$7.99" },
-                { name: "Medium", standard: "5,000,000", deep: "1,250,000", price: "$29.99" },
-                { name: "Large", standard: "20,000,000", deep: "5,000,000", price: "$69.99" }
-              ].map(p => `
-                <div class="pack-card">
-                  <div class="pack-row">
-                    <h4 style="margin:0;">${p.name.toUpperCase()}</h4>
-                    <div class="pack-price">${p.price}</div>
-                  </div>
-                  <p class="pack-meta"><strong>Standard Tokens:</strong> ${p.standard}</p>
-                  <p class="pack-meta"><strong>Deep Tokens:</strong> ${p.deep}</p>
-                  <div style="margin-top:8px;">
-                    <button class="cta-button green purchase-btn" data-pack="${p.name}" style="width:100%;">Purchase</button>
-                  </div>
-                </div>
-              `).join("")}
-            </div>
-          </div>
-        </div>`}
         <div class="section-block" style="margin-top:8px;">
           <div class="content-narrow">
             <h3 style="margin-bottom:14px;">Subscription Plans</h3>
