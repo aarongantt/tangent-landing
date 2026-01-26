@@ -2,204 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-    <meta name="screen-orientation" content="portrait">
-    <meta name="x5-orientation" content="portrait">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <style>
-        @supports (-webkit-touch-callout: none) {
-            html {
-                transform: rotate(0deg);
-                transform-origin: left top;
-                width: 100%;
-                overflow-x: hidden;
-                position: fixed;
-            }
-        }
-    </style>
-
-    <!-- Primary Meta Tags -->
-    <title>TANGENT - AI-Powered Browser Assistant for Chrome | Free Trial</title>
-    <meta name="title" content="TANGENT - AI-Powered Browser Assistant for Chrome | Free Trial">
-    <meta name="description" content="Transform your browsing with TANGENT, the floating AI assistant that lives on every page. Get instant, context-aware answers without switching tabs. Start your free 7-day trial with 1,000 queries. No credit card required.">
-    <meta name="keywords" content="AI browser extension, Chrome AI assistant, context-aware AI, ChatGPT alternative, browser AI tool, on-page AI assistant, AI research tool, productivity AI extension">
-    <meta name="author" content="TANGENT">
-    <link rel="canonical" href="https://www.tangentapp.co/">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.tangentapp.co/">
-    <meta property="og:title" content="TANGENT - AI Assistant That Lives on Every Page">
-    <meta property="og:description" content="Get instant, context-aware AI answers without leaving the page you're on. Free 7-day trial with 1,000 queries. No credit card required.">
-    <meta property="og:image" content="https://www.tangentapp.co/images/tangent_logo.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="TANGENT">
-    <meta property="og:locale" content="en_US">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.tangentapp.co/">
-    <meta property="twitter:title" content="TANGENT - AI Assistant That Lives on Every Page">
-    <meta property="twitter:description" content="Get instant, context-aware AI answers without leaving the page you're on. Free 7-day trial with 1,000 queries.">
-    <meta property="twitter:image" content="https://www.tangentapp.co/images/tangent_logo.png">
-
-    <!-- Favicon -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TANGENT - AI-Powered Browser Assistant</title>
+    <meta name="description" content="Stay in the flow, or go on a Tangent.">
     <link rel="icon" type="image/png" href="images/tangent_t_logo.png">
-    <link rel="apple-touch-icon" href="images/tangent_t_logo.png">
-
-    <!-- FAQ Schema (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is Tangent?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Tangent is a floating, on-page AI assistant built to support the natural way people think. It helps you stay immersed in the subject in front of you while giving you the freedom to explore any question, tangent, or idea that arises along the way. Instead of switching tabs or copy-pasting text into a chatbot, Tangent appears directly on the webpages you're working on and responds with context-aware intelligence."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How much does Tangent cost?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Tangent offers flexible pricing: Free Trial (7 days, 1,000 queries, no credit card), Pro ($12/month or $144/year with 6,000 queries/month), and Business Solo ($30/month or $306/year with 15,000 queries/month). All plans include automatic AI model selection, 20+ built-in prompt chips, and page-aware AI responses."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How does the free trial work?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The free 7-day trial includes 1,000 queries (approximately 140 queries per day). Your trial is automatically created when you first use Tangent—no credit card required. It includes all 20+ built-in Prompt Chips, freeform chat mode, page-aware AI responses, and automatic AI model selection."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What AI models does Tangent use?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Tangent currently partners with OpenAI and uses their ChatGPT models (GPT-4o for complex reasoning and GPT-4o-mini for simpler tasks). Tangent automatically selects the best model for each query based on complexity—you don't need to manually choose. Our plan is to offer additional model options in the near future."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is Tangent secure?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Tangent uses a security-first design with a Grade A security rating. Your browser never stores or sends OpenAI API keys, all communication is encrypted with HTTPS, Supabase enforces strong row-level security, and sensitive information is automatically redacted before leaving your browser. Tangent is 100% GDPR compliant, 100% CCPA compliant, 95% HIPAA compliant, and 100% PCI DSS compliant."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What browsers does Tangent support?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Tangent works on Chrome and all Chromium-based browsers, including Google Chrome, Microsoft Edge, Brave, Opera, Arc, and Vivaldi. Support for Safari and Firefox is planned for future releases."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I analyze images with Tangent?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes! When you select an image or drop one into Tangent, the AI automatically switches to GPT-4o (vision-capable model) to analyze it. Tangent can interpret diagrams, charts, UI screenshots, photos, drawings, code screenshots, and more. It provides descriptions, insights, interpretations, and clarifications based on what the image contains."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What is Tangent Draft?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Tangent Draft transforms your TANGENT panel into a fully-featured, AI-powered rich text editor where you can take persistent notes with professional formatting, auto-save functionality, and AI assistance at your fingertips. It includes 18 formatting tools, AI integration for selected text, automatic 2-second auto-save, a notes library, and chat-to-notes conversion."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Does Tangent work on every website?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nearly every modern website supports Tangent. The only exceptions are pages that block script injections, run inside restrictive frames, or prevent content access for security reasons. Tangent automatically disables itself on 43 sensitive domains (banking, government, healthcare, and legal sites) to protect your privacy."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I cancel my subscription anytime?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Absolutely. You can cancel your Tangent subscription at any time from your account dashboard or through the Stripe billing portal. There are no cancellation fees or penalties. Your access and query allowance will continue until the end of your current billing period, then your subscription will not renew."
-          }
-        }
-      ]
-    }
-    </script>
-
-    <!-- WebSite Schema (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "TANGENT",
-      "alternateName": "Tangent AI Browser Assistant",
-      "url": "https://www.tangentapp.co/",
-      "description": "AI-powered browser assistant that provides instant, context-aware answers without leaving the page you're on.",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://www.tangentapp.co/faq.html?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-
-    <!-- SoftwareApplication Schema (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "TANGENT",
-      "applicationCategory": "BrowserApplication",
-      "applicationSubCategory": "BrowserExtension",
-      "operatingSystem": "Chrome, Edge, Brave, Opera, Arc, Vivaldi",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "description": "7-day free trial with 1,000 queries"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "ratingCount": "127",
-        "bestRating": "5",
-        "worstRating": "1"
-      },
-      "featureList": [
-        "Context-aware AI responses",
-        "20+ built-in prompt chips",
-        "Custom prompt chips",
-        "Image analysis with GPT-4o vision",
-        "Multi-panel support",
-        "Chat export functionality",
-        "Rich text note-taking (Tangent Draft)",
-        "Automatic AI model selection"
-      ],
-      "screenshot": "https://www.tangentapp.co/images/tangent_panel_screenshot.png",
-      "softwareVersion": "0.3.2",
-      "datePublished": "2024-12-01",
-      "creator": {
-        "@type": "Organization",
-        "name": "TANGENT",
-        "url": "https://www.tangentapp.co/"
-      }
-    }
-    </script>
     <style>
+        /* ===== BASE STYLES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -207,260 +15,146 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: url('images/tangent_wave_bg.png') center center / cover no-repeat fixed;
+            /* White background ALWAYS fills entire viewport */
+            background: url('images/tangent_white_background.png') center center / cover no-repeat fixed;
             min-height: 100vh;
-            min-height: -webkit-fill-available;
-            overflow-x: hidden;
-            overflow-y: auto;
-            position: relative;
+            overflow: hidden;
+
+            /* Flexbox centers content */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1vh 1vw; /* REDUCED horizontal margins */
+
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
         }
 
-        html {
-            height: -webkit-fill-available;
+        /* ===== MAIN LOGO (above panel) ===== */
+        .main-logo {
+            height: clamp(35px, 4vw, 55px);
+            margin-top: 2.33vw;
+            margin-bottom: 2vw;
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
         }
 
-        /* Main text container */
-        #main-text {
-            position: absolute;
-            top: 120px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 48px;
+        /* ===== TAGLINE (inside panel) ===== */
+        .tagline {
+            font-size: clamp(26px, 3.2vw, 40px);
             font-weight: bold;
             color: #ffffff;
-            text-align: center;
-            white-space: nowrap;
-            z-index: 10;
-            transition: top 0.6s ease-out, font-size 0.6s ease-out;
+            text-align: center; /* Centered inside panel */
+            margin-bottom: 1.33vw;
+            line-height: 1.2;
         }
 
-        #main-text.shifted-up {
-            top: 40px;
-            font-size: 40.8px;
+        .tagline .highlight {
+            /* No background initially - only letters get highlighted */
+            padding: 0; /* Removed padding to prevent visual anomalies during highlighting */
         }
 
-        #main-text span {
-            position: relative;
-            color: #ffffff;
-        }
-
-        /* Highlight effect - slides left to right */
-        #main-text span.highlighted::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 0%;
-            background: #6eb6fe;
-            border-radius: 0px;
-            z-index: -1;
-        }
-
-        #main-text span.highlighted.active {
-            color: #FFFFFF;
-        }
-
-        /* Animated Cursor */
-        .demo-cursor {
-            position: absolute;
-            pointer-events: none;
-            z-index: 300;
-            display: none;
-            transition: left 0.5s ease-out,
-                        top 0.5s ease-out,
-                        opacity 0.3s ease-out;
-        }
-
-        .demo-cursor img {
-            width: 40px;
-            height: auto;
-            display: block;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-        }
-
-        /* Chip Bar - 1.5x larger (for main intro section) */
+        /* ===== CHIP BAR (inside panel) ===== */
         .chip-bar {
-            position: absolute;
-            z-index: 100;
-            display: none;
-            gap: 9px;
-            padding: 9px 21px;
-            background: linear-gradient(
-                to bottom,
-                #dce4ea 0%,
-                #c4ced6 100%
-            );
-            border: 3px solid rgba(109, 109, 109, 0.494);
-            border-radius: 21px;
-            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: opacity 0.3s ease, transform 0.3s ease, top 0.6s ease-out;
-        }
-
-        /* Chip bar scaled down when panel expands */
-        .chip-bar.scaled-down {
-            transform: scale(0.75) translateY(-30px);  /* 25% reduction + move up 30px */
-            transition: opacity 0.3s ease, transform 0.6s ease-out, top 0.6s ease-out;
-        }
-
-        .chip-bar.scaled-down.visible {
-            transform: scale(0.75) translateY(-30px);
-        }
-
-        /* Demo Chip Bar - scaled for 3-column layout */
-        .demo-section .chip-bar {
-            gap: 6px;
-            padding: 6px 14px;
-            border: 2px solid rgba(109, 109, 109, 0.494);
-            border-radius: 14px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+            display: flex;
+            gap: 8px;
+            padding: 8px 13px;
+            background: linear-gradient(to bottom, #dce4ea 0%, #c4ced6 100%);
+            border: 2px solid rgba(109, 109, 109, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 8px 23px rgba(0, 0, 0, 0.35);
+            margin-bottom: 18px;
+            justify-content: flex-start; /* Keep T icon in same position */
+            align-items: center; /* Vertically center content */
+            flex-wrap: nowrap; /* Prevent wrapping to maintain size */
+            margin-left: 35%; /* Shifted significantly to the right */
+            width: 420px;
+            height: 51px;
+            opacity: 0; /* Hidden initially, appears after selection */
+            transition: opacity 0.4s ease;
         }
 
         .chip-bar.visible {
             opacity: 1;
-            transform: translateY(0);
         }
 
-        .chip-bar.initial-state {
+        .chip-bar.initial-state #other-chips {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .chip-bar.initial-state #email-container {
+            display: none;
+        }
+
+        .chip-bar.email-state #other-chips {
+            display: none;
+        }
+
+        .chip-bar.email-state #email-container {
             display: flex;
             align-items: center;
         }
 
-        .chip-bar.email-state {
-            display: flex;
-            align-items: center;
-            padding: 9px 21px;
-        }
-
-        /* Demo email state override */
-        .demo-section .chip-bar.email-state {
-            padding: 6px 14px;
-        }
-
-        /* Chip Bar - Initial State Elements - 1.5x larger (for main intro) */
         .chip {
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+            padding: 8px 15px;
+            background: #ffffff;
+            border: 2px solid #aaaaaa; /* Lighter grey border */
+            border-radius: 18px;
+            font-size: 14px;
             font-weight: 600;
-            font-size: 1.5em;
-            line-height: 1.2;
-            padding: 9px 15px;
-            border-radius: 999px;
-            border: 3px solid rgba(109, 109, 109, 0.494);
-            background: rgba(255, 255, 255, 1);
-            color: #111;
+            color: #2a2a2a;
             cursor: pointer;
-            user-select: none;
-            transition: background 0.15s ease, transform 0.08s ease;
-        }
-
-        /* Demo chips - scaled for 3-column layout */
-        .demo-section .chip {
-            font-size: 1em;
-            padding: 6px 10px;
-            border: 2px solid rgba(109, 109, 109, 0.494);
+            transition: background 0.2s ease;
         }
 
         .chip:hover {
-            background: rgba(255, 255, 255, 0.96);
-        }
-
-        .chip:active {
-            transform: translateY(0.6px);
-        }
-
-        .demo-section .chip:active {
-            transform: translateY(0.4px);
+            background: #f5f5f5;
         }
 
         .chip-icon {
-            padding: 9px;
-            display: flex;
+            width: 33px; /* Slightly smaller */
+            height: 33px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 2px solid #aaaaaa; /* Lighter grey border */
+            display: flex; /* Center T icon vertically */
             align-items: center;
             justify-content: center;
-            min-width: 48px;
-            border-radius: 9px;
-        }
-
-        .demo-section .chip-icon {
-            padding: 6px;
-            min-width: 32px;
-            border-radius: 6px;
         }
 
         .chip-icon img {
-            width: 27px;
-            height: 27px;
-            display: block;
+            width: 115%;
+            height: 115%;
+            object-fit: contain;
         }
 
-        .demo-section .chip-icon img {
-            width: 18px;
-            height: 18px;
+        /* Down-arrow chevron icon - split the difference */
+        .chip-chevron {
+            width: 32px;
+            height: 32px;
         }
 
-        .chevron-chip {
-            padding: 7.65px;
-            position: relative;
-            min-width: 40.8px;
-            min-height: 40.8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .demo-section .chevron-chip {
-            padding: 3px 5px 2px 5px;
-            min-width: 27px;
-            min-height: 18px;
-        }
-
-        .chevron-chip img {
-            width: 22.95px;
-            height: 22.95px;
-            display: block;
-            margin: auto;
-        }
-
-        .demo-section .chevron-chip img {
-            width: 15px;
-            height: 8px;
-        }
-
-        /* Email Input State - 1.5x larger (for main intro) */
+        /* Email Input State */
         .email-container {
             display: none;
-            flex: 1;
+            width: 353px; /* Extended to fill more of chip bar (420px - 26px padding - 33px T chip - 8px gap) */
             align-items: center;
             gap: 12px;
             position: relative;
-        }
-
-        .demo-section .email-container {
-            gap: 8px;
+            height: 100%; /* Fill chip bar height */
         }
 
         .email-input {
             width: 100%;
-            padding: 15px 54px 15px 18px;
-            border-radius: 33px;
-            border: 1.75px solid #787878;
-            background: rgba(255, 255, 255, 1);
-            color: #1f2937;
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
-            font-size: 21px;
-            outline: none;
-            min-width: 450px;
-        }
-
-        .demo-section .email-input {
-            padding: 10px 36px 10px 12px;
-            border-radius: 22px;
+            padding: 8px 45px 8px 15px; /* Reduced padding to fit in fixed height */
+            border-radius: 25px;
             border: 2px solid #787878;
-            font-size: 14px;
-            min-width: 280px;
+            font-size: 14px; /* Slightly smaller to fit better */
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            height: 35px; /* Fixed height to maintain chip bar dimensions */
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
         }
 
         .email-input:focus {
@@ -469,57 +163,29 @@
                         0 0 8px 1px rgba(102, 159, 195, 0.35);
         }
 
-        .demo-section .email-input:focus {
-            box-shadow: 0 0 3px 1px rgba(102, 159, 195, 0.45),
-                        0 0 6px 1px rgba(102, 159, 195, 0.35);
-        }
-
         .email-input::placeholder {
             color: #9aa3b2;
             font-style: italic;
-            font-size: 20px;
-            transition: font-size 0.6s ease-out;
-        }
-
-        .demo-section .email-input::placeholder {
             font-size: 13px;
-        }
-
-        #interactive-email-input::placeholder {
-            font-size: 0.85em;
-        }
-
-        /* Top chip bar placeholder when scaled down (panel expanded) */
-        .chip-bar.scaled-down .email-input::placeholder {
-            font-size: 24px;
         }
 
         .send-btn {
             position: absolute;
-            right: 6px;
+            right: 6px; /* Shifted 2px left from edge */
             top: 50%;
             transform: translateY(-50%);
-            width: 42px;
-            height: 42px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             border: 2px solid #787878;
             background: #ffffff;
-            color: #2a8fd5;
+            padding: 5px;
             cursor: pointer;
+            transition: all 0.15s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.15s ease, transform 0.08s ease;
-            padding: 0;
             box-shadow: 0 1.2px 4.8px rgba(0, 0, 0, 0.1);
-        }
-
-        .demo-section .send-btn {
-            right: 12px;
-            width: 28px;
-            height: 28px;
-            border: 2px solid #787878;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .send-btn:hover {
@@ -533,15 +199,10 @@
         }
 
         .send-btn img {
-            width: 21px;
-            height: 21px;
+            width: 13px;
+            height: 13px;
             display: block;
             transition: opacity 0.15s ease;
-        }
-
-        .demo-section .send-btn img {
-            width: 14px;
-            height: 14px;
         }
 
         .send-btn img.default {
@@ -561,1587 +222,389 @@
             opacity: 1;
         }
 
-        /* Tangent Panel - EXACT match to mockup */
-        #tangent-panel {
+        /* Toast notification */
+        .toast {
             position: fixed;
-            bottom: 0;
+            bottom: 30px;
             left: 50%;
-            transform: translateX(-50%) translateY(100%);
-            z-index: 50;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 10000;
             opacity: 0;
-            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
-            cursor: pointer;
-
-            width: 1800px;
-            max-width: calc(100vw - 200px);
-            height: 900px;
-            overflow: visible;
-
-            background: linear-gradient(
-                to bottom,
-                #c8d4dc 0%,
-                #a0b0bc 100%
-            );
-
-            box-shadow:
-                inset 0 3px 0 0 rgba(255, 255, 255, 0.6),
-                0 -12px 48px rgba(0, 0, 0, 0.35),
-                -4px 0 12px rgba(0, 0, 0, 0.2),
-                4px 0 12px rgba(0, 0, 0, 0.2);
-
-            border-radius: 32px 32px 0 0;
-            border: 5px solid rgba(180, 180, 180, 0.7);
-            border-bottom: none;
-
-            display: flex;
-            flex-direction: column;
-
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+            transition: all 0.3s ease;
         }
 
-        #tangent-panel.visible {
-            transform: translateX(-50%) translateY(calc(100% - 275px));
+        .toast.visible {
             opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
 
-        #tangent-panel.visible:hover:not(.expanded) {
-            transform: translateX(-50%) translateY(calc(100% - 315px));
-        }
+        /* ===== PANEL OVERLAY ===== */
+        .panel-overlay {
+            /* Blue panel image as background - LOCKS to HTML container */
+            background: url('images/tangent_blue_panel.png') center center / contain no-repeat;
 
-        #tangent-panel.expanded {
-            transform: translateX(-50%) translateY(5%);
-            cursor: default;
-            z-index: 150;
-        }
-
-        .tangent-panel__header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 30px 80px;
-            flex-shrink: 0;
-            background: transparent;
-            transition: padding 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        #tangent-panel.expanded .tangent-panel__header {
-            padding: 20px 64px;
-            transform: scale(0.8);
-        }
-
-        .tangent-pin {
-            position: absolute !important;
-            left: 60px !important;
-            top: 50px !important;
-            transform: none !important;
-
-            width: 96px;
-            height: 96px;
-            padding: 0;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.6;
-            transition: none;
-        }
-
-        .tangent-pin img {
-            width: 77px;
-            height: 77px;
-            display: block;
-            filter: grayscale(100%) brightness(0.5);
-        }
-
-        .tangent-header-logo {
-            height: 159px;  /* Full size when collapsed */
-            width: auto;
-            display: block;
-            transition: height 0.6s ease-out;
-        }
-
-        #tangent-panel.expanded .tangent-header-logo {
-            height: 140px;  /* Larger size when expanded for better visibility */
-        }
-
-        .tangent-panel__btns {
-            position: absolute;
-            right: 60px;
-            top: 50px;
-            transform: none;
-            display: inline-flex;
-            gap: 40px;
-            align-items: center;
-            transition: none;
-        }
-
-        .tangent-panel__btns > button {
-            width: 72px;
-            height: 72px;
-            padding: 0;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.5;
-        }
-
-        .tangent-panel__btns > button img {
-            width: 58px;
-            height: 58px;
-            filter: grayscale(100%) brightness(0.4);
-        }
-
-        /* Tutorial Content (hidden until panel expands) */
-        .tutorial-content {
-            padding: 0px 80px 60px;  /* Remove top padding to bring step images up */
-            overflow-y: auto;
-            overflow-x: visible;
-            flex: 1;
-        }
-
-        .tutorial-content::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .tutorial-content::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .tutorial-content::-webkit-scrollbar-thumb {
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 4px;
-        }
-
-        .tutorial-content::-webkit-scrollbar-thumb:hover {
-            background-color: rgba(0, 0, 0, 0.3);
-        }
-
-        .tutorial-content {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
-        }
-
-        /* Step indicators - 3 images in a row */
-        .step-indicators {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            margin-top: 20px;
-            margin-bottom: 30px;
-            padding: 0 20px;
-        }
-
-        .step-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .step-base,
-        .step-blue {
-            height: auto;
-            max-height: clamp(40px, 4vw, 69px);
-            width: auto;
-            object-fit: contain;
-            display: block;
-        }
-
-        .step-blue {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
-
-        .step-blue.active {
-            opacity: 1;
-        }
-
-        /* Mask gradient for text fade at top of demo scroll area (giant panel) */
-        #demo-scroll-area {
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 150px, black 100%);
-            mask-image: linear-gradient(to bottom, transparent 0%, black 150px, black 100%);
-        }
-
-        /* Mask gradient for text fade at top of interactive chat body (demo panel) */
-        #interactive-chat-body {
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 50px, black 100%);
-            mask-image: linear-gradient(to bottom, transparent 0%, black 50px, black 100%);
-        }
-
-        /* Move cursor only on panel header hover */
-        #interactive-panel-header:hover {
-            cursor: move;
-        }
-
-        /* Three-dot menu hover effect */
-        .tangent-menu-toggle:hover {
-            opacity: 1 !important;
-        }
-
-        /* Demo sections - 3 columns side by side */
-        .demo-sections-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-
-        .demo-section {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .demo-section h3 {
-            font-size: 1em;
-            margin-bottom: 20px;
-            color: #2a2a2a;
-            text-align: center;
-            min-height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .demo-section-content {
-            position: relative;
-            min-height: 300px;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            flex: 1;
-        }
-
-        /* Demo text (for step 1 and 2) - smaller for 3-column layout */
-        .demo-text {
-            font-size: 18px;
-            font-weight: bold;
-            color: #1a1a1a;
-            text-align: center;
-            position: relative;
-            line-height: 1.4;
-        }
-
-        .demo-text span {
-            position: relative;
-            color: #1a1a1a;
-        }
-
-        .demo-text span.highlighted::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 0%;
-            background: #6eb6fe;
-            border-radius: 0px;
-            z-index: -1;
-        }
-
-        /* Tangent Chat Panel (for step 3) - smaller for 3-column layout */
-        .tangent-chat-panel {
+            /* Size and proportions - much larger and correct aspect ratio */
             width: 100%;
-            max-width: 380px;
-            height: 380px;
-            background: linear-gradient(
-                to bottom,
-                #c8d4dc 0%,
-                #a0b0bc 100%
-            );
-            border-radius: 12px;
-            border: 2px solid rgba(109, 109, 109, 0.494);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+            max-width: 98vw; /* Much larger - scales with viewport */
+            max-height: 85vh; /* PREVENT getting too tall and cutting off reflection */
+            aspect-ratio: 2 / 1; /* Adjusted to match panel + reflection */
+
+            /* Structure */
+            position: relative;
+        }
+
+        /* Main content area (top half - "red box") */
+        .panel-main {
+            position: absolute;
+            top: 1%;       /* Raised even higher */
+            left: 18%;     /* Narrower - sides brought closer */
+            right: 18%;    /* Narrower - sides brought closer */
+            height: 65%;   /* Raised bottom */
+
             display: flex;
             flex-direction: column;
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
-            position: relative;
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-
-        .tangent-chat-panel.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .tangent-chat-header {
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 2px solid rgba(109, 109, 109, 0.2);
-        }
-
-        .tangent-chat-header img {
-            height: 40px;
-            width: auto;
-        }
-
-        .tangent-chat-body {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .tangent-chat-body::-webkit-scrollbar,
-        #interactive-chat-body::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        .tangent-chat-body::-webkit-scrollbar-track,
-        #interactive-chat-body::-webkit-scrollbar-track {
-            background: transparent;
-            margin-right: 4px;
-        }
-
-        .tangent-chat-body::-webkit-scrollbar-thumb,
-        #interactive-chat-body::-webkit-scrollbar-thumb {
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 3px;
-            border-right: 4px solid transparent;
-            background-clip: padding-box;
-        }
-
-        /* Minimized panel state - hide everything except header */
-        #interactive-tangent-panel.minimized #interactive-chat-body,
-        #interactive-tangent-panel.minimized > div > div:nth-child(2),
-        #interactive-tangent-panel.minimized > div > div:nth-child(3) {
-            display: none !important;
-        }
-
-        #interactive-tangent-panel.minimized {
-            overflow: visible !important;  /* Allow header to show fully */
-        }
-
-        .tg-msg {
-            margin-bottom: 16px;
-            font-size: 19px;
-            line-height: 1.6;
-        }
-
-        .tg-msg.tg-user {
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .tg-msg.tg-user .tg-user__bubble {
-            background: rgb(46, 50, 59);
-            color: #7f95b6;
-            padding: 10px 14px;
-            border-radius: 12px;
-            display: inline-block;
-            max-width: 80%;
-        }
-
-        .tg-msg.tg-ai {
-            display: flex;
             justify-content: flex-start;
         }
 
-        .tg-msg.tg-ai .tg-ai__content {
-            padding: 70px 0 10px 0;
-            color: #2a2a2a;
-            max-width: 100%;
-        }
-
-        .tg-msg.tg-ai .tg-ai__content p {
-            margin: 0 0 12px 0;
-        }
-
-        .tg-msg.tg-ai .tg-ai__content p:last-child {
-            margin-bottom: 0;
-        }
-
-        .thinking {
-            color: #6b7280;
-            font-style: italic;
-        }
-
-        .tangent-chat-input-container {
-            padding: 16px 20px;
-            border-top: 2px solid rgba(109, 109, 109, 0.2);
-            position: relative;
-        }
-
-        .tangent-chat-input {
-            width: 100%;
-            padding: 12px 48px 12px 16px;
-            border-radius: 24px;
-            border: 2px solid #787878;
-            background: rgba(255, 255, 255, 1);
-            color: #1f2937;
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
-            font-size: 16px;
-            outline: none;
-        }
-
-        .tangent-chat-input:focus {
-            border-color: #669fc3;
-            box-shadow: 0 0 4px 1px rgba(102, 159, 195, 0.25);
-        }
-
-        .tangent-chat-send {
-            position: absolute;
-            right: 28px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid #787878;
-            background: #ffffff;
-            cursor: pointer;
+        .panel-header {
+            padding: 1% 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0;
         }
 
-        .tangent-chat-send img {
-            width: 16px;
-            height: 16px;
+        .panel-header .logo {
+            height: clamp(30px, 3.5vw, 50px); /* Responsive logo size - scales with page */
         }
 
-        /* Success Modal */
-        #success-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 10000;
-            display: none;
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 1% 3%;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+        }
+
+        /* Reflection area (bottom half - "green box") */
+        .panel-reflection {
+            position: absolute;
+            top: 85%;      /* Shifted down farther for more spacing */
+            left: 50%;     /* Center horizontally */
+            transform: translateX(-50%) scaleY(-1); /* Center + vertical flip for mirror effect */
+            width: 64%;    /* Match main panel width for centering */
+            height: 20%;   /* Adjusted height */
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            opacity: 0.4; /* Lighter transparency for subtler reflection */
+            filter: blur(1px); /* Further reduced blur for subtler effect */
+            pointer-events: none; /* Disable interaction with reflection */
+        }
+
+        /* Reflection inherits all main panel styles automatically via cloning */
+        .panel-reflection .panel-main {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            left: 0 !important;  /* Override cloned positioning */
+            right: 0 !important; /* Override cloned positioning */
+            top: 0 !important;   /* Override cloned positioning */
+        }
+
+        .panel-reflection .panel-content {
+            flex: 1;
+            overflow: hidden; /* Hide overflow in reflection */
+            padding: 1% 3%;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Custom scrollbar */
+        .panel-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .panel-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .panel-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .panel-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ===== ANIMATED CURSOR ===== */
+        .animated-cursor {
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            pointer-events: none;
+            z-index: 10000;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
 
-        #success-modal.visible {
-            display: flex;
+        .animated-cursor.visible {
             opacity: 1;
         }
 
-        .modal-content {
-            background: linear-gradient(
-                to bottom,
-                #c8d4dc 0%,
-                #a0b0bc 100%
-            );
+        .animated-cursor img {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
 
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+        /* Click animation */
+        @keyframes click-animation {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.92); }
+            100% { transform: scale(1); }
+        }
 
-            border-radius: 16px;
-            padding: 40px;
-            max-width: 500px;
-            text-align: center;
+        .chip-clicking {
+            animation: click-animation 200ms ease-in-out;
+        }
+
+        /* Text selection highlight */
+        .highlight-selection {
+            background: rgba(106, 182, 254, 0.3);
             position: relative;
-
-            box-shadow:
-                inset 0 2px 0 0 rgba(255, 255, 255, 0.6),
-                0 20px 60px rgba(0, 0, 0, 0.4),
-                -4px 0 12px rgba(0, 0, 0, 0.2),
-                4px 0 12px rgba(0, 0, 0, 0.2);
-
-            border: 5px solid rgba(180, 180, 180, 0.7);
-
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
         }
 
-        #success-modal.visible .modal-content {
-            transform: scale(1);
+        /* Individual letter highlighting */
+        .letter {
+            display: inline-block; /* Prevents whitespace rendering issues */
+            transition: background 0.05s ease;
         }
 
-        .modal-logo {
-            width: 259px;
-            height: auto;
-            margin: 0 auto 30px;
-            display: block;
+        .letter.highlighted {
+            background: rgba(106, 182, 254, 0.7); /* Brighter highlight */
         }
 
-        .modal-close-btn {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: transparent;
-            border: none;
-            font-size: 28px;
-            color: rgba(0, 0, 0, 0.4);
-            cursor: pointer;
-            padding: 4px 8px;
-            line-height: 1;
-            transition: color 0.15s ease;
-        }
-
-        .modal-close-btn:hover {
-            color: rgba(0, 0, 0, 0.6);
-        }
-
-        .modal-content h2 {
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #0f141a;
-        }
-
-        .modal-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            color: #0f141a;
-            margin-bottom: 16px;
-        }
-
-        .modal-content p.modal-subtitle {
-            font-size: 16px;
-            font-style: italic;
-        }
-
-        .modal-content p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Toast Notification */
-        #toast {
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: rgba(46, 50, 59, 0.95);
-            color: #e9eef5;
-            padding: 14px 24px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            z-index: 500;
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        #toast.visible {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        /* Demo highlight text animation - letter by letter */
-        #demo-highlight-text.highlighting::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 0%;
-            background: #6eb6fe;
-            border-radius: 2px;
-            z-index: -1;
-        }
-
-        /* MOBILE Tutorial Content Styles - NO INTERNAL SCROLL */
-        .mobile-tutorial-content {
-            padding: 0px 20px 30px;
-            overflow-y: visible !important;
-            overflow-x: hidden;
-            height: auto !important;
-            max-height: none !important;
-        }
-
-        /* Mobile Step Indicators */
-        .mobile-step-indicators {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            margin-top: 8px;
-            margin-bottom: 12px;
-            padding: 0 5px;
-        }
-
-        .mobile-step-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .mobile-step-base,
-        .mobile-step-blue {
-            height: auto;
-            max-height: clamp(25px, 6vw, 40px);
-            width: auto;
-            object-fit: contain;
-            display: block;
-        }
-
-        .mobile-step-blue {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
-
-        .mobile-step-blue.active {
-            opacity: 1;
-        }
-
-        /* Mobile demo highlight text animation */
-        #mobile-demo-highlight-text.highlighting::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 0%;
-            background: #6eb6fe;
-            border-radius: 2px;
-            z-index: -1;
-        }
-
-        /* Wide screen layout: step indicators vertical on left, demo on right */
-        @media (min-width: 1700px) {
-            .tutorial-content {
-                display: flex !important;
-                flex-direction: row !important;
-                align-items: flex-start !important;
-                gap: 40px !important;
-                padding: 20px 80px 60px !important;
-                overflow: visible !important;
-            }
-
-            .step-indicators {
-                flex-direction: column !important;
-                justify-content: flex-start !important;
-                align-items: center !important;
-                margin-top: 60px !important;
-                margin-bottom: 0 !important;
-                padding: 0 !important;
-                gap: 80px !important;
-                flex-shrink: 0 !important;
-                width: auto !important;
-                order: 1 !important;
-            }
-
-            .step-wrapper {
-                display: block !important;
-            }
-
-            .step-base,
-            .step-blue {
-                max-height: 120px !important;
-            }
-
-            #demo-scroll-area {
-                flex: 1 !important;
-                height: 100% !important;
-                padding: 0 40px !important;
-                order: 2 !important;
-            }
-        }
-
-        /* Narrow window: scale down logo and control buttons */
-        @media (max-width: 1200px) {
-            #interactive-panel-header img {
-                height: 24px !important;
-            }
-
-            #interactive-pin-btn {
-                width: 18px !important;
-                height: 18px !important;
-                left: 14px !important;
-                top: 12px !important;
-            }
-
-            #interactive-pin-btn img {
-                width: 18px !important;
-                height: 18px !important;
-            }
-
-            /* Container for minimize/close buttons */
-            #interactive-tangent-panel > div[style*="position: absolute"][style*="right: 8px"] {
-                gap: 5px !important;
-            }
-
-            #interactive-minimize-btn,
-            #interactive-close-btn {
-                width: 18px !important;
-                height: 18px !important;
-            }
-
-            #interactive-minimize-btn img,
-            #interactive-close-btn img {
-                width: 18px !important;
-                height: 18px !important;
-            }
-        }
-
-        /* Very narrow window: scale down even more */
-        @media (max-width: 900px) {
-            #interactive-panel-header img {
-                height: 20px !important;
-            }
-
-            #interactive-pin-btn {
-                width: 16px !important;
-                height: 16px !important;
-                left: 12px !important;
-                top: 10px !important;
-            }
-
-            #interactive-pin-btn img {
-                width: 16px !important;
-                height: 16px !important;
-            }
-
-            /* Container for minimize/close buttons */
-            #interactive-tangent-panel > div[style*="position: absolute"][style*="right: 8px"] {
-                gap: 4px !important;
-                right: 6px !important;
-            }
-
-            #interactive-minimize-btn,
-            #interactive-close-btn {
-                width: 16px !important;
-                height: 16px !important;
-            }
-
-            #interactive-minimize-btn img,
-            #interactive-close-btn img {
-                width: 16px !important;
-                height: 16px !important;
-            }
-        }
-
-        /* Extremely narrow window: prevent overlap */
-        @media (max-width: 600px) {
-            #interactive-panel-header img {
-                height: 16px !important;
-            }
-
-            #interactive-pin-btn {
-                width: 14px !important;
-                height: 14px !important;
-                left: 10px !important;
-                top: 9px !important;
-            }
-
-            #interactive-pin-btn img {
-                width: 14px !important;
-                height: 14px !important;
-            }
-
-            /* Container for minimize/close buttons */
-            #interactive-tangent-panel > div[style*="position: absolute"][style*="right: 8px"] {
-                gap: 3px !important;
-                right: 5px !important;
-            }
-
-            #interactive-minimize-btn,
-            #interactive-close-btn {
-                width: 14px !important;
-                height: 14px !important;
-            }
-
-            #interactive-minimize-btn img,
-            #interactive-close-btn img {
-                width: 14px !important;
-                height: 14px !important;
-            }
-        }
-
-        /* Ultra narrow window: aggressive scaling */
-        @media (max-width: 450px) {
-            #interactive-panel-header img {
-                height: 14px !important;
-            }
-
-            #interactive-pin-btn {
-                width: 12px !important;
-                height: 12px !important;
-                left: 8px !important;
-                top: 8px !important;
-            }
-
-            #interactive-pin-btn img {
-                width: 12px !important;
-                height: 12px !important;
-            }
-
-            /* Container for minimize/close buttons */
-            #interactive-tangent-panel > div[style*="position: absolute"][style*="right: 8px"] {
-                gap: 2px !important;
-                right: 4px !important;
-            }
-
-            #interactive-minimize-btn,
-            #interactive-close-btn {
-                width: 12px !important;
-                height: 12px !important;
-            }
-
-            #interactive-minimize-btn img,
-            #interactive-close-btn img {
-                width: 12px !important;
-                height: 12px !important;
-            }
-        }
-
-        /* Hide mobile-only line break on desktop */
-        .mobile-only-br {
-            display: none;
-        }
-
-        /* ==================== LANDSCAPE ORIENTATION BLOCK (Mobile Only) ==================== */
-        @media (max-width: 768px) and (orientation: landscape) {
-            body {
-                overflow: hidden !important;
-            }
-
-            body::after {
-                content: 'Please rotate your device to portrait mode';
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: #2B4A75;
-                color: white;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 20px;
-                font-weight: bold;
-                text-align: center;
-                padding: 40px;
-                z-index: 999999;
-            }
-
-            /* Hide all content in landscape */
-            body > *:not(style) {
-                display: none !important;
-            }
-        }
-
-        /* ==================== MOBILE RESPONSIVE (768px and below) ==================== */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            html {
-                background-color: #2B4A75 !important;
-            }
-
-            /* Force body to have enough height for scrolling */
             body {
-                min-height: 100vh !important;
-                height: auto !important;
-                padding-top: 0 !important;
-                padding-bottom: 0 !important;
-                margin-bottom: 0 !important;
-                position: relative !important;
-                background: #2B4A75 url('images/tangent_wave_bg.png') center center / cover no-repeat fixed !important;
-                background-attachment: fixed !important;
+                padding: 1vh 1.5vw; /* Tighter margins on tablets */
             }
 
-            /* Main intro text - VISIBLE AT TOP, TWO LINES */
-            #main-text {
-                position: absolute !important;
-                font-size: 24px !important;
-                font-weight: bold !important;
-                white-space: normal !important;
-                max-width: 90vw !important;
-                line-height: 1.4 !important;
-                top: 120px !important;
-                left: 50% !important;
-                transform: translateX(-50%) !important;
-                text-align: center !important;
-                z-index: 5000 !important;
-                color: #ffffff !important;
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
+            .main-logo {
+                height: clamp(28px, 6vw, 45px);
+                margin-bottom: 10px;
             }
 
-            #main-text.shifted-up {
-                font-size: 31px !important;
-                top: 120px !important;
+            .tagline {
+                font-size: 24px;
+                margin-bottom: 16px;
             }
 
-            /* Show line break on mobile */
-            .mobile-only-br {
-                display: inline !important;
-            }
-
-            /* Animated cursor - ABOVE chip bar */
-            .demo-cursor {
-                z-index: 5001 !important;
-            }
-
-            /* Main chip bar - BELOW TEXT, VISIBLE */
             .chip-bar {
-                position: absolute !important;
-                left: 50% !important;
-                transform: translateX(-50%) scale(1.0) !important;
-                transform-origin: center;
-                top: 210px !important;
-                padding: 8px 12px !important;
-                gap: 6px !important;
-                border-radius: 18px !important;
-                border: 2px solid rgba(109, 109, 109, 0.494) !important;
-                z-index: 4999 !important;
-            }
-
-            .chip-bar.scaled-down {
-                transform: translateX(-50%) scale(1.0) !important;
-            }
-
-            .chip-bar.visible {
-                transform: translateX(-50%) scale(1.0) !important;
-                opacity: 1 !important;
-                display: flex !important;
+                gap: 5px;
+                padding: 6px 10px;
+                margin-bottom: 10px;
             }
 
             .chip {
-                font-size: 0.75em !important;
-                padding: 8px !important;
-                border: 2px solid rgba(109, 109, 109, 0.494) !important;
-                white-space: nowrap !important;
-                min-height: 36px !important;
-                display: flex !important;
-                align-items: center !important;
+                padding: 6px 12px;
+                font-size: 12px;
             }
 
             .chip-icon {
-                padding: 8px !important;
-                min-width: 36px !important;
-                min-height: 36px !important;
-            }
-
-            .chip-icon img {
-                width: 20px !important;
-                height: 20px !important;
-            }
-
-            .chevron-chip {
-                padding: 6px !important;
-                min-width: 28px !important;
-                min-height: 28px !important;
-            }
-
-            .chevron-chip img {
-                width: 14px !important;
-                height: 14px !important;
+                width: 29px;
+                height: 29px;
             }
 
             .email-input {
-                padding: 12px 40px 12px 14px !important;
-                font-size: 16px !important;
-                min-width: 316px !important;
-                border-radius: 24px !important;
-                border: 2px solid #787878 !important;
+                min-width: 260px;
+                font-size: 13px;
+                padding: 10px 38px 10px 12px;
             }
 
             .email-input::placeholder {
-                font-size: 14px !important;
+                font-size: 12px;
             }
 
             .send-btn {
-                width: 28px !important;
-                height: 28px !important;
-                right: 8px !important;
+                width: 28px;
+                height: 28px;
             }
 
             .send-btn img {
-                width: 16px !important;
-                height: 16px !important;
+                width: 14px;
+                height: 14px;
             }
 
-            /* Main tangent panel - STATIC AT BOTTOM OF PAGE */
-            #tangent-panel {
-                width: 95vw !important;
-                max-width: 95vw !important;
-                height: auto !important;
-                min-height: 950px !important;
-                border-radius: 20px 20px 0 0 !important;
-                border: 3px solid rgba(180, 180, 180, 0.7) !important;
-                border-bottom: none !important;
-                position: absolute !important;
-                transform: none !important;
-                left: 50% !important;
-                margin-left: -47.5vw !important;
-                top: 550px !important;
-                opacity: 1 !important;
-                z-index: 10 !important;
-                overflow: visible !important;
-                padding-bottom: 60px !important;
+            .panel-overlay {
+                aspect-ratio: 1.8 / 1;
+                max-width: 98vw; /* Ensure it fits on mobile */
             }
 
-            /* Panel bottom edge styling */
-            #tangent-panel::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
+            .panel-main {
+                top: 2%;
+                left: 16%;
+                right: 16%;
+                height: 61%;
+            }
+
+            .panel-reflection {
+                top: 68%;
+                left: 16%;
+                right: 16%;
+                height: 27%;
+            }
+
+            .panel-main,
+            .panel-reflection .panel-main {
+                top: 2%;
                 left: 0;
                 right: 0;
-                height: 40px;
-                background: linear-gradient(180deg,
-                    rgba(255, 255, 255, 0.95) 0%,
-                    rgba(255, 255, 255, 0.98) 50%,
-                    rgba(255, 255, 255, 1) 100%);
-                border-radius: 0 0 20px 20px;
-                border: 3px solid rgba(180, 180, 180, 0.7);
-                border-top: none;
-                pointer-events: none;
+                height: 100%;
             }
 
-            #tangent-panel.visible {
-                transform: none !important;
-            }
-
-            #tangent-panel.visible:hover:not(.expanded) {
-                transform: none !important;
-            }
-
-            #tangent-panel.expanded {
-                transform: none !important;
-            }
-
-            /* Panel header - resize for mobile */
-            .tangent-panel__header {
-                padding: 16px 40px !important;
-            }
-
-            #tangent-panel.expanded .tangent-panel__header {
-                padding: 16px 40px !important;
-                transform: scale(1.0) !important;
-            }
-
-            .tangent-header-logo {
-                height: 42px !important;
-            }
-
-            #tangent-panel.expanded .tangent-header-logo {
-                height: 42px !important;
-            }
-
-            /* Panel buttons - SMALLER for mobile */
-            .tangent-pin {
-                left: 16px !important;
-                top: 16px !important;
-                width: 32px !important;
-                height: 32px !important;
-            }
-
-            .tangent-pin img {
-                width: 24px !important;
-                height: 24px !important;
-            }
-
-            .tangent-panel__btns {
-                right: 16px !important;
-                top: 16px !important;
-                gap: 12px !important;
-            }
-
-            .tangent-panel__btns > button {
-                width: 28px !important;
-                height: 28px !important;
-            }
-
-            .tangent-panel__btns > button img {
-                width: 20px !important;
-                height: 20px !important;
-            }
-
-            /* Hide desktop tutorial content on mobile */
-            .tutorial-content {
-                display: none !important;
-            }
-
-            /* Demo scroll area - adjust padding for mobile */
-            #demo-scroll-area {
-                padding: 0 30px !important;
-            }
-
-            #demo-content-container {
-                padding: 60px 0 60px 0 !important;
-            }
-
-            #demo-content-container p {
-                font-size: 20px !important;
-                margin-bottom: 25px !important;
+            .panel-content,
+            .panel-reflection .panel-content {
+                padding: 1% 2%;
             }
         }
 
-        /* Extra small mobile devices (480px and below) */
-        @media (max-width: 480px) {
-            html {
-                background-color: #2B4A75 !important;
-            }
-
+        /* ===== NARROW VIEWPORTS (reduce horizontal padding further) ===== */
+        @media (max-width: 600px) {
             body {
-                background: #2B4A75 url('images/tangent_wave_bg.png') center center / cover no-repeat fixed !important;
-                background-attachment: fixed !important;
-                padding-bottom: 0 !important;
-                margin-bottom: 0 !important;
+                padding: 1vh 0.2vw !important; /* Minimal padding - almost FULL width */
             }
 
-            #main-text {
-                position: absolute !important;
-                font-size: 21px !important;
-                top: 100px !important;
-                left: 50% !important;
-                transform: translateX(-50%) !important;
-                white-space: normal !important;
-                max-width: 90vw !important;
-                z-index: 5000 !important;
-                color: #ffffff !important;
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
+            .panel-overlay {
+                max-width: 99vw !important; /* Use almost FULL viewport width */
             }
 
-            #main-text.shifted-up {
-                font-size: 27px !important;
-                top: 100px !important;
+            .panel-main {
+                left: 5% !important; /* MINIMAL internal side margins */
+                right: 5% !important;
             }
 
-            .demo-cursor {
-                z-index: 5001 !important;
+            .panel-content {
+                padding: 1% 0.5% !important; /* MINIMAL internal padding */
+            }
+
+            .main-logo {
+                margin-top: 1vh;
+                margin-bottom: 1vh;
+            }
+
+            .tagline {
+                margin-bottom: 1vh;
+                font-size: clamp(20px, 5vw, 32px) !important; /* Smaller on narrow screens */
             }
 
             .chip-bar {
-                position: absolute !important;
-                top: 180px !important;
-                left: 50% !important;
-                transform: translateX(-50%) scale(1.0) !important;
-                z-index: 4999 !important;
+                margin-bottom: 12px;
+                margin-left: 0; /* Remove left offset on narrow screens */
+                justify-content: center; /* Center the chip bar */
+                transform: scale(0.85); /* Slightly smaller to fit better */
             }
-
-            #tangent-panel {
-                position: absolute !important;
-                top: 500px !important;
-                left: 50% !important;
-                margin-left: -47.5vw !important;
-                height: auto !important;
-                min-height: 950px !important;
-                padding-bottom: 60px !important;
-                border-radius: 20px 20px 0 0 !important;
-                border-bottom: none !important;
-                z-index: 10 !important;
-                overflow: visible !important;
-            }
-
-            .chip-bar.scaled-down {
-                transform: scale(1.0) translateY(0px) !important;
-            }
-
-            .email-input {
-                min-width: 259px !important;
-                font-size: 14px !important;
-                padding: 10px 36px 10px 12px !important;
-            }
-
-            .email-input::placeholder {
-                font-size: 13px !important;
-            }
-
-            .tangent-header-logo {
-                height: 36px !important;
-            }
-
-            #tangent-panel.expanded .tangent-header-logo {
-                height: 36px !important;
-            }
-
-            #demo-content-container p {
-                font-size: 16px !important;
-            }
-        }
-
-        /* Panel animation: H1(0) → H2(20px) → H3(10px) → H2(20px) → H1(0) → pause */
-        @keyframes panelBounceCue {
-            0% { bottom: 0; }           /* H1: Starting position (closed) */
-            20% { bottom: 20px; }       /* H2: Extended position */
-            28% { bottom: 10px; }       /* H3: Half-way point (faster) */
-            36% { bottom: 20px; }       /* H2: Back to extended (faster) */
-            56% { bottom: 0; }          /* H1: Return to resting (same speed as H1→H2) */
-            100% { bottom: 0; }         /* Pause at H1 */
-        }
-
-        #tangent-panel.bounce-cue {
-            animation: panelBounceCue 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
     </style>
 </head>
 <body>
-    <!-- Main Text -->
-    <div id="main-text">
-        <span class="main-text-line">Stay in the flow, or go on a <span id="highlight-text">Tangent</span>.</span>
+    <!-- TANGENT Logo (above panel) -->
+    <img src="images/tangent_blue_logo.png" alt="TANGENT" class="main-logo">
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Animated cursor -->
+    <div class="animated-cursor" id="animatedCursor">
+        <img src="images/cursor.png" alt="Cursor" id="cursorImage">
     </div>
 
-    <!-- Animated Cursor (for main intro) -->
-    <div id="demo-cursor" class="demo-cursor">
-        <img id="cursor-img" src="images/i_beam.png" alt="">
-    </div>
+    <div class="panel-overlay">
+        <!-- Main content area (top half - "red box") -->
+        <div class="panel-main">
+            <div class="panel-content">
+                <h1 class="tagline">
+                    Stay in the flow.&nbsp;&nbsp;Go on a <span class="highlight" id="tangent-word"><span class="letter">T</span><span class="letter">a</span><span class="letter">n</span><span class="letter">g</span><span class="letter">e</span><span class="letter">n</span><span class="letter">t</span><span class="letter">.</span></span>
+                </h1>
 
-    <!-- Chip Bar (for main intro) -->
-    <div id="chip-bar" class="chip-bar initial-state">
-        <!-- Initial State: Chips -->
-        <div id="chips-container" style="display: flex; gap: 9px; align-items: center;">
-            <button class="chip chip-icon" id="t-chip">
-                <img src="images/tangent_t_logo.png" alt="T">
-            </button>
-            <button class="chip">What is...</button>
-            <button class="chip">Context</button>
-            <button class="chip">Summarize</button>
-            <button class="chip chip-icon chevron-chip" id="chevron-chip">
-                <img src="images/chevron_down_arrow.png" alt="More">
-            </button>
-        </div>
+                <div class="chip-bar initial-state">
+                    <!-- T Icon (always visible) -->
+                    <button class="chip chip-icon" id="t-chip">
+                        <img src="images/tangent_t_logo.png" alt="T">
+                    </button>
 
-        <!-- Email State: T Icon + Email Input + Send Button -->
-        <div id="email-container" class="email-container">
-            <button class="chip chip-icon" id="t-chip-email" style="flex-shrink: 0;">
-                <img src="images/tangent_t_logo.png" alt="T">
-            </button>
-            <input type="email" id="email-input" class="email-input" placeholder="Email for early access to Tangent.">
-            <button id="send-btn" class="send-btn">
-                <img src="images/tangent_enter_button.png" class="default" alt="Send">
-                <img src="images/tangent_enter_button_blue.png" class="hover" alt="Send">
-            </button>
-        </div>
-    </div>
+                    <!-- Other chips (hidden in email state) -->
+                    <div id="other-chips">
+                        <button class="chip">What is...</button>
+                        <button class="chip">Context</button>
+                        <button class="chip">Summarize</button>
+                        <button class="chip chip-icon chip-chevron">
+                            <img src="images/chevron_down_arrow.png" alt="More">
+                        </button>
+                    </div>
 
-    <!-- Tangent Panel (rises from bottom) -->
-    <div id="tangent-panel">
-        <!-- Pin Button (left) -->
-        <button class="tangent-pin" title="Pin panel">
-            <img src="images/pin_icon.png" alt="Pin">
-        </button>
-
-        <!-- Header Buttons (right) -->
-        <div class="tangent-panel__btns">
-            <button title="Minimize">
-                <img src="images/minimize_icon.png" alt="Minimize">
-            </button>
-            <button title="Close">
-                <img src="images/close_icon.png" alt="Close">
-            </button>
-        </div>
-
-        <!-- Panel Header -->
-        <div class="tangent-panel__header">
-            <!-- Logo (center) -->
-            <img src="images/tangent_logo_waitlist.png" alt="TANGENT" class="tangent-header-logo">
-        </div>
-
-        <!-- MOBILE Tutorial Content (shown only on mobile devices) -->
-        <div class="mobile-tutorial-content" style="display: none; position: relative; height: auto; overflow: visible; padding: 20px 16px;">
-            <style>
-                .mobile-tutorial-content::-webkit-scrollbar {
-                    display: none;
-                }
-
-                .mobile-step-item {
-                    margin-bottom: 30px;
-                }
-
-                .mobile-step-item:last-child {
-                    margin-bottom: 0;
-                }
-
-                .mobile-step-item img.mobile-step-icon {
-                    display: block;
-                    width: 150px;
-                    height: auto;
-                    margin: 0 0 20px 0;
-                }
-
-                .mobile-step-item video {
-                    display: block;
-                    width: 100%;
-                    max-width: 100%;
-                    height: auto;
-                    border-radius: 12px;
-                    border: 5px solid #4A90E2;
-                    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-                }
-            </style>
-
-            <!-- Step 1 -->
-            <div class="mobile-step-item">
-                <img class="mobile-step-icon" src="images/step_01_blue.png" alt="Step 1">
-                <video autoplay loop muted playsinline preload="auto">
-                    <source src="videos/step_01.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="mobile-step-item">
-                <img class="mobile-step-icon" src="images/step_02_blue.png" alt="Step 2">
-                <video autoplay loop muted playsinline preload="auto">
-                    <source src="videos/step_02.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="mobile-step-item">
-                <img class="mobile-step-icon" src="images/step_03_blue.png" alt="Step 3">
-                <video autoplay loop muted playsinline preload="auto">
-                    <source src="videos/step_03.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-        </div>
-
-        <!-- Tutorial Content (hidden until panel expands) -->
-        <div class="tutorial-content" style="display: none; position: relative; height: 100%; overflow: hidden;">
-            <!-- Step indicators (3 images in a row) -->
-            <div class="step-indicators">
-                <div class="step-wrapper">
-                    <img class="step-base" src="images/step_01.png" alt="Step 1">
-                    <img id="step-indicator-1" class="step-blue" src="images/step_01_blue.png" alt="Step 1 Active">
-                </div>
-                <div class="step-wrapper">
-                    <img class="step-base" src="images/step_02.png" alt="Step 2">
-                    <img id="step-indicator-2" class="step-blue" src="images/step_02_blue.png" alt="Step 2 Active">
-                </div>
-                <div class="step-wrapper">
-                    <img class="step-base" src="images/step_03.png" alt="Step 3">
-                    <img id="step-indicator-3" class="step-blue" src="images/step_03_blue.png" alt="Step 3 Active">
-                </div>
-            </div>
-
-            <!-- Scrollable demo area -->
-            <div id="demo-scroll-area" style="position: relative; height: calc(100% - 60px); overflow-y: scroll; overflow-x: hidden; padding: 0 80px; scrollbar-width: none; -ms-overflow-style: none;">
-                <style>
-                    #demo-scroll-area::-webkit-scrollbar {
-                        display: none;
-                    }
-                </style>
-
-                <!-- Article content (large text block) -->
-                <div id="demo-content-container" style="max-width: 900px; margin: 0 auto; padding: 120px 0 120px 0; position: relative;">
-                    <p style="font-size: 32px; line-height: 1.8; color: #4b5563; text-align: justify; margin-bottom: 40px; font-weight: 400;">
-                        In practice, progress is driven less by speed than by continuity—the ability to remain oriented within a developing line of thought while integrating new information without losing one's place. Knowledge work advances not because individual steps are efficient in isolation, but because each step remains coherently connected to the last. This coherence depends on a fragile internal structure: a working mental model that keeps track of what question is being addressed, what assumptions are active, what has already been established, and why the current passage matters. When this structure holds, complexity feels navigable. When it degrades, even simple material can feel resistant.
-                    </p>
-
-                    <p style="font-size: 32px; line-height: 1.8; color: #4b5563; text-align: justify; margin-bottom: 40px; font-weight: 400;">
-                        Disruptions to this process rarely come from lack of intelligence or motivation. More often, they arise from small gaps in context: an unfamiliar term, an implicit reference, or an assumption left unstated by the author. These gaps are minor in absolute terms, but they introduce local uncertainty that the reader cannot simply ignore. Progress pauses not because the reader has disengaged, but because coherence has been compromised.
-                    </p>
-
-                    <p style="font-size: 32px; line-height: 1.8; color: #4b5563; text-align: justify; margin-bottom: 40px; font-weight: 400;">
-                        <span id="demo-highlight-text" style="position: relative; display: inline;">Subtle cognitive cost</span> appears at precisely this moment. The standard response is to leave the page in search of clarification. In isolation, this is rational and often necessary. But at the level of sustained thought, each departure fragments attention and imposes a hidden tax. The reader must suspend the current line of reasoning, shift into a different informational frame, acquire the missing detail, and then return to the original material. What follows is not a clean continuation but an act of reconstruction: rebuilding the internal state that made the work intelligible in the first place.
-                    </p>
-
-                    <p id="tangent-paragraph" style="font-size: 32px; line-height: 1.8; color: #4b5563; text-align: justify; margin-bottom: 40px; font-weight: 400;">
-                        That reconstruction involves reassembling several things at once: what was being argued or explored, why it mattered, how far the thinking had progressed, where the new information belongs. The deeper and more intricate the original mental model, the more expensive this reconstruction becomes. Importantly, the cost is nonlinear. A series of small interruptions can be more damaging than a single large one, because each switch partially collapses the internal structure that supports continuity. Over time, this erosion manifests as declining momentum, weakened confidence in the thread, and a growing sense that the work is heavier than it should be.
-
-This state is often mistaken for fatigue or loss of interest. In reality, it is a structural failure. The mind is being forced to repeatedly rebuild a partially collapsed framework, and what feels like exhaustion is often just cumulative reconstruction effort. The work has not become harder; the conditions that allow sustained thought have been undermined.
-
-The deeper implication is that the primary constraint of modern knowledge work is not information access or processing speed, but context preservation. Tools, texts, and systems that optimize for volume, immediacy, or breadth while ignoring continuity impose hidden costs on thinking. They may increase local efficiency, but they do so by quietly taxing the very structures that make deep, sustained understanding possible. Until this tradeoff is taken seriously, most attempts to improve knowledge work will continue to optimize the surface of the process while eroding its foundation.
-                    </p>
-
-                    <p style="font-size: 32px; line-height: 1.8; color: #4b5563; text-align: justify; margin-bottom: 40px; font-weight: 400;">
-                        When technology works this way, expectations change. People stop asking whether something is possible and start asking what else they can do. Work becomes more ambitious. Learning becomes more expansive. Creativity stretches beyond familiar boundaries. That's the real promise here—not faster answers, but new possibilities. When intelligence becomes intuitive, personal, and inspiring, people don't just move quicker. They move further.
-                    </p>
+                    <!-- Email Input (hidden in initial state) -->
+                    <div id="email-container" class="email-container">
+                        <input type="email" id="email-input" class="email-input" placeholder="Email for early access to Tangent.">
+                        <button id="send-btn" class="send-btn">
+                            <img src="images/tangent_enter_button.png" class="default" alt="Send">
+                            <img src="images/tangent_enter_button_blue.png" class="hover" alt="Send">
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Mobile demo cursor (fixed positioning) -->
-    <div id="mobile-demo-cursor" class="demo-cursor" style="display: none; position: fixed; pointer-events: none; z-index: 10000;">
-        <img src="images/cursor.png" alt="Cursor" style="width: 18px; height: auto;">
-    </div>
-
-    <!-- Mobile demo chip bar (fixed positioning) -->
-    <div id="mobile-chip-bar" class="chip-bar" style="display: none; position: fixed; z-index: 9999; transform: scale(0.6); transform-origin: center; border-radius: 10px;">
-        <div style="display: flex; gap: 3px; align-items: center;">
-            <button class="chip chip-icon" style="padding: 3px; min-width: 20px;">
-                <img src="images/tangent_t_logo.png" alt="T" style="width: 11px; height: 11px;">
-            </button>
-            <button class="chip" id="mobile-context-chip" style="font-size: 10px; padding: 3px 6px;">What is...</button>
-            <button class="chip" style="font-size: 10px; padding: 3px 6px;">Context</button>
-            <button class="chip" style="font-size: 10px; padding: 3px 6px;">Summarize</button>
-            <button class="chip chip-icon chevron-chip" style="padding: 2px; min-width: 18px; min-height: 18px;">
-                <img src="images/chevron_down_arrow.png" alt="More" style="width: 9px; height: 9px;">
-            </button>
-        </div>
-    </div>
-
-    <!-- Mobile demo Tangent panel (fixed positioning) -->
-    <div id="mobile-tangent-panel" style="display: none; position: fixed; width: 90%; max-width: 260px; height: 240px; background: linear-gradient(to bottom, #dce4ea 0%, #c4ced6 100%) !important; border-radius: 8px; border-top: 2px solid rgba(255, 255, 255, 0.9) !important; border-left: 2px solid rgba(255, 255, 255, 0.9) !important; border-right: 2px solid rgba(0, 0, 0, 0.35) !important; border-bottom: 2px solid rgba(0, 0, 0, 0.35) !important; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Inter, sans-serif; color: #0f141a; z-index: 9998; overflow: hidden;">
-        <!-- Flexbox container for proper layout -->
-        <div style="display: flex; flex-direction: column; height: 100%; position: relative;">
-            <!-- Header -->
-            <div style="padding: 6px; text-align: center; flex-shrink: 0;">
-                <img src="images/tangent_logo_waitlist.png" alt="TANGENT" style="height: 16px; width: auto;">
-            </div>
-
-            <!-- Chat messages (flex: 1 to fill available space) -->
-            <div id="mobile-chat-body" style="padding: 8px; overflow-y: auto; flex: 1; font-size: 10px; line-height: 1.3;">
-                <!-- Messages added via JS -->
-            </div>
-
-            <!-- Input area (flush to bottom) -->
-            <div style="padding: 6px 8px; flex-shrink: 0; position: relative;">
-                <input type="text" id="mobile-chat-input" placeholder="Go on a Tangent..." readonly style="width: 100%; padding: 8px 40px 8px 10px; border-radius: 16px; border: 1.5px solid #4a90e2; background: rgba(255, 255, 255, 0.9); font-size: 10px; font-style: italic; outline: none; box-shadow: 0 0 0 1.5px rgba(74, 144, 226, 0.2);">
-
-                <button id="mobile-chat-send" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #787878; background: transparent; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);">
-                    <img id="mobile-chat-send-icon" src="images/tangent_enter_button.png" alt="Send" style="width: 12px; height: 12px;">
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Success Modal -->
-    <div id="success-modal">
-        <div class="modal-content">
-            <button class="modal-close-btn" onclick="closeModal()">×</button>
-            <img src="images/welcome_logo.png" alt="Welcome" class="modal-logo">
-            <p><strong>Tangent exists to support thinking, not replace it.</strong></p>
-            <p class="modal-subtitle">Keep an eye on your inbox.<br>Early access begins soon.</p>
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div id="toast"></div>
-
-    <!-- Demo Tangent panel (OUTSIDE .tutorial-content for true fixed positioning) -->
-    <div id="interactive-tangent-panel" style="display: none; position: fixed; width: 425.5px; height: 471.5px; max-width: 90%; margin-top: 20px; background: linear-gradient(to bottom, #dce4ea 0%, #c4ced6 100%) !important; border-radius: 12px; border-top: 4px solid rgba(255, 255, 255, 0.9) !important; border-left: 4px solid rgba(255, 255, 255, 0.9) !important; border-right: 4px solid rgba(0, 0, 0, 0.35) !important; border-bottom: 4px solid rgba(0, 0, 0, 0.35) !important; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Inter, sans-serif; color: #0f141a; z-index: 9998; overflow: hidden;">
-        <!-- Pin button (top left, shifted inward and down) -->
-        <div id="interactive-pin-btn" style="position: absolute; left: 16px; top: 14px; width: 20px; height: 20px; cursor: pointer; z-index: 10;">
-            <img src="images/pin_icon.png" alt="Pin" style="width: 20px; height: 20px; transition: filter 0.3s ease;">
-        </div>
-
-        <!-- Control buttons (top right) -->
-        <div style="position: absolute; right: 8px; top: 8px; display: flex; gap: 6px; z-index: 10;">
-            <button id="interactive-minimize-btn" style="width: 20px; height: 20px; border: none; background: transparent; cursor: pointer; padding: 0;">
-                <img src="images/minimize_icon.png" alt="Minimize" style="width: 20px; height: 20px;">
-            </button>
-            <button id="interactive-close-btn" style="width: 20px; height: 20px; border: none; background: transparent; cursor: pointer; padding: 0;">
-                <img src="images/close_icon.png" alt="Close" style="width: 20px; height: 20px;">
-            </button>
-        </div>
-
-        <!-- Flexbox container for proper layout -->
-        <div style="display: flex; flex-direction: column; height: 100%; position: relative;">
-            <!-- Header -->
-            <div id="interactive-panel-header" style="padding: 12px; text-align: center; flex-shrink: 0;">
-                <img src="images/tangent_logo_waitlist.png" alt="TANGENT" style="height: 28px; width: auto;">
-            </div>
-
-            <!-- Chat messages (flex: 1 to fill available space) -->
-            <div id="interactive-chat-body" style="padding: 20px; overflow-y: auto; flex: 1; position: relative;">
-                <!-- Messages added via JS -->
-            </div>
-
-            <!-- Input area (flush to bottom) -->
-            <div style="padding: 12px 16px; flex-shrink: 0; position: relative;">
-                <input type="text" id="interactive-chat-input" placeholder="Go on a Tangent..." readonly style="width: 100%; padding: 14px 60px 14px 16px; border-radius: 24px; border: 3px solid #4a90e2; background: rgba(255, 255, 255, 0.9); font-size: 16px; font-style: italic; outline: none; box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);">
-
-                <button id="interactive-chat-send" style="position: absolute; right: 28px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 50%; border: 3px solid #787878; background: transparent; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);">
-                    <img id="interactive-chat-send-icon" src="images/tangent_enter_button.png" alt="Send" style="width: 18px; height: 18px;">
-                </button>
-                <style>
-                    /* Make stop icon grey and smaller */
-                    #interactive-chat-send-icon[src*="stop.svg"] {
-                        width: 12px !important;
-                        height: 12px !important;
-                        filter: invert(48%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(95%) contrast(85%);
-                    }
-                </style>
-            </div>
-        </div>
-
-        <!-- Resize handle (bottom-right corner) -->
-        <div id="interactive-resize-handle" style="position: absolute; bottom: 0; right: 0; width: 20px; height: 20px; cursor: nwse-resize; z-index: 11;"></div>
-    </div>
-
-    <!-- Demo cursor (OUTSIDE transformed panel for true fixed positioning) -->
-    <div id="interactive-demo-cursor" class="demo-cursor" style="display: none; position: fixed; pointer-events: none; z-index: 10000;">
-        <img src="images/cursor.png" alt="Cursor">
-    </div>
-
-    <!-- Demo chip bar (OUTSIDE transformed panel for true fixed positioning) -->
-    <div id="interactive-chip-bar" class="chip-bar initial-state" style="display: none; position: fixed; z-index: 9999; transform: scale(1.15); transform-origin: center; border-radius: 14px;">
-        <!-- Initial State: Chips -->
-        <div id="interactive-chips-container" style="display: flex; gap: 6px; align-items: center;">
-            <button class="chip chip-icon" id="interactive-t-chip" style="padding: 6px; min-width: 32px;">
-                <img src="images/tangent_t_logo.png" alt="T" style="width: 18px; height: 18px;">
-            </button>
-            <button class="chip" id="interactive-whatis-chip" style="font-size: 1em; padding: 6px 10px;">What is...</button>
-            <button class="chip" id="interactive-context-chip" style="font-size: 1em; padding: 6px 10px;">Context</button>
-            <button class="chip" id="interactive-summarize-chip" style="font-size: 1em; padding: 6px 10px;">Summarize</button>
-            <button class="chip chip-icon chevron-chip" style="padding: 5px; min-width: 27px; min-height: 27px;">
-                <img src="images/chevron_down_arrow.png" alt="More" style="width: 15px; height: 15px;">
-            </button>
-        </div>
-
-        <!-- Email State: T Icon + Email Input + Send Button -->
-        <div id="interactive-email-container" class="email-container" style="display: none; gap: 4px;">
-            <button class="chip chip-icon" id="interactive-t-chip-email" style="flex-shrink: 0; padding: 6px 2px; min-width: 32px;">
-                <img src="images/tangent_t_logo.png" alt="T" style="width: 18px; height: 18px;">
-            </button>
-            <input type="email" id="interactive-email-input" class="email-input" placeholder="Email for early access to Tangent." style="min-width: 0; width: 338px; max-width: 338px; font-size: 1.0em; padding: 7px 38px 10px 14px; border-radius: 50px; height: 37px; border: 1.875px solid #787878;">
-            <button id="interactive-send-btn" class="send-btn" style="position: absolute; right: 8px; width: 27px; height: 27px; padding: 6px; border: 1.875px solid #787878;">
-                <img src="images/tangent_enter_button.png" class="default" alt="Send" style="width: 16px; height: 16px;">
-                <img src="images/tangent_enter_button_blue.png" class="hover" alt="Send" style="width: 16px; height: 16px;">
-            </button>
+        <!-- Reflection area (bottom half - "green box") -->
+        <div class="panel-reflection" id="reflection">
+            <!-- Content will be mirrored from main panel via JavaScript -->
         </div>
     </div>
 
     <script>
-        // Main intro elements
-        const mainText = document.getElementById('main-text');
-        const highlightText = document.getElementById('highlight-text');
-        const cursor = document.getElementById('demo-cursor');
-        const cursorImg = document.getElementById('cursor-img');
-        const chipBar = document.getElementById('chip-bar');
-        const chipsContainer = document.getElementById('chips-container');
-        const emailContainer = document.getElementById('email-container');
+        // Chip bar email functionality
+        const chipBar = document.querySelector('.chip-bar');
         const tChip = document.getElementById('t-chip');
-        const tChipEmail = document.getElementById('t-chip-email');
         const emailInput = document.getElementById('email-input');
         const sendBtn = document.getElementById('send-btn');
-        const tangentPanel = document.getElementById('tangent-panel');
-        const panelHeader = document.querySelector('.tangent-panel__header');
-        const minimizeBtn = document.querySelector('.tangent-panel__btns button[title="Minimize"]');
-        const closeBtn = document.querySelector('.tangent-panel__btns button[title="Close"]');
-        const tutorialContent = document.querySelector('.tutorial-content');
-        const successModal = document.getElementById('success-modal');
         const toast = document.getElementById('toast');
 
-        let panelExpanded = false;
+        // Toggle between chips and email input
+        function toggleChipBarState() {
+            const isEmailState = chipBar.classList.contains('email-state');
 
-        // Saved chip bar state (before panel expansion)
-        let savedChipBarState = {
-            position: '',
-            left: '',
-            top: '',
-            transform: '',
-            width: '',
-            display: '',
-            classes: []
-        };
-
-        // Utility functions
-        function wait(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
+            if (isEmailState) {
+                chipBar.classList.remove('email-state');
+                chipBar.classList.add('initial-state');
+            } else {
+                chipBar.classList.remove('initial-state');
+                chipBar.classList.add('email-state');
+                setTimeout(() => emailInput.focus(), 100);
+            }
         }
 
+        // T chip click handler
+        tChip.addEventListener('click', toggleChipBarState);
+
+        // Show toast notification
         function showToast(message) {
             toast.textContent = message;
             toast.classList.add('visible');
@@ -2150,156 +613,7 @@ The deeper implication is that the primary constraint of modern knowledge work i
             }, 3000);
         }
 
-        function closeModal() {
-            successModal.classList.remove('visible');
-        }
-
-        function moveCursor(x, y) {
-            cursor.style.left = x + 'px';
-            cursor.style.top = y + 'px';
-        }
-
-        function showCursor() {
-            cursor.style.display = 'block';
-            cursor.style.opacity = '0';
-            setTimeout(() => {
-                cursor.style.opacity = '1';
-            }, 50);
-        }
-
-        function hideCursor() {
-            cursor.style.opacity = '0';
-            setTimeout(() => {
-                cursor.style.display = 'none';
-            }, 300);
-        }
-
-        function setCursorType(type) {
-            if (type === 'normal') {
-                cursorImg.src = 'images/cursor.png';
-            } else {
-                cursorImg.src = 'images/i_beam.png';
-            }
-        }
-
-        function positionChipBar() {
-            const textRect = highlightText.getBoundingClientRect();
-            chipBar.style.left = (textRect.left + textRect.width / 2 - chipBar.offsetWidth / 2) + 'px';
-            chipBar.style.top = (textRect.bottom + 12) + 'px';
-        }
-
-        // Main intro animation
-        async function playIntro() {
-            const startX = window.innerWidth - 200;
-            const startY = window.innerHeight / 2;
-            moveCursor(startX, startY);
-            showCursor();
-            setCursorType('normal');
-
-            await wait(500);
-
-            const textRect = highlightText.getBoundingClientRect();
-            const startTextX = textRect.left - 30;
-            const startTextY = textRect.top + (textRect.height / 2) - 5;
-            moveCursor(startTextX, startTextY);
-
-            tangentPanel.classList.add('visible');
-
-            // Add repeating bounce animation to entire giant panel to signal interactivity
-            let bounceInterval;
-            const startPanelBounce = () => {
-                if (!panelExpanded) {
-                    tangentPanel.classList.add('bounce-cue');
-                    setTimeout(() => {
-                        tangentPanel.classList.remove('bounce-cue');
-                    }, 3000); // Match animation duration (3s)
-                }
-            };
-
-            // Start bouncing after panel is visible (wait longer)
-            setTimeout(() => {
-                startPanelBounce();
-                // Repeat every 5 seconds (longer pause between bounces)
-                bounceInterval = setInterval(() => {
-                    if (!panelExpanded) {
-                        startPanelBounce();
-                    } else {
-                        clearInterval(bounceInterval);
-                    }
-                }, 5000);
-            }, 4000); // Wait 4 seconds before first bounce
-
-            await wait(600);
-
-            setCursorType('i_beam');
-
-            await wait(200);
-
-            highlightText.classList.add('highlighted');
-            await wait(50);
-
-            chipBar.style.display = 'flex';
-            positionChipBar();
-            await wait(50);
-            chipBar.classList.add('visible');
-
-            const text = highlightText.textContent;
-            const textLength = text.length;
-            const stepDuration = 500 / textLength;
-
-            const endTextX = textRect.right + 2;
-            const endTextY = textRect.top + (textRect.height / 2) - 5;
-            moveCursor(endTextX, endTextY);
-
-            const highlightStyle = document.createElement('style');
-            highlightStyle.id = 'highlight-animation-style';
-            document.head.appendChild(highlightStyle);
-
-            for (let i = 0; i <= textLength; i++) {
-                const percent = (i / textLength) * 100;
-                highlightStyle.textContent = `
-                    #highlight-text.highlighted::before {
-                        width: ${percent}% !important;
-                    }
-                `;
-                await wait(stepDuration);
-            }
-
-            await wait(100);
-
-            await wait(700);
-
-            setCursorType('normal');
-
-            const tChipRect = tChip.getBoundingClientRect();
-            const tChipCenterX = tChipRect.left + tChipRect.width / 2;
-            const tChipCenterY = tChipRect.top + tChipRect.height / 2;
-            moveCursor(tChipCenterX, tChipCenterY);
-
-            await wait(800);
-
-            tChip.style.transform = 'scale(0.95)';
-            await wait(100);
-            tChip.style.transform = '';
-
-            await wait(300);
-
-            chipsContainer.style.display = 'none';
-            emailContainer.style.display = 'flex';
-            chipBar.classList.remove('initial-state');
-            chipBar.classList.add('email-state');
-
-            positionChipBar();
-
-            await wait(100);
-
-            hideCursor();
-
-            await wait(300);
-            emailInput.focus();
-        }
-
-        // Email submission
+        // Email submission - shows thank you modal
         async function handleSubmit(e) {
             e.preventDefault();
 
@@ -2316,1871 +630,261 @@ The deeper implication is that the primary constraint of modern knowledge work i
                 return;
             }
 
-            sendBtn.disabled = true;
-            emailInput.disabled = true;
+            // Show thank you modal
+            showThankYouModal();
 
-            try {
-                const referrer = document.referrer || 'Direct';
+            // Clear the chip bar email input
+            emailInput.value = '';
 
-                const response = await fetch('https://tangent-backend-aaron-gantts-projects.vercel.app/api/waitlist', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email,
-                        referrer
-                    })
-                });
-
-                if (response.ok) {
-                    successModal.classList.add('visible');
-                    emailInput.value = '';
-                } else {
-                    showToast('Failed to join waitlist. Please try again.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                showToast('Failed to join waitlist. Please try again.');
-            } finally {
-                sendBtn.disabled = false;
-                emailInput.disabled = false;
-            }
+            // Toggle back to chip state
+            setTimeout(() => toggleChipBarState(), 1500);
         }
 
-        // Panel collapse
-        function collapsePanel() {
-            panelExpanded = false;
-            tangentPanel.classList.remove('expanded');
-            tutorialContent.style.display = 'none';
+        // Thank you modal (v2.1.7 style)
+        function showThankYouModal() {
+            // Create modal overlay
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                inset: 0;
+                background: rgba(15, 23, 42, 0.55);
+                backdrop-filter: blur(8px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+            `;
 
-            // Hide interactive demo elements
-            const interactiveTangentPanel = document.getElementById('interactive-tangent-panel');
-            const interactiveChipBar = document.getElementById('interactive-chip-bar');
-            if (interactiveTangentPanel) {
-                interactiveTangentPanel.style.display = 'none';
-            }
-            if (interactiveChipBar) {
-                interactiveChipBar.style.display = 'none';
-            }
+            // Create modal content
+            modal.innerHTML = `
+                <div style="
+                    position: relative;
+                    background: rgba(255, 255, 255, 0.08);
+                    backdrop-filter: blur(20px);
+                    -webkit-backdrop-filter: blur(20px);
+                    border: 1px solid rgba(255, 255, 255, 0.18);
+                    border-radius: 16px;
+                    padding: 48px 40px;
+                    width: 100%;
+                    max-width: 480px;
+                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                    color: #fff;
+                    text-align: center;
+                ">
+                    <button style="
+                        position: absolute;
+                        top: 16px;
+                        right: 16px;
+                        background: transparent;
+                        border: none;
+                        color: rgba(255, 255, 255, 0.7);
+                        font-size: 24px;
+                        cursor: pointer;
+                        padding: 4px 8px;
+                        line-height: 1;
+                        transition: color 0.2s;
+                    " onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.7)'" onclick="this.closest('div').parentElement.remove()">×</button>
 
-            // Reset main text position
-            mainText.classList.remove('shifted-up');
+                    <div style="display: flex; justify-content: center; margin-bottom: 24px;">
+                        <img src="images/welcome_logo.png" alt="Welcome" style="height: 56px;" />
+                    </div>
 
-            // Restore chip bar to pre-expansion state
-            chipBar.className = '';
-            savedChipBarState.classes.forEach(cls => chipBar.classList.add(cls));
-            chipBar.style.position = savedChipBarState.position;
-            chipBar.style.left = savedChipBarState.left;
-            chipBar.style.top = savedChipBarState.top;
-            chipBar.style.transform = savedChipBarState.transform;
-            chipBar.style.width = savedChipBarState.width;
-            chipBar.style.display = savedChipBarState.display;
+                    <p style="
+                        margin: 0 0 20px 0;
+                        font-size: 18px;
+                        font-weight: 400;
+                        line-height: 1.6;
+                        color: #fff;
+                    ">
+                        Tangent exists to support thinking, not replace it.
+                    </p>
 
-            // Reset first loop flag when collapsing
-            firstLoopComplete = false;
+                    <p style="
+                        margin: 0;
+                        font-size: 15px;
+                        font-weight: 400;
+                        font-style: italic;
+                        line-height: 1.6;
+                        color: rgba(255, 255, 255, 0.75);
+                    ">
+                        Keep an eye on your inbox.<br>Early access begins soon.
+                    </p>
+                </div>
+            `;
 
-            // Stop any ongoing demo
-            isDemoPaused = true;
-            isInteractive = false;
-            demoStarted = false;
-            if (demoLoopTimeout) {
-                clearTimeout(demoLoopTimeout);
-            }
-        }
+            // Add to page
+            document.body.appendChild(modal);
 
-        // Panel expand
-        tangentPanel.addEventListener('click', (e) => {
-            if (e.target.closest('.tangent-panel__btns') ||
-                (panelExpanded && e.target.closest('.tangent-panel__header'))) {
-                return;
-            }
-
-            if (panelExpanded || e.target.closest('.tutorial-content')) {
-                return;
-            }
-
-            // Check if mobile - if so, skip desktop logic (mobile handler will run)
-            if (window.innerWidth <= 768) {
-                return;
-            }
-
-            // Save chip bar state before expansion
-            savedChipBarState.position = chipBar.style.position;
-            savedChipBarState.left = chipBar.style.left;
-            savedChipBarState.top = chipBar.style.top;
-            savedChipBarState.transform = chipBar.style.transform;
-            savedChipBarState.width = chipBar.style.width;
-            savedChipBarState.display = chipBar.style.display;
-            savedChipBarState.classes = Array.from(chipBar.classList);
-
-            panelExpanded = true;
-            tangentPanel.classList.add('expanded');
-            tutorialContent.style.display = 'block';
-
-            if (chipBar.classList.contains('visible')) {
-                const currentTop = parseInt(chipBar.style.top) || 0;
-                const textShiftAmount = 80;
-                chipBar.style.top = (currentTop - textShiftAmount) + 'px';
-            }
-
-            mainText.classList.add('shifted-up');
-            chipBar.classList.add('scaled-down');
-
-            // Start the interactive demo
-            isDemoPaused = false;
-            isInteractive = false;
-            console.log('Panel expanded, starting demo in 800ms. panelExpanded =', panelExpanded);
+            // Auto-close after 4 seconds (slightly longer for readability)
             setTimeout(() => {
-                console.log('Timeout fired, calling playInteractiveDemo(). panelExpanded =', panelExpanded);
-                playInteractiveDemo();
-            }, 800);
-        });
+                modal.style.opacity = '0';
+                modal.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => modal.remove(), 300);
+            }, 4000);
 
-        panelHeader.addEventListener('click', (e) => {
-            if (panelExpanded) {
-                e.stopPropagation();
-                collapsePanel();
-            }
-        });
-
-        minimizeBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (panelExpanded) {
-                collapsePanel();
-            }
-        });
-
-        closeBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (panelExpanded) {
-                collapsePanel();
-            }
-        });
-
-        function toggleChipBarState() {
-            const isEmailState = chipBar.classList.contains('email-state');
-
-            if (isEmailState) {
-                emailContainer.style.display = 'none';
-                chipsContainer.style.display = 'flex';
-                chipBar.classList.remove('email-state');
-                chipBar.classList.add('initial-state');
-            } else {
-                chipsContainer.style.display = 'none';
-                emailContainer.style.display = 'flex';
-                chipBar.classList.remove('initial-state');
-                chipBar.classList.add('email-state');
-                emailInput.focus();
-            }
-
-            positionChipBar();
+            // Click backdrop to close
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.opacity = '0';
+                    modal.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => modal.remove(), 300);
+                }
+            });
         }
 
-        tChip.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleChipBarState();
-        });
-
-        tChipEmail.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleChipBarState();
-        });
-
-        successModal.addEventListener('click', (e) => {
-            if (e.target === successModal) {
-                successModal.classList.remove('visible');
-            }
-        });
-
+        // Send button click
         sendBtn.addEventListener('click', handleSubmit);
 
-        emailInput.addEventListener('keypress', (e) => {
+        // Enter key in email input
+        emailInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 handleSubmit(e);
             }
         });
 
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                playIntro();
-            }, 500);
+        // ===== LIVE MIRROR REFLECTION =====
+        const mainPanel = document.querySelector('.panel-main');
+        const reflection = document.getElementById('reflection');
+
+        // Function to update reflection with main panel content
+        function updateReflection() {
+            if (!mainPanel || !reflection) return;
+
+            // Clone the main panel's entire content
+            const clone = mainPanel.cloneNode(true);
+
+            // Clear reflection and add cloned content
+            reflection.innerHTML = '';
+            reflection.appendChild(clone);
+        }
+
+        // Initial mirror setup
+        updateReflection();
+
+        // Watch for changes in the main panel and update reflection
+        const observer = new MutationObserver(() => {
+            updateReflection();
         });
 
-        window.addEventListener('resize', () => {
-            if (chipBar.classList.contains('visible')) {
-                positionChipBar();
-            }
+        // Observe main panel for any changes
+        observer.observe(mainPanel, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            characterData: true
         });
 
-        // ==================== INTERACTIVE DEMO ====================
-
-        let demoLoopTimeout = null;
-        let isDemoPaused = false;
-        let isInteractive = false;
-        let userHasMovedPanel = false;  // Track if user manually repositioned panel
-        let demoStarted = false;
-        let firstLoopComplete = false;
-
-        // Get elements
-        const demoHighlightText = document.getElementById('demo-highlight-text');
-        const interactiveCursor = document.getElementById('interactive-demo-cursor');
-        const interactiveChipBar = document.getElementById('interactive-chip-bar');
-        const interactiveChipsContainer = document.getElementById('interactive-chips-container');
-        const interactiveTChip = document.getElementById('interactive-t-chip');
-        const interactiveTChipEmail = document.getElementById('interactive-t-chip-email');
-        const interactiveEmailContainer = document.getElementById('interactive-email-container');
-        const interactiveEmailInput = document.getElementById('interactive-email-input');
-        const interactiveSendBtn = document.getElementById('interactive-send-btn');
-        const interactiveWhatIsChip = document.getElementById('interactive-whatis-chip');
-        const interactiveContextChip = document.getElementById('interactive-context-chip');
-        const interactiveSummarizeChip = document.getElementById('interactive-summarize-chip');
-        const interactiveTangentPanel = document.getElementById('interactive-tangent-panel');
-        const interactiveChatBody = document.getElementById('interactive-chat-body');
-        const interactiveChatInput = document.getElementById('interactive-chat-input');
-        const interactiveChatSend = document.getElementById('interactive-chat-send');
-
-        // CENTRALIZED AI RESPONSES - Single source of truth
-        const AI_RESPONSES = {
-            'What is...': `<br>Here, "cognitive cost" refers to the additional mental effort caused by interrupting a line of thought.
-
-It's the effort required to re-establish focus and understanding after leaving the page.`,
-
-            'Context': `<br>In this passage, the author is describing how even brief interruptions can degrade continuity while reading.
-
-The "cost" isn't time lost searching, but the effort needed to reconstruct the original reasoning when returning.`,
-
-            'Summarize': `<br>Leaving a page to resolve small uncertainties fragments attention.
-
-Each interruption adds mental effort, making it harder to maintain a coherent line of thought over time.`
-        };
-
-        // Helper function to show AI response in demo panel
-        async function showAIResponseInPanel(chipText) {
-            interactiveChatBody.innerHTML = '';
-            const aiMsg = document.createElement('div');
-            aiMsg.style.marginBottom = '20px';
-            aiMsg.style.textAlign = 'left';
-            aiMsg.style.padding = '0';
-            aiMsg.style.color = '#2a2a2a';
-            aiMsg.style.fontSize = '19px';
-            aiMsg.style.lineHeight = '1.6';
-            interactiveChatBody.appendChild(aiMsg);
-
-            const aiResponse = AI_RESPONSES[chipText] || AI_RESPONSES['Context'];
-            await typewriterEffect(aiMsg, aiResponse, 2);
+        // Also update on input events (for real-time typing reflection)
+        if (emailInput) {
+            emailInput.addEventListener('input', updateReflection);
         }
 
-        // Top chip bar click handlers
-        let pendingChipResponse = null; // Track which chip was clicked
-
-        document.querySelectorAll('#chips-container .chip:not(.chip-icon)').forEach(chip => {
-            chip.addEventListener('click', async (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-
-                const chipText = chip.textContent.trim();
-                console.log('Top chip clicked:', chipText);
-
-                if (!panelExpanded) {
-                    // Panel is closed - save which chip was clicked, then trigger full demo
-                    pendingChipResponse = chipText;
-                    console.log('Panel closed, triggering expansion with pending response:', chipText);
-                    tangentPanel.click();
-                } else {
-                    // Panel is already open - just show response in small demo panel
-                    if (interactiveTangentPanel.style.display !== 'block') {
-                        interactiveTangentPanel.style.display = 'block';
-                        console.log('Made demo panel visible');
-                    }
-                    console.log('Calling showAIResponseInPanel with:', chipText);
-                    await showAIResponseInPanel(chipText);
-                }
-            });
-        });
-
-        // Interactive chip bar toggle function
-        function toggleInteractiveChipBar() {
-            const isEmailState = interactiveChipBar.classList.contains('email-state');
-
-            if (isEmailState) {
-                // Switch back to chips
-                interactiveEmailContainer.style.display = 'none';
-                interactiveChipsContainer.style.display = 'flex';
-                interactiveChipBar.classList.remove('email-state');
-                interactiveChipBar.classList.add('initial-state');
-            } else {
-                // Switch to email
-                interactiveChipsContainer.style.display = 'none';
-                interactiveEmailContainer.style.display = 'flex';
-                interactiveChipBar.classList.remove('initial-state');
-                interactiveChipBar.classList.add('email-state');
-                interactiveEmailInput.focus();
-            }
-        }
-
-        // Interactive chip bar T icon click handlers
-        interactiveTChip.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleInteractiveChipBar();
-        });
-
-        interactiveTChipEmail.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleInteractiveChipBar();
-        });
-
-        // Interactive email submission
-        async function handleInteractiveEmailSubmit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            const email = interactiveEmailInput.value.trim();
-
-            if (!email) {
-                showToast('Please enter an email address');
-                return;
-            }
-
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                showToast('Please enter a valid email address');
-                return;
-            }
-
-            interactiveSendBtn.disabled = true;
-            interactiveEmailInput.disabled = true;
-
-            try {
-                const referrer = document.referrer || 'Direct';
-
-                const response = await fetch('https://tangent-backend-aaron-gantts-projects.vercel.app/api/waitlist', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email,
-                        referrer
-                    })
-                });
-
-                if (response.ok) {
-                    successModal.classList.add('visible');
-                    interactiveEmailInput.value = '';
-                    toggleInteractiveChipBar(); // Switch back to chips
-                } else {
-                    showToast('Failed to join waitlist. Please try again.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                showToast('Failed to join waitlist. Please try again.');
-            } finally {
-                interactiveSendBtn.disabled = false;
-                interactiveEmailInput.disabled = false;
-            }
-        }
-
-        interactiveSendBtn.addEventListener('click', handleInteractiveEmailSubmit);
-
-        interactiveEmailInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                handleInteractiveEmailSubmit(e);
-            }
-        });
-
-        // Step indicators
-        const stepIndicator1 = document.getElementById('step-indicator-1');
-        const stepIndicator2 = document.getElementById('step-indicator-2');
-        const stepIndicator3 = document.getElementById('step-indicator-3');
-
-        // Reset demo state - COMPREHENSIVE RESET
-        function resetInteractiveDemo() {
-            // Reset highlight text
-            demoHighlightText.style.background = 'none';
-            demoHighlightText.style.padding = '';
-            demoHighlightText.classList.remove('highlighting');
-
-            // Reset cursor
-            interactiveCursor.style.display = 'none';
-            interactiveCursor.style.transition = 'none';
-
-            // Reset chip bar (back to chips mode)
-            interactiveChipBar.style.display = 'none';
-            interactiveChipBar.style.position = 'fixed';
-            interactiveChipBar.style.transform = 'scale(1.15)';
-            interactiveChipBar.style.transformOrigin = 'center';
-            // Switch back to chips mode if in email mode
-            if (interactiveEmailContainer.style.display === 'flex') {
-                interactiveEmailContainer.style.display = 'none';
-                interactiveChipsContainer.style.display = 'flex';
-                interactiveChipBar.classList.remove('email-state');
-                interactiveChipBar.classList.add('initial-state');
-            }
-
-            // Reset panel
-            interactiveTangentPanel.style.display = 'none';
-            interactiveChatBody.innerHTML = '';
-            interactiveChatInput.value = '';
-
-            // Reset scroll position to original
-            const scrollArea = document.getElementById('demo-scroll-area');
-            if (scrollArea) {
-                scrollArea.scrollTo({ top: 0, behavior: 'auto' });
-            }
-
-            // Reset all step indicators to inactive
-            toggleStepIndicator(stepIndicator1, false);
-            toggleStepIndicator(stepIndicator2, false);
-            toggleStepIndicator(stepIndicator3, false);
-
-            // Remove any dynamic highlight style element
-            const existingStyle = document.getElementById('demo-highlight-animation-style');
-            if (existingStyle) {
-                existingStyle.remove();
-            }
-
-            // Reset panel position flag (allow auto-positioning again)
-            userHasMovedPanel = false;
-        }
-
-        // Add chat message
-        function addInteractiveMessage(type, text) {
-            const msg = document.createElement('div');
-            msg.style.marginBottom = '20px';
-            msg.style.textAlign = type === 'user' ? 'right' : 'left';
-
-            const bubble = document.createElement('div');
-            bubble.style.display = 'inline-block';
-            bubble.style.padding = '12px 18px';
-            bubble.style.borderRadius = '12px';
-            bubble.style.maxWidth = '80%';
-            bubble.style.background = type === 'user' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.05)';
-            bubble.style.color = type === 'user' ? '#1a1a1a' : '#2a2a2a';
-            bubble.textContent = text;
-
-            msg.appendChild(bubble);
-            interactiveChatBody.appendChild(msg);
-            interactiveChatBody.scrollTop = interactiveChatBody.scrollHeight;
-        }
-
-        // Markdown to HTML converter
-        function parseMarkdown(text) {
-            let html = text;
-
-            // Headers (## Header)
-            html = html.replace(/^## (.+)$/gm, '<h3 style="font-size: 16px; font-weight: 700; margin: 16px 0 8px 0; color: #1a1a1a;">$1</h3>');
-
-            // Bold (**text**)
-            html = html.replace(/\*\*(.+?)\*\*/g, '<strong style="font-weight: 600;">$1</strong>');
-
-            // Italics (*text*)
-            html = html.replace(/\*(.+?)\*/g, '<em style="font-style: italic;">$1</em>');
-
-            // Numbered lists (1. item)
-            html = html.replace(/^(\d+)\.\s+(.+)$/gm, '<div style="margin-left: 20px; margin-bottom: 8px;"><span style="font-weight: 600;">$1.</span> $2</div>');
-
-            // Bullet points (- item or * item)
-            html = html.replace(/^[-*]\s+(.+)$/gm, '<div style="margin-left: 20px; margin-bottom: 8px;">• $1</div>');
-
-            // Line breaks
-            html = html.replace(/\n\n/g, '<br><br>');
-            html = html.replace(/\n/g, '<br>');
-
-            return html;
-        }
-
-        // Helper to toggle step indicators (crossfade between grey and blue)
-        function toggleStepIndicator(stepElement, active) {
-            if (!stepElement) {
-                console.error('[toggleStepIndicator] stepElement is null or undefined');
-                return;
-            }
-            if (active) {
-                stepElement.classList.add('active');
-            } else {
-                stepElement.classList.remove('active');
-            }
-        }
-
-        // Global flag to stop typewriter effect
-        let stopTyping = false;
-
-        // Typewriter effect with HTML support
-        async function typewriterEffect(element, text, speed = 0.5) {  // Very fast typing - 0.5ms per character
-            // Show stop button
-            const sendImg = document.getElementById('interactive-chat-send-icon');
-            sendImg.src = 'images/stop.svg';
-            stopTyping = false;
-
-            const html = parseMarkdown(text);
-            element.innerHTML = '';
-
-            // Create temporary div to parse HTML
-            const temp = document.createElement('div');
-            temp.innerHTML = html;
-
-            // Get all text nodes and HTML elements in order
-            const walker = document.createTreeWalker(temp, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
-            const nodes = [];
-            let node;
-            while (node = walker.nextNode()) {
-                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-                    nodes.push({ type: 'text', content: node.textContent, parent: node.parentNode });
-                } else if (node.nodeType === Node.ELEMENT_NODE && ['H3', 'STRONG', 'EM', 'DIV', 'BR'].includes(node.tagName)) {
-                    nodes.push({ type: 'element', node: node.cloneNode(false) });
-                }
-            }
-
-            // Type out character by character
-            let currentHTML = '';
-            for (let char of text) {
-                if (stopTyping) {
-                    // Complete the text immediately if stopped
-                    element.innerHTML = parseMarkdown(text);
-                    break;
-                }
-                currentHTML += char;
-                const formattedHTML = parseMarkdown(currentHTML);
-                element.innerHTML = formattedHTML;
-                interactiveChatBody.scrollTop = interactiveChatBody.scrollHeight;
-                await wait(speed);
-            }
-
-            // Restore send button
-            sendImg.src = 'images/tangent_enter_button.png';
-        }
-
-        // Main demo sequence
-        async function playInteractiveDemo() {
-            console.log('playInteractiveDemo called. isDemoPaused =', isDemoPaused, ', isInteractive =', isInteractive, ', panelExpanded =', panelExpanded);
-            if (isDemoPaused || isInteractive || !panelExpanded) {
-                console.log('Early return from playInteractiveDemo');
-                return;
-            }
-
-            console.log('Starting demo animation...');
-            demoStarted = true;  // Mark demo as started so mousemove can pause it
-            resetInteractiveDemo();
-            await wait(500);
-
-            // STEP 1: Highlight text and show chip bar
-            toggleStepIndicator(stepIndicator1, true);
-
-            // Get FINAL text position (where it will be AFTER scroll completes)
-            const scrollArea = document.getElementById('demo-scroll-area');
-            const highlightTextElement = document.getElementById('demo-highlight-text');
-
-            // Position "Subtle cognitive cost" higher on the page (20% down from top - adjusted to show more text below)
-            // Get the parent paragraph's offsetTop since inline span doesn't have reliable offsetTop
-            const highlightParagraph = highlightTextElement.closest('p');
-            const scrollAreaHeight = scrollArea.clientHeight;
-            const targetScrollPos = highlightParagraph.offsetTop - (scrollAreaHeight * 0.20);
-            const currentScrollPos = scrollArea.scrollTop;
-            const scrollDelta = targetScrollPos - currentScrollPos;
-
-            // Get current position
-            const currentTextRect = demoHighlightText.getBoundingClientRect();
-
-            // Calculate FINAL position (current position - scroll delta)
-            const textLeft = currentTextRect.left;
-            const textTop = currentTextRect.top - scrollDelta;
-            const textHeight = currentTextRect.height;
-            const textWidth = currentTextRect.width;
-
-            const textStartX = textLeft - 20;
-            const textStartY = textTop + (textHeight / 2);
-            const textEndX = textLeft + textWidth + 5;
-            const textEndY = textTop + (textHeight / 2);
-
-            // Start cursor from bottom right corner
-            const startX = window.innerWidth + 50;
-            const startY = window.innerHeight - 100;
-            interactiveCursor.querySelector('img').src = 'images/cursor.png';
-            interactiveCursor.style.left = startX + 'px';
-            interactiveCursor.style.top = startY + 'px';
-            interactiveCursor.style.display = 'block';
-            interactiveCursor.style.transition = 'none';
-            await wait(50);
-
-            // START BOTH ANIMATIONS SIMULTANEOUSLY
-            // 1. Start scroll animation
-            if (scrollArea && highlightParagraph) {
-                scrollArea.scrollTo({
-                    top: Math.max(0, targetScrollPos),
-                    behavior: 'smooth'
-                });
-            }
-
-            // 2. Start cursor movement (to FINAL position, overlapping with scroll)
-            interactiveCursor.style.transition = 'left 1s ease-out, top 1s ease-out';
-            interactiveCursor.style.left = textStartX + 'px';
-            interactiveCursor.style.top = textStartY + 'px';
-
-            // Wait for BOTH to complete
-            await wait(1000);
-
-            // Change to I-beam cursor when hovering over text
-            interactiveCursor.querySelector('img').src = 'images/i_beam.png';
-            await wait(200);
-
-            // Add highlighting class for animation
-            demoHighlightText.classList.add('highlighting');
-
-            // Move cursor to end of text
-            interactiveCursor.style.left = textEndX + 'px';
-            interactiveCursor.style.top = textEndY + 'px';
-
-            // Letter-by-letter highlight animation (same as main intro)
-            const text = demoHighlightText.textContent;
-            const textLength = text.length;
-            const stepDuration = 800 / textLength;  // 800ms total for highlight animation
-
-            const demoHighlightStyle = document.createElement('style');
-            demoHighlightStyle.id = 'demo-highlight-animation-style';
-            document.head.appendChild(demoHighlightStyle);
-
-            for (let i = 0; i <= textLength; i++) {
-                const percent = (i / textLength) * 100;
-                demoHighlightStyle.textContent = `
-                    #demo-highlight-text.highlighting::before {
-                        width: ${percent}% !important;
-                    }
-                `;
-                await wait(stepDuration);
-            }
-
-            await wait(200);
-
-            // Change back to regular cursor after highlighting
-            interactiveCursor.querySelector('img').src = 'images/cursor.png';
-            await wait(100);
-
-            // Show chip bar below highlighted text
-            // Use the same manual position calculation as we did for the cursor
-            // (reuse textLeft, textTop, textWidth, textHeight from above)
-
-            // First show chip bar to get its actual width
-            interactiveChipBar.style.display = 'flex';
-            interactiveChipBar.style.opacity = '0'; // Invisible while we position it
-            await wait(100);
-
-            // Get actual chip bar width
-            const chipBarRect = interactiveChipBar.getBoundingClientRect();
-            const chipBarWidth = chipBarRect.width;
-
-            // Center chip bar under the highlighted text using manual coordinates
-            const chipBarLeft = textLeft + (textWidth / 2) - (chipBarWidth / 2);
-            const chipBarTop = textTop + textHeight + 10;
-
-            console.log('Chip bar positioning:', {
-                textPosition: { left: textLeft, top: textTop, width: textWidth, height: textHeight },
-                chipBarWidth,
-                chipBarLeft,
-                chipBarTop,
-                textCenter: textLeft + (textWidth / 2),
-                viewportWidth: window.innerWidth,
-                viewportHeight: window.innerHeight
-            });
-
-            interactiveChipBar.style.left = chipBarLeft + 'px';
-            interactiveChipBar.style.top = chipBarTop + 'px';
-            interactiveChipBar.style.opacity = '1'; // Now make it visible
-            await wait(500);  // Reduced from 1500ms to 500ms - move to chip sooner
-
-            if (isDemoPaused || isInteractive) return;
-
-            // STEP 2: Click the appropriate chip based on pendingChipResponse
-            toggleStepIndicator(stepIndicator1, false);
-            toggleStepIndicator(stepIndicator2, true);
-
-            // Determine which chip to click based on pendingChipResponse
-            let targetChip;
-            const chipToClick = pendingChipResponse || 'What is...'; // Default to What is... if not set
-
-            if (chipToClick === 'What is...') {
-                targetChip = interactiveWhatIsChip;
-            } else if (chipToClick === 'Summarize') {
-                targetChip = interactiveSummarizeChip;
-            } else {
-                targetChip = interactiveContextChip;
-            }
-
-            console.log('Demo will click chip:', chipToClick, targetChip);
-
-            // Cursor should already be visible at end of text
-            // Animate cursor moving from current position to selected chip
-            const chipRect = targetChip.getBoundingClientRect();
-            const targetX = chipRect.left + chipRect.width / 2;
-            const targetY = chipRect.top + chipRect.height / 2;
-
-            // Cursor continues from its current position (end of text)
-            interactiveCursor.style.transition = 'left 1s ease-out, top 1s ease-out';  // SLOWED DOWN from 0.5s
-            interactiveCursor.style.left = targetX + 'px';
-            interactiveCursor.style.top = targetY + 'px';
-            await wait(1100);  // INCREASED to match slower animation (1000ms + 100ms buffer)
-
-            // Click effect on selected chip
-            targetChip.style.transform = 'translateY(2px)';
-            await wait(100);
-            targetChip.style.transform = '';
-
-            if (isDemoPaused || isInteractive) return;
-
-            // STEP 3: Show Tangent panel IMMEDIATELY after click
-            // Position panel at ABSOLUTE TOP of tutorial content (above step indicators)
-            // BUT ONLY if user hasn't manually moved it AND demo isn't paused AND scroll listener not disabled
-            if (!userHasMovedPanel && !isDemoPaused && !isInteractive && !scrollListenerDisabled) {
-                const chipBarRectForPanel = interactiveChipBar.getBoundingClientRect();
-                const tutorialContent = document.querySelector('.tutorial-content');
-                const tutorialContentRect = tutorialContent.getBoundingClientRect();
-
-                // DOUBLE CHECK right before modifying styles (in case flags changed during getBoundingClientRect calls)
-                if (!userHasMovedPanel && !isDemoPaused && !isInteractive && !scrollListenerDisabled) {
-                    // Position panel to the right of chip bar and near top of tutorial content
-                    // Now that panel is outside .tutorial-content, position: fixed works correctly!
-                    const calculatedLeft = (chipBarRectForPanel.left + 530);  // Adjusted from 150 (was compensating for old offset)
-                    const calculatedTop = (tutorialContentRect.top + 40);  // Raised higher (reduced from 120 to 40)
-
-                    interactiveTangentPanel.style.left = calculatedLeft + 'px';
-                    interactiveTangentPanel.style.top = calculatedTop + 'px';
-                    interactiveTangentPanel.style.transform = 'none';
-
-                    // IMMEDIATELY check what getBoundingClientRect returns
-                    const verifyRect = interactiveTangentPanel.getBoundingClientRect();
-
-                    console.log('Tangent panel positioned at top of tutorial content:', {
-                        chipBarRect: chipBarRectForPanel,
-                        tutorialContentRect: tutorialContentRect,
-                        calculatedLeft: calculatedLeft,
-                        calculatedTop: calculatedTop,
-                        inlineStyleLeft: interactiveTangentPanel.style.left,
-                        inlineStyleTop: interactiveTangentPanel.style.top,
-                        ACTUAL_rectLeft: verifyRect.left,
-                        ACTUAL_rectTop: verifyRect.top,
-                        MISMATCH: verifyRect.left !== calculatedLeft ? `YES! ${verifyRect.left} !== ${calculatedLeft}` : 'NO'
-                    });
-                } else {
-                    console.log('🛑 Positioning BLOCKED - flags changed during execution!');
-                }
-            }
-            interactiveTangentPanel.style.display = 'block';
-            // Opacity controlled by inline CSS background rgba values (0.7 alpha = 70% transparent for glass blur)
-            await wait(300);
-
-            // Add AI response with typewriter - normal format (no bubble, no user message)
-            const aiMsg = document.createElement('div');
-            aiMsg.style.marginBottom = '20px';
-            aiMsg.style.textAlign = 'left';
-            aiMsg.style.padding = '0';
-            aiMsg.style.color = '#2a2a2a';
-            aiMsg.style.fontSize = '19px';
-            aiMsg.style.lineHeight = '1.6';
-
-            interactiveChatBody.appendChild(aiMsg);
-
-            // Use pending chip response if set, otherwise default to 'What is...'
-            const responseKey = pendingChipResponse || 'What is...';
-            const aiResponse = AI_RESPONSES[responseKey];
-            console.log('Showing AI response for:', responseKey);
-
-            // Clear pending response after using it
-            pendingChipResponse = null;
-
-            // Start typewriter effect and wait for it to complete
-            await typewriterEffect(aiMsg, aiResponse, 0.5);
-
-            // After typing is complete, switch to step 3 icon
-            toggleStepIndicator(stepIndicator2, false);
-            toggleStepIndicator(stepIndicator3, true);
-
-            // Hide cursor after panel content is complete
-            interactiveCursor.style.display = 'none';
-            interactiveCursor.style.transition = '';
-
-            await wait(8000);  // Linger on final state
-
-            if (isDemoPaused || isInteractive) return;
-
-            // Mark first loop as complete
-            firstLoopComplete = true;
-
-            // Wait at least 30 seconds before looping (30000ms total - 8000ms already waited = 22000ms more)
-            demoLoopTimeout = setTimeout(playInteractiveDemo, 22000);
-        }
-
-        // Scroll handler - keep chip bar locked to "Tangent" text position
-        const demoScrollArea = document.getElementById('demo-scroll-area');
-        if (demoScrollArea) {
-            demoScrollArea.addEventListener('scroll', () => {
-                // Only reposition if chip bar is visible and demo is running
-                if (interactiveChipBar.style.display === 'flex' && panelExpanded) {
-                    // Recalculate text position
-                    const updatedTextRect = demoHighlightText.getBoundingClientRect();
-                    const updatedTextLeft = updatedTextRect.left;
-                    const updatedTextTop = updatedTextRect.top;
-                    const updatedTextWidth = updatedTextRect.width;
-                    const updatedTextHeight = updatedTextRect.height;
-
-                    // Recalculate chip bar position
-                    const chipBarRect = interactiveChipBar.getBoundingClientRect();
-                    const chipBarWidth = chipBarRect.width;
-                    const newChipBarLeft = updatedTextLeft + (updatedTextWidth / 2) - (chipBarWidth / 2);
-                    const newChipBarTop = updatedTextTop + updatedTextHeight + 10;
-
-                    // Update chip bar position
-                    interactiveChipBar.style.left = newChipBarLeft + 'px';
-                    interactiveChipBar.style.top = newChipBarTop + 'px';
-
-                    // Also update Tangent panel position if it's visible (at top of tutorial content)
-                    // BUT ONLY if user has NOT manually moved it and is NOT currently dragging it!
-                    // Use requestAnimationFrame to defer until after mousedown completes
-                    // ALSO check scrollListenerDisabled flag (nuclear option)
-                    requestAnimationFrame(() => {
-                        if (scrollListenerDisabled) {
-                            console.log('🚫 Scroll listener disabled - not repositioning panel');
-                            return;
-                        }
-                        if (interactiveTangentPanel.style.display === 'block' && !isDraggingPanel && !userHasMovedPanel) {
-                            const updatedChipBarRect = interactiveChipBar.getBoundingClientRect();
-                            const updatedTutorialContent = document.querySelector('.tutorial-content');
-                            const updatedTutorialContentRect = updatedTutorialContent.getBoundingClientRect();
-                            interactiveTangentPanel.style.left = (updatedChipBarRect.left + 530) + 'px';  // Match new positioning
-                            interactiveTangentPanel.style.top = (updatedTutorialContentRect.top + 40) + 'px';  // Match new positioning (raised higher)
-                        }
-                    });
-                }
+        // ===== CURSOR ANIMATION =====
+        const animatedCursor = document.getElementById('animatedCursor');
+        const cursorImage = document.getElementById('cursorImage');
+        const tangentWord = document.getElementById('tangent-word');
+        const letters = tangentWord.querySelectorAll('.letter');
+
+        function moveCursor(x, y, duration = 1000) {
+            return new Promise(resolve => {
+                animatedCursor.style.transition = `left ${duration}ms ease-in-out, top ${duration}ms ease-in-out`;
+                animatedCursor.style.left = x + 'px';
+                animatedCursor.style.top = y + 'px';
+                setTimeout(resolve, duration);
             });
         }
 
-        // Mouse hover detection - pause after current loop (but only AFTER first loop completes)
-        document.addEventListener('mousemove', () => {
-            if (!isInteractive && !isDemoPaused && panelExpanded && demoStarted && firstLoopComplete) {
-                console.log('Mouse move detected, pausing demo');
-                isDemoPaused = true;
-
-                // Let current animation finish, then enable interaction
-                setTimeout(() => {
-                    if (isDemoPaused) {
-                        isInteractive = true;
-                        clearTimeout(demoLoopTimeout);
-
-                        // Keep all indicators blue in interactive mode
-                        toggleStepIndicator(stepIndicator1, true);
-                        toggleStepIndicator(stepIndicator2, true);
-                        toggleStepIndicator(stepIndicator3, true);
-                    }
-                }, 2000);
-            }
-        });
-
-        // Close button - ONLY hide panel (keep chip bar visible so chips remain clickable)
-        const interactiveCloseBtn = document.getElementById('interactive-close-btn');
-        if (interactiveCloseBtn) {
-            // Prevent mousedown from triggering drag FIRST (capture phase)
-            interactiveCloseBtn.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-            }, true);
-
-            // Then handle the click
-            interactiveCloseBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-                console.log('Close button clicked');
-                interactiveTangentPanel.style.display = 'none';
-                isDemoPaused = true;
-                isInteractive = true;
-                clearTimeout(demoLoopTimeout);
-            }, true);
+        function wait(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
         }
 
-        // Minimize button - just hide panel (keep chip bar visible)
-        const interactiveMinimizeBtn = document.getElementById('interactive-minimize-btn');
-        if (interactiveMinimizeBtn) {
-            // Prevent mousedown from triggering drag FIRST (capture phase)
-            interactiveMinimizeBtn.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-            }, true);
-
-            // Then handle the click
-            interactiveMinimizeBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-                console.log('Minimize button clicked');
-
-                // Toggle minimized state
-                const isMinimized = interactiveTangentPanel.classList.contains('minimized');
-
-                if (isMinimized) {
-                    // Expand back to full size
-                    interactiveTangentPanel.classList.remove('minimized');
-                    interactiveTangentPanel.style.height = '410px';
-                    interactiveTangentPanel.style.width = '370px';
-                } else {
-                    // Minimize to just header bar
-                    interactiveTangentPanel.classList.add('minimized');
-                    interactiveTangentPanel.style.height = '52px';  // Just tall enough for header
-                    interactiveTangentPanel.style.width = '252px';  // Match reference width
-                }
-            }, true);
-        }
-
-        // Make ALL chips in the chip bar clickable to open the panel (EXCEPT T icon which has its own handler)
-        const allDemoChips = interactiveChipBar.querySelectorAll('.chip:not(.chevron-chip):not(.chip-icon)');
-        allDemoChips.forEach(chip => {
-            chip.addEventListener('click', async (e) => {
-                e.stopPropagation();
-
-                // Pause demo if running
-                isDemoPaused = true;
-                isInteractive = true;
-                clearTimeout(demoLoopTimeout);
-
-                // Hide the simulated cursor
-                interactiveCursor.style.display = 'none';
-
-                // Keep all step indicators blue in interactive mode
-                toggleStepIndicator(stepIndicator1, true);
-                toggleStepIndicator(stepIndicator2, true);
-                toggleStepIndicator(stepIndicator3, true);
-
-                // Visual click effect
-                chip.style.transform = 'translateY(2px)';
-                await new Promise(resolve => setTimeout(resolve, 100));
-                chip.style.transform = '';
-
-                // Show panel if not already visible
-                if (interactiveTangentPanel.style.display !== 'block') {
-                    interactiveTangentPanel.style.display = 'block';
-                }
-
-                // Clear and show AI response based on which chip was clicked
-                interactiveChatBody.innerHTML = '';
-                const aiMsg = document.createElement('div');
-                aiMsg.style.marginBottom = '20px';
-                aiMsg.style.textAlign = 'left';
-                aiMsg.style.padding = '0';
-                aiMsg.style.color = '#2a2a2a';
-                aiMsg.style.fontSize = '19px';
-                aiMsg.style.lineHeight = '1.6';
-                interactiveChatBody.appendChild(aiMsg);
-
-                // Determine response based on chip text (use centralized responses)
-                const chipText = chip.textContent.trim();
-                const aiResponse = AI_RESPONSES[chipText] || AI_RESPONSES['Context'];  // Fallback to Context
-
-                await typewriterEffect(aiMsg, aiResponse, 2);
-            });
-        });
-
-        // Stop button functionality
-        interactiveChatSend.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const sendImg = document.getElementById('interactive-chat-send-icon');
-            // Check if stop icon is showing (typing in progress)
-            if (sendImg.src.includes('stop.svg')) {
-                stopTyping = true;
-            }
-        });
-
-        // Drag-to-move functionality for the panel
-        let isDraggingPanel = false;  // Renamed to avoid conflict with other isDragging variables
-        let panelDragOffsetX = 0;
-        let panelDragOffsetY = 0;
-        let savedPanelLeft = 0;  // Save position at mousedown
-        let savedPanelTop = 0;
-        let lockPositionLoop = null;  // RAF loop to continuously lock position
-        let scrollListenerDisabled = false;  // NUCLEAR option to completely disable scroll repositioning
-        let lastHeaderClickTime = 0;  // For double-click detection
-
-        // Double-click header to minimize
-        interactiveTangentPanel.addEventListener('dblclick', (e) => {
-            if (e.target.closest('#interactive-panel-header')) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                // Trigger minimize toggle
-                const isMinimized = interactiveTangentPanel.classList.contains('minimized');
-                if (isMinimized) {
-                    interactiveTangentPanel.classList.remove('minimized');
-                    interactiveTangentPanel.style.height = '410px';
-                    interactiveTangentPanel.style.width = '370px';
-                } else {
-                    interactiveTangentPanel.classList.add('minimized');
-                    interactiveTangentPanel.style.height = '52px';
-                    interactiveTangentPanel.style.width = '252px';
-                }
-            }
-        });
-
-        interactiveTangentPanel.addEventListener('mousedown', (e) => {
-            // ONLY allow dragging from the header area - must be inside header
-            if (!e.target.closest('#interactive-panel-header')) {
-                return;
-            }
-
-            // Don't drag if clicking on buttons
-            if (e.target.closest('#interactive-minimize-btn') ||
-                e.target.closest('#interactive-close-btn') ||
-                e.target.closest('#interactive-pin-btn')) {
-                return;
-            }
-
-            // NUCLEAR: Disable scroll listener FIRST, before anything else
-            scrollListenerDisabled = true;
-            console.log('💣 SCROLL LISTENER DISABLED');
-
-            console.log('🎯 MOUSEDOWN START');
-
-            // CRITICAL: Capture current position IMMEDIATELY before anything else
-            const panelRect = interactiveTangentPanel.getBoundingClientRect();
-            savedPanelLeft = panelRect.left;
-            savedPanelTop = panelRect.top;
-
-            // Check inline styles AND computed styles
-            const computedStyle = window.getComputedStyle(interactiveTangentPanel);
-            console.log('📍 Captured position:', {
-                rectLeft: savedPanelLeft,
-                rectTop: savedPanelTop,
-                inlineLeft: interactiveTangentPanel.style.left,
-                inlineTop: interactiveTangentPanel.style.top,
-                computedLeft: computedStyle.left,
-                computedTop: computedStyle.top,
-                computedTransform: computedStyle.transform,
-                mouseX: e.clientX,
-                mouseY: e.clientY,
-                DIFF: `inline ${interactiveTangentPanel.style.left} → rect ${savedPanelLeft}px = +${(savedPanelLeft - parseFloat(interactiveTangentPanel.style.left)).toFixed(1)}px mystery offset!`
-            });
-
-            // 🔍 DEBUG: Check if any ancestor creates containing block for position:fixed
-            let ancestorEl = interactiveTangentPanel;
-            console.log('🔍 CHECKING ALL ANCESTORS FOR CONTAINING BLOCK:');
-            while (ancestorEl = ancestorEl.parentElement) {
-                const ancestorComputed = window.getComputedStyle(ancestorEl);
-                const elementName = ancestorEl.id || ancestorEl.className || ancestorEl.tagName;
-                if (ancestorComputed.transform !== 'none' ||
-                    ancestorComputed.perspective !== 'none' ||
-                    ancestorComputed.filter !== 'none' ||
-                    ancestorComputed.backdropFilter !== 'none' ||
-                    ancestorComputed.willChange !== 'auto') {
-                    console.log('⚠️ CONTAINING BLOCK FOUND:', {
-                        element: elementName,
-                        transform: ancestorComputed.transform,
-                        perspective: ancestorComputed.perspective,
-                        filter: ancestorComputed.filter,
-                        backdropFilter: ancestorComputed.backdropFilter,
-                        willChange: ancestorComputed.willChange,
-                        position: ancestorComputed.position
-                    });
-                } else if (elementName.includes('tutorial')) {
-                    console.log(`✓ Ancestor: ${elementName} (position: ${ancestorComputed.position}, overflow: ${ancestorComputed.overflow})`);
-                }
-            }
-
-            // Calculate offset from mouse to panel's current position
-            panelDragOffsetX = e.clientX - savedPanelLeft;
-            panelDragOffsetY = e.clientY - savedPanelTop;
-
-            // Set flags to indicate ready to drag
-            isDraggingPanel = true;
-            userHasMovedPanel = true;
-
-            // PAUSE THE DEMO immediately
-            isDemoPaused = true;
-            isInteractive = true;
-            clearTimeout(demoLoopTimeout);
-
-            // Hide the simulated cursor
-            interactiveCursor.style.display = 'none';
-
-            // Keep all step indicators blue in interactive mode
-            toggleStepIndicator(stepIndicator1, true);
-            toggleStepIndicator(stepIndicator2, true);
-            toggleStepIndicator(stepIndicator3, true);
-
-            // Check position after a brief delay to see if something else changed it
-            setTimeout(() => {
-                const checkRect = interactiveTangentPanel.getBoundingClientRect();
-                console.log('⏱️ Position after 10ms:', { left: checkRect.left, top: checkRect.top });
-                if (Math.abs(checkRect.left - savedPanelLeft) > 1 || Math.abs(checkRect.top - savedPanelTop) > 1) {
-                    console.error('❌ POSITION CHANGED! Something else moved it!');
-                }
-            }, 10);
-
-            // Change cursor to grabbing on the whole panel while dragging
-            interactiveTangentPanel.style.cursor = 'grabbing';
-            e.preventDefault();
-            e.stopPropagation();  // Prevent other click handlers
-        }, true);  // Use capture phase to run BEFORE other handlers
-
-        document.addEventListener('mousemove', (e) => {
-            if (!isDraggingPanel) return;
-
-            // Calculate new position based on mouse and offset
-            const newLeft = e.clientX - panelDragOffsetX;
-            const newTop = e.clientY - panelDragOffsetY;
-
-            // Update panel position with direct pixel values
-            interactiveTangentPanel.style.left = newLeft + 'px';
-            interactiveTangentPanel.style.top = newTop + 'px';
-            interactiveTangentPanel.style.transform = 'none';  // Remove any transform
-        });
-
-        document.addEventListener('mouseup', () => {
-            if (isDraggingPanel) {
-                isDraggingPanel = false;
-                // Reset cursor to default (will show move cursor when hovering over header)
-                interactiveTangentPanel.style.cursor = '';
-            }
-        });
-
-        // Resize functionality
-        const interactiveResizeHandle = document.getElementById('interactive-resize-handle');
-        let isResizing = false;
-        let resizeStartX = 0;
-        let resizeStartY = 0;
-        let resizeStartWidth = 0;
-        let resizeStartHeight = 0;
-
-        if (interactiveResizeHandle) {
-            interactiveResizeHandle.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-
-                isResizing = true;
-                resizeStartX = e.clientX;
-                resizeStartY = e.clientY;
-                resizeStartWidth = interactiveTangentPanel.offsetWidth;
-                resizeStartHeight = interactiveTangentPanel.offsetHeight;
-
-                document.body.style.cursor = 'nwse-resize';
-                document.body.style.userSelect = 'none';
-            });
-        }
-
-        document.addEventListener('mousemove', (e) => {
-            if (!isResizing) return;
-
-            const deltaX = e.clientX - resizeStartX;
-            const deltaY = e.clientY - resizeStartY;
-
-            const newWidth = Math.max(300, resizeStartWidth + deltaX);  // Min width 300px
-            const newHeight = Math.max(250, resizeStartHeight + deltaY);  // Min height 250px
-
-            interactiveTangentPanel.style.width = newWidth + 'px';
-            interactiveTangentPanel.style.height = newHeight + 'px';
-        });
-
-        document.addEventListener('mouseup', () => {
-            if (isResizing) {
-                isResizing = false;
-                document.body.style.cursor = '';
-                document.body.style.userSelect = '';
-            }
-        });
-
-        // Pin button - toggle blue color when clicked
-        const interactivePinBtn = document.getElementById('interactive-pin-btn');
-        let isPinned = false;
-        if (interactivePinBtn) {
-            // Prevent mousedown from triggering drag FIRST (capture phase)
-            interactivePinBtn.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-            }, true);
-
-            // Then handle the click
-            interactivePinBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-
-                isPinned = !isPinned;
-                console.log('Pin button clicked, isPinned:', isPinned);
-
-                // Toggle blue filter (Tangent blue #4a90e2)
-                if (isPinned) {
-                    interactivePinBtn.style.filter = 'brightness(0) saturate(100%) invert(47%) sepia(94%) saturate(1285%) hue-rotate(196deg) brightness(95%) contrast(91%)';
-
-                    // Switch to absolute positioning (scrolls with tutorial-content)
-                    const tutorialContent = document.querySelector('.tutorial-content');
-
-                    // Get current position on screen
-                    const panelRect = interactiveTangentPanel.getBoundingClientRect();
-                    const tutorialRect = tutorialContent.getBoundingClientRect();
-
-                    // Calculate position relative to tutorial-content
-                    const relativeTop = panelRect.top - tutorialRect.top;
-                    const relativeLeft = panelRect.left - tutorialRect.left;
-
-                    interactiveTangentPanel.style.position = 'absolute';
-                    interactiveTangentPanel.style.top = relativeTop + 'px';
-                    interactiveTangentPanel.style.left = relativeLeft + 'px';
-                    interactiveTangentPanel.style.bottom = 'auto';
-
-                    // Move panel inside tutorial-content so it scrolls with content
-                    tutorialContent.appendChild(interactiveTangentPanel);
-                } else {
-                    interactivePinBtn.style.filter = 'none';
-
-                    // Switch back to fixed positioning (stays on screen)
-                    const panelRect = interactiveTangentPanel.getBoundingClientRect();
-
-                    interactiveTangentPanel.style.position = 'fixed';
-                    interactiveTangentPanel.style.top = panelRect.top + 'px';
-                    interactiveTangentPanel.style.left = panelRect.left + 'px';
-                    interactiveTangentPanel.style.bottom = 'auto';
-
-                    // Move panel back to body (outside tutorial content)
-                    document.body.appendChild(interactiveTangentPanel);
-                }
-            }, true);
-        }
-
-        // ======================================================================
-        // MOBILE DEMO CODE (SEPARATE FROM DESKTOP - DO NOT MODIFY DESKTOP CODE)
-        // ======================================================================
-
-        // Mobile detection
-        function isMobileDevice() {
-            return window.innerWidth <= 768;
-        }
-
-        // Mobile demo elements
-        const mobileTutorialContent = document.querySelector('.mobile-tutorial-content');
-        const mobileStepIndicator1 = document.getElementById('mobile-step-indicator-1');
-        const mobileStepIndicator2 = document.getElementById('mobile-step-indicator-2');
-        const mobileStepIndicator3 = document.getElementById('mobile-step-indicator-3');
-        const mobileDemoHighlightText = document.getElementById('mobile-demo-highlight-text');
-        const mobileDemoCursor = document.getElementById('mobile-demo-cursor');
-        const mobileChipBar = document.getElementById('mobile-chip-bar');
-        const mobileContextChip = document.getElementById('mobile-context-chip');
-        const mobileTangentPanel = document.getElementById('mobile-tangent-panel');
-        const mobileChatBody = document.getElementById('mobile-chat-body');
-        const mobileChatInput = document.getElementById('mobile-chat-input');
-        const mobileChatSend = document.getElementById('mobile-chat-send');
-        const mobileChatSendIcon = document.getElementById('mobile-chat-send-icon');
-
-        let mobilePanelExpanded = false;
-
-        // Mobile step indicator toggle (same crossfade effect as desktop)
-        function toggleMobileStepIndicator(stepElement, active) {
-            if (!stepElement) {
-                console.error('[toggleMobileStepIndicator] stepElement is null or undefined');
-                return;
-            }
-            if (active) {
-                stepElement.classList.add('active');
-            } else {
-                stepElement.classList.remove('active');
-            }
-        }
-
-        // Mobile demo animation
-        async function playMobileDemo() {
-            if (!isMobileDevice() || !mobilePanelExpanded) return;
-
-            console.log('Starting mobile demo animation...');
-            await wait(500);
-
-            // STEP 1: Highlight text and show chip bar
-            toggleMobileStepIndicator(mobileStepIndicator1, true);
-
-            const highlightTextElement = mobileDemoHighlightText;
-            const textRect = highlightTextElement.getBoundingClientRect();
-            const textLeft = textRect.left;
-            const textTop = textRect.top;
-            const textHeight = textRect.height;
-            const textWidth = textRect.width;
-
-            const textStartX = textLeft - 15;
-            const textStartY = textTop + (textHeight / 2);
-            const textEndX = textLeft + textWidth + 3;
-            const textEndY = textTop + (textHeight / 2);
-
-            // Show cursor
-            mobileDemoCursor.querySelector('img').src = 'images/cursor.png';
-            mobileDemoCursor.style.left = (textStartX - 50) + 'px';
-            mobileDemoCursor.style.top = textStartY + 'px';
-            mobileDemoCursor.style.display = 'block';
-            mobileDemoCursor.style.transition = 'left 0.8s ease-out, top 0.8s ease-out';
-
-            await wait(100);
-
-            // Move to start of text
-            mobileDemoCursor.style.left = textStartX + 'px';
-            mobileDemoCursor.style.top = textStartY + 'px';
-            await wait(900);
-
-            // Change to I-beam
-            mobileDemoCursor.querySelector('img').src = 'images/i_beam.png';
-            await wait(150);
-
-            // Highlight animation
-            mobileDemoHighlightText.classList.add('highlighting');
-
-            mobileDemoCursor.style.left = textEndX + 'px';
-            mobileDemoCursor.style.top = textEndY + 'px';
-
-            const text = mobileDemoHighlightText.textContent;
-            const textLength = text.length;
-            const stepDuration = 600 / textLength;
-
-            const mobileHighlightStyle = document.createElement('style');
-            mobileHighlightStyle.id = 'mobile-highlight-animation-style';
-            document.head.appendChild(mobileHighlightStyle);
-
-            for (let i = 0; i <= textLength; i++) {
-                const percent = (i / textLength) * 100;
-                mobileHighlightStyle.textContent = `
-                    #mobile-demo-highlight-text.highlighting::before {
-                        width: ${percent}% !important;
-                    }
-                `;
-                await wait(stepDuration);
-            }
-
-            await wait(150);
-
-            // Change back to regular cursor
-            mobileDemoCursor.querySelector('img').src = 'images/cursor.png';
-            await wait(80);
-
-            // Show chip bar
-            mobileChipBar.style.display = 'flex';
-            mobileChipBar.style.opacity = '0';
-            await wait(80);
-
-            const chipBarRect = mobileChipBar.getBoundingClientRect();
-            const chipBarWidth = chipBarRect.width;
-
-            const chipBarLeft = textLeft + (textWidth / 2) - (chipBarWidth / 2);
-            const chipBarTop = textTop + textHeight + 8;
-
-            mobileChipBar.style.left = chipBarLeft + 'px';
-            mobileChipBar.style.top = chipBarTop + 'px';
-            mobileChipBar.style.opacity = '1';
-            await wait(400);
-
-            // STEP 2: Click Context chip
-            toggleMobileStepIndicator(mobileStepIndicator1, false);
-            toggleMobileStepIndicator(mobileStepIndicator2, true);
-
-            const chipRect = mobileContextChip.getBoundingClientRect();
-            const targetX = chipRect.left + chipRect.width / 2;
-            const targetY = chipRect.top + chipRect.height / 2;
-
-            mobileDemoCursor.style.transition = 'left 0.8s ease-out, top 0.8s ease-out';
-            mobileDemoCursor.style.left = targetX + 'px';
-            mobileDemoCursor.style.top = targetY + 'px';
-            await wait(900);
-
-            // Click effect
-            mobileContextChip.style.transform = 'translateY(2px)';
-            await wait(80);
-            mobileContextChip.style.transform = '';
-
-            // STEP 3: Show panel
-            toggleMobileStepIndicator(mobileStepIndicator2, false);
-            toggleMobileStepIndicator(mobileStepIndicator3, true);
-
-            // Position panel in center of screen
-            const panelRect = mobileTangentPanel.getBoundingClientRect();
-            const panelLeft = (window.innerWidth - panelRect.width) / 2;
-            const panelTop = chipBarTop + 60;
-
-            mobileTangentPanel.style.left = panelLeft + 'px';
-            mobileTangentPanel.style.top = panelTop + 'px';
-            mobileTangentPanel.style.display = 'block';
-
-            await wait(300);
-
-            // Hide chip bar and cursor
-            mobileChipBar.style.opacity = '0';
-            mobileDemoCursor.style.opacity = '0';
-            await wait(300);
-            mobileChipBar.style.display = 'none';
-            mobileDemoCursor.style.display = 'none';
-
-            // Add AI response
-            await wait(200);
-
-            const aiMsg = document.createElement('div');
-            aiMsg.className = 'tg-msg tg-ai';
-            aiMsg.innerHTML = '<div class="tg-ai__content"></div>';
-            mobileChatBody.appendChild(aiMsg);
-
-            const response = 'In this context, "subtle cognitive cost" refers to the mental effort required when encountering gaps in understanding while reading. Each time you need to look something up, you must pause your current thinking, search for information, and then rebuild your mental model of what you were learning. This reconstruction takes mental energy and can make deep work feel more exhausting than it actually is.';
-
-            // Typewriter effect
-            const aiContent = aiMsg.querySelector('.tg-ai__content');
-            await typewriterEffect(aiContent, response, 0.5);
-
-            console.log('Mobile demo complete!');
-        }
-
-        // Mobile: Show tutorial content immediately when panel is visible
-        // NO animations, NO expansion, NO observers - just static display
-        if (isMobileDevice()) {
-            // Show tutorial content immediately (no waiting for panel state changes)
-            if (mobileTutorialContent) {
-                mobileTutorialContent.style.display = 'block';
-            }
-        }
-
-        // ======================================================================
-        // END MOBILE DEMO CODE
-        // ======================================================================
-
-        // Old step demo functions (kept for compatibility but not used)
-        async function playStep1Demo() {
-            const step1Cursor = document.getElementById('step1-cursor');
-            const step1Text = document.getElementById('step1-text');
-            const step1Highlight = document.getElementById('step1-highlight');
-            const step1Chipbar = document.getElementById('step1-chipbar');
-
-            // Position cursor at start of "Discover"
-            const highlightRect = step1Highlight.getBoundingClientRect();
-            const startX = highlightRect.left - 30;
-            const startY = highlightRect.top + (highlightRect.height / 2);
-
-            step1Cursor.style.left = startX + 'px';
-            step1Cursor.style.top = startY + 'px';
-            step1Cursor.style.display = 'block';
-            step1Cursor.style.opacity = '1';
-
-            await wait(500);
-
-            // Change to I-beam
-            step1Cursor.querySelector('img').src = 'images/i_beam.png';
-
-            await wait(200);
-
-            // Start highlighting
-            step1Highlight.classList.add('highlighted');
-
-            // Move cursor to end
-            const endX = highlightRect.right + 2;
-            const endY = highlightRect.top + (highlightRect.height / 2);
-            step1Cursor.style.left = endX + 'px';
-            step1Cursor.style.top = endY + 'px';
-
-            // Animate highlight
-            const text = step1Highlight.textContent;
-            const textLength = text.length;
-            const stepDuration = 500 / textLength;
-
-            const step1Style = document.createElement('style');
-            step1Style.id = 'step1-highlight-style';
-            document.head.appendChild(step1Style);
-
-            for (let i = 0; i <= textLength; i++) {
-                const percent = (i / textLength) * 100;
-                step1Style.textContent = `
-                    #step1-highlight.highlighted::before {
-                        width: ${percent}% !important;
-                    }
-                `;
-                await wait(stepDuration);
-            }
-
-            await wait(300);
-
-            // Show chip bar below text
-            const textRect = step1Text.getBoundingClientRect();
-            step1Chipbar.style.left = (textRect.left + textRect.width / 2 - step1Chipbar.offsetWidth / 2) + 'px';
-            step1Chipbar.style.top = (highlightRect.bottom + 12) + 'px';
-            step1Chipbar.style.display = 'flex';
-            await wait(50);
-            step1Chipbar.classList.add('visible');
-
-            // Hide cursor
-            step1Cursor.style.opacity = '0';
-            await wait(300);
-            step1Cursor.style.display = 'none';
-
-            // Wait then start step 2
+        async function runCursorAnimation() {
+            // Wait for page to settle
             await wait(1500);
-            playStep2Demo();
-        }
 
-        // STEP 2: Click Context chip, switch to text input, type message
-        async function playStep2Demo() {
-            const step2Cursor = document.getElementById('step2-cursor');
-            const step2Highlight = document.getElementById('step2-highlight');
-            const step2Chipbar = document.getElementById('step2-chipbar');
-            const step2Chips = document.getElementById('step2-chips');
-            const step2Email = document.getElementById('step2-email');
-            const step2ContextChip = document.getElementById('step2-context-chip');
-            const step2TChip = document.getElementById('step2-t-chip');
-            const step2Input = document.getElementById('step2-input');
-            const step2Send = document.getElementById('step2-send');
+            // Get position of "Tangent" word
+            const tangentRect = tangentWord.getBoundingClientRect();
+            const tangentStartX = tangentRect.left - 50;
+            const tangentStartY = tangentRect.top + tangentRect.height / 2;
 
-            // Set up highlight (already highlighted from step 1 state)
-            const step2Style = document.createElement('style');
-            step2Style.textContent = `
-                #step2-highlight.highlighted::before {
-                    width: 100% !important;
-                }
-            `;
-            document.head.appendChild(step2Style);
+            // Position cursor off-screen right (using regular cursor)
+            cursorImage.src = 'images/cursor.png';
 
-            // Position chip bar
-            const highlightRect = step2Highlight.getBoundingClientRect();
-            step2Chipbar.style.left = (highlightRect.left + highlightRect.width / 2 - step2Chipbar.offsetWidth / 2) + 'px';
-            step2Chipbar.style.top = (highlightRect.bottom + 12) + 'px';
+            // Disable transition for initial positioning
+            animatedCursor.style.transition = 'none';
+            animatedCursor.style.left = (window.innerWidth + 100) + 'px'; // Start well off-screen RIGHT
+            animatedCursor.style.top = (window.innerHeight + 100) + 'px'; // Start well off-screen BOTTOM
+            animatedCursor.classList.add('visible');
 
+            // Wait a moment to ensure position is set before animating
+            await wait(100);
+
+            // Now slide in from far right to start of "Tangent"
+            await moveCursor(tangentStartX, tangentStartY, 1200); // Longer duration for the long slide
+
+            // Switch to I-beam cursor immediately when over text
+            cursorImage.src = 'images/i_beam.png';
+            await wait(300);
+
+            // Get end position of "Tangent"
+            const tangentEndX = tangentRect.right + 10;
+            const tangentEndY = tangentRect.top + tangentRect.height / 2;
+
+            // Start smooth cursor movement across the entire word
+            const cursorMoveDuration = 600; // Total time to move across word
+            moveCursor(tangentEndX, tangentEndY, cursorMoveDuration);
+
+            // Highlight letters one by one as cursor moves
+            const letterCount = letters.length;
+            const delayBetweenLetters = cursorMoveDuration / letterCount;
+
+            for (let i = 0; i < letterCount; i++) {
+                await wait(delayBetweenLetters);
+                letters[i].classList.add('highlighted');
+            }
+
+            // Chip bar appears immediately when highlighting completes
+            chipBar.classList.add('visible');
+
+            // Switch back to regular cursor immediately when leaving text
+            cursorImage.src = 'images/cursor.png';
+
+            // Pause at the end of selection
+            await wait(800);
             await wait(500);
 
-            // Show cursor at Context chip
-            const contextRect = step2ContextChip.getBoundingClientRect();
-            const contextX = contextRect.left + contextRect.width / 2;
-            const contextY = contextRect.top + contextRect.height / 2;
-
-            step2Cursor.querySelector('img').src = 'images/cursor.png';
-            step2Cursor.style.left = contextX + 'px';
-            step2Cursor.style.top = contextY + 'px';
-            step2Cursor.style.display = 'block';
-            step2Cursor.style.opacity = '1';
-
-            await wait(600);
-
-            // Click Context chip
-            step2ContextChip.style.transform = 'scale(0.95)';
-            await wait(100);
-            step2ContextChip.style.transform = '';
-
-            await wait(400);
-
-            // Move cursor to T chip
-            const tChipRect = step2TChip.getBoundingClientRect();
+            // Get position of T chip
+            const tChipRect = tChip.getBoundingClientRect();
             const tChipX = tChipRect.left + tChipRect.width / 2;
             const tChipY = tChipRect.top + tChipRect.height / 2;
 
-            step2Cursor.style.left = tChipX + 'px';
-            step2Cursor.style.top = tChipY + 'px';
-
-            await wait(600);
-
-            // Click T chip
-            step2TChip.style.transform = 'scale(0.95)';
-            await wait(100);
-            step2TChip.style.transform = '';
-
+            // Move to T chip
+            await moveCursor(tChipX, tChipY, 1000);
             await wait(300);
 
-            // Transform to email input
-            step2Chips.style.display = 'none';
-            step2Email.style.display = 'flex';
-            step2Chipbar.classList.remove('initial-state');
-            step2Chipbar.classList.add('email-state');
+            // Animate T chip click
+            tChip.classList.add('chip-clicking');
+            await wait(100); // Wait for animation to reach middle (scale down)
 
-            // Reposition chip bar
-            step2Chipbar.style.left = (highlightRect.left + highlightRect.width / 2 - step2Chipbar.offsetWidth / 2) + 'px';
+            // Click T chip (trigger the toggle)
+            tChip.click();
+            await wait(100); // Wait for animation to complete (scale back up)
 
-            await wait(400);
-
-            // Hide cursor briefly
-            step2Cursor.style.opacity = '0';
-
-            await wait(200);
-
-            // Type "Tell me more."
-            const message = "Tell me more.";
-            step2Input.value = '';
-
-            for (let i = 0; i <= message.length; i++) {
-                step2Input.value = message.substring(0, i);
-                await wait(80);
-            }
-
-            await wait(400);
-
-            // Move cursor to send button
-            const sendRect = step2Send.getBoundingClientRect();
-            const sendX = sendRect.left + sendRect.width / 2;
-            const sendY = sendRect.top + sendRect.height / 2;
-
-            step2Cursor.style.left = sendX + 'px';
-            step2Cursor.style.top = sendY + 'px';
-            step2Cursor.style.opacity = '1';
-
-            await wait(600);
-
-            // Click send button
-            step2Send.style.transform = 'translateY(-50%) scale(0.95)';
-            await wait(100);
-            step2Send.style.transform = '';
-
-            // Hide cursor
-            step2Cursor.style.opacity = '0';
+            // Remove animation class
+            tChip.classList.remove('chip-clicking');
             await wait(300);
-            step2Cursor.style.display = 'none';
 
-            // Wait then start step 3
-            await wait(1000);
-            playStep3Demo();
+            // Fade out cursor
+            animatedCursor.classList.remove('visible');
+            await wait(500);
+
+            // Keep "Tangent" highlighted after animation completes
         }
 
-        // STEP 3: Show chat panel with AI responses
-        async function playStep3Demo() {
-            const step3Panel = document.getElementById('step3-panel');
-            const step3ChatBody = document.getElementById('step3-chatbody');
-            const step3ChatInput = document.getElementById('step3-chatinput');
-            const step3ChatSend = document.getElementById('step3-chatsend');
-            const step3Cursor = document.getElementById('step3-cursor');
-
-            // Show panel
-            step3Panel.classList.add('visible');
-
-            await wait(600);
-
-            // Show "Thinking..."
-            const thinkingMsg = document.createElement('div');
-            thinkingMsg.className = 'tg-msg tg-ai';
-            thinkingMsg.innerHTML = '<div class="tg-ai__content thinking">Thinking...</div>';
-            step3ChatBody.appendChild(thinkingMsg);
-
-            await wait(1200);
-
-            // Remove thinking, add first AI response
-            thinkingMsg.remove();
-
-            const aiMsg1 = document.createElement('div');
-            aiMsg1.className = 'tg-msg tg-ai';
-            aiMsg1.innerHTML = '<div class="tg-ai__content"></div>';
-            step3ChatBody.appendChild(aiMsg1);
-
-            const response1 = 'Artificial intelligence (AI) in this context refers to the development of computer systems that can perform tasks typically requiring human intelligence, such as learning and problem-solving. It encompasses various approaches, including machine learning, which specifically focuses on algorithms that allow systems to learn from data and improve over time without being explicitly programmed for each scenario. This relationship highlights AI\'s broader goal of creating systems that can autonomously adapt and enhance their performance, marking a significant evolution from traditional programming methods.';
-
-            // Typewriter effect
-            const aiContent1 = aiMsg1.querySelector('.tg-ai__content');
-            for (let i = 0; i <= response1.length; i++) {
-                aiContent1.textContent = response1.substring(0, i);
-                step3ChatBody.scrollTop = step3ChatBody.scrollHeight;
-                await wait(15);
-            }
-
-            await wait(800);
-
-            // Move cursor to input box
-            const inputRect = step3ChatInput.getBoundingClientRect();
-            const inputX = inputRect.left + 40;
-            const inputY = inputRect.top + inputRect.height / 2;
-
-            step3Cursor.querySelector('img').src = 'images/cursor.png';
-            step3Cursor.style.left = inputX + 'px';
-            step3Cursor.style.top = inputY + 'px';
-            step3Cursor.style.display = 'block';
-            step3Cursor.style.opacity = '1';
-
-            await wait(400);
-
-            // Click input
-            await wait(100);
-
-            // Hide cursor, type question
-            step3Cursor.style.opacity = '0';
-
-            await wait(200);
-
-            const question = "What are neural networks?";
-            step3ChatInput.value = '';
-
-            for (let i = 0; i <= question.length; i++) {
-                step3ChatInput.value = question.substring(0, i);
-                await wait(80);
-            }
-
-            await wait(400);
-
-            // Move cursor to send button
-            const sendRect = step3ChatSend.getBoundingClientRect();
-            const sendX = sendRect.left + sendRect.width / 2;
-            const sendY = sendRect.top + sendRect.height / 2;
-
-            step3Cursor.style.left = sendX + 'px';
-            step3Cursor.style.top = sendY + 'px';
-            step3Cursor.style.opacity = '1';
-
-            await wait(600);
-
-            // Click send
-            step3ChatSend.style.transform = 'translateY(-50%) scale(0.95)';
-            await wait(100);
-            step3ChatSend.style.transform = '';
-
-            step3Cursor.style.opacity = '0';
-            await wait(200);
-            step3Cursor.style.display = 'none';
-
-            // Clear input and add user message
-            step3ChatInput.value = '';
-
-            const userMsg = document.createElement('div');
-            userMsg.className = 'tg-msg tg-user';
-            userMsg.innerHTML = '<div class="tg-user__bubble">What are neural networks?</div>';
-            step3ChatBody.appendChild(userMsg);
-            step3ChatBody.scrollTop = step3ChatBody.scrollHeight;
-
-            await wait(400);
-
-            // Show "Thinking..." again
-            const thinkingMsg2 = document.createElement('div');
-            thinkingMsg2.className = 'tg-msg tg-ai';
-            thinkingMsg2.innerHTML = '<div class="tg-ai__content thinking">Thinking...</div>';
-            step3ChatBody.appendChild(thinkingMsg2);
-            step3ChatBody.scrollTop = step3ChatBody.scrollHeight;
-
-            await wait(1200);
-
-            // Remove thinking, add second AI response
-            thinkingMsg2.remove();
-
-            const aiMsg2 = document.createElement('div');
-            aiMsg2.className = 'tg-msg tg-ai';
-            aiMsg2.innerHTML = '<div class="tg-ai__content"></div>';
-            step3ChatBody.appendChild(aiMsg2);
-
-            const response2 = 'Neural networks are computational models inspired by the biological neural networks found in human brains. They consist of interconnected layers of artificial neurons that process information. Each neuron receives input, applies a mathematical transformation, and passes the output to the next layer.\n\nA typical neural network is structured in layers:\n\nInput Layer: This layer receives the initial data.\n\nHidden Layers: These layers perform various transformations on the input data. Each neuron in a hidden layer computes a weighted sum of its inputs and applies an activation function, often represented as:\n\nz = w₁x₁ + w₂x₂ + … + wₙxₙ + b\n\nwhere wᵢ are the weights, xᵢ are the inputs, and b is the bias. The output of the neuron is then calculated using an activation function f(z):\n\na = f(z)\n\nOutput Layer: This layer produces the final output of the network, which can represent classifications, predictions, or other results depending on the task.\n\nNeural networks are particularly powerful for tasks like image recognition, natural language processing, and other applications requiring complex pattern recognition. The training process involves adjusting the weights and biases to minimize the difference between the predicted output and the actual output, often using techniques like backpropagation and gradient descent.';
-
-            // Typewriter effect with paragraph support
-            const aiContent2 = aiMsg2.querySelector('.tg-ai__content');
-            const paragraphs = response2.split('\n\n');
-
-            for (let p = 0; p < paragraphs.length; p++) {
-                if (p > 0) {
-                    aiContent2.innerHTML += '<p></p>';
-                }
-
-                const para = paragraphs[p];
-                const currentP = aiContent2.lastElementChild || aiContent2;
-
-                for (let i = 0; i <= para.length; i++) {
-                    if (currentP.tagName === 'P') {
-                        currentP.textContent = para.substring(0, i);
-                    } else {
-                        currentP.textContent = para.substring(0, i);
-                    }
-                    step3ChatBody.scrollTop = step3ChatBody.scrollHeight;
-                    await wait(10);
-                }
-            }
-
-            await wait(1000);
-
-            // Demo complete - old functions kept for compatibility
-        }
-
-        // Dynamic responsive scaling for panel header elements
-        function scaleHeaderElements() {
-            const width = window.innerWidth;
-            const logo = document.querySelector('#interactive-panel-header img');
-            const pinBtn = document.getElementById('interactive-pin-btn');
-            const pinImg = pinBtn?.querySelector('img');
-            const btnContainer = document.querySelector('#interactive-tangent-panel > div[style*="position: absolute"][style*="right"]');
-            const minimizeBtn = document.getElementById('interactive-minimize-btn');
-            const minimizeImg = minimizeBtn?.querySelector('img');
-            const closeBtn = document.getElementById('interactive-close-btn');
-            const closeImg = closeBtn?.querySelector('img');
-
-            let logoSize, btnSize, pinSize, containerGap, containerRight, pinLeft, pinTop;
-
-            if (width <= 450) {
-                // Ultra narrow
-                logoSize = 14;
-                btnSize = 12;
-                pinSize = 12;
-                containerGap = 2;
-                containerRight = 4;
-                pinLeft = 8;
-                pinTop = 8;
-            } else if (width <= 600) {
-                // Extremely narrow
-                logoSize = 16;
-                btnSize = 14;
-                pinSize = 14;
-                containerGap = 3;
-                containerRight = 5;
-                pinLeft = 10;
-                pinTop = 9;
-            } else if (width <= 900) {
-                // Very narrow
-                logoSize = 20;
-                btnSize = 16;
-                pinSize = 16;
-                containerGap = 4;
-                containerRight = 6;
-                pinLeft = 12;
-                pinTop = 10;
-            } else if (width <= 1200) {
-                // Narrow
-                logoSize = 24;
-                btnSize = 18;
-                pinSize = 18;
-                containerGap = 5;
-                containerRight = 8;
-                pinLeft = 14;
-                pinTop = 12;
-            } else {
-                // Normal
-                logoSize = 28;
-                btnSize = 20;
-                pinSize = 20;
-                containerGap = 6;
-                containerRight = 8;
-                pinLeft = 16;
-                pinTop = 14;
-            }
-
-            // Apply styles
-            if (logo) logo.style.height = logoSize + 'px';
-
-            if (pinBtn) {
-                pinBtn.style.width = pinSize + 'px';
-                pinBtn.style.height = pinSize + 'px';
-                pinBtn.style.left = pinLeft + 'px';
-                pinBtn.style.top = pinTop + 'px';
-            }
-            if (pinImg) {
-                pinImg.style.width = pinSize + 'px';
-                pinImg.style.height = pinSize + 'px';
-            }
-
-            if (btnContainer) {
-                btnContainer.style.gap = containerGap + 'px';
-                btnContainer.style.right = containerRight + 'px';
-            }
-
-            if (minimizeBtn) {
-                minimizeBtn.style.width = btnSize + 'px';
-                minimizeBtn.style.height = btnSize + 'px';
-            }
-            if (minimizeImg) {
-                minimizeImg.style.width = btnSize + 'px';
-                minimizeImg.style.height = btnSize + 'px';
-            }
-
-            if (closeBtn) {
-                closeBtn.style.width = btnSize + 'px';
-                closeBtn.style.height = btnSize + 'px';
-            }
-            if (closeImg) {
-                closeImg.style.width = btnSize + 'px';
-                closeImg.style.height = btnSize + 'px';
-            }
-        }
-
-        // Run on load and resize
-        window.addEventListener('load', scaleHeaderElements);
-        window.addEventListener('resize', scaleHeaderElements);
+        // Start animation once on page load
+        window.addEventListener('load', () => {
+            runCursorAnimation();
+        });
     </script>
 </body>
 </html>

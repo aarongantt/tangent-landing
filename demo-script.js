@@ -111,7 +111,8 @@
         const rect = anchorEl.getBoundingClientRect();
         const containerRect = document.getElementById('demo-stage-container').getBoundingClientRect();
 
-        const left = rect.left - containerRect.left + (rect.width / 2) - (element.offsetWidth / 2);
+        const RIGHT_OFFSET = 80; // Shift chip bar significantly to the right
+        const left = rect.left - containerRect.left + (rect.width / 2) - (element.offsetWidth / 2) + RIGHT_OFFSET;
         const top = rect.bottom - containerRect.top + offsetY;
 
         element.style.left = left + 'px';
@@ -253,21 +254,44 @@
 
         await wait(1400); // Wait for scroll to complete
 
-        // 2. Highlight the word
-        anchor.classList.add('tg-demo-highlighted');
+        // 2. Highlight the word LETTER BY LETTER with actual selection
+        const anchorText = anchor.textContent; // "Tangent"
+        const letterDuration = 60; // 60ms per letter for natural feel
 
-        // CURSOR: Follow the right border of the highlight as it forms (move immediately - no delay)
         // Re-query anchor position after scroll
         const anchorRectFinal = anchor.getBoundingClientRect();
-        const highlightEndX = anchorRectFinal.right - containerRect.left + 2;
-        const highlightY = anchorRectFinal.top - containerRect.top + (anchorRectFinal.height / 2);
 
-        // Move cursor immediately as highlight starts (no setTimeout)
-        moveCursor(highlightEndX, highlightY);
+        // Create selection effect by wrapping letters in spans with progressive highlight
+        anchor.innerHTML = ''; // Clear original text
+        for (let i = 0; i < anchorText.length; i++) {
+            const span = document.createElement('span');
+            span.textContent = anchorText[i];
+            span.className = 'tg-demo-letter';
+            span.style.backgroundColor = 'transparent';
+            anchor.appendChild(span);
+        }
 
-        await wait(324); // Increased from 224 to give cursor more time (add 100ms delay before chips appear)
+        // Animate highlighting letter by letter
+        const letters = anchor.querySelectorAll('.tg-demo-letter');
+        for (let i = 0; i < letters.length; i++) {
+            letters[i].style.backgroundColor = '#669fc3'; // Blue highlight
+            letters[i].style.color = '#ffffff'; // White text
 
-        // 3. Show chips
+            // Move cursor to follow the selection edge
+            const letterRect = letters[i].getBoundingClientRect();
+            const cursorX = letterRect.right - containerRect.left + 2;
+            const cursorY = letterRect.top - containerRect.top + (letterRect.height / 2);
+            moveCursor(cursorX, cursorY);
+
+            await wait(letterDuration);
+        }
+
+        // Full word is now highlighted - add the demo class for any additional styling
+        anchor.classList.add('tg-demo-highlighted');
+
+        await wait(150); // Brief pause after highlighting completes
+
+        // 3. Show chips ONLY AFTER full word is highlighted
         chips.style.display = 'flex';
         positionBelowAnchor(chips, anchor, 12);
 
