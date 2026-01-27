@@ -402,6 +402,87 @@
             background: rgba(106, 182, 254, 0.7); /* Brighter highlight */
         }
 
+        /* ===== TRIPTYCH SECTION ===== */
+        .triptych-section {
+            width: 100%;
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            pointer-events: none;
+        }
+
+        .triptych-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .triptych-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== SCROLL CHEVRON BUTTON ===== */
+        .scroll-chevron {
+            position: absolute;
+            bottom: 2%;
+            left: 50%;
+            transform: translateX(-50%);
+
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-chevron:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateX(-50%) scale(1.08);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+        }
+
+        .scroll-chevron:active {
+            transform: translateX(-50%) scale(0.95);
+        }
+
+        .scroll-chevron img {
+            width: 18px;
+            height: 18px;
+            opacity: 0.85;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .scroll-chevron:hover img {
+            opacity: 1;
+            transform: translateY(2px);
+        }
+
+        .scroll-chevron.rotated img {
+            transform: rotate(180deg);
+        }
+
+        /* ===== PANEL CONTENT SCROLL STATE ===== */
+        .panel-content {
+            transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .panel-content.scrolled {
+            transform: translateY(-100%);
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             body {
@@ -485,6 +566,21 @@
             .panel-reflection .panel-content {
                 padding: 1% 2%;
             }
+
+            .scroll-chevron {
+                width: 38px;
+                height: 38px;
+                bottom: 3%;
+            }
+
+            .scroll-chevron img {
+                width: 15px;
+                height: 15px;
+            }
+
+            .triptych-section {
+                margin-top: 24px;
+            }
         }
 
         /* ===== NARROW VIEWPORTS (reduce horizontal padding further) ===== */
@@ -521,6 +617,17 @@
                 margin-left: 0; /* Remove left offset on narrow screens */
                 justify-content: center; /* Center the chip bar */
                 transform: scale(0.85); /* Slightly smaller to fit better */
+            }
+
+            .scroll-chevron {
+                width: 34px;
+                height: 34px;
+                bottom: 4%;
+            }
+
+            .scroll-chevron img {
+                width: 13px;
+                height: 13px;
             }
         }
     </style>
@@ -569,6 +676,16 @@
                             <img src="images/tangent_enter_button_blue.png" class="hover" alt="Send">
                         </button>
                     </div>
+
+                    <!-- Triptych Section (hidden initially) -->
+                    <div class="triptych-section">
+                        <img src="images/tangent_triptych.png" alt="TANGENT Features" class="triptych-image">
+                    </div>
+
+                    <!-- Scroll Chevron Button -->
+                    <button class="scroll-chevron" id="scroll-chevron" aria-label="View features">
+                        <img src="images/chevron_down_arrow.png" alt="Scroll down">
+                    </button>
                 </div>
             </div>
         </div>
@@ -884,6 +1001,94 @@
         // Start animation once on page load
         window.addEventListener('load', () => {
             runCursorAnimation();
+        });
+
+        // ===== SCROLL CHEVRON INTERACTION =====
+        const scrollChevron = document.getElementById('scroll-chevron');
+        const panelContent = document.querySelector('.panel-content');
+        const triptychSection = document.querySelector('.triptych-section');
+
+        let isScrolledDown = false;
+        let isAnimating = false;
+
+        // Toggle between hero and triptych states
+        function toggleScrollState() {
+            if (isAnimating) return; // Prevent rapid clicking
+
+            isAnimating = true;
+            isScrolledDown = !isScrolledDown;
+
+            if (isScrolledDown) {
+                // SHOW TRIPTYCH: Scroll content up
+                panelContent.classList.add('scrolled');
+                triptychSection.classList.add('visible');
+                scrollChevron.classList.add('rotated');
+                scrollChevron.setAttribute('aria-label', 'Back to top');
+
+            } else {
+                // SHOW HERO: Scroll content down
+                panelContent.classList.remove('scrolled');
+                triptychSection.classList.remove('visible');
+                scrollChevron.classList.remove('rotated');
+                scrollChevron.setAttribute('aria-label', 'View features');
+            }
+
+            // Re-enable after animation completes
+            setTimeout(() => {
+                isAnimating = false;
+            }, 800); // Match CSS transition duration
+        }
+
+        // Click handler
+        scrollChevron.addEventListener('click', toggleScrollState);
+
+        // Keyboard accessibility (Enter/Space)
+        scrollChevron.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleScrollState();
+            }
+        });
+
+        // Fade in chevron after cursor animation completes
+        window.addEventListener('load', () => {
+            scrollChevron.style.opacity = '0';
+            scrollChevron.style.transition = 'opacity 0.6s ease';
+
+            setTimeout(() => {
+                scrollChevron.style.opacity = '1';
+            }, 3500); // Synced with chip bar appearance
+        });
+
+        // Mouse wheel scroll detection (alternative trigger)
+        let wheelTimeout;
+        panelContent.addEventListener('wheel', function(e) {
+            // Only respond to downward scroll when in hero state
+            if (!isScrolledDown && e.deltaY > 0) {
+                e.preventDefault();
+
+                // Debounce rapid wheel events
+                clearTimeout(wheelTimeout);
+                wheelTimeout = setTimeout(() => {
+                    toggleScrollState();
+                }, 100);
+            }
+            // Upward scroll when in triptych state
+            else if (isScrolledDown && e.deltaY < 0) {
+                e.preventDefault();
+
+                clearTimeout(wheelTimeout);
+                wheelTimeout = setTimeout(() => {
+                    toggleScrollState();
+                }, 100);
+            }
+        });
+
+        // Prevent manual scrolling (reset position if user scrolls)
+        panelContent.addEventListener('scroll', function() {
+            if (!isScrolledDown) {
+                panelContent.scrollTop = 0;
+            }
         });
     </script>
 </body>
