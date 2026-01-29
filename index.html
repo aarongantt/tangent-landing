@@ -511,8 +511,93 @@
         }
 
         /* ===== RESPONSIVE ===== */
+        /* Ultra-wide screens (larger than 2600px) - Scale everything by 60% */
+        @media (min-width: 2601px) {
+            .main-logo {
+                height: clamp(56px, 6.4vw, 88px); /* 60% larger than clamp(35px, 4vw, 55px) */
+                margin-top: 3.7vw; /* 60% larger than 2.33vw */
+                margin-bottom: 3.2vw; /* 60% larger than 2vw */
+            }
+
+            .tagline {
+                font-size: clamp(42px, 5vw, 70px); /* 60% larger */
+                margin-bottom: 0.75vw;
+            }
+
+            .chip-bar {
+                width: 590px; /* Reduced to better fit chip content */
+                height: 82px; /* 60% larger than 51px */
+                gap: 13px; /* 60% larger than 8px */
+                padding: 13px 21px; /* 60% larger than 8px 13px */
+                border-radius: 24px; /* 60% larger than 15px */
+                margin-left: 50%; /* Centered under "Tangent" */
+            }
+
+            .chip-bar.email-state {
+                width: 672px; /* Expand for email input */
+            }
+
+            .chip {
+                padding: 13px 24px; /* 60% larger than 8px 15px */
+                font-size: 22px; /* 60% larger than 14px */
+                border-radius: 29px; /* 60% larger than 18px */
+                border-width: 3px; /* 60% larger than 2px */
+            }
+
+            .chip-icon {
+                width: 53px; /* 60% larger than 33px */
+                height: 53px;
+                padding: 13px; /* 60% larger than 8px */
+                border-width: 3px; /* 60% larger than 2px */
+                border-radius: 10px; /* 60% larger than 6px */
+            }
+
+            .chip-icon img {
+                width: 115%; /* Keep same ratio */
+                height: 115%;
+            }
+
+            .chip-chevron {
+                width: 51px; /* 60% larger than 32px */
+                height: 51px;
+            }
+
+            .email-container {
+                width: 565px; /* 60% larger than 353px */
+            }
+
+            .email-input {
+                font-size: 22px; /* 60% larger than 14px */
+                height: 56px; /* 60% larger than 35px */
+                padding: 13px 72px 13px 24px; /* 60% larger */
+                border-width: 3px; /* 60% larger than 2px */
+                border-radius: 40px; /* 60% larger than 25px */
+            }
+
+            .email-input::placeholder {
+                font-size: 21px; /* 60% larger than 13px */
+            }
+
+            .send-btn {
+                width: 38px; /* 60% larger than 24px */
+                height: 38px;
+                right: 10px; /* 60% larger than 6px */
+                border-width: 3px; /* 60% larger than 2px */
+                padding: 8px; /* 60% larger than 5px */
+            }
+
+            .send-btn img {
+                width: 21px; /* 60% larger than 13px */
+                height: 21px;
+            }
+        }
+
         /* Medium screens (between tablets and ultra-wide) */
         @media (min-width: 769px) and (max-width: 2600px) {
+            .chip-bar {
+                margin-left: 42%; /* Shifted farther right for better centering under "Tangent" */
+            }
+
             .triptych-section {
                 width: 56%; /* Further reduced for medium-large screens */
                 max-width: 1250px; /* Smaller cap */
@@ -534,10 +619,15 @@
                 margin-bottom: 16px;
             }
 
+            .tagline {
+                white-space: normal; /* Allow line breaks on tablets too */
+            }
+
             .chip-bar {
                 gap: 5px;
                 padding: 6px 10px;
                 margin-bottom: 10px;
+                margin-left: 20%; /* Reduced offset on tablets */
             }
 
             .chip {
@@ -651,6 +741,11 @@
             .tagline {
                 margin-bottom: 1vh;
                 font-size: clamp(20px, 5vw, 32px) !important; /* Smaller on narrow screens */
+            }
+
+            .tagline {
+                white-space: normal; /* Allow line breaks */
+                word-wrap: break-word;
             }
 
             .chip-bar {
