@@ -262,8 +262,8 @@
         .panel-main {
             position: absolute;
             top: 1%;       /* Raised even higher */
-            left: 18%;     /* Narrower - sides brought closer */
-            right: 18%;    /* Narrower - sides brought closer */
+            left: 2%;      /* Ultra-minimal gutters - cut to 2% */
+            right: 2%;     /* Ultra-minimal gutters - cut to 2% */
             height: 65%;   /* Raised bottom */
 
             display: flex;
@@ -291,67 +291,85 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start; /* Changed from center - using padding-top on hero-content instead */
+            box-sizing: border-box; /* Include padding in width calculation */
         }
 
-        /* Reflection area (bottom half - "green box") */
+        /* Reflection area (positioned directly below main panel) */
         .panel-reflection {
             position: absolute;
-            top: 85%;      /* Shifted down farther for more spacing */
+            top: 76%;      /* Lowered to align seam with bottom edge of main panel */
             left: 50%;     /* Center horizontally */
             transform: translateX(-50%) scaleY(-1); /* Center + vertical flip for mirror effect */
-            width: 64%;    /* Match main panel width for centering */
-            height: 20%;   /* Adjusted height */
+            width: 96%;    /* Match main panel width (2% gutters = 96% width) */
+            height: 35%;   /* Taller to show full content reflection */
 
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            opacity: 0.4; /* Lighter transparency for subtler reflection */
-            filter: blur(1px); /* Further reduced blur for subtler effect */
+            opacity: 0.4;  /* Slightly more visible for debugging */
+            filter: blur(1px); /* Subtle blur for mirror effect */
             pointer-events: none; /* Disable interaction with reflection */
+            overflow: hidden; /* Clip content that extends beyond */
         }
 
-        /* Reflection inherits all main panel styles automatically via cloning */
-        .panel-reflection .panel-main {
-            position: relative;
+        /* The cloned .panel-content inside reflection */
+        .panel-reflection > .panel-content {
+            flex: 1;
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            left: 0 !important;  /* Override cloned positioning */
-            right: 0 !important; /* Override cloned positioning */
-            top: 0 !important;   /* Override cloned positioning */
-        }
-
-        .panel-reflection .panel-content {
-            flex: 1;
-            overflow: hidden; /* Hide overflow in reflection */
+            overflow-y: auto; /* Allow scrolling in reflection */
+            overflow-x: hidden;
             padding: 1% 3%;
             color: #ffffff;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
+
+            /* Hide scrollbars in reflection */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
         }
 
-        /* Custom scrollbar */
+        .panel-reflection > .panel-content::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+
+        /* Adjust hero content padding in reflection to match visual alignment */
+        .panel-reflection .hero-content {
+            /* Due to scaleY(-1), padding-top becomes visual padding-bottom */
+            /* Remove top padding and add equivalent bottom padding for proper alignment */
+            padding-top: 0 !important;
+            padding-bottom: 20vh !important; /* Match the original padding-top */
+        }
+
+        /* Keep scroll spacer in reflection to maintain spacing between slogan and triptych */
+        .panel-reflection .scroll-spacer {
+            display: block !important; /* Override hide - need this for proper spacing */
+            /* Height is already set to 100% from main styles */
+        }
+
+        /* Show all content in reflection - scroll sync will handle visibility */
+        .panel-reflection .triptych-section {
+            display: block;
+            /* With scaleY(-1) on parent, negative margin-top pulls content UP to show bottom edge */
+            margin-top: -250px !important;
+        }
+
+        /* Chevron in reflection - HIDE IT */
+        .panel-reflection .scroll-chevron {
+            display: none !important;
+        }
+
+        /* Hide scrollbar completely */
+        .panel-content {
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+        }
+
         .panel-content::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .panel-content::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-
-        .panel-content::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-        }
-
-        .panel-content::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.5);
+            display: none; /* Chrome/Safari */
         }
 
         /* ===== ANIMATED CURSOR ===== */
@@ -402,10 +420,98 @@
             background: rgba(106, 182, 254, 0.7); /* Brighter highlight */
         }
 
+        /* Keep hero content centered using padding instead of flex center */
+        .hero-content {
+            padding-top: 20vh; /* Push down but not too much */
+        }
+
+        /* Spacer creates scroll distance - matches panel height exactly */
+        .scroll-spacer {
+            height: 100%; /* Full height of panel-content container = one "page" */
+            min-height: 50vh; /* Fallback minimum */
+        }
+
+        /* ===== TRIPTYCH SECTION ===== */
+        .triptych-section {
+            width: 100%;
+            max-width: 1040px; /* Increased by 30% from 800px */
+            padding: 20px 20px 40px 20px; /* Added horizontal padding to prevent edge bleeding */
+            margin: 0 auto;
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+
+        .triptych-image {
+            width: 100%;
+            max-width: 100%; /* Never exceed container width */
+            height: auto;
+            border-radius: 12px;
+            display: block;
+            box-sizing: border-box; /* Include any border in width calculation */
+        }
+
+        /* ===== SCROLL CHEVRON (fixed at bottom of panel) ===== */
+        .scroll-chevron {
+            position: absolute;
+            bottom: 3%; /* Fixed position in panel-main */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20; /* Above content */
+
+            /* Circle design */
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+
+            /* Flexbox centering for icon */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+            /* Transitions */
+            opacity: 0; /* Hidden initially */
+            transition: all 0.3s ease, opacity 0.6s ease;
+        }
+
+        .scroll-chevron.visible {
+            opacity: 1; /* Fade in after cursor animation */
+        }
+
+        .scroll-chevron:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateX(-50%) scale(1.08);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+        }
+
+        .scroll-chevron:active {
+            transform: translateX(-50%) scale(0.95);
+        }
+
+        .scroll-chevron img {
+            width: 18px;
+            height: 18px;
+            opacity: 0.85;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .scroll-chevron:hover img {
+            opacity: 1;
+            transform: translateY(2px);
+        }
+
+        /* Rotate chevron when scrolled down */
+        .scroll-chevron.rotated img {
+            transform: rotate(180deg);
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             body {
-                padding: 1vh 1.5vw; /* Tighter margins on tablets */
+                padding: 1vh 0.5vw; /* Much tighter side padding on tablets */
             }
 
             .main-logo {
@@ -461,20 +567,19 @@
 
             .panel-main {
                 top: 2%;
-                left: 16%;
-                right: 16%;
+                left: 5%;
+                right: 5%;
                 height: 61%;
             }
 
             .panel-reflection {
                 top: 68%;
-                left: 16%;
-                right: 16%;
+                left: 5%;
+                right: 5%;
                 height: 27%;
             }
 
-            .panel-main,
-            .panel-reflection .panel-main {
+            .panel-main {
                 top: 2%;
                 left: 0;
                 right: 0;
@@ -482,8 +587,28 @@
             }
 
             .panel-content,
-            .panel-reflection .panel-content {
+            .panel-reflection > .panel-content {
                 padding: 1% 2%;
+            }
+
+            .scroll-chevron {
+                width: 38px;
+                height: 38px;
+                bottom: 4%;
+            }
+
+            .scroll-chevron img {
+                width: 15px;
+                height: 15px;
+            }
+
+            .scroll-spacer {
+                height: 120vh; /* Tablet scroll distance */
+            }
+
+            .triptych-section {
+                width: 98%;
+                padding: 24px 0;
             }
         }
 
@@ -522,6 +647,26 @@
                 justify-content: center; /* Center the chip bar */
                 transform: scale(0.85); /* Slightly smaller to fit better */
             }
+
+            .scroll-spacer {
+                height: 100vh; /* Mobile scroll distance */
+            }
+
+            .triptych-section {
+                width: 100%;
+                padding: 16px 0;
+            }
+
+            .scroll-chevron {
+                width: 34px;
+                height: 34px;
+                bottom: 5%;
+            }
+
+            .scroll-chevron img {
+                width: 13px;
+                height: 13px;
+            }
         }
     </style>
 </head>
@@ -541,36 +686,51 @@
         <!-- Main content area (top half - "red box") -->
         <div class="panel-main">
             <div class="panel-content">
-                <h1 class="tagline">
-                    Stay in the flow.&nbsp;&nbsp;Go on a <span class="highlight" id="tangent-word"><span class="letter">T</span><span class="letter">a</span><span class="letter">n</span><span class="letter">g</span><span class="letter">e</span><span class="letter">n</span><span class="letter">t</span><span class="letter">.</span></span>
-                </h1>
+                <div class="hero-content">
+                    <h1 class="tagline">
+                        Stay in the flow.&nbsp;&nbsp;Go on a <span class="highlight" id="tangent-word"><span class="letter">T</span><span class="letter">a</span><span class="letter">n</span><span class="letter">g</span><span class="letter">e</span><span class="letter">n</span><span class="letter">t</span><span class="letter">.</span></span>
+                    </h1>
 
-                <div class="chip-bar initial-state">
-                    <!-- T Icon (always visible) -->
-                    <button class="chip chip-icon" id="t-chip">
-                        <img src="images/tangent_t_logo.png" alt="T">
-                    </button>
-
-                    <!-- Other chips (hidden in email state) -->
-                    <div id="other-chips">
-                        <button class="chip">What is...</button>
-                        <button class="chip">Context</button>
-                        <button class="chip">Summarize</button>
-                        <button class="chip chip-icon chip-chevron">
-                            <img src="images/chevron_down_arrow.png" alt="More">
+                    <div class="chip-bar initial-state">
+                        <!-- T Icon (always visible) -->
+                        <button class="chip chip-icon" id="t-chip">
+                            <img src="images/tangent_t_logo.png" alt="T">
                         </button>
-                    </div>
 
-                    <!-- Email Input (hidden in initial state) -->
-                    <div id="email-container" class="email-container">
-                        <input type="email" id="email-input" class="email-input" placeholder="Enter your Email for early access to Tangent.">
-                        <button id="send-btn" class="send-btn">
-                            <img src="images/tangent_enter_button.png" class="default" alt="Send">
-                            <img src="images/tangent_enter_button_blue.png" class="hover" alt="Send">
-                        </button>
+                        <!-- Other chips (hidden in email state) -->
+                        <div id="other-chips">
+                            <button class="chip">What is...</button>
+                            <button class="chip">Context</button>
+                            <button class="chip">Summarize</button>
+                            <button class="chip chip-icon chip-chevron">
+                                <img src="images/chevron_down_arrow.png" alt="More">
+                            </button>
+                        </div>
+
+                        <!-- Email Input (hidden in initial state) -->
+                        <div id="email-container" class="email-container">
+                            <input type="email" id="email-input" class="email-input" placeholder="Enter your Email for early access to Tangent.">
+                            <button id="send-btn" class="send-btn">
+                                <img src="images/tangent_enter_button.png" class="default" alt="Send">
+                                <img src="images/tangent_enter_button_blue.png" class="hover" alt="Send">
+                            </button>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Spacer pushes triptych below viewport -->
+                <div class="scroll-spacer"></div>
+
+                <!-- Triptych Section -->
+                <div class="triptych-section">
+                    <img src="images/tangent_triptych.png" alt="TANGENT Features" class="triptych-image">
+                </div>
             </div>
+
+            <!-- Chevron positioned OUTSIDE panel-content, inside panel-main -->
+            <button class="scroll-chevron" id="scroll-chevron" aria-label="View features">
+                <img src="images/chevron_down_arrow.png" alt="Scroll down">
+            </button>
         </div>
 
         <!-- Reflection area (bottom half - "green box") -->
@@ -743,40 +903,101 @@
         });
 
         // ===== LIVE MIRROR REFLECTION =====
-        const mainPanel = document.querySelector('.panel-main');
+        const mainPanelContent = document.querySelector('.panel-main .panel-content');
+        const mainChevron = document.getElementById('scroll-chevron');
         const reflection = document.getElementById('reflection');
 
         // Function to update reflection with main panel content
         function updateReflection() {
-            if (!mainPanel || !reflection) return;
+            if (!mainPanelContent || !reflection) return;
 
-            // Clone the main panel's entire content
-            const clone = mainPanel.cloneNode(true);
+            console.log('[REFLECTION] Updating reflection');
+
+            // Clone the panel-content
+            const contentClone = mainPanelContent.cloneNode(true);
+
+            // Clone the chevron button separately (it's outside panel-content)
+            const chevronClone = mainChevron ? mainChevron.cloneNode(true) : null;
 
             // Clear reflection and add cloned content
             reflection.innerHTML = '';
-            reflection.appendChild(clone);
+            reflection.appendChild(contentClone);
+
+            // Add cloned chevron if it exists
+            if (chevronClone) {
+                reflection.appendChild(chevronClone);
+            }
+
+            console.log('[REFLECTION] Clone added to reflection');
+
+            // Sync scroll position after cloning
+            syncReflectionScroll();
+        }
+
+        // Function to sync scroll position between main panel and reflection
+        function syncReflectionScroll() {
+            if (!reflection || !mainPanelContent) return;
+
+            const reflectionContent = reflection.querySelector('.panel-content');
+
+            if (!reflectionContent) return;
+
+            // MATCH scroll position directly - scaleY(-1) handles the visual flipping
+            // When main shows slogan (scrollTop=0), reflection also scrolls to 0
+            // The scaleY(-1) transform makes it appear flipped visually
+
+            // Only update if there's a meaningful difference (prevents jitter)
+            if (Math.abs(reflectionContent.scrollTop - mainPanelContent.scrollTop) > 1) {
+                reflectionContent.scrollTop = mainPanelContent.scrollTop;
+            }
         }
 
         // Initial mirror setup
         updateReflection();
 
-        // Watch for changes in the main panel and update reflection
-        const observer = new MutationObserver(() => {
-            updateReflection();
+        // Watch for changes in the main panel content and update reflection
+        const observer = new MutationObserver((mutations) => {
+            // Only update if the mutation is significant (not just scroll position changes)
+            const shouldUpdate = mutations.some(mutation =>
+                mutation.type === 'childList' ||
+                mutation.type === 'characterData' ||
+                (mutation.type === 'attributes' && mutation.attributeName !== 'style')
+            );
+
+            if (shouldUpdate) {
+                updateReflection();
+            } else {
+                // For style changes (like scroll), just sync scroll position
+                syncReflectionScroll();
+            }
         });
 
-        // Observe main panel for any changes
-        observer.observe(mainPanel, {
+        // Observe main panel CONTENT for any changes
+        observer.observe(mainPanelContent, {
             childList: true,
             subtree: true,
             attributes: true,
+            attributeFilter: ['class', 'style'],
             characterData: true
         });
 
         // Also update on input events (for real-time typing reflection)
         if (emailInput) {
             emailInput.addEventListener('input', updateReflection);
+        }
+
+        // Sync reflection scroll when main panel scrolls - with RAF for smooth updates
+        if (mainPanelContent) {
+            let ticking = false;
+            mainPanelContent.addEventListener('scroll', function() {
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        syncReflectionScroll();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
         }
 
         // ===== CURSOR ANIMATION =====
@@ -885,6 +1106,112 @@
         window.addEventListener('load', () => {
             runCursorAnimation();
         });
+
+        // ===== SCROLL CHEVRON INTERACTION =====
+        const scrollChevron = document.getElementById('scroll-chevron');
+        const panelContent = document.querySelector('.panel-content');
+        // reflection variable already declared above in MutationObserver section
+
+        let isScrolledDown = false;
+        let isAnimating = false;
+
+        // Calculate scroll distance (height of visible content area)
+        function getScrollDistance() {
+            return panelContent.scrollHeight - panelContent.clientHeight;
+        }
+
+        // Toggle scroll state
+        function toggleScrollState() {
+            if (isAnimating) return; // Prevent rapid clicking
+
+            isAnimating = true;
+            isScrolledDown = !isScrolledDown;
+
+            if (isScrolledDown) {
+                // SCROLL DOWN: Show triptych
+                panelContent.scrollTo({
+                    top: getScrollDistance(),
+                    behavior: 'smooth'
+                });
+
+                scrollChevron.classList.add('rotated');
+                scrollChevron.setAttribute('aria-label', 'Back to top');
+
+                // Sync rotation to reflection chevron
+                const reflectionChevron = reflection.querySelector('.scroll-chevron');
+                if (reflectionChevron) {
+                    reflectionChevron.classList.add('rotated');
+                }
+
+            } else {
+                // SCROLL UP: Show hero content
+                panelContent.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+
+                scrollChevron.classList.remove('rotated');
+                scrollChevron.setAttribute('aria-label', 'View features');
+
+                // Sync rotation to reflection chevron
+                const reflectionChevron = reflection.querySelector('.scroll-chevron');
+                if (reflectionChevron) {
+                    reflectionChevron.classList.remove('rotated');
+                }
+            }
+
+            // Re-enable after animation completes (smooth scroll takes ~800ms)
+            setTimeout(() => {
+                isAnimating = false;
+            }, 900);
+        }
+
+        // Click handler
+        if (scrollChevron) {
+            scrollChevron.addEventListener('click', toggleScrollState);
+
+            // Keyboard accessibility
+            scrollChevron.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleScrollState();
+                }
+            });
+
+            // Fade in chevron after cursor animation completes
+            setTimeout(() => {
+                scrollChevron.classList.add('visible');
+            }, 7500); // After full cursor animation sequence (1500+100+1200+300+600+1300+1000+800+500 = ~7.2s)
+        }
+
+        // Mouse wheel scroll detection (alternative trigger)
+        let wheelTimeout;
+        if (panelContent) {
+            panelContent.addEventListener('wheel', function(e) {
+                // Only respond if not already animating
+                if (isAnimating) return;
+
+                // Downward scroll when at top
+                if (!isScrolledDown && e.deltaY > 20) {
+                    e.preventDefault();
+                    clearTimeout(wheelTimeout);
+                    wheelTimeout = setTimeout(() => {
+                        toggleScrollState();
+                    }, 100);
+                }
+                // Upward scroll when scrolled down
+                else if (isScrolledDown && e.deltaY < -20) {
+                    e.preventDefault();
+                    clearTimeout(wheelTimeout);
+                    wheelTimeout = setTimeout(() => {
+                        toggleScrollState();
+                    }, 100);
+                }
+            }, { passive: false }); // Passive false allows preventDefault
+        }
+
+        // Reflection scroll is automatically synced via scroll event listener
+        // The scaleY(-1) flip on .panel-reflection creates the mirror effect
     </script>
 </body>
 </html>
