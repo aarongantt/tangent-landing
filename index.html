@@ -433,8 +433,10 @@
 
         /* ===== TRIPTYCH SECTION ===== */
         .triptych-section {
-            width: 100%;
-            max-width: 1040px; /* Increased by 30% from 800px */
+            /* Scale based on container width with reasonable min/max bounds */
+            width: 82%; /* Slightly reduced to prevent overflow on small screens */
+            min-width: 600px; /* Prevent too small */
+            max-width: 2200px; /* Larger cap for ultra-wide screens */
             padding: 20px 20px 40px 20px; /* Added horizontal padding to prevent edge bleeding */
             margin: 0 auto;
             box-sizing: border-box; /* Include padding in width calculation */
@@ -509,6 +511,14 @@
         }
 
         /* ===== RESPONSIVE ===== */
+        /* Medium screens (between tablets and ultra-wide) */
+        @media (min-width: 769px) and (max-width: 2600px) {
+            .triptych-section {
+                width: 56%; /* Further reduced for medium-large screens */
+                max-width: 1250px; /* Smaller cap */
+            }
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 1vh 0.5vw; /* Much tighter side padding on tablets */
@@ -607,7 +617,9 @@
             }
 
             .triptych-section {
-                width: 98%;
+                width: 92%; /* Slightly wider on tablets */
+                min-width: 500px;
+                max-width: 1000px;
                 padding: 24px 0;
             }
         }
@@ -653,7 +665,9 @@
             }
 
             .triptych-section {
-                width: 100%;
+                width: 95%; /* Nearly full width on mobile */
+                min-width: 280px;
+                max-width: 600px;
                 padding: 16px 0;
             }
 
