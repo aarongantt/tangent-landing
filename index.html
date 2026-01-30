@@ -99,40 +99,43 @@
         .chip {
             padding: 8px 15px;
             background: #ffffff;
-            border: 2px solid #aaaaaa; /* Lighter grey border */
+            border: 1.5px solid #aaaaaa; /* Thinner border to match reference */
             border-radius: 18px;
             font-size: 14px;
             font-weight: 600;
             color: #2a2a2a;
             cursor: pointer;
             transition: background 0.2s ease;
+            white-space: nowrap; /* CRITICAL: Prevent text wrapping inside chips */
         }
 
         .chip:hover {
             background: #f5f5f5;
         }
 
-        .chip-icon {
-            width: 33px; /* Slightly smaller */
-            height: 33px;
-            padding: 8px;
+        .chip-icon,
+        .chip-bar.email-state .chip-icon {
+            width: 35px;
+            height: 35px;
+            padding: 3px;
             border-radius: 6px;
-            border: 2px solid #aaaaaa; /* Lighter grey border */
-            display: flex; /* Center T icon vertically */
+            border: 1.5px solid #aaaaaa;
+            display: flex;
             align-items: center;
             justify-content: center;
+            box-sizing: border-box;
         }
 
         .chip-icon img {
-            width: 115%;
-            height: 115%;
+            width: 80%;
+            height: 80%;
             object-fit: contain;
         }
 
-        /* Down-arrow chevron icon - split the difference */
+        /* Down-arrow chevron icon - 10% smaller than before */
         .chip-chevron {
-            width: 32px;
-            height: 32px;
+            width: 30px; /* Reduced by 10% from 33px */
+            height: 30px;
         }
 
         /* Email Input State */
@@ -511,89 +514,187 @@
         }
 
         /* ===== RESPONSIVE ===== */
-        /* Ultra-wide screens (larger than 2600px) - Scale everything by 60% */
-        @media (min-width: 2601px) {
+        /* Ultra-wide BUT SHORT screens - Reduce scaling */
+        @media (min-width: 2601px) and (max-height: 900px) {
             .main-logo {
-                height: clamp(56px, 6.4vw, 88px); /* 60% larger than clamp(35px, 4vw, 55px) */
-                margin-top: 3.7vw; /* 60% larger than 2.33vw */
-                margin-bottom: 3.2vw; /* 60% larger than 2vw */
+                height: clamp(45px, 5vw, 70px); /* Smaller scaling */
+                margin-top: 2.5vw;
+                margin-bottom: 2vw;
             }
 
             .tagline {
-                font-size: clamp(42px, 5vw, 70px); /* 60% larger */
-                margin-bottom: 0.75vw;
+                font-size: clamp(34px, 4vw, 55px); /* Smaller */
+                margin-bottom: 0.6vw;
             }
 
             .chip-bar {
-                width: 590px; /* Reduced to better fit chip content */
-                height: 82px; /* 60% larger than 51px */
-                gap: 13px; /* 60% larger than 8px */
-                padding: 13px 21px; /* 60% larger than 8px 13px */
-                border-radius: 24px; /* 60% larger than 15px */
-                margin-left: 50%; /* Centered under "Tangent" */
+                width: 530px; /* Increased for more space after chevron */
+                height: 68px; /* Smaller */
+                gap: 11px;
+                padding: 11px 18px 11px 18px; /* Add right padding */
+                border-radius: 20px;
+                margin-left: 50%;
             }
 
             .chip-bar.email-state {
-                width: 672px; /* Expand for email input */
+                width: 560px;
             }
 
             .chip {
-                padding: 13px 24px; /* 60% larger than 8px 15px */
-                font-size: 22px; /* 60% larger than 14px */
-                border-radius: 29px; /* 60% larger than 18px */
-                border-width: 3px; /* 60% larger than 2px */
+                padding: 11px 20px;
+                font-size: 18px;
+                border-radius: 24px;
+                border-width: 2px; /* Thinner border */
             }
 
-            .chip-icon {
-                width: 53px; /* 60% larger than 33px */
-                height: 53px;
-                padding: 13px; /* 60% larger than 8px */
-                border-width: 3px; /* 60% larger than 2px */
-                border-radius: 10px; /* 60% larger than 6px */
-            }
-
-            .chip-icon img {
-                width: 115%; /* Keep same ratio */
-                height: 115%;
+            .chip-icon,
+            .chip-bar.email-state .chip-icon {
+                width: 52px;
+                height: 52px;
+                padding: 5px;
+                border-width: 2px;
+                border-radius: 8px;
+                box-sizing: border-box;
             }
 
             .chip-chevron {
-                width: 51px; /* 60% larger than 32px */
-                height: 51px;
+                width: 40px; /* Reduced by 10% from 44px */
+                height: 40px;
             }
 
             .email-container {
-                width: 565px; /* 60% larger than 353px */
+                width: 470px;
             }
 
             .email-input {
-                font-size: 22px; /* 60% larger than 14px */
-                height: 56px; /* 60% larger than 35px */
-                padding: 13px 72px 13px 24px; /* 60% larger */
-                border-width: 3px; /* 60% larger than 2px */
-                border-radius: 40px; /* 60% larger than 25px */
+                font-size: 18px;
+                height: 46px;
+                padding: 11px 60px 11px 20px;
+                border-width: 3px;
             }
 
             .email-input::placeholder {
-                font-size: 21px; /* 60% larger than 13px */
+                font-size: 17px;
             }
 
             .send-btn {
-                width: 38px; /* 60% larger than 24px */
-                height: 38px;
-                right: 10px; /* 60% larger than 6px */
-                border-width: 3px; /* 60% larger than 2px */
-                padding: 8px; /* 60% larger than 5px */
+                width: 32px;
+                height: 32px;
+                right: 8px;
+                border-width: 3px;
             }
 
             .send-btn img {
-                width: 21px; /* 60% larger than 13px */
-                height: 21px;
+                width: 17px;
+                height: 17px;
             }
         }
 
-        /* Medium screens (between tablets and ultra-wide) */
-        @media (min-width: 769px) and (max-width: 2600px) {
+        /* Ultra-wide screens (larger than 2600px) - Scale moderately */
+        @media (min-width: 2601px) and (min-height: 901px) {
+            .main-logo {
+                height: clamp(45px, 5vw, 70px); /* Moderate scaling */
+                margin-top: 2.8vw;
+                margin-bottom: 2.4vw;
+            }
+
+            .tagline {
+                font-size: clamp(34px, 4vw, 55px); /* Moderate scaling - prevents overly large text */
+                margin-bottom: 0.65vw;
+            }
+
+            .chip-bar {
+                width: 530px; /* More moderate sizing */
+                height: 68px; /* Smaller than 82px */
+                gap: 11px;
+                padding: 11px 18px 11px 18px;
+                border-radius: 20px;
+                margin-left: 50%;
+            }
+
+            .chip-bar.email-state {
+                width: 560px; /* Moderate expansion */
+            }
+
+            .chip {
+                padding: 11px 20px; /* More moderate sizing */
+                font-size: 18px;
+                border-radius: 24px;
+                border-width: 2px;
+            }
+
+            .chip-icon,
+            .chip-bar.email-state .chip-icon {
+                width: 52px; /* Match ultra-wide short sizing */
+                height: 52px;
+                padding: 5px;
+                border-width: 2px;
+                border-radius: 8px;
+                box-sizing: border-box;
+            }
+
+            .chip-icon img {
+                width: 80%;
+                height: 80%;
+            }
+
+            .chip-chevron {
+                width: 40px; /* Match ultra-wide short sizing */
+                height: 40px;
+            }
+
+            .email-container {
+                width: 470px; /* More moderate sizing */
+            }
+
+            .email-input {
+                font-size: 18px;
+                height: 46px;
+                padding: 11px 60px 11px 20px;
+                border-width: 3px;
+                border-radius: 32px;
+            }
+
+            .email-input::placeholder {
+                font-size: 17px;
+            }
+
+            .send-btn {
+                width: 32px;
+                height: 32px;
+                right: 8px;
+                border-width: 3px;
+                padding: 6px;
+            }
+
+            .send-btn img {
+                width: 17px;
+                height: 17px;
+            }
+        }
+
+        /* Narrow desktop/wide tablet (769px - 1100px) - Handle narrow viewports */
+        @media (min-width: 769px) and (max-width: 1100px) {
+            .tagline {
+                white-space: normal; /* Allow line breaks when viewport is narrow */
+                line-height: 1.3;
+            }
+
+            .chip-bar {
+                margin-left: 25%; /* Reduce offset to prevent overflow */
+            }
+
+            .chip-bar.email-state {
+                width: 420px; /* Reduce email state width to fit narrow viewports */
+            }
+
+            .email-container {
+                width: 300px; /* Smaller email input */
+            }
+        }
+
+        /* Medium screens (1101px - 2600px) */
+        @media (min-width: 1101px) and (max-width: 2600px) {
             .chip-bar {
                 margin-left: 42%; /* Shifted farther right for better centering under "Tangent" */
             }
@@ -635,9 +736,17 @@
                 font-size: 12px;
             }
 
-            .chip-icon {
-                width: 29px;
-                height: 29px;
+            .chip-icon,
+            .chip-bar.email-state .chip-icon {
+                width: 34px;
+                height: 34px;
+                padding: 3px;
+                box-sizing: border-box;
+            }
+
+            .chip-chevron {
+                width: 26px; /* Reduced by 10% from 29px */
+                height: 26px;
             }
 
             .email-input {
@@ -714,23 +823,25 @@
             }
         }
 
-        /* ===== NARROW VIEWPORTS (reduce horizontal padding further) ===== */
+        /* ===== NARROW VIEWPORTS (MOBILE ONLY - vertical/portrait layout) ===== */
         @media (max-width: 600px) {
             body {
-                padding: 1vh 0.2vw !important; /* Minimal padding - almost FULL width */
+                /* Use new mobile background image */
+                background: url('images/tangent_mobile_background.png') center center / cover no-repeat fixed;
+                padding: 1vh 0.2vw !important;
             }
 
             .panel-overlay {
-                max-width: 99vw !important; /* Use almost FULL viewport width */
+                max-width: 99vw !important;
             }
 
             .panel-main {
-                left: 5% !important; /* MINIMAL internal side margins */
+                left: 5% !important;
                 right: 5% !important;
             }
 
             .panel-content {
-                padding: 1% 0.5% !important; /* MINIMAL internal padding */
+                padding: 1% 0.5% !important;
             }
 
             .main-logo {
@@ -739,20 +850,70 @@
             }
 
             .tagline {
-                margin-bottom: 1vh;
-                font-size: clamp(20px, 5vw, 32px) !important; /* Smaller on narrow screens */
-            }
-
-            .tagline {
-                white-space: normal; /* Allow line breaks */
+                /* Force two lines: "Stay in the flow." then "Go on a Tangent." */
+                font-size: clamp(18px, 4.5vw, 28px) !important;
+                margin-bottom: 2vh;
+                line-height: 1.4;
+                white-space: normal;
                 word-wrap: break-word;
+                text-align: center;
             }
 
             .chip-bar {
+                /* Resize to fit mobile blue panel */
+                width: 320px; /* Smaller for mobile portrait */
+                height: 44px; /* Reduced height */
+                gap: 6px;
+                padding: 6px 10px;
                 margin-bottom: 12px;
-                margin-left: 0; /* Remove left offset on narrow screens */
-                justify-content: center; /* Center the chip bar */
-                transform: scale(0.85); /* Slightly smaller to fit better */
+                margin-left: 0; /* Center horizontally */
+                justify-content: center;
+                transform: none; /* Remove scale transform */
+            }
+
+            .chip {
+                padding: 5px 10px;
+                font-size: 11px;
+                border-radius: 14px;
+            }
+
+            .chip-icon,
+            .chip-bar.email-state .chip-icon {
+                width: 33px;
+                height: 33px;
+                padding: 3px;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+
+            .chip-chevron {
+                width: 25px; /* Reduced by 10% from 28px */
+                height: 25px;
+            }
+
+            .email-container {
+                width: 280px; /* Smaller for mobile */
+            }
+
+            .email-input {
+                font-size: 13px;
+                height: 32px;
+                padding: 6px 36px 6px 10px;
+            }
+
+            .email-input::placeholder {
+                font-size: 11px;
+            }
+
+            .send-btn {
+                width: 22px;
+                height: 22px;
+                right: 6px;
+            }
+
+            .send-btn img {
+                width: 11px;
+                height: 11px;
             }
 
             .scroll-spacer {
