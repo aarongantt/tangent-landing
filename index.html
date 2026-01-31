@@ -6,12 +6,25 @@
     <title>TANGENT - AI-Powered Browser Assistant</title>
     <meta name="description" content="Stay in the flow, or go on a Tangent.">
     <link rel="icon" type="image/png" href="images/tangent_t_logo.png">
-    <script>
-        // Redirect mobile users to mobile.html
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            window.location.replace('/mobile.html');
+    <link rel="preload" as="image" href="images/tangent_mobile_background.png">
+    <style>
+        /* Show/hide based on screen size */
+        .desktop-content {
+            display: block;
         }
-    </script>
+        .mobile-content {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .desktop-content {
+                display: none !important;
+            }
+            .mobile-content {
+                display: block !important;
+            }
+        }
+    </style>
     <style>
         /* ===== BASE STYLES ===== */
         * {
@@ -957,6 +970,356 @@
     </style>
 </head>
 <body>
+<div class="mobile-content">
+    <!-- Mobile version content -->
+    <style>
+        @media (max-width: 768px) {
+            body {
+                background: url('images/tangent_mobile_background.png') center center / cover no-repeat fixed !important;
+                overflow-x: hidden !important;
+                display: block !important;
+                padding: 0 !important;
+                padding-top: env(safe-area-inset-top, 0);
+                padding-bottom: env(safe-area-inset-bottom, 0);
+            }
+
+            .mobile-main-logo {
+                position: fixed;
+                top: 2.5vh;
+                left: 50%;
+                transform: translateX(-50%);
+                height: clamp(35px, 7vw, 55px);
+                z-index: 100;
+            }
+
+            .mobile-scrollable-content {
+                position: fixed;
+                top: calc(2.5vh + clamp(35px, 7vw, 55px) + 4vh);
+                left: 0;
+                right: 0;
+                bottom: 8vh;
+                overflow-y: auto;
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: y mandatory;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                mask-image: linear-gradient(to bottom, transparent 0%, black 3vh, black calc(100% - 3vh), transparent 100%);
+                -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 3vh, black calc(100% - 3vh), transparent 100%);
+            }
+
+            .mobile-scrollable-content::-webkit-scrollbar {
+                display: none;
+            }
+
+            .mobile-container {
+                position: relative;
+                width: 100%;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 5vw;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+            }
+
+            .mobile-hero-content {
+                width: 90%;
+                max-width: 400px;
+                position: absolute;
+                top: 35%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2.5vh;
+            }
+
+            .mobile-tagline {
+                font-size: clamp(22px, 5.5vw, 32px);
+                font-weight: bold;
+                color: #ffffff;
+                text-align: center;
+                margin: 0;
+                line-height: 1.3;
+                white-space: normal;
+            }
+
+            .mobile-tagline .letter {
+                display: inline-block;
+                transition: background 0.05s ease;
+                line-height: 1;
+                vertical-align: baseline;
+                margin: 0;
+                padding: 0;
+            }
+
+            .mobile-tagline .letter.highlighted {
+                background: rgba(106, 182, 254, 0.7);
+                box-decoration-break: clone;
+                -webkit-box-decoration-break: clone;
+                padding: 0.1em 0.005em;
+                margin: 0;
+            }
+
+            .mobile-chip-bar {
+                display: flex;
+                gap: 5px;
+                padding: 6px 6px;
+                background: linear-gradient(to bottom, #dce4ea 0%, #c4ced6 100%);
+                border: 1.6px solid rgba(109, 109, 109, 0.5);
+                border-radius: 12px;
+                box-shadow: 0 6.5px 19px rgba(0, 0, 0, 0.35);
+                width: clamp(280px, 80vw, 300px);
+                height: 40px;
+                margin: 0 auto;
+                opacity: 0;
+                transition: opacity 0.4s ease;
+                justify-content: flex-start;
+                align-items: center;
+                flex-wrap: nowrap;
+            }
+
+            .mobile-chip-bar.visible {
+                opacity: 1;
+            }
+
+            #mobile-other-chips {
+                display: flex;
+                gap: 5px;
+                align-items: center;
+            }
+
+            .mobile-chip-bar.initial-state #mobile-email-container {
+                display: none;
+            }
+
+            .mobile-chip-bar.email-state #mobile-other-chips {
+                display: none;
+            }
+
+            .mobile-chip-bar.email-state #mobile-email-container {
+                display: flex;
+                align-items: center;
+            }
+
+            .mobile-chip {
+                padding: 4px 7px;
+                background: #ffffff;
+                border: 1.2px solid #aaaaaa;
+                border-radius: 14px;
+                font-size: 10.5px;
+                font-weight: 600;
+                color: #2a2a2a;
+                cursor: pointer;
+                transition: background 0.2s ease;
+                white-space: nowrap;
+            }
+
+            .mobile-chip:hover {
+                background: #f5f5f5;
+            }
+
+            .mobile-chip-icon {
+                width: 30px;
+                height: 30px;
+                padding: 2px;
+                border-radius: 5px;
+                border: 1.2px solid #aaaaaa;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-sizing: border-box;
+            }
+
+            .mobile-chip-icon img {
+                width: 80%;
+                height: 80%;
+                object-fit: contain;
+            }
+
+            .mobile-chip-chevron {
+                width: 22px;
+                height: 22px;
+            }
+
+            @keyframes mobile-click-animation {
+                0% { transform: scale(1); }
+                50% { transform: scale(0.92); }
+                100% { transform: scale(1); }
+            }
+
+            .mobile-chip-clicking {
+                animation: mobile-click-animation 200ms ease-in-out;
+            }
+
+            .mobile-email-container {
+                display: none;
+                width: 100%;
+                align-items: center;
+                gap: 8px;
+                position: relative;
+            }
+
+            .mobile-email-input {
+                flex: 1;
+                padding: 6px 40px 6px 10px;
+                border-radius: 20px;
+                border: 1.6px solid #787878;
+                font-size: 12px;
+                outline: none;
+                transition: border-color 0.2s ease;
+                height: 28px;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            }
+
+            .mobile-email-input:focus {
+                border-color: #669fc3;
+                box-shadow: 0 0 3px 1px rgba(102, 159, 195, 0.4);
+            }
+
+            .mobile-email-input::placeholder {
+                color: #9aa3b2;
+                font-style: italic;
+                font-size: 10px;
+            }
+
+            .mobile-send-btn {
+                position: absolute;
+                right: 6px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 1.6px solid #787878;
+                background: #ffffff;
+                padding: 4px;
+                cursor: pointer;
+                transition: all 0.15s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .mobile-send-btn:active {
+                transform: translateY(-50%) scale(0.9);
+            }
+
+            .mobile-send-btn img {
+                width: 10px;
+                height: 10px;
+            }
+
+            .mobile-animated-cursor {
+                position: fixed;
+                width: 20px;
+                height: 20px;
+                pointer-events: none;
+                z-index: 10000;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .mobile-animated-cursor.visible {
+                opacity: 1;
+            }
+
+            .mobile-animated-cursor img {
+                width: 100%;
+                height: 100%;
+                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            }
+
+            .mobile-triptych-page {
+                width: 100%;
+                min-height: calc(100vh - (2.5vh + clamp(35px, 7vw, 55px) + 4vh) - 8vh);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+                padding: 0;
+                margin: 0;
+            }
+
+            .mobile-triptych-image {
+                width: 90%;
+                max-width: 500px;
+                height: auto;
+                object-fit: contain;
+                display: block;
+                cursor: pointer;
+                transition: transform 0.2s ease;
+            }
+
+            .mobile-triptych-image:active {
+                transform: scale(0.98);
+            }
+        }
+    </style>
+
+    <!-- Animated cursor (for cursor animation) -->
+    <div class="mobile-animated-cursor">
+        <img src="images/cursor.png" alt="">
+    </div>
+
+    <!-- Fixed logo at top -->
+    <img src="images/tangent_blue_logo.png" alt="TANGENT" class="mobile-main-logo">
+
+    <!-- Scrollable content area -->
+    <div class="mobile-scrollable-content">
+        <div class="mobile-container">
+            <div class="mobile-hero-content">
+                <h1 class="mobile-tagline">
+                    Stay in the flow.<br>Go on a <span class="highlight" id="mobile-tangent-word"><span class="letter">T</span><span class="letter">a</span><span class="letter">n</span><span class="letter">g</span><span class="letter">e</span><span class="letter">n</span><span class="letter">t</span><span class="letter">.</span></span>
+                </h1>
+
+                <div class="mobile-chip-bar initial-state">
+                    <button class="mobile-chip mobile-chip-icon" id="mobile-t-chip">
+                        <img src="images/tangent_t_logo.png" alt="T">
+                    </button>
+                    <div id="mobile-other-chips">
+                        <button class="mobile-chip">What is...</button>
+                        <button class="mobile-chip">Context</button>
+                        <button class="mobile-chip">Summarize</button>
+                        <button class="mobile-chip mobile-chip-icon mobile-chip-chevron">
+                            <img src="images/chevron_down_arrow.png" alt="More">
+                        </button>
+                    </div>
+                    <div id="mobile-email-container" class="mobile-email-container">
+                        <input type="email" id="mobile-email-input" class="mobile-email-input"
+                               placeholder="Enter your Email for early access to Tangent.">
+                        <button id="mobile-send-btn" class="mobile-send-btn">
+                            <img src="images/tangent_enter_button.png" alt="Send">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Triptych Page 1 -->
+        <div class="mobile-triptych-page">
+            <img loading="lazy" src="images/tangent_mobile_triptych_01.png" alt="TANGENT Feature 1" class="mobile-triptych-image">
+        </div>
+
+        <!-- Triptych Page 2 -->
+        <div class="mobile-triptych-page">
+            <img loading="lazy" src="images/tangent_mobile_triptych_02.png" alt="TANGENT Feature 2" class="mobile-triptych-image">
+        </div>
+
+        <!-- Triptych Page 3 -->
+        <div class="mobile-triptych-page">
+            <img loading="lazy" src="images/tangent_mobile_triptych_03.png" alt="TANGENT Feature 3" class="mobile-triptych-image">
+        </div>
+    </div>
+</div>
+
+<div class="desktop-content">
     <!-- TANGENT Logo (above panel) -->
     <img src="images/tangent_blue_logo.png" alt="TANGENT" class="main-logo">
 
@@ -1499,5 +1862,131 @@
         // Reflection scroll is automatically synced via scroll event listener
         // The scaleY(-1) flip on .panel-reflection creates the mirror effect
     </script>
+</div>
+
+<!-- Mobile JavaScript -->
+<script>
+if (window.innerWidth <= 768) {
+    /* ===== MOBILE CHIP BAR STATE TOGGLE ===== */
+    const mobileTChip = document.getElementById('mobile-t-chip');
+    const mobileChipBar = document.querySelector('.mobile-chip-bar');
+    const mobileEmailInput = document.getElementById('mobile-email-input');
+    const mobileSendBtn = document.getElementById('mobile-send-btn');
+
+    function toggleMobileChipBarState() {
+        if (mobileChipBar.classList.contains('initial-state')) {
+            mobileChipBar.classList.remove('initial-state');
+            mobileChipBar.classList.add('email-state');
+            setTimeout(() => mobileEmailInput.focus(), 100);
+        } else {
+            mobileChipBar.classList.remove('email-state');
+            mobileChipBar.classList.add('initial-state');
+        }
+    }
+
+    mobileTChip.addEventListener('click', toggleMobileChipBarState);
+
+    /* ===== MOBILE EMAIL SUBMISSION ===== */
+    async function handleMobileSubmit(e) {
+        e.preventDefault();
+        const email = mobileEmailInput.value.trim();
+        if (!email) return;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) return;
+        showMobileThankYouModal();
+        mobileEmailInput.value = '';
+        setTimeout(() => toggleMobileChipBarState(), 1500);
+    }
+
+    function showMobileThankYouModal() {
+        const modal = document.createElement('div');
+        modal.style.cssText = `position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 9999;`;
+        modal.innerHTML = `<div style="position: relative; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 16px; padding: 48px 40px; width: 90%; max-width: 380px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); color: #fff; text-align: center;"><button style="position: absolute; top: 16px; right: 16px; background: transparent; border: none; color: rgba(255, 255, 255, 0.7); font-size: 24px; cursor: pointer; padding: 4px 8px; line-height: 1; transition: color 0.2s;" onclick="this.closest('div').parentElement.remove()">×</button><div style="display: flex; justify-content: center; margin-bottom: 24px;"><img src="images/welcome_logo.png" alt="Welcome" style="height: 48px;" /></div><p style="margin: 0 0 20px 0; font-size: 16px; font-weight: 400; line-height: 1.6; color: #fff;">Tangent exists to support thinking, not replace it.</p><p style="margin: 0; font-size: 14px; font-weight: 400; font-style: italic; line-height: 1.6; color: rgba(255, 255, 255, 0.75);">Keep an eye on your inbox.<br>Early access begins soon.</p></div>`;
+        document.body.appendChild(modal);
+        setTimeout(() => {
+            modal.style.opacity = '0';
+            modal.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => modal.remove(), 300);
+        }, 4000);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.opacity = '0';
+                modal.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => modal.remove(), 300);
+            }
+        });
+    }
+
+    mobileSendBtn.addEventListener('click', handleMobileSubmit);
+    mobileEmailInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleMobileSubmit(e);
+    });
+
+    /* ===== MOBILE CURSOR ANIMATION ===== */
+    async function runMobileCursorAnimation() {
+        const cursor = document.querySelector('.mobile-animated-cursor');
+        const cursorImg = cursor.querySelector('img');
+        const tangentWord = document.getElementById('mobile-tangent-word');
+        const letters = tangentWord.querySelectorAll('.letter');
+
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function moveCursor(target, duration) {
+            const rect = target.getBoundingClientRect();
+            const targetX = rect.left + rect.width / 2;
+            const targetY = rect.top + rect.height / 2;
+            cursor.style.transition = `left ${duration}ms cubic-bezier(0.4, 0, 0.2, 1), top ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+            cursor.style.left = targetX + 'px';
+            cursor.style.top = targetY + 'px';
+            await delay(duration);
+        }
+
+        cursor.style.left = 'calc(100vw + 50px)';
+        cursor.style.top = '30vh';
+        cursor.classList.add('visible');
+        await moveCursor(letters[0], 700);
+        cursorImg.src = 'images/i_beam.png';
+        await delay(150);
+        for (let letter of letters) {
+            await moveCursor(letter, 80);
+            letter.classList.add('highlighted');
+            await delay(40);
+        }
+        mobileChipBar.classList.add('visible');
+        await delay(1500);
+        cursorImg.src = 'images/cursor.png';
+        await delay(200);
+        await moveCursor(mobileTChip, 500);
+        mobileTChip.classList.add('mobile-chip-clicking');
+        mobileTChip.click();
+        setTimeout(() => mobileTChip.classList.remove('mobile-chip-clicking'), 140);
+        await delay(140);
+        cursor.style.opacity = '0';
+        await delay(200);
+        cursor.classList.remove('visible');
+    }
+
+    window.addEventListener('load', () => {
+        setTimeout(runMobileCursorAnimation, 500);
+    });
+
+    /* ===== MOBILE TRIPTYCH NAVIGATION ===== */
+    const mobileTriptychImages = document.querySelectorAll('.mobile-triptych-image');
+    const mobileTriptychPages = document.querySelectorAll('.mobile-triptych-page');
+    const mobileScrollableContent = document.querySelector('.mobile-scrollable-content');
+
+    mobileTriptychImages[0].addEventListener('click', () => {
+        mobileTriptychPages[1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    mobileTriptychImages[1].addEventListener('click', () => {
+        mobileTriptychPages[2].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    mobileTriptychImages[2].addEventListener('click', () => {
+        mobileScrollableContent.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+</script>
 </body>
 </html>
