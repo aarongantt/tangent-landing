@@ -671,6 +671,10 @@
                 width: 17px;
                 height: 17px;
             }
+
+            .triptych-section {
+                max-width: 1150px; /* Prevent overflow on ultra-wide */
+            }
         }
 
         /* Narrow desktop/wide tablet (769px - 1100px) - Handle narrow viewports */
@@ -701,7 +705,7 @@
 
             .triptych-section {
                 width: 56%; /* Further reduced for medium-large screens */
-                max-width: 1250px; /* Smaller cap */
+                max-width: 1050px; /* Reduced to prevent overflow at 2560px width */
             }
         }
 
@@ -838,15 +842,21 @@
             .panel-main {
                 left: 5% !important;
                 right: 5% !important;
+                height: 100% !important; /* Ensure panel fills to allow content centering */
             }
 
             .panel-content {
-                padding: 1% 0.5% !important;
+                padding: 0.5% !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important; /* Vertically center all content */
+                align-items: center !important;
+                height: 100% !important; /* Fill parent to enable vertical centering */
             }
 
             .main-logo {
-                margin-top: 1vh;
-                margin-bottom: 1vh;
+                margin-top: 0;
+                margin-bottom: 2vh;
             }
 
             .tagline {
@@ -865,7 +875,7 @@
                 height: 44px; /* Reduced height */
                 gap: 6px;
                 padding: 6px 10px;
-                margin-bottom: 12px;
+                margin-bottom: 0;
                 margin-left: 0; /* Center horizontally */
                 justify-content: center;
                 transform: none; /* Remove scale transform */
