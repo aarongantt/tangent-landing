@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>TANGENT - AI-Powered Browser Assistant</title>
+    <meta name="description" content="Stay in the flow, or go on a Tangent.">
+    <link rel="icon" type="image/png" href="images/tangent_t_logo.png">
+    <link rel="preload" as="image" href="images/tangent_mobile_background.png">
+    <style>
+        /* ===== BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: url('images/tangent_mobile_background.png') center center / cover no-repeat fixed;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            padding-top: env(safe-area-inset-top, 0);
+            padding-bottom: env(safe-area-inset-bottom, 0);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ===== MOBILE CONTAINER ===== */
+        /* ===== FIXED LOGO (locked at top) ===== */
+        .main-logo {
+            position: fixed;
+            top: 2.5vh;
+            left: 50%;
+            transform: translateX(-50%);
+            height: clamp(35px, 7vw, 55px);
+            z-index: 100;
+        }
+
+        /* ===== SCROLLABLE CONTENT AREA (between red lines) ===== */
+        .scrollable-content {
+            position: fixed;
+            top: calc(2.5vh + clamp(35px, 7vw, 55px) + 4vh); /* Logo height + top margin + spacing */
+            left: 0;
+            right: 0;
+            bottom: 8vh; /* Match red line position - stop before bottom of screen */
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: y mandatory;
+
+            /* Hide scrollbar */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+
+            /* Gradient feathering at top and bottom */
+            mask-image: linear-gradient(
+                to bottom,
+                transparent 0%,
+                black 3vh,
+                black calc(100% - 3vh),
+                transparent 100%
+            );
+            -webkit-mask-image: linear-gradient(
+                to bottom,
+                transparent 0%,
+                black 3vh,
+                black calc(100% - 3vh),
+                transparent 100%
+            );
+        }
+
+        /* Hide scrollbar for Chrome/Safari */
+        .scrollable-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 5vw;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        /* ===== HERO CONTENT (SLOGAN + CHIP BAR) - SHIFTED DOWN ===== */
+        .hero-content {
+            width: 90%;
+            max-width: 400px;
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5vh;
+        }
+
+        /* ===== TWO-LINE SLOGAN ===== */
+        .tagline {
+            font-size: clamp(22px, 5.5vw, 32px);
+            font-weight: bold;
+            color: #ffffff;
+            text-align: center;
+            margin: 0;
+            line-height: 1.3;
+            white-space: normal;
+        }
+
+        .tagline .letter {
+            display: inline-block;
+            transition: background 0.05s ease;
+            line-height: 1;
+            vertical-align: baseline;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tagline .letter.highlighted {
+            background: rgba(106, 182, 254, 0.7);
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+            padding: 0.1em 0;
+            margin: 0 -0.02em;
+        }
+
+        /* ===== CHIP BAR ===== */
+        .chip-bar {
+            display: flex;
+            gap: 5px;
+            padding: 6px 6px;
+            background: linear-gradient(to bottom, #dce4ea 0%, #c4ced6 100%);
+            border: 1.6px solid rgba(109, 109, 109, 0.5);
+            border-radius: 12px;
+            box-shadow: 0 6.5px 19px rgba(0, 0, 0, 0.35);
+
+            width: clamp(280px, 80vw, 300px);
+            height: 40px;
+
+            margin: 0 auto;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        .chip-bar.visible {
+            opacity: 1;
+        }
+
+        /* Chip bar state management */
+        #other-chips {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .chip-bar.initial-state #email-container {
+            display: none;
+        }
+
+        .chip-bar.email-state #other-chips {
+            display: none;
+        }
+
+        .chip-bar.email-state #email-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .chip {
+            padding: 4px 7px;
+            background: #ffffff;
+            border: 1.2px solid #aaaaaa;
+            border-radius: 14px;
+            font-size: 10.5px;
+            font-weight: 600;
+            color: #2a2a2a;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .chip:hover {
+            background: #f5f5f5;
+        }
+
+        .chip-icon,
+        .chip-bar.email-state .chip-icon {
+            width: 30px;
+            height: 30px;
+            padding: 2px;
+            border-radius: 5px;
+            border: 1.2px solid #aaaaaa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .chip-icon img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+
+        .chip-chevron {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* Click animation */
+        @keyframes click-animation {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.92); }
+            100% { transform: scale(1); }
+        }
+
+        .chip-clicking {
+            animation: click-animation 200ms ease-in-out;
+        }
+
+        /* ===== EMAIL INPUT STATE ===== */
+        .email-container {
+            display: none;
+            width: 100%;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 6px 40px 6px 10px;
+            border-radius: 20px;
+            border: 1.6px solid #787878;
+            font-size: 12px;
+            outline: none;
+            transition: border-color 0.2s ease;
+            height: 28px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+        }
+
+        .email-input:focus {
+            border-color: #669fc3;
+            box-shadow: 0 0 3px 1px rgba(102, 159, 195, 0.4);
+        }
+
+        .email-input::placeholder {
+            color: #9aa3b2;
+            font-style: italic;
+            font-size: 10px;
+        }
+
+        .send-btn {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1.6px solid #787878;
+            background: #ffffff;
+            padding: 4px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-btn:active {
+            transform: translateY(-50%) scale(0.9);
+        }
+
+        .send-btn img {
+            width: 10px;
+            height: 10px;
+        }
+
+        /* ===== ANIMATED CURSOR ===== */
+        .animated-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .animated-cursor.visible {
+            opacity: 1;
+        }
+
+        .animated-cursor img {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        /* ===== VERTICAL TRIPTYCH (3 separate pages) ===== */
+        .triptych-page {
+            width: 100%;
+            min-height: calc(100vh - (2.5vh + clamp(35px, 7vw, 55px) + 4vh) - 8vh);  /* Fill available scrollable space */
+            display: flex;
+            align-items: center;  /* Center vertically */
+            justify-content: center;  /* Center horizontally */
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            padding: 0;  /* Remove padding for true centering */
+            margin: 0;
+        }
+
+        .triptych-image {
+            width: 90%;
+            max-width: 500px;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .triptych-image:active {
+            transform: scale(0.98);
+        }
+
+        /* ===== RESPONSIVE BREAKPOINTS ===== */
+        /* Small phones (iPhone SE, 320-374px) */
+        @media (max-width: 374px) {
+            .main-logo {
+                height: clamp(30px, 6vw, 45px);
+                top: 2vh;
+            }
+
+            .scrollable-content {
+                top: calc(2vh + clamp(30px, 6vw, 45px) + 3.5vh);
+            }
+
+            .tagline {
+                font-size: clamp(18px, 5vw, 24px);
+            }
+
+            .chip-bar {
+                width: 275px;
+                height: 36px;
+            }
+
+            .chip {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+        }
+
+        /* Large phones (415px+, Pro Max, Pixel) */
+        @media (min-width: 415px) {
+            .main-logo {
+                height: clamp(40px, 7.5vw, 60px);
+                top: 3vh;
+            }
+
+            .scrollable-content {
+                top: calc(3vh + clamp(40px, 7.5vw, 60px) + 4.5vh);
+            }
+
+            .tagline {
+                font-size: clamp(24px, 5.5vw, 34px);
+            }
+
+            .chip-bar {
+                width: clamp(290px, 80vw, 315px);
+                height: 44px;
+            }
+
+            .chip {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated cursor (for cursor animation) -->
+    <div class="animated-cursor">
+        <img src="images/cursor.png" alt="">
+    </div>
+
+    <!-- Fixed logo at top -->
+    <img src="images/tangent_blue_logo.png" alt="TANGENT" class="main-logo">
+
+    <!-- Scrollable content area (between red lines) -->
+    <div class="scrollable-content">
+        <div class="mobile-container">
+            <div class="hero-content">
+                <h1 class="tagline">
+                    Stay in the flow.<br>Go on a <span class="highlight" id="tangent-word"><span class="letter">T</span><span class="letter">a</span><span class="letter">n</span><span class="letter">g</span><span class="letter">e</span><span class="letter">n</span><span class="letter">t</span><span class="letter">.</span></span>
+                </h1>
+
+                <div class="chip-bar initial-state">
+                    <button class="chip chip-icon" id="t-chip">
+                        <img src="images/tangent_t_logo.png" alt="T">
+                    </button>
+                    <div id="other-chips">
+                        <button class="chip">What is...</button>
+                        <button class="chip">Context</button>
+                        <button class="chip">Summarize</button>
+                        <button class="chip chip-icon chip-chevron">
+                            <img src="images/chevron_down_arrow.png" alt="More">
+                        </button>
+                    </div>
+                    <div id="email-container" class="email-container">
+                        <input type="email" id="email-input" class="email-input"
+                               placeholder="Enter your Email for early access to Tangent.">
+                        <button id="send-btn" class="send-btn">
+                            <img src="images/tangent_enter_button.png" alt="Send">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Triptych Page 1 -->
+        <div class="triptych-page">
+            <img loading="lazy" src="images/tangent_mobile_triptych_01.png" alt="TANGENT Feature 1" class="triptych-image">
+        </div>
+
+        <!-- Triptych Page 2 -->
+        <div class="triptych-page">
+            <img loading="lazy" src="images/tangent_mobile_triptych_02.png" alt="TANGENT Feature 2" class="triptych-image">
+        </div>
+
+        <!-- Triptych Page 3 -->
+        <div class="triptych-page">
+            <img loading="lazy" src="images/tangent_mobile_triptych_03.png" alt="TANGENT Feature 3" class="triptych-image">
+        </div>
+    </div>
+
+    <script>
+        /* ===== CHIP BAR STATE TOGGLE ===== */
+        const tChip = document.getElementById('t-chip');
+        const chipBar = document.querySelector('.chip-bar');
+        const emailInput = document.getElementById('email-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        function toggleChipBarState() {
+            if (chipBar.classList.contains('initial-state')) {
+                chipBar.classList.remove('initial-state');
+                chipBar.classList.add('email-state');
+                setTimeout(() => emailInput.focus(), 100);
+            } else {
+                chipBar.classList.remove('email-state');
+                chipBar.classList.add('initial-state');
+            }
+        }
+
+        tChip.addEventListener('click', toggleChipBarState);
+
+        /* ===== EMAIL SUBMISSION ===== */
+        async function handleSubmit(e) {
+            e.preventDefault();
+
+            const email = emailInput.value.trim();
+
+            if (!email) {
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                return;
+            }
+
+            // Show thank you modal
+            showThankYouModal();
+
+            // Clear the chip bar email input
+            emailInput.value = '';
+
+            // Toggle back to chip state
+            setTimeout(() => toggleChipBarState(), 1500);
+        }
+
+        // Thank you modal
+        function showThankYouModal() {
+            // Create modal overlay
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                inset: 0;
+                background: rgba(15, 23, 42, 0.55);
+                backdrop-filter: blur(8px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+            `;
+
+            // Create modal content
+            modal.innerHTML = `
+                <div style="
+                    position: relative;
+                    background: rgba(255, 255, 255, 0.08);
+                    backdrop-filter: blur(20px);
+                    -webkit-backdrop-filter: blur(20px);
+                    border: 1px solid rgba(255, 255, 255, 0.18);
+                    border-radius: 16px;
+                    padding: 48px 40px;
+                    width: 90%;
+                    max-width: 380px;
+                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                    color: #fff;
+                    text-align: center;
+                ">
+                    <button style="
+                        position: absolute;
+                        top: 16px;
+                        right: 16px;
+                        background: transparent;
+                        border: none;
+                        color: rgba(255, 255, 255, 0.7);
+                        font-size: 24px;
+                        cursor: pointer;
+                        padding: 4px 8px;
+                        line-height: 1;
+                        transition: color 0.2s;
+                    " onclick="this.closest('div').parentElement.remove()">×</button>
+
+                    <div style="display: flex; justify-content: center; margin-bottom: 24px;">
+                        <img src="images/welcome_logo.png" alt="Welcome" style="height: 48px;" />
+                    </div>
+
+                    <p style="
+                        margin: 0 0 20px 0;
+                        font-size: 16px;
+                        font-weight: 400;
+                        line-height: 1.6;
+                        color: #fff;
+                    ">
+                        Tangent exists to support thinking, not replace it.
+                    </p>
+
+                    <p style="
+                        margin: 0;
+                        font-size: 14px;
+                        font-weight: 400;
+                        font-style: italic;
+                        line-height: 1.6;
+                        color: rgba(255, 255, 255, 0.75);
+                    ">
+                        Keep an eye on your inbox.<br>Early access begins soon.
+                    </p>
+                </div>
+            `;
+
+            // Add to page
+            document.body.appendChild(modal);
+
+            // Auto-close after 4 seconds
+            setTimeout(() => {
+                modal.style.opacity = '0';
+                modal.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => modal.remove(), 300);
+            }, 4000);
+
+            // Click backdrop to close
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.opacity = '0';
+                    modal.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => modal.remove(), 300);
+                }
+            });
+        }
+
+        // Send button click
+        sendBtn.addEventListener('click', handleSubmit);
+
+        // Enter key in email input
+        emailInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleSubmit(e);
+            }
+        });
+
+        /* ===== CURSOR ANIMATION (MOBILE-ADAPTED) ===== */
+        async function runCursorAnimation() {
+            const cursor = document.querySelector('.animated-cursor');
+            const cursorImg = cursor.querySelector('img');
+            const tangentWord = document.getElementById('tangent-word');
+            const letters = tangentWord.querySelectorAll('.letter');
+
+            // Helper functions
+            function delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            async function moveCursor(target, duration) {
+                const rect = target.getBoundingClientRect();
+                const targetX = rect.left + rect.width / 2;
+                const targetY = rect.top + rect.height / 2;
+
+                cursor.style.transition = `left ${duration}ms cubic-bezier(0.4, 0, 0.2, 1), top ${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+                cursor.style.left = targetX + 'px';
+                cursor.style.top = targetY + 'px';
+
+                await delay(duration);
+            }
+
+            // Start cursor off-screen right
+            cursor.style.left = 'calc(100vw + 50px)';
+            cursor.style.top = '30vh';
+            cursor.classList.add('visible');
+
+            // Move to first letter of "Tangent" (before highlighting starts)
+            await moveCursor(letters[0], 700);
+
+            // Switch to I-beam
+            cursorImg.src = 'images/i_beam.png';
+            await delay(150);
+
+            // Highlight letters (faster)
+            for (let letter of letters) {
+                await moveCursor(letter, 80);
+                letter.classList.add('highlighted');
+                await delay(40);
+            }
+
+            // Show chip bar immediately after highlighting
+            chipBar.classList.add('visible');
+            await delay(1500);  // Give users more time to see the prompt chips
+
+            // Switch back to pointer
+            cursorImg.src = 'images/cursor.png';
+            await delay(200);
+
+            // Move to T chip (faster)
+            await moveCursor(tChip, 500);
+
+            // Click animation and trigger click event
+            tChip.classList.add('chip-clicking');
+            tChip.click(); // Actually trigger the click to switch to email mode
+            setTimeout(() => tChip.classList.remove('chip-clicking'), 140);
+
+            await delay(140);
+
+            // Fade out cursor (faster)
+            cursor.style.opacity = '0';
+            await delay(200);
+            cursor.classList.remove('visible');
+        }
+
+        // Start animation on load
+        window.addEventListener('load', () => {
+            setTimeout(runCursorAnimation, 500);
+        });
+
+        /* ===== TRIPTYCH NAVIGATION ===== */
+        const triptychImages = document.querySelectorAll('.triptych-image');
+        const triptychPages = document.querySelectorAll('.triptych-page');
+        const scrollableContent = document.querySelector('.scrollable-content');
+
+        // First image -> scroll to second triptych page
+        triptychImages[0].addEventListener('click', () => {
+            triptychPages[1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // Second image -> scroll to third triptych page
+        triptychImages[1].addEventListener('click', () => {
+            triptychPages[2].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // Third image -> scroll back to top (mobile-container)
+        triptychImages[2].addEventListener('click', () => {
+            scrollableContent.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
