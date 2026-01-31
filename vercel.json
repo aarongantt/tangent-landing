@@ -1,6 +1,18 @@
 {
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini).*"
+        }
+      ],
+      "destination": "/mobile.html",
+      "permanent": false
+    },
+    {
       "source": "/demo.html",
       "destination": "/",
       "permanent": false
