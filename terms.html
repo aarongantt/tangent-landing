@@ -5,9 +5,444 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Terms of Service - TANGENT</title>
     <link rel="stylesheet" href="/styles.css">
+    <style>
+        .terms-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #333;
+        }
+        .terms-container h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+        .terms-container h2 {
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            color: #2563eb;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+        .terms-container h3 {
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+        .terms-container p, .terms-container li {
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        .terms-container ul, .terms-container ol {
+            padding-left: 25px;
+        }
+        .terms-container a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .terms-container a:hover {
+            text-decoration: underline;
+        }
+        .last-updated {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        .highlight-box {
+            background: #f3f4f6;
+            border-left: 4px solid #2563eb;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .contact-info {
+            background: #eff6ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
     <div id="header-placeholder"></div>
+
+    <div class="terms-container">
+        <h1>Terms of Service</h1>
+        <p class="last-updated"><strong>Last Updated:</strong> February 10, 2026</p>
+
+        <div class="highlight-box">
+            <p><strong>Agreement:</strong> By using TANGENT, you agree to these Terms of Service. Please read them carefully. If you don't agree, please do not use our service.</p>
+        </div>
+
+        <h2>1. Acceptance of Terms</h2>
+        <p>These Terms of Service ("Terms") govern your access to and use of the TANGENT Chrome extension and related services (collectively, the "Service"). By installing, accessing, or using TANGENT, you agree to be bound by these Terms and our <a href="/privacy.html">Privacy Policy</a>.</p>
+
+        <p>If you are using TANGENT on behalf of an organization, you represent that you have authority to bind that organization to these Terms.</p>
+
+        <h2>2. Service Description</h2>
+        <p>TANGENT is an AI-powered browser assistant that allows you to:</p>
+        <ul>
+            <li>Select text on any webpage and get AI-generated responses</li>
+            <li>Analyze page content using pre-built or custom prompt chips</li>
+            <li>Engage in contextual conversations with AI models</li>
+            <li>Create and manage AI-powered drafts and notes</li>
+        </ul>
+
+        <p>The Service uses AI models provided by OpenAI (including GPT-4o and gpt-4o-mini). AI-generated responses may not always be accurate, complete, or suitable for your specific needs. You are responsible for verifying any information before relying on it.</p>
+
+        <h2>3. Eligibility</h2>
+        <p>You must be at least <strong>13 years old</strong> to use TANGENT. If you are under 18, you must have parental or guardian permission to use the Service.</p>
+
+        <p>By using TANGENT, you represent and warrant that:</p>
+        <ul>
+            <li>You meet the age requirement</li>
+            <li>You have the legal capacity to enter into these Terms</li>
+            <li>Your use complies with all applicable laws and regulations</li>
+        </ul>
+
+        <h2>4. Account Registration</h2>
+
+        <h3>4.1 Account Creation</h3>
+        <p>To access certain features, you must create an account by providing:</p>
+        <ul>
+            <li>A valid email address</li>
+            <li>A secure password</li>
+        </ul>
+
+        <p>You are responsible for:</p>
+        <ul>
+            <li>Maintaining the confidentiality of your account credentials</li>
+            <li>All activities that occur under your account</li>
+            <li>Notifying us immediately of any unauthorized access</li>
+        </ul>
+
+        <h3>4.2 Free Trial</h3>
+        <p>New users receive a <strong>7-day free trial</strong> with limited quota. Trial terms:</p>
+        <ul>
+            <li>One trial per email address</li>
+            <li>Trial ends after 7 days or when quota is exhausted (whichever comes first)</li>
+            <li>No credit card required for trial</li>
+            <li>Trial accounts have restricted features (no custom chips)</li>
+        </ul>
+
+        <h3>4.3 Account Security</h3>
+        <p>We implement security measures to protect your account, but you must:</p>
+        <ul>
+            <li>Use a strong, unique password</li>
+            <li>Not share your account credentials</li>
+            <li>Log out from shared devices</li>
+            <li>Report suspicious activity immediately</li>
+        </ul>
+
+        <h2>5. Subscription Plans and Billing</h2>
+
+        <h3>5.1 Paid Plans</h3>
+        <p>TANGENT offers subscription plans with different quota allowances:</p>
+        <ul>
+            <li><strong>Pro</strong> – $12/month or $144/year</li>
+            <li><strong>Business Solo</strong> – $30/month or $306/year</li>
+        </ul>
+
+        <p>Pricing and plans are subject to change with 30 days' notice.</p>
+
+        <h3>5.2 Billing and Payment</h3>
+        <ul>
+            <li>Payments are processed securely by <strong>Stripe</strong></li>
+            <li>Subscriptions auto-renew unless canceled</li>
+            <li>You authorize us to charge your payment method on each billing cycle</li>
+            <li>Failed payments may result in service suspension</li>
+            <li>All fees are in USD and non-refundable except as required by law</li>
+        </ul>
+
+        <h3>5.3 Quota System</h3>
+        <p>Each subscription plan includes a monthly quota measured in <strong>units</strong>:</p>
+        <ul>
+            <li><strong>Standard queries</strong> cost 1 unit each</li>
+            <li><strong>Deep/complex queries</strong> cost 50 units each</li>
+            <li>AI automatically routes queries based on complexity</li>
+            <li>Quotas reset monthly on your billing cycle anniversary</li>
+        </ul>
+
+        <div class="warning-box">
+            <p><strong>Quota Exhaustion:</strong> When your quota is exhausted, you can:</p>
+            <ul style="margin-bottom: 0;">
+                <li>Wait for your monthly reset</li>
+                <li>Upgrade to a higher plan</li>
+                <li>Enable overages ($0.01 per unit, opt-in required)</li>
+            </ul>
+        </div>
+
+        <h3>5.4 Refunds and Cancellation</h3>
+        <ul>
+            <li><strong>Monthly subscriptions:</strong> Cancel anytime via <a href="https://www.tangentapp.co/account">Account Settings</a>. No prorated refunds; access continues until end of billing period.</li>
+            <li><strong>Annual subscriptions:</strong> Cancel anytime. No refunds for unused months except as required by law.</li>
+            <li><strong>Free trial:</strong> Cancel before trial ends to avoid charges.</li>
+            <li><strong>Refund requests:</strong> Email <a href="mailto:support@tangentapp.co">support@tangentapp.co</a> within 7 days of charge.</li>
+        </ul>
+
+        <h2>6. Acceptable Use Policy</h2>
+
+        <h3>6.1 Permitted Use</h3>
+        <p>You may use TANGENT for lawful purposes, including:</p>
+        <ul>
+            <li>Research and learning</li>
+            <li>Content analysis and summarization</li>
+            <li>Writing assistance and brainstorming</li>
+            <li>Professional and personal productivity</li>
+        </ul>
+
+        <h3>6.2 Prohibited Use</h3>
+        <p>You agree NOT to use TANGENT to:</p>
+        <ul>
+            <li><strong>Violate laws</strong> – Engage in illegal activities or promote harm</li>
+            <li><strong>Abuse the service</strong> – Scraping, automated bot usage, or quota circumvention</li>
+            <li><strong>Infringe rights</strong> – Violate intellectual property, privacy, or other rights</li>
+            <li><strong>Spread misinformation</strong> – Generate or distribute false, misleading, or harmful content</li>
+            <li><strong>Bypass restrictions</strong> – Attempt to access restricted domains (banking, government sites)</li>
+            <li><strong>Reverse engineer</strong> – Decompile, disassemble, or reverse-engineer the Service</li>
+            <li><strong>Resell or sublicense</strong> – Share your account or resell access to TANGENT</li>
+            <li><strong>Harm systems</strong> – Introduce malware, viruses, or disruptive code</li>
+        </ul>
+
+        <h3>6.3 Content Restrictions</h3>
+        <p>Do not submit content that is:</p>
+        <ul>
+            <li>Illegal, hateful, or promotes violence</li>
+            <li>Pornographic or sexually explicit</li>
+            <li>Spam or phishing</li>
+            <li>Invasive of others' privacy</li>
+            <li>Infringing on intellectual property rights</li>
+        </ul>
+
+        <h3>6.4 Restricted Domains</h3>
+        <p>TANGENT is automatically disabled on:</p>
+        <ul>
+            <li>Banking and financial sites (Chase, Bank of America, PayPal, etc.)</li>
+            <li>Government sites (IRS, SSA, login.gov, etc.)</li>
+            <li>Healthcare sites with HIPAA protections (Epic, Cerner, MyChart, etc.)</li>
+            <li>Legal sites with attorney-client privilege (Westlaw, LexisNexis, etc.)</li>
+        </ul>
+
+        <p>This is to protect sensitive information and comply with regulations.</p>
+
+        <h2>7. AI-Generated Content</h2>
+
+        <h3>7.1 No Guarantee of Accuracy</h3>
+        <p>AI-generated responses may contain:</p>
+        <ul>
+            <li>Factual errors or outdated information</li>
+            <li>Biased or inappropriate content</li>
+            <li>Incomplete or misleading answers</li>
+        </ul>
+
+        <p><strong>You are solely responsible for verifying AI-generated content before using it.</strong> TANGENT is not liable for any decisions made based on AI responses.</p>
+
+        <h3>7.2 Content Ownership</h3>
+        <ul>
+            <li><strong>Your input:</strong> You retain all rights to content you submit to TANGENT.</li>
+            <li><strong>AI output:</strong> You own AI-generated responses created for you, subject to these Terms.</li>
+            <li><strong>Our rights:</strong> You grant us a license to process your input to provide the Service.</li>
+        </ul>
+
+        <h3>7.3 Third-Party AI Providers</h3>
+        <p>TANGENT uses OpenAI's models. By using our Service, you also agree to OpenAI's:</p>
+        <ul>
+            <li><a href="https://openai.com/terms/" target="_blank">Terms of Use</a></li>
+            <li><a href="https://openai.com/policies/usage-policies" target="_blank">Usage Policies</a></li>
+        </ul>
+
+        <h2>8. Intellectual Property</h2>
+
+        <h3>8.1 Our Intellectual Property</h3>
+        <p>TANGENT and all related trademarks, logos, and content are owned by us or our licensors. You may not:</p>
+        <ul>
+            <li>Copy, modify, or distribute our software</li>
+            <li>Use our trademarks without permission</li>
+            <li>Create derivative works</li>
+            <li>Remove copyright or proprietary notices</li>
+        </ul>
+
+        <h3>8.2 License Grant</h3>
+        <p>We grant you a limited, non-exclusive, non-transferable, revocable license to use TANGENT for personal or internal business use, subject to these Terms.</p>
+
+        <h3>8.3 User Feedback</h3>
+        <p>If you provide feedback or suggestions about TANGENT, we may use them without obligation or compensation to you.</p>
+
+        <h2>9. Privacy and Data Protection</h2>
+        <p>Your privacy is important to us. Our <a href="/privacy.html">Privacy Policy</a> explains how we collect, use, and protect your data. Key points:</p>
+        <ul>
+            <li>We collect minimal data necessary for the Service</li>
+            <li>Usage logs are deleted after 90 days</li>
+            <li>Conversation history is stored locally on your device</li>
+            <li>You can request data export or deletion anytime</li>
+            <li>We comply with GDPR and CCPA</li>
+        </ul>
+
+        <h2>10. Disclaimers and Limitations of Liability</h2>
+
+        <h3>10.1 Service "As Is"</h3>
+        <p>TANGENT is provided "AS IS" and "AS AVAILABLE" without warranties of any kind, either express or implied, including but not limited to:</p>
+        <ul>
+            <li>Merchantability, fitness for a particular purpose, or non-infringement</li>
+            <li>Uninterrupted, error-free, or secure operation</li>
+            <li>Accuracy, reliability, or quality of AI responses</li>
+        </ul>
+
+        <h3>10.2 Limitation of Liability</h3>
+        <p>To the maximum extent permitted by law, TANGENT and its affiliates shall not be liable for:</p>
+        <ul>
+            <li><strong>Indirect damages</strong> – Lost profits, data, goodwill, or business opportunities</li>
+            <li><strong>Consequential damages</strong> – Resulting from use or inability to use the Service</li>
+            <li><strong>Third-party conduct</strong> – Actions or content from other users or OpenAI</li>
+        </ul>
+
+        <p><strong>Maximum liability:</strong> Our total liability to you for any claims arising from these Terms or the Service shall not exceed the amount you paid us in the 12 months preceding the claim.</p>
+
+        <h3>10.3 Exceptions</h3>
+        <p>Some jurisdictions do not allow exclusion of certain warranties or limitation of liability for incidental or consequential damages. In such cases, our liability is limited to the maximum extent permitted by law.</p>
+
+        <h2>11. Indemnification</h2>
+        <p>You agree to indemnify, defend, and hold harmless TANGENT and its officers, directors, employees, and agents from any claims, liabilities, damages, losses, and expenses (including legal fees) arising from:</p>
+        <ul>
+            <li>Your use or misuse of the Service</li>
+            <li>Your violation of these Terms</li>
+            <li>Your violation of any third-party rights</li>
+            <li>Content you submit through TANGENT</li>
+        </ul>
+
+        <h2>12. Service Availability and Modifications</h2>
+
+        <h3>12.1 Service Changes</h3>
+        <p>We reserve the right to:</p>
+        <ul>
+            <li>Modify or discontinue the Service at any time</li>
+            <li>Change features, functionality, or quota limits</li>
+            <li>Update pricing with 30 days' notice</li>
+        </ul>
+
+        <h3>12.2 Service Interruptions</h3>
+        <p>We strive for 99.9% uptime but cannot guarantee uninterrupted service. The Service may be temporarily unavailable due to:</p>
+        <ul>
+            <li>Scheduled maintenance</li>
+            <li>Technical issues or third-party provider outages</li>
+            <li>Security incidents or emergency updates</li>
+        </ul>
+
+        <h3>12.3 Beta Features</h3>
+        <p>Some features may be labeled "beta" or "experimental." These are provided for testing purposes and may be unstable, change without notice, or be discontinued.</p>
+
+        <h2>13. Termination</h2>
+
+        <h3>13.1 Termination by You</h3>
+        <p>You may terminate your account at any time by:</p>
+        <ul>
+            <li>Canceling your subscription via <a href="https://www.tangentapp.co/account">Account Settings</a></li>
+            <li>Requesting account deletion (30-day grace period)</li>
+        </ul>
+
+        <h3>13.2 Termination by Us</h3>
+        <p>We may suspend or terminate your account if you:</p>
+        <ul>
+            <li>Violate these Terms or our policies</li>
+            <li>Engage in abusive or fraudulent behavior</li>
+            <li>Fail to pay subscription fees</li>
+            <li>Remain inactive for 3 years</li>
+        </ul>
+
+        <p>We'll provide notice when possible, except for serious violations requiring immediate action.</p>
+
+        <h3>13.3 Effect of Termination</h3>
+        <p>Upon termination:</p>
+        <ul>
+            <li>Your access to the Service ends immediately</li>
+            <li>Unpaid fees become due</li>
+            <li>We may delete your data per our <a href="/privacy.html">Privacy Policy</a></li>
+            <li>Sections of these Terms that should survive (liability, indemnification) remain in effect</li>
+        </ul>
+
+        <h2>14. Dispute Resolution</h2>
+
+        <h3>14.1 Governing Law</h3>
+        <p>These Terms are governed by the laws of the <strong>State of Delaware, United States</strong>, without regard to conflict of law principles.</p>
+
+        <h3>14.2 Arbitration Agreement</h3>
+        <p>Any disputes arising from these Terms or the Service shall be resolved through <strong>binding arbitration</strong> rather than in court, except:</p>
+        <ul>
+            <li>Small claims court actions (under $10,000)</li>
+            <li>Intellectual property disputes</li>
+            <li>Claims for injunctive relief</li>
+        </ul>
+
+        <p>Arbitration will be conducted by the <strong>American Arbitration Association (AAA)</strong> under its Commercial Arbitration Rules. You waive your right to a jury trial and class action lawsuits.</p>
+
+        <h3>14.3 Informal Resolution</h3>
+        <p>Before filing arbitration, you agree to first contact us at <a href="mailto:support@tangentapp.co">support@tangentapp.co</a> to attempt informal resolution. We'll work in good faith to resolve the issue.</p>
+
+        <h2>15. General Provisions</h2>
+
+        <h3>15.1 Entire Agreement</h3>
+        <p>These Terms, together with our Privacy Policy, constitute the entire agreement between you and TANGENT.</p>
+
+        <h3>15.2 Severability</h3>
+        <p>If any provision of these Terms is found unenforceable, the remaining provisions will continue in full force.</p>
+
+        <h3>15.3 No Waiver</h3>
+        <p>Our failure to enforce any right or provision does not constitute a waiver of that right.</p>
+
+        <h3>15.4 Assignment</h3>
+        <p>You may not assign these Terms without our consent. We may assign our rights and obligations to any affiliate or successor.</p>
+
+        <h3>15.5 Force Majeure</h3>
+        <p>We are not liable for delays or failures due to events beyond our reasonable control (natural disasters, war, pandemics, provider outages, etc.).</p>
+
+        <h3>15.6 Export Compliance</h3>
+        <p>You agree to comply with all export and import laws. You represent that you are not located in a sanctioned country and are not on any government restricted parties list.</p>
+
+        <h2>16. Updates to These Terms</h2>
+        <p>We may update these Terms to reflect:</p>
+        <ul>
+            <li>Changes to our Service or business practices</li>
+            <li>Legal or regulatory requirements</li>
+            <li>Security or privacy improvements</li>
+        </ul>
+
+        <p>When we make material changes:</p>
+        <ul>
+            <li>We'll update the "Last Updated" date</li>
+            <li>We'll notify you via email or in-app notification</li>
+            <li>Continued use after changes constitutes acceptance</li>
+        </ul>
+
+        <p>If you disagree with changes, you must stop using the Service and cancel your account.</p>
+
+        <h2>17. Contact Information</h2>
+
+        <div class="contact-info">
+            <p><strong>Questions about these Terms?</strong> We're here to help:</p>
+            <ul style="margin-bottom: 0;">
+                <li><strong>Support:</strong> <a href="mailto:support@tangentapp.co">support@tangentapp.co</a></li>
+                <li><strong>Legal:</strong> <a href="mailto:legal@tangentapp.co">legal@tangentapp.co</a></li>
+                <li><strong>Account Issues:</strong> <a href="https://www.tangentapp.co/account">tangentapp.co/account</a></li>
+            </ul>
+        </div>
+
+        <hr style="margin: 40px 0; border: 0; border-top: 1px solid #e5e7eb;">
+
+        <p style="color: #6b7280; font-size: 14px;">
+            By using TANGENT, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service and our <a href="/privacy.html">Privacy Policy</a>.
+        </p>
+    </div>
 
     <!-- Unified auth and navigation -->
     <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
@@ -18,12 +453,12 @@
             .then(response => response.text())
             .then(html => {
                 document.getElementById('header-placeholder').innerHTML = html;
-                
+
                 // Setup mobile menu handlers
                 const menuToggle = document.getElementById('mobileMenuToggle');
                 const mobileMenu = document.getElementById('mobileMenu');
                 const menuOverlay = document.getElementById('mobileMenuOverlay');
-                
+
                 if (menuToggle && mobileMenu && menuOverlay) {
                     function toggleMenu() {
                         const isActive = mobileMenu.classList.contains('active');
@@ -49,42 +484,42 @@
                         });
                     });
                 }
-                
+
                 // Check auth state
                 return checkAuth();
             })
             .catch(error => console.error('Error loading header:', error));
-        
+
         async function checkAuth() {
             const {createClient} = window.supabase || {};
             if (!createClient) {
                 makeNavVisible();
                 return;
             }
-            
+
             const supabase = createClient(
                 'https://kkufltyogoaoxacvhdab.supabase.co',
                 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtrdWZsdHlvZ29hb3hhY3ZoZGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI1OTUzOTQsImV4cCI6MjA0ODE3MTM5NH0.wOkUq0H1JR4lRUn_HkuT87cPPY0qyBG6JeCCkZ51-_Q'
             );
-            
+
             const {data, error} = await supabase.auth.getSession();
             const loggedIn = !error && data?.session;
-            
+
             function toggle(id, show) {
                 const el = document.getElementById(id);
                 if (el) el.style.display = show ? '' : 'none';
             }
-            
+
             toggle('navSubscribe', !loggedIn);
             toggle('navLogin', !loggedIn);
             toggle('navAccount', loggedIn);
             toggle('navSignOut', loggedIn);
-            
+
             toggle('mobileNavSubscribe', !loggedIn);
             toggle('mobileNavLogin', !loggedIn);
             toggle('mobileNavAccount', loggedIn);
             toggle('mobileNavSignOut', loggedIn);
-            
+
             if (loggedIn) {
                 const signOut = async () => {
                     await supabase.auth.signOut();
@@ -93,10 +528,10 @@
                 document.getElementById('navSignOut')?.addEventListener('click', signOut);
                 document.getElementById('mobileNavSignOut')?.addEventListener('click', signOut);
             }
-            
+
             makeNavVisible();
         }
-        
+
         function makeNavVisible() {
             const nav = document.getElementById('navRoot');
             if (nav) {
