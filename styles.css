@@ -4,10 +4,10 @@
     --bg: #05060a;
     --bg-alt: #0b0d14;
     --bg-soft: #121520;
-    --accent: #4a90e2;
-    /* Tangent blue-ish */
-    --accent-soft: rgba(74, 144, 226, 0.15);
-    --accent-strong: #6aa6ff;
+    --accent: #2a8fd5;
+    /* Tangent blue — matches extension --tg-accent */
+    --accent-soft: rgba(42, 143, 213, 0.15);
+    --accent-strong: #4a9eff;
     --text-main: #f5f7ff;
     --text-muted: #b1b5c9;
     --border-subtle: #1f2232;
