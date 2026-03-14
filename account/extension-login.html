@@ -9,7 +9,12 @@
     (function() {
       const params = new URLSearchParams(location.search);
       const theme = (params.get('theme') || 'light').toLowerCase();
+      const bgColor = params.get('bg') || (theme === 'dark' ? '0b0f1b' : 'ffffff');
+
       document.documentElement.setAttribute('data-theme', theme);
+
+      // Force exact background color from URL parameter
+      document.write('<style>body { background: #' + bgColor + ' !important; }</style>');
     })();
   </script>
   <style>
