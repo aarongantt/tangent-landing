@@ -1,15 +1,23 @@
-<!DOCTYPE html> 
-<html lang="en" data-theme="light">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tangent – Sign In</title>
+  <!-- CRITICAL: Apply theme BEFORE any content renders to prevent white flash -->
+  <script>
+    (function() {
+      const params = new URLSearchParams(location.search);
+      const theme = (params.get('theme') || 'light').toLowerCase();
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <style>
     :root {
-      --tg-bg: #0a0f1c;
+      --tg-bg: #0b0f1b;
       --tg-fg: #e9eef5;
-      --tg-card: rgba(12,14,20,0.96);
-      --tg-border: rgba(255,255,255,0.16);
+      --tg-card: #0b0f1b;
+      --tg-border: rgba(255,255,255,0.12);
       --tg-link: #9ecbff;
     }
     :root[data-theme="light"] {
@@ -118,14 +126,6 @@
   <script>
     (function() {
       const params = new URLSearchParams(location.search);
-      const theme = (params.get('theme') || 'auto').toLowerCase();
-      if (theme === 'dark') document.documentElement.dataset.theme = 'dark';
-      else if (theme === 'light') document.documentElement.dataset.theme = 'light';
-      else {
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        document.documentElement.dataset.theme = prefersDark ? 'dark' : 'light';
-      }
-
       const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
       const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhudXFyZm5mb2t4dHV2aGxnc2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDcwODAsImV4cCI6MjA3ODYyMzA4MH0.AAmo_H2aXdeEzYVFDLXlvER9O0y5teRwkEVnbcsO0bg";
       const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false } });

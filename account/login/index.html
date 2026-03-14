@@ -157,9 +157,27 @@
 
     async function doSignIn(email, password) {
       setStatus("Signing in…");
-      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      const { error, data } = await supabaseClient.auth.signInWithPassword({ email, password });
       if (error) throw new Error(error.message || "Sign-in failed.");
+
       setStatus("Signed in. Redirecting…", "ok");
+
+      // Notify TANGENT extension that auth succeeded via postMessage
+      // (TANGENT content script listens for this and forwards to extension)
+      const accessToken = data?.session?.access_token;
+      if (accessToken) {
+        try {
+          window.postMessage({
+            type: 'TANGENT_WEB_AUTH_SUCCESS',
+            token: accessToken,
+            source: 'tangent-landing-page'
+          }, window.location.origin);
+          console.log('[TANGENT] Posted auth success message to window');
+        } catch (err) {
+          console.log('[TANGENT] Could not post message:', err);
+        }
+      }
+
       setTimeout(() => { window.location.href = "/account"; }, 300);
     }
 
