@@ -30,8 +30,8 @@
           <input id="tgLoginPassword" type="password" autocomplete="current-password" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(5,6,10,0.7);color:#e5e7eb;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);" />
         </label>
         <div style="display:flex;gap:10px;margin-top:12px;">
-          <button id="tgLoginSignIn" class="cta-button secondary" style="flex:1;padding:10px 14px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 120ms ease;background:#64748b;color:#fff;">Sign In</button>
-          <button id="tgLoginSignUp" class="cta-button secondary" style="flex:1;padding:10px 14px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 120ms ease;background:#64748b;color:#fff;">Sign Up</button>
+          <button id="tgLoginSignIn" class="cta-button secondary" style="flex:1;padding:10px 14px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 120ms ease;background:#2a8fd5;color:#fff;">Sign In</button>
+          <button id="tgLoginSignUp" class="cta-button secondary" style="flex:1;padding:10px 14px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 120ms ease;background:#2a8fd5;color:#fff;">Sign Up</button>
         </div>
         <p id="tgLoginStatus" style="min-height:18px;font-size:13px;margin-top:10px;"></p>
       </div>

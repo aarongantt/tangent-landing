@@ -25,6 +25,26 @@
     console.error('Failed to load header:', error);
   }
 
+  // Check for auth tokens passed from extension via URL hash (extension → website bridge)
+  const hashParams = new URLSearchParams(window.location.hash.substring(1));
+  const bridgeAccessToken = hashParams.get('access_token');
+  const bridgeRefreshToken = hashParams.get('refresh_token');
+  const bridgeType = hashParams.get('type');
+
+  if (bridgeAccessToken && bridgeRefreshToken && bridgeType === 'extension_bridge') {
+    try {
+      await supabase.auth.setSession({
+        access_token: bridgeAccessToken,
+        refresh_token: bridgeRefreshToken
+      });
+      // Clean up URL hash (remove tokens for security)
+      const cleanUrl = window.location.href.split('#')[0] + (window.location.search || '');
+      window.history.replaceState(null, '', cleanUrl);
+    } catch (err) {
+      console.error('[AUTH] Failed to restore session from extension:', err);
+    }
+  }
+
   // Check auth state
   const {data, error} = await supabase.auth.getSession();
   const loggedIn = !error && data?.session;
