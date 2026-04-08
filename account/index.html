@@ -1742,8 +1742,21 @@
             throw new Error(errorData.error || "Failed to create subscription");
           }
 
-          const { clientSecret: subClientSecret } = await subscriptionResponse.json();
-          clientSecret = subClientSecret;
+          const subData = await subscriptionResponse.json();
+
+          // If subscription auto-activated (customer had saved payment method), skip payment form
+          if (subData.alreadyActive) {
+            closePaymentModal();
+            // Show success and reload page
+            const successMsg = document.createElement('div');
+            successMsg.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#2a8fd5;color:#fff;padding:14px 28px;border-radius:8px;font-weight:600;font-size:16px;z-index:999999;box-shadow:0 4px 20px rgba(0,0,0,0.3);';
+            successMsg.textContent = 'Subscription Activated!';
+            document.body.appendChild(successMsg);
+            setTimeout(() => { successMsg.remove(); window.location.reload(); }, 2000);
+            return;
+          }
+
+          clientSecret = subData.clientSecret;
         } else {
           // For one-time payments, create payment intent
           const response = await fetch(`${API_BASE}/api/create-payment-intent`, {
