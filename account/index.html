@@ -83,8 +83,10 @@
     .plan-card h4, .plan-card .plan-price, .plan-card .plan-desc, .plan-card .plan-list, .plan-card .plan-actions { text-align: left !important; }
     .plans-grid { overflow: visible !important; }
 
-    /* Section headings */
-    #plans-container h3, .section h3 { color: #ffffff !important; }
+    /* Section headings — left justified */
+    #plans-container h3, .section h3, .account-card h1 { color: #ffffff !important; text-align: left !important; }
+    .section-block, .content-narrow { text-align: left !important; }
+    .account-card { text-align: left !important; }
 
     /* Payment modal inside panel */
     .tg-payment-card {
@@ -682,22 +684,10 @@
               <!-- T logo background + warning banners appear here -->
             </div>
             <div class="account-actions">
-              <a href="/download" class="cta-button" style="
-                text-decoration: none;
-                text-align: center;
-                padding: 10px 14px;
-                font-size: 14px;
-                font-weight: 800;
-                background: linear-gradient(135deg, #2a8fd5, #3b82f6);
-                border: 1px solid #ffffff;
-                color: #ffffff;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-              ">Download Tangent</a>
+              <a href="/download" class="cta-button" style="text-decoration:none;text-align:center;display:inline-flex;align-items:center;justify-content:center;">Download Tangent</a>
               <button id="sign-out" class="cta-button">Sign Out</button>
-              <button id="billing-portal" class="cta-button secondary" disabled>Billing Portal</button>
-              <button id="cancel-plan" class="cta-button secondary" disabled>Cancel Plan</button>
+              <button id="billing-portal" class="cta-button secondary">Billing Portal</button>
+              <button id="cancel-plan" class="cta-button secondary">Cancel Plan</button>
             </div>
           </div>
         </div>
