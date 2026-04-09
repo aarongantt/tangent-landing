@@ -173,7 +173,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 16px;
-      align-items: start;
+      align-items: center;
       min-height: auto;
       position: relative;
     }
@@ -1257,7 +1257,7 @@
           "Priority access to new features and improvements",
           "Email support"
         ],
-        altPrice: "$25.50 / mo ($306 billed annually)"
+        altPrice: "$25 / mo ($300 Billed Annually)"
       }
     ];
 
@@ -1468,7 +1468,7 @@
               planPrice = "$10/month ($120 billed annually)";
             } else if (planCode.includes("business_solo")) {
               planName = "Business (Solo)";
-              planPrice = "$25.50/month ($306 billed annually)";
+              planPrice = "$25/month ($300 Billed Annually)";
             } else if (planCode.includes("business_teams")) {
               planName = "Business (Teams)";
               planPrice = "$40.83/month per seat ($490 billed annually)";
@@ -1500,7 +1500,7 @@
           const existingBanner = document.querySelector('.token-exhausted-banner');
           if (existingBanner) existingBanner.remove();
 
-          planDetails.innerHTML = "<p>Please sign in to view your plan.</p>";
+          planDetails.innerHTML = "<p style='font-style:italic;'>Please sign in to view your plan.</p>";
           billingBtn.disabled = true;
           setNavLoggedOut();
           // Show all plans when not signed in (including Free Trial)
