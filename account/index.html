@@ -42,7 +42,8 @@
     .account-card h1, .account-card h2, .account-card h3 { color: #ffffff !important; }
     .account-card p, .account-card span, .account-card label { color: rgba(255,255,255,0.9) !important; }
     .account-card a { color: #ffffff !important; text-decoration: underline !important; }
-    .account-card .cta-button { color: #4a6a8a !important; background: #ffffff !important; text-decoration: none !important; }
+    .account-card .cta-button { color: #ffffff !important; background: #2a8fd5 !important; text-decoration: none !important; border: none !important; box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important; }
+    .account-card .cta-button.secondary { background: rgba(255,255,255,0.15) !important; border: 1px solid rgba(255,255,255,0.3) !important; }
 
     /* Plan cards — semi-transparent matching signup style */
     .plan-card {
@@ -129,18 +130,18 @@
     }
     .nav-guard { opacity: 0; visibility: hidden; }
     .account-card {
-      background: linear-gradient(180deg, #6b87a8 0%, #8da4bc 40%, #a7b8c9 100%);
-      border: none;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
       border-radius: 16px;
       padding: 18px 26px;
       width: 100%;
       max-width: 1040px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
       color: #ffffff;
       margin: 0 auto;
       position: relative;
       overflow: hidden;
-      min-height: 260px;
+      min-height: auto;
     }
     .account-card h2, .account-card h3, .account-card h4,
     .account-card p, .account-card span, .account-card label,
@@ -265,6 +266,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 16px;
+      align-items: stretch;
     }
     .plan-card {
       background: rgba(255,255,255,0.1);
@@ -313,6 +315,7 @@
       font-size: 13px;
       line-height: 1.5;
       list-style: none;
+      flex: 1;
     }
     .plan-list li {
       position: relative;
@@ -1214,7 +1217,6 @@
           "Automatic AI model selection (picks the right depth for each task)",
           "All core Tangent chips (Explain, Summarize, Translate, Teach Me, etc.)",
           "Context-aware responses that automatically understand the page",
-          "Support for long articles and docs",
           "7-day trial period"
         ],
         altPrice: null,
