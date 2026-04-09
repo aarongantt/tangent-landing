@@ -182,6 +182,9 @@
             box-sizing: border-box !important;
             overflow: hidden !important;
         }
+        /* Add top padding to non-featured cards so titles align with Pro (which has Most Popular badge) */
+        .pricing-card:not(.pricing-card-featured) { padding-top: 32px !important; }
+        .pricing-tier-grid { margin-top: 16px !important; }
         .pricing-card .pricing-name { font-size: 24px !important; margin-bottom: 6px !important; }
         .pricing-card .pricing-price { font-size: 26px !important; font-weight: 800 !important; margin-bottom: 8px !important; }
         .pricing-card .pricing-price small { font-size: 14px !important; color: rgba(255,255,255,0.7) !important; }
@@ -211,8 +214,8 @@
         /* removed — conflicted with 1040px max-width above */
         /* Override global styles — fit everything inside the visible blue area of the panel image */
         :root { --max-width: 1040px !important; }
-        .panel-main { overflow: hidden !important; }
-        .panel-content { padding: 1% 3% !important; }
+        .panel-main { overflow: visible !important; }
+        .panel-content { overflow-y: auto !important; overflow-x: hidden !important; padding: 1% 3% !important; }
         .pricing-tier-grid { width: 100% !important; box-sizing: border-box !important; }
         .pricing-card-featured .pill-tag {
             top: 24px;
