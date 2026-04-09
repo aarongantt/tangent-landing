@@ -48,22 +48,23 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    overflow: visible;
 }
 
 /* Scrollable content inside panel */
 .panel-content {
     flex: 1;
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
     padding: 1% 3%;
+    padding-top: 20px;
     color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     box-sizing: border-box;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 .panel-content::-webkit-scrollbar {

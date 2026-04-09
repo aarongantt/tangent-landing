@@ -172,7 +172,7 @@
             word-wrap: break-word !important;
         }
         /* Constrain and make scrollable */
-        .panel-content { overflow-x: hidden !important; overflow-y: auto !important; }
+        /* scrolling handled by panel-template.css */
         main, .section, .section-alt { padding: 0 !important; margin: 0 !important; width: 100% !important; overflow: hidden !important; }
         .container.pricing-layout {
             max-width: 1040px !important;
@@ -182,8 +182,8 @@
             box-sizing: border-box !important;
             overflow: hidden !important;
         }
-        /* Add top padding to non-featured cards so titles align with Pro (which has Most Popular badge) */
-        .pricing-card:not(.pricing-card-featured) { padding-top: 32px !important; }
+        /* Add top padding to non-featured cards so titles align with Pro (which has Most Popular badge inline) */
+        .pricing-card:not(.pricing-card-featured) { padding-top: 36px !important; }
         .pricing-tier-grid { margin-top: 16px !important; }
         .pricing-card .pricing-name { font-size: 24px !important; margin-bottom: 6px !important; }
         .pricing-card .pricing-price { font-size: 26px !important; font-weight: 800 !important; margin-bottom: 8px !important; }
@@ -194,28 +194,27 @@
             background: rgba(255,255,255,0.18) !important;
         }
         .pricing-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
+            display: inline-block;
             background: #ffffff;
             color: #2a8fd5;
             font-size: 0.75rem;
             font-weight: 700;
             padding: 4px 14px;
-            z-index: 10;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            margin-bottom: 8px;
+            position: static;
+            transform: none;
         }
         /* Reduce section padding */
         .section-alt { padding: 4px 0 !important; width: 100% !important; }
         /* removed — conflicted with 1040px max-width above */
         /* Override global styles — fit everything inside the visible blue area of the panel image */
         :root { --max-width: 1040px !important; }
-        .panel-main { overflow: visible !important; }
-        .panel-content { overflow-y: auto !important; overflow-x: hidden !important; padding: 1% 3% !important; }
+        /* panel overflow handled by panel-template.css */
+        /* panel content handled by panel-template.css */
         .pricing-tier-grid { width: 100% !important; box-sizing: border-box !important; }
         .pricing-card-featured .pill-tag {
             top: 24px;
