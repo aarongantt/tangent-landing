@@ -185,8 +185,10 @@
         /* All cards same top padding — featured card has margin-top to make room for badge */
         .pricing-card { padding-top: 18px !important; }
         .pricing-card:not(.pricing-card-featured) { margin-top: 16px !important; }
-        .pricing-tier-grid { margin-top: 16px !important; }
+        .pricing-tier-grid { margin-top: 8px !important; }
         .pricing-card { text-align: left !important; display: flex !important; flex-direction: column !important; }
+        .pricing-tier-grid { align-items: stretch !important; }
+        .pricing-card .pricing-features { flex: 1 !important; }
         .pricing-card .pricing-cta { margin-top: auto !important; }
         .pricing-card .pricing-name { font-size: 24px !important; margin-bottom: 6px !important; text-align: left !important; }
         .pricing-card .pricing-price { font-size: 26px !important; font-weight: 800 !important; margin-bottom: 8px !important; }
@@ -205,7 +207,7 @@
             left: 50%;
             transform: translateX(-50%);
             background: #ffffff;
-            color: #5380ac;
+            color: #5381ac;
             font-size: 0.75rem;
             font-weight: 700;
             padding: 4px 14px;
@@ -261,8 +263,8 @@
         }
         .pill.upgrade {
             background: #ffffff;
-            color: #5380ac;
-            border: 1px solid #5380ac;
+            color: #5381ac;
+            border: 1px solid #5381ac;
             font-weight: 700;
             cursor: pointer;
         }
@@ -494,7 +496,7 @@
     <main>
         <section class="section section-alt" style="padding: 24px 0 32px 0;">
             <div class="container pricing-layout">
-                <div class="pricing-intro" style="margin-bottom: 16px; text-align: center;">
+                <div class="pricing-intro" style="margin-bottom: 4px; text-align: center;">
                     <h1 style="margin-bottom: 0; background: none; -webkit-text-fill-color: #ffffff; color: #ffffff; font-size: clamp(20px, 2.2vw, 28px);">Choose Your Tangent:</h1>
                     <!-- Free trial button removed -->
                 </div>
