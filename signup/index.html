@@ -146,15 +146,22 @@
         }
 
         /* Pricing card — compact to fit inside blue panel */
+        .pricing-layout {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 0 !important;
+        }
         .pricing-tier-grid {
-            gap: 12px !important;
-            max-width: 95% !important;
+            gap: 10px !important;
+            max-width: 100% !important;
             margin: 0 auto !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
         }
         .pricing-card {
             position: relative;
-            padding: 14px 16px !important;
+            padding: 12px 12px !important;
             border-radius: 12px !important;
+            overflow: hidden !important;
         }
         .pricing-card .pricing-name { font-size: 18px !important; margin-bottom: 2px !important; }
         .pricing-card .pricing-price { font-size: 28px !important; margin-bottom: 4px !important; }
@@ -185,7 +192,7 @@
         }
         /* Reduce section padding */
         .section-alt { padding: 4px 0 !important; }
-        .pricing-layout { padding: 0 !important; }
+        .container.pricing-layout { padding: 0 2% !important; max-width: 100% !important; }
         .pricing-card-featured .pill-tag {
             top: 24px;
         }
@@ -455,7 +462,7 @@
             <div class="container pricing-layout">
                 <div class="pricing-intro" style="margin-bottom: 16px; text-align: center;">
                     <h1 style="margin-bottom: 0; background: none; -webkit-text-fill-color: #ffffff; color: #ffffff; font-size: clamp(20px, 2.2vw, 28px);">Choose The Plan That Fits Your Style:</h1>
-                    <button id="freeTrialBtn" class="free-trial-btn" style="display:none !important;">Sign Up for Free Trial</button>
+                    <!-- Free trial button removed -->
                 </div>
 
                 <div class="pricing-tier-grid">
