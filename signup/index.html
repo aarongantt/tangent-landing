@@ -145,28 +145,47 @@
             opacity: 0.6;
         }
 
-        /* Pricing card checkmarks and badges */
+        /* Pricing card — compact to fit inside blue panel */
+        .pricing-tier-grid {
+            gap: 12px !important;
+            max-width: 95% !important;
+            margin: 0 auto !important;
+        }
         .pricing-card {
             position: relative;
+            padding: 14px 16px !important;
+            border-radius: 12px !important;
         }
+        .pricing-card .pricing-name { font-size: 18px !important; margin-bottom: 2px !important; }
+        .pricing-card .pricing-price { font-size: 28px !important; margin-bottom: 4px !important; }
+        .pricing-card .pricing-price small { font-size: 13px !important; }
+        .pricing-card .pricing-desc { font-size: 12px !important; margin-bottom: 6px !important; }
+        .pricing-card ul { margin: 6px 0 !important; }
+        .pricing-card li { font-size: 12px !important; padding: 2px 0 !important; }
+        .pricing-card .plan-button { padding: 8px 12px !important; font-size: 13px !important; }
+        .pricing-card .pill { font-size: 11px !important; padding: 3px 10px !important; }
         .pricing-card-featured {
-            border-color: var(--accent);
-            box-shadow: 0 0 40px rgba(74, 144, 226, 0.25);
+            border-color: #ffffff !important;
+            box-shadow: none !important;
+            background: rgba(255,255,255,0.18) !important;
         }
         .pricing-badge {
             position: absolute;
-            top: -12px;
+            top: -10px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-            color: #05060a;
-            font-size: 0.75rem;
+            background: #ffffff;
+            color: #4a6a8a;
+            font-size: 0.7rem;
             font-weight: 700;
-            padding: 4px 12px;
-            border-radius: var(--radius-pill);
+            padding: 3px 10px;
+            border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
+        /* Reduce section padding */
+        .section-alt { padding: 4px 0 !important; }
+        .pricing-layout { padding: 0 !important; }
         .pricing-card-featured .pill-tag {
             top: 24px;
         }
@@ -434,14 +453,9 @@
     <main>
         <section class="section section-alt" style="padding: 24px 0 32px 0;">
             <div class="container pricing-layout">
-                <div class="pricing-intro" style="margin-bottom: 24px; text-align: center;">
-                    <div class="pricing-header-row" style="justify-content: center;">
-                        <h1 style="margin-bottom: 8px; background: linear-gradient(135deg, #ffffff 0%, #ffffff 30%, #4a90e2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Subscription Plans</h1>
-                        <button id="freeTrialBtn" class="free-trial-btn" style="display:none;">Sign Up for Free Trial</button>
-                    </div>
-                    <p class="section-intro" style="margin: 0 auto;">
-                        Choose the plan that fits your style.
-                    </p>
+                <div class="pricing-intro" style="margin-bottom: 16px; text-align: center;">
+                    <h1 style="margin-bottom: 0; background: none; -webkit-text-fill-color: #ffffff; color: #ffffff; font-size: clamp(20px, 2.2vw, 28px);">Choose The Plan That Fits Your Style:</h1>
+                    <button id="freeTrialBtn" class="free-trial-btn" style="display:none !important;">Sign Up for Free Trial</button>
                 </div>
 
                 <div class="pricing-tier-grid">
