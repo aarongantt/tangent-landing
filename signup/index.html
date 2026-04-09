@@ -182,8 +182,9 @@
             box-sizing: border-box !important;
             overflow: hidden !important;
         }
-        /* Add top padding to non-featured cards so titles align with Pro (which has Most Popular badge inline) */
-        .pricing-card:not(.pricing-card-featured) { padding-top: 36px !important; }
+        /* All cards same top padding — featured card has margin-top to make room for badge */
+        .pricing-card { padding-top: 18px !important; }
+        .pricing-card:not(.pricing-card-featured) { margin-top: 16px !important; }
         .pricing-tier-grid { margin-top: 16px !important; }
         .pricing-card .pricing-name { font-size: 24px !important; margin-bottom: 6px !important; }
         .pricing-card .pricing-price { font-size: 26px !important; font-weight: 800 !important; margin-bottom: 8px !important; }
@@ -193,8 +194,14 @@
             box-shadow: none !important;
             background: rgba(255,255,255,0.18) !important;
         }
+        .pricing-card-featured {
+            margin-top: 16px !important;
+        }
         .pricing-badge {
-            display: inline-block;
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
             background: #ffffff;
             color: #2a8fd5;
             font-size: 0.75rem;
@@ -204,10 +211,11 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            margin-bottom: 8px;
-            position: static;
-            transform: none;
+            z-index: 100;
+            white-space: nowrap;
         }
+        .pricing-card { overflow: visible !important; }
+        .pricing-tier-grid { overflow: visible !important; }
         /* Reduce section padding */
         .section-alt { padding: 4px 0 !important; width: 100% !important; }
         /* removed — conflicted with 1040px max-width above */
