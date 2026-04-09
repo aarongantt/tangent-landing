@@ -679,7 +679,7 @@
     <div class="panel-main">
       <div class="panel-content" id="account-panel-content">
 
-  <h3 style="margin:0 auto 8px;color:#ffffff !important;text-align:left;width:100%;max-width:1040px;padding:0 22px;box-sizing:border-box;font-size:1.5rem;">Account:</h3>
+  <h3 style="margin:0 auto 8px;color:#ffffff !important;text-align:left;width:100%;max-width:1040px;padding:0 6px;box-sizing:border-box;font-size:1.5rem;">Account:</h3>
 
   <main class="account-main">
     <section class="section section-alt">
@@ -1201,7 +1201,7 @@
       },
       tangent_business_solo_monthly: {
         monthly: "price_1SkbTtFYbfjZcbAUt9S7XBhc",
-        annual: "price_1SkbUoFYbfjZcbAUCgSSXX2u"
+        annual: "price_1TKRVfFYbfjZcbAUxnj53nPd"
       }
       // TEMPORARILY HIDDEN: Business Teams plan
       // tangent_business_teams_monthly: {
@@ -1500,7 +1500,7 @@
           const existingBanner = document.querySelector('.token-exhausted-banner');
           if (existingBanner) existingBanner.remove();
 
-          planDetails.innerHTML = "<p style='font-style:italic;'>Please sign in to view your plan.</p>";
+          planDetails.innerHTML = "<p style='font-style:italic;text-align:center;'>Please sign in to view your plan.</p>";
           billingBtn.disabled = true;
           setNavLoggedOut();
           // Show all plans when not signed in (including Free Trial)
