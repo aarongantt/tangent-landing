@@ -42,8 +42,9 @@
     .account-card h1, .account-card h2, .account-card h3 { color: #ffffff !important; }
     .account-card p, .account-card span, .account-card label { color: rgba(255,255,255,0.9) !important; }
     .account-card a { color: #ffffff !important; text-decoration: underline !important; }
-    .account-card .cta-button { color: #ffffff !important; background: #2a8fd5 !important; text-decoration: none !important; border: none !important; box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important; }
-    .account-card .cta-button.secondary { background: rgba(255,255,255,0.15) !important; border: 1px solid rgba(255,255,255,0.3) !important; }
+    .account-card .cta-button { color: #ffffff !important; background: rgba(255,255,255,0.1) !important; text-decoration: none !important; border: 1px solid rgba(255,255,255,0.4) !important; border-radius: 999px !important; box-shadow: none !important; }
+    .account-card .cta-button:hover { background: rgba(255,255,255,0.2) !important; }
+    .account-card .cta-button.secondary { background: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.4) !important; }
 
     /* Plan cards — semi-transparent matching signup style */
     .plan-card {
@@ -352,21 +353,22 @@
     .plan-cta {
       width: 100%;
       padding: 10px;
-      border-radius: 8px;
-      border: none;
-      background: #2a8fd5;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.1);
       color: #ffffff;
       font-weight: 600;
       font-size: 14px;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .plan-cta:hover {
+      background: rgba(255,255,255,0.2);
     }
     .plan-cta:disabled {
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
-      color: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.4);
       cursor: not-allowed;
-      opacity: 0.8;
     }
     /* Keep login modal inputs dark even on autofill */
     #tgLoginEmail, #tgLoginPassword {
