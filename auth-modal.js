@@ -17,23 +17,23 @@
     loginModal.style.justifyContent = "center";
     loginModal.style.zIndex = "9999";
     loginModal.innerHTML = `
-      <div style="background:#050915;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:22px;width:100%;max-width:420px;box-shadow:0 14px 36px rgba(0,0,0,0.45);color:#e5e7eb;position:relative;">
-        <button id="tgLoginClose" style="position:absolute;top:10px;right:10px;background:transparent;border:0;color:#cbd5e1;font-size:18px;cursor:pointer;">×</button>
+      <div style="background:linear-gradient(180deg,#6b87a8 0%,#8da4bc 40%,#a7b8c9 100%);border:none;border-radius:12px;padding:22px;width:100%;max-width:420px;box-shadow:0 12px 40px rgba(0,0,0,0.2);color:#ffffff;position:relative;">
+        <button id="tgLoginClose" style="position:absolute;top:10px;right:10px;background:transparent;border:0;color:#ffffff;font-size:18px;cursor:pointer;">×</button>
         <div style="display:flex;justify-content:center;margin-bottom:12px;">
           <img src="/images/tangent_logo.png" alt="Tangent" style="height:28px;" />
         </div>
-        <h3 style="margin:0 0 14px 0;font-weight:700;">Sign In:</h3>
-        <label style="display:block;margin-bottom:10px;font-weight:600;font-size:13px;">Email
-          <input id="tgLoginEmail" type="email" autocomplete="email" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(5,6,10,0.7);color:#e5e7eb;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);" />
+        <h3 style="margin:0 0 14px 0;font-weight:700;color:#ffffff;">Sign In:</h3>
+        <label style="display:block;margin-bottom:10px;font-weight:600;font-size:13px;color:#fff;">Email
+          <input id="tgLoginEmail" type="email" autocomplete="email" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.15);color:#ffffff;" />
         </label>
-        <label style="display:block;margin-bottom:14px;font-weight:600;font-size:13px;">Password
-          <input id="tgLoginPassword" type="password" autocomplete="current-password" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(5,6,10,0.7);color:#e5e7eb;box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);" />
+        <label style="display:block;margin-bottom:14px;font-weight:600;font-size:13px;color:#fff;">Password
+          <input id="tgLoginPassword" type="password" autocomplete="current-password" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.15);color:#ffffff;" />
         </label>
         <div style="display:flex;gap:10px;margin-top:12px;">
-          <button id="tgLoginSignIn" class="cta-button secondary" style="flex:1;padding:10px 14px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 120ms ease;background:#2a8fd5;color:#fff;">Sign In</button>
-          <button id="tgLoginSignUp" class="cta-button secondary" style="flex:1;padding:10px 14px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 120ms ease;background:#2a8fd5;color:#fff;">Sign Up</button>
+          <button id="tgLoginSignIn" class="cta-button secondary" style="flex:1;padding:10px 14px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 120ms ease;background:#ffffff;color:#4a6a8a;">Sign In</button>
+          <button id="tgLoginSignUp" class="cta-button secondary" style="flex:1;padding:10px 14px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 120ms ease;background:rgba(255,255,255,0.2);color:#ffffff;border:1px solid rgba(255,255,255,0.3);">Sign Up</button>
         </div>
-        <p id="tgLoginStatus" style="min-height:18px;font-size:13px;margin-top:10px;"></p>
+        <p id="tgLoginStatus" style="min-height:18px;font-size:13px;margin-top:10px;color:#fff;"></p>
       </div>
     `;
     document.body.appendChild(loginModal);

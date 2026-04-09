@@ -12,6 +12,16 @@
   <!-- Fraud Prevention -->
   <script src="/js/fraud-prevention.js"></script>
   <style>
+    /* ===== NEW LIGHT THEME (matches index.html) ===== */
+    body {
+      background: url('/images/tangent_white_background.png') center center / cover no-repeat fixed !important;
+      color: #2a3444 !important;
+    }
+    .site-header, header { background: transparent !important; border-bottom: none !important; }
+    nav a, .nav-link, .site-header a { color: #4a6a8a !important; }
+    section, .section, .hero, .pricing-section, main { background: transparent !important; color: #2a3444 !important; }
+    h1, h2, h3, h4 { color: #1a2a3a !important; }
+    p, li, span, label { color: #3a4a5a; }
     .pricing-header-row {
       display: flex;
       align-items: center;
@@ -59,14 +69,14 @@
             background: #3b82f6;
             color: #fff;
         }
-        .cta-button.secondary { background: #64748b; }
+        .cta-button.secondary { background: #2a8fd5; }
         .cta-button:hover { opacity: 0.9; }
         .cta-button:disabled { opacity: 0.6; cursor: not-allowed; }
         .nav-guard { opacity: 0; visibility: hidden; }
         /* Theme-aware CSS variables for login modal */
         :root {
-            --modal-overlay-bg: rgba(15, 23, 42, 0.55);
-            --modal-bg: #050915;
+            --modal-overlay-bg: rgba(0, 0, 0, 0.3);
+            --modal-bg: linear-gradient(180deg, #6b87a8 0%, #8da4bc 40%, #a7b8c9 100%);
             --modal-border: rgba(255, 255, 255, 0.1);
             --modal-text: #e5e7eb;
             --modal-text-muted: #cbd5e1;
