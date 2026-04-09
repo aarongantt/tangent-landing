@@ -7,37 +7,57 @@
   <link rel="stylesheet" href="/styles.css" />
   <link rel="icon" type="image/png" href="/images/tangent_t_logo.png" />
   <script src="https://js.stripe.com/v3/"></script>
+  <link rel="stylesheet" href="/panel-template.css" />
   <style>
-    /* ===== NEW LIGHT THEME (matches index.html) ===== */
-    body {
+    /* Override any dark styles from styles.css */
+    body.account-body {
       background: url('/images/tangent_white_background.png') center center / cover no-repeat fixed !important;
-      color: #2a3444 !important;
-      min-height: 100vh;
-    }
-    .site-header, header {
-      background: transparent !important;
-      border-bottom: none !important;
-    }
-    .site-header .logo-img, header img {
-      filter: none !important;
-    }
-    /* Override dark nav links */
-    nav a, .nav-link, .site-header a {
-      color: #4a6a8a !important;
-    }
-    /* Override dark section backgrounds */
-    section, .section, .hero, .pricing-section, main {
-      background: transparent !important;
-      color: #2a3444 !important;
-    }
-    h1, h2, h3, h4 {
-      color: #1a2a3a !important;
-    }
-    p, li, span, label {
-      color: #3a4a5a;
+      overflow: hidden !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
 
-    /* Buttons */
+    /* Hide original header — logo is above panel now */
+    #header-placeholder, .site-header { display: none !important; }
+
+    /* All content sits inside panel-content — override dark backgrounds */
+    .account-main, .account-main * { color: #ffffff; }
+    .account-main { background: transparent !important; padding: 0 !important; margin: 0 !important; width: 100% !important; }
+    .section, .section-alt { background: transparent !important; padding: 8px 0 !important; }
+    .container { max-width: 100% !important; padding: 0 !important; }
+
+    /* Account card inside panel */
+    .account-card {
+      background: rgba(255,255,255,0.1) !important;
+      border: 1px solid rgba(255,255,255,0.15) !important;
+      box-shadow: none !important;
+      color: #ffffff !important;
+    }
+    .account-card::before { opacity: 0.1 !important; filter: brightness(2) !important; }
+    .account-card h1, .account-card h2, .account-card h3, .account-card p, .account-card span, .account-card a, .account-card label { color: #ffffff !important; }
+
+    /* Plan cards inside panel */
+    .plan-card {
+      background: rgba(255,255,255,0.1) !important;
+      border: 1px solid rgba(255,255,255,0.15) !important;
+      box-shadow: none !important;
+      color: #ffffff !important;
+    }
+    .plan-card h4, .plan-card p, .plan-card li, .plan-card span { color: #ffffff !important; }
+    .plan-card.active { border-color: #ffffff !important; background: rgba(255,255,255,0.18) !important; opacity: 1 !important; }
+    .plan-price { color: #ffffff !important; }
+    .plan-price small { color: rgba(255,255,255,0.7) !important; }
+
+    /* Payment modal inside panel */
+    .tg-payment-card {
+      background: rgba(30,50,70,0.95) !important;
+      border: 1px solid rgba(255,255,255,0.15) !important;
+      color: #ffffff !important;
+    }
+
+    /* CTA buttons — white on blue panel */
     .cta-button {
       width: 100%;
       padding: 10px 14px;
@@ -600,6 +620,13 @@
 <body class="account-body">
   <div id="header-placeholder"></div>
 
+  <!-- TANGENT Logo (above panel) -->
+  <img src="/images/tangent_blue_logo.png" alt="TANGENT" class="main-logo">
+
+  <div class="panel-overlay">
+    <div class="panel-main">
+      <div class="panel-content" id="account-panel-content">
+
   <main class="account-main">
     <section class="section section-alt">
       <div class="container account-grid">
@@ -640,18 +667,53 @@
     <section id="plans-container" class="section"></section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-links">
-        <a href="/privacy.html">Privacy</a>
-        <a href="/privacy.html#security">Security</a>
-        <a href="/faq.html">FAQ</a>
-        <a href="mailto:support@tangentapp.co">Support</a>
-      </div>
-      <div class="footer-tagline">
-        <span>© <span id="year"></span> Tangent -- Discover Without Distraction.</span>
-      </div>
-    </div>
+      </div><!-- /.panel-content -->
+    </div><!-- /.panel-main -->
+
+    <!-- Reflection -->
+    <div class="panel-reflection" id="account-panel-reflection"></div>
+
+    <!-- Scroll chevron -->
+    <img src="/images/chevron_down_dark.png" alt="Scroll" class="scroll-chevron" id="scroll-chevron"
+         onerror="this.style.display='none'"
+         style="width:28px;height:auto;">
+  </div><!-- /.panel-overlay -->
+
+  <!-- Reflection sync script -->
+  <script>
+    (function() {
+      const content = document.getElementById('account-panel-content');
+      const reflection = document.getElementById('account-panel-reflection');
+      if (content && reflection) {
+        // Clone content into reflection
+        function syncReflection() {
+          reflection.innerHTML = '';
+          const clone = content.cloneNode(true);
+          clone.removeAttribute('id');
+          clone.style.pointerEvents = 'none';
+          reflection.appendChild(clone);
+        }
+        // Initial sync + periodic updates
+        setTimeout(syncReflection, 500);
+        setInterval(syncReflection, 3000);
+        // Sync scroll position
+        content.addEventListener('scroll', () => {
+          const clone = reflection.querySelector('.panel-content');
+          if (clone) clone.scrollTop = content.scrollTop;
+        });
+      }
+      // Scroll chevron
+      const chevron = document.getElementById('scroll-chevron');
+      if (chevron && content) {
+        chevron.addEventListener('click', () => {
+          content.scrollBy({ top: 200, behavior: 'smooth' });
+        });
+      }
+    })();
+  </script>
+
+  <footer class="site-footer" style="display:none;">
+    <span>© <span id="year"></span> Tangent</span>
   </footer>
 
   <!-- Supabase client -->

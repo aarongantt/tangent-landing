@@ -7,21 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Signup for Tangent Pro – the AI assistant that lives on every page you open." />
   <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/panel-template.css" />
   <link rel="icon" type="image/png" href="/images/tangent_t_logo.png" />
   <script src="https://js.stripe.com/v3/"></script>
   <!-- Fraud Prevention -->
   <script src="/js/fraud-prevention.js"></script>
   <style>
-    /* ===== NEW LIGHT THEME (matches index.html) ===== */
-    body {
-      background: url('/images/tangent_white_background.png') center center / cover no-repeat fixed !important;
-      color: #2a3444 !important;
-    }
-    .site-header, header { background: transparent !important; border-bottom: none !important; }
-    nav a, .nav-link, .site-header a { color: #4a6a8a !important; }
-    section, .section, .hero, .pricing-section, main { background: transparent !important; color: #2a3444 !important; }
-    h1, h2, h3, h4 { color: #1a2a3a !important; }
-    p, li, span, label { color: #3a4a5a; }
     .pricing-header-row {
       display: flex;
       align-items: center;
@@ -70,6 +61,22 @@
             color: #fff;
         }
         .cta-button.secondary { background: #2a8fd5; }
+
+        /* Panel overrides */
+        body { background: url('/images/tangent_white_background.png') center center / cover no-repeat fixed !important; overflow: hidden !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; }
+        .site-header, header, #header-placeholder { display: none !important; }
+        main, main * { color: #ffffff; }
+        main { background: transparent !important; padding: 0 !important; margin: 0 !important; width: 100% !important; }
+        .section, .section-alt { background: transparent !important; padding: 8px 0 !important; }
+        .container { max-width: 100% !important; padding: 0 8px !important; }
+        h1 { background: none !important; -webkit-text-fill-color: #ffffff !important; color: #ffffff !important; }
+        .section-intro { color: rgba(255,255,255,0.8) !important; }
+        .pricing-card { background: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.15) !important; color: #ffffff !important; }
+        .pricing-card * { color: #ffffff !important; }
+        .pricing-card.featured { border-color: #ffffff !important; }
+        .plan-button { background: rgba(255,255,255,0.2) !important; color: #ffffff !important; border: 1px solid rgba(255,255,255,0.3) !important; }
+        .plan-button:hover { background: rgba(255,255,255,0.3) !important; }
+        .free-trial-btn { background: #ffffff !important; color: #4a6a8a !important; box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important; }
         .cta-button:hover { opacity: 0.9; }
         .cta-button:disabled { opacity: 0.6; cursor: not-allowed; }
         .nav-guard { opacity: 0; visibility: hidden; }
@@ -399,6 +406,13 @@
 </head>
 
 <body>
+    <!-- TANGENT Logo (above panel) -->
+    <img src="/images/tangent_blue_logo.png" alt="TANGENT" class="main-logo">
+
+    <div class="panel-overlay">
+      <div class="panel-main">
+        <div class="panel-content" id="signup-panel-content">
+
     <header class="site-header">
         <div class="container header-inner">
             <a href="/" class="logo-link">
@@ -562,16 +576,37 @@
     </main>
 
 
-    <footer class="site-footer">
+        </div><!-- /.panel-content -->
+      </div><!-- /.panel-main -->
+      <div class="panel-reflection" id="signup-panel-reflection"></div>
+    </div><!-- /.panel-overlay -->
+
+    <script>
+      (function() {
+        const content = document.getElementById('signup-panel-content');
+        const reflection = document.getElementById('signup-panel-reflection');
+        if (content && reflection) {
+          function syncReflection() {
+            reflection.innerHTML = '';
+            const clone = content.cloneNode(true);
+            clone.removeAttribute('id');
+            clone.style.pointerEvents = 'none';
+            reflection.appendChild(clone);
+          }
+          setTimeout(syncReflection, 500);
+          setInterval(syncReflection, 3000);
+          content.addEventListener('scroll', () => {
+            const clone = reflection.querySelector('.panel-content');
+            if (clone) clone.scrollTop = content.scrollTop;
+          });
+        }
+      })();
+    </script>
+
+    <footer class="site-footer" style="display:none;">
         <div class="container footer-inner">
-            <div class="footer-links">
-                <a href="/privacy.html">Privacy</a>
-                <a href="/privacy.html#security">Security</a>
-                <a href="/faq.html">FAQ</a>
-                <a href="mailto:support@tangentapp.co">Support</a>
-            </div>
             <div class="footer-tagline">
-                <span>© <span id="year"></span> Tangent -- Discover Without Distraction.</span>
+                <span>© <span id="year"></span> Tangent</span>
             </div>
         </div>
     </footer>
