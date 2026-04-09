@@ -30,23 +30,20 @@ body {
 
 /* Panel overlay — uses blue panel image */
 .panel-overlay {
-    background: url('/images/tangent_blue_panel.png') center center / contain no-repeat;
+    background: url('/images/tangent_blue_panel.png') top center / 100% auto no-repeat;
     width: 100%;
-    max-width: 98vw;
-    max-height: 85vh;
-    aspect-ratio: 2 / 1;
+    max-width: 85vw;
+    aspect-ratio: 3378 / 2369; /* Match actual image dimensions */
     position: relative;
 }
 
-/* Main content area (top portion of panel) */
-/* Note: panel image is narrower than container due to contain + 2:1 aspect ratio */
-/* Image is ~71% of container width, centered. Content must align to image, not container. */
+/* Main content area (top portion of panel — the blue box, not the reflection) */
 .panel-main {
     position: absolute;
-    top: 1%;
-    left: 16%;
-    right: 16%;
-    height: 65%;
+    top: 2%;
+    left: 3%;
+    right: 3%;
+    height: 52%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
