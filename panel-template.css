@@ -8,10 +8,14 @@
     box-sizing: border-box;
 }
 
+html {
+    overflow: hidden !important;
+}
+
 body {
     background: url('/images/tangent_white_background.png') center center / cover no-repeat fixed;
     min-height: 100vh;
-    overflow: hidden;
+    overflow: hidden !important;
     display: flex;
     flex-direction: column;
     align-items: center;
