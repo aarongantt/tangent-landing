@@ -31,7 +31,7 @@
         </label>
         <div style="display:flex;gap:10px;margin-top:12px;">
           <button id="tgLoginSignIn" class="cta-button secondary" style="flex:1;padding:10px 14px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 120ms ease;background:#ffffff;color:#4a6a8a;">Sign In</button>
-          <button id="tgLoginSignUp" class="cta-button secondary" style="flex:1;padding:10px 14px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 120ms ease;background:rgba(255,255,255,0.2);color:#ffffff;border:1px solid rgba(255,255,255,0.3);">Sign Up</button>
+          <button id="tgLoginSignUp" class="cta-button secondary" style="flex:1;padding:10px 14px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 120ms ease;background:rgba(255,255,255,0.2);color:#ffffff;border:1px solid rgba(255,255,255,0.3);">Get Started</button>
         </div>
         <p id="tgLoginStatus" style="min-height:18px;font-size:13px;margin-top:10px;color:#fff;"></p>
       </div>
@@ -98,7 +98,7 @@
     }
   }
 
-  // Attach event listener to "Log In / Sign Up" link after header loads
+  // Attach event listener to "Log In" link after header loads
   window.addEventListener('DOMContentLoaded', function() {
     // Wait a bit for header to be injected
     setTimeout(function() {

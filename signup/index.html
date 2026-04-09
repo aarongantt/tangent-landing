@@ -186,7 +186,8 @@
         .pricing-card { padding-top: 18px !important; }
         .pricing-card:not(.pricing-card-featured) { margin-top: 16px !important; }
         .pricing-tier-grid { margin-top: 16px !important; }
-        .pricing-card .pricing-name { font-size: 24px !important; margin-bottom: 6px !important; }
+        .pricing-card { text-align: left !important; }
+        .pricing-card .pricing-name { font-size: 24px !important; margin-bottom: 6px !important; text-align: left !important; }
         .pricing-card .pricing-price { font-size: 26px !important; font-weight: 800 !important; margin-bottom: 8px !important; }
         .pricing-card .pricing-price small { font-size: 14px !important; color: rgba(255,255,255,0.7) !important; }
         .pricing-card-featured {
@@ -202,8 +203,8 @@
             top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            background: #ffffff;
-            color: #2a8fd5;
+            background: #4a6a8a;
+            color: #ffffff;
             font-size: 0.75rem;
             font-weight: 700;
             padding: 4px 14px;
@@ -481,8 +482,8 @@
                 <a href="/demo.html" class="nav-link" id="navDemo">Demo</a>
                 <a href="/faq.html" class="nav-link" id="navFaq">FAQ</a>
                 <a href="javascript:void(0)" class="nav-link" id="navSignOut" style="display:none;">Sign Out</a>
-                <a href="javascript:void(0)" class="nav-link" id="navLogin">Log In / Sign Up</a>
-                <a href="/signup" class="nav-link nav-link-cta" id="navSubscribe">SUBSCRIBE</a>
+                <a href="javascript:void(0)" class="nav-link" id="navLogin">Log In</a>
+                <a href="/signup" class="nav-link nav-link-cta" id="navSubscribe">GET STARTED</a>
                 <a href="/account" class="nav-link nav-link-cta nav-link-cta-active" id="navAccount" style="display:none;">Account</a>
             </nav>
         </div>
@@ -499,7 +500,7 @@
                 <div class="pricing-tier-grid">
                     <!-- Free Trial -->
                     <article class="pricing-card">
-                        <div class="pill pill-tag upgrade">Sign Up</div>
+                        <div class="pill pill-tag upgrade">Start Free Trial</div>
                         <h2 class="pricing-name">Free Trial</h2>
                         <p class="pricing-price">
                             <span class="pricing-amount">$0</span>
@@ -519,7 +520,7 @@
 
                         <div class="pricing-cta">
                             <button type="button" class="plan-button" data-plan="free_trial">
-                                Sign Up for Free Trial
+                                Start Free Trial
                             </button>
                             <p style="margin-top: 8px; font-size: 13px; color: #64748b; text-align: center;">No credit card required</p>
                         </div>
@@ -528,7 +529,7 @@
                     <!-- Pro -->
                     <article class="pricing-card pricing-card-featured">
                         <div class="pricing-badge">Most Popular</div>
-                        <div class="pill pill-tag upgrade" data-plan="pro_monthly" style="cursor: pointer;">Upgrade</div>
+                        <div class="pill pill-tag upgrade" data-plan="pro_monthly" style="cursor: pointer;">Start Free Trial</div>
                         <h2 class="pricing-name">Pro</h2>
                         <p class="pricing-price">
                             <span class="pricing-amount">$12</span>
@@ -559,7 +560,7 @@
 
                     <!-- Business (Solo) -->
                     <article class="pricing-card">
-                        <div class="pill pill-tag upgrade" data-plan="business_solo_monthly" style="cursor: pointer;">Upgrade</div>
+                        <div class="pill pill-tag upgrade" data-plan="business_solo_monthly" style="cursor: pointer;">Start Free Trial</div>
                         <h2 class="pricing-name">Business (Solo)</h2>
                         <p class="pricing-price">
                             <span class="pricing-amount">$30</span>
@@ -1306,7 +1307,7 @@
                     <div id="cf-turnstile-container" style="margin: 16px 0; min-height: 65px; display: flex; justify-content: center;"></div>
                     <div style="display:flex;gap:10px;margin-top:12px;">
                       <button id="tgLoginSignIn" class="cta-button secondary" style="flex:1;">Sign In</button>
-                      <button id="tgLoginSignUp" class="cta-button secondary" style="flex:1;">Sign Up</button>
+                      <button id="tgLoginSignUp" class="cta-button secondary" style="flex:1;">Get Started</button>
                     </div>
                     <p id="tgLoginStatus" style="min-height:18px;font-size:13px;margin-top:10px;"></p>
                   </div>
