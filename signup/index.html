@@ -73,6 +73,8 @@
         .section-intro { color: rgba(255,255,255,0.8) !important; }
         .pricing-card { background: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.15) !important; color: #ffffff !important; box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important; }
         .pricing-card * { color: #ffffff !important; }
+        .pricing-card .pill.upgrade { color: #5381ac !important; }
+        .pricing-badge { color: #5381ac !important; }
         .pricing-card.featured { border-color: #ffffff !important; background: rgba(255,255,255,0.18) !important; }
         .pricing-card .pill { border: 1px solid #ffffff !important; font-weight: 700 !important; }
         .plan-button { background: rgba(255,255,255,0.2) !important; color: #ffffff !important; border: 1px solid rgba(255,255,255,0.3) !important; }
@@ -185,7 +187,7 @@
         /* All cards same top padding — featured card has margin-top to make room for badge */
         .pricing-card { padding-top: 18px !important; }
         .pricing-card:not(.pricing-card-featured) { margin-top: 16px !important; }
-        .pricing-tier-grid { margin-top: 8px !important; }
+        .pricing-tier-grid { margin-top: 2px !important; }
         .pricing-card { text-align: left !important; display: flex !important; flex-direction: column !important; }
         .pricing-tier-grid { align-items: stretch !important; }
         .pricing-card .pricing-features { flex: 1 !important; }
@@ -496,7 +498,7 @@
     <main>
         <section class="section section-alt" style="padding: 24px 0 32px 0;">
             <div class="container pricing-layout">
-                <div class="pricing-intro" style="margin-bottom: 4px; text-align: center;">
+                <div class="pricing-intro" style="margin-bottom: 0; text-align: center;">
                     <h1 style="margin-bottom: 0; background: none; -webkit-text-fill-color: #ffffff; color: #ffffff; font-size: clamp(20px, 2.2vw, 28px);">Choose Your Tangent:</h1>
                     <!-- Free trial button removed -->
                 </div>
@@ -526,7 +528,9 @@
                             <button type="button" class="plan-button" data-plan="free_trial">
                                 Start Free Trial
                             </button>
-                            <p style="margin-top: 8px; font-size: 13px; color: #64748b; text-align: center;">No credit card required</p>
+                            <button type="button" class="plan-button plan-button-secondary" style="visibility: hidden;">
+                                &nbsp;
+                            </button>
                         </div>
                     </article>
 
