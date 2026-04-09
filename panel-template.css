@@ -43,7 +43,7 @@ body {
     top: 2%;
     left: 3%;
     right: 3%;
-    height: 52%;
+    height: 57%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -69,14 +69,15 @@ body {
     display: none;
 }
 
-/* Reflection area */
+/* Reflection area — positioned in the lower portion of the panel image */
 .panel-reflection {
     position: absolute;
-    top: 76%;
-    left: 50%;
-    transform: translateX(-50%) scaleY(-1);
-    width: 96%;
-    height: 35%;
+    top: 62%;
+    left: 3%;
+    right: 3%;
+    transform: scaleY(-1);
+    width: auto;
+    height: 30%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
