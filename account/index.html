@@ -35,7 +35,7 @@
       border: 1px solid rgba(255,255,255,0.15) !important;
       box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
       color: #ffffff !important;
-      padding: 14px 22px 10px !important;
+      padding: 12px 22px 8px !important;
       min-height: auto !important;
     }
     .account-card::before { display: none !important; }
@@ -172,7 +172,7 @@
       grid-template-columns: 1fr 1fr 1fr;
       gap: 32px;
       align-items: start;
-      min-height: 220px;
+      min-height: auto;
       position: relative;
     }
 
@@ -1303,6 +1303,12 @@
                     <ul class="plan-list">
                       ${pl.bullets.map(b => `<li>${b}</li>`).join("")}
                     </ul>
+                    <div class="plan-actions">
+                      ${isCurrentTrial
+                        ? '<button class="plan-cta" disabled>Current Plan</button>'
+                        : '<button class="plan-cta sign-up-pill" data-plan="trial">Start Free Trial</button>'}
+                      <button class="plan-cta" style="visibility:hidden;">&nbsp;</button>
+                    </div>
                   </div>`;
                 }
 
