@@ -201,11 +201,11 @@
         /* Reduce section padding */
         .section-alt { padding: 4px 0 !important; width: 100% !important; }
         .container.pricing-layout { padding: 0 !important; max-width: 100% !important; width: 100% !important; }
-        /* Override global styles so everything fits inside panel */
+        /* Override global styles — fit everything inside the visible blue area of the panel image */
         :root { --max-width: 100% !important; }
         .container { max-width: 100% !important; width: 100% !important; padding: 0 !important; box-sizing: border-box !important; }
-        .panel-main { overflow: hidden !important; }
-        .panel-content { padding: 1% 5% !important; }
+        .panel-main { overflow: hidden !important; left: 7% !important; right: 7% !important; }
+        .panel-content { padding: 1% 3% !important; }
         .pricing-tier-grid { width: 100% !important; box-sizing: border-box !important; }
         .pricing-card-featured .pill-tag {
             top: 24px;
