@@ -201,9 +201,12 @@
         /* Reduce section padding */
         .section-alt { padding: 4px 0 !important; width: 100% !important; }
         .container.pricing-layout { padding: 0 !important; max-width: 100% !important; width: 100% !important; }
-        /* Nuclear override — nothing exceeds panel-main */
+        /* Override global styles so everything fits inside panel */
+        :root { --max-width: 100% !important; }
+        .container { max-width: 100% !important; width: 100% !important; padding: 0 !important; box-sizing: border-box !important; }
         .panel-main { overflow: hidden !important; }
-        main, main > section, main > section > div { width: 100% !important; max-width: 100% !important; margin: 0 !important; padding-left: 0 !important; padding-right: 0 !important; box-sizing: border-box !important; }
+        .panel-content { padding: 1% 5% !important; }
+        .pricing-tier-grid { width: 100% !important; box-sizing: border-box !important; }
         .pricing-card-featured .pill-tag {
             top: 24px;
         }
