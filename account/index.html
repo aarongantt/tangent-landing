@@ -81,8 +81,9 @@
       border-color: #ffffff !important;
       background: rgba(255,255,255,0.18) !important;
     }
-    .plan-card { overflow: visible !important; position: relative !important; text-align: left !important; }
+    .plan-card { overflow: visible !important; position: relative !important; text-align: left !important; animation: none !important; transition: none !important; padding-top: 28px !important; }
     .plan-card h4, .plan-card .plan-price, .plan-card .plan-desc, .plan-card .plan-list, .plan-card .plan-actions { text-align: left !important; }
+    .plan-card .pill-tag { top: 22px !important; }
     .plans-grid { overflow: visible !important; }
 
     /* Section headings — left justified */
@@ -170,7 +171,7 @@
     .account-summary {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 32px;
+      gap: 16px;
       align-items: start;
       min-height: auto;
       position: relative;
@@ -194,17 +195,20 @@
     .account-actions {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       align-items: stretch;
       z-index: 2;
+      padding-top: 0;
     }
     .account-actions .cta-button {
       width: 65%;
       margin-left: auto;
+      padding: 8px 14px;
+      font-size: 13px;
     }
 
     .account-header-row {
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     /* Plan + packs */
