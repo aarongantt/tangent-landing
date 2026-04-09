@@ -186,7 +186,8 @@
         .pricing-card { padding-top: 18px !important; }
         .pricing-card:not(.pricing-card-featured) { margin-top: 16px !important; }
         .pricing-tier-grid { margin-top: 16px !important; }
-        .pricing-card { text-align: left !important; }
+        .pricing-card { text-align: left !important; display: flex !important; flex-direction: column !important; }
+        .pricing-card .pricing-cta { margin-top: auto !important; }
         .pricing-card .pricing-name { font-size: 24px !important; margin-bottom: 6px !important; text-align: left !important; }
         .pricing-card .pricing-price { font-size: 26px !important; font-weight: 800 !important; margin-bottom: 8px !important; }
         .pricing-card .pricing-price small { font-size: 14px !important; color: rgba(255,255,255,0.7) !important; }
@@ -203,8 +204,8 @@
             top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            background: #4a6a8a;
-            color: #ffffff;
+            background: #ffffff;
+            color: #4a6a8a;
             font-size: 0.75rem;
             font-weight: 700;
             padding: 4px 14px;
@@ -226,7 +227,7 @@
         /* panel content handled by panel-template.css */
         .pricing-tier-grid { width: 100% !important; box-sizing: border-box !important; }
         .pricing-card-featured .pill-tag {
-            top: 24px;
+            top: 14px;
         }
         .pricing-features {
             list-style: none;
@@ -255,13 +256,14 @@
         }
         .pill-tag {
             position: absolute;
-            top: 10px;
+            top: 14px;
             right: 10px;
         }
         .pill.upgrade {
-            background: #3b82f6;
-            color: #ffffff;
-            border-color: #3b82f6;
+            background: #ffffff;
+            color: #2a8fd5;
+            border: 1px solid #2a8fd5;
+            font-weight: 700;
             cursor: pointer;
         }
 
@@ -493,7 +495,7 @@
         <section class="section section-alt" style="padding: 24px 0 32px 0;">
             <div class="container pricing-layout">
                 <div class="pricing-intro" style="margin-bottom: 16px; text-align: center;">
-                    <h1 style="margin-bottom: 0; background: none; -webkit-text-fill-color: #ffffff; color: #ffffff; font-size: clamp(20px, 2.2vw, 28px);">Choose The Plan That Fits Your Style:</h1>
+                    <h1 style="margin-bottom: 0; background: none; -webkit-text-fill-color: #ffffff; color: #ffffff; font-size: clamp(20px, 2.2vw, 28px);">Choose Your Tangent:</h1>
                     <!-- Free trial button removed -->
                 </div>
 
@@ -561,7 +563,7 @@
                     <!-- Business (Solo) -->
                     <article class="pricing-card">
                         <div class="pill pill-tag upgrade" data-plan="business_solo_monthly" style="cursor: pointer;">Start Free Trial</div>
-                        <h2 class="pricing-name">Business (Solo)</h2>
+                        <h2 class="pricing-name" style="font-size: 23px !important;">Business (Solo)</h2>
                         <p class="pricing-price">
                             <span class="pricing-amount">$30</span>
                             <span class="pricing-interval">/ month</span>
@@ -637,21 +639,32 @@
       (function() {
         const content = document.getElementById('signup-panel-content');
         const reflection = document.getElementById('signup-panel-reflection');
-        if (content && reflection) {
-          function syncReflection() {
-            reflection.innerHTML = '';
-            const clone = content.cloneNode(true);
-            clone.removeAttribute('id');
-            clone.style.pointerEvents = 'none';
-            reflection.appendChild(clone);
-          }
-          setTimeout(syncReflection, 500);
-          setInterval(syncReflection, 3000);
-          content.addEventListener('scroll', () => {
-            const clone = reflection.querySelector('.panel-content');
-            if (clone) clone.scrollTop = content.scrollTop;
-          });
+        if (!content || !reflection) return;
+
+        let reflectionClone = null;
+
+        function syncReflection() {
+          reflection.innerHTML = '';
+          reflectionClone = content.cloneNode(true);
+          reflectionClone.removeAttribute('id');
+          reflectionClone.style.pointerEvents = 'none';
+          reflectionClone.style.overflow = 'hidden';
+          reflection.appendChild(reflectionClone);
+          // Match scroll position
+          reflectionClone.scrollTop = content.scrollTop;
         }
+
+        // Initial sync after page loads
+        setTimeout(syncReflection, 800);
+        // Periodic sync to catch dynamic content changes
+        setInterval(syncReflection, 5000);
+
+        // Sync scroll position in real-time
+        content.addEventListener('scroll', () => {
+          if (reflectionClone) {
+            reflectionClone.scrollTop = content.scrollTop;
+          }
+        });
       })();
     </script>
 
