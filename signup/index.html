@@ -227,7 +227,11 @@
         /* removed — conflicted with 1040px max-width above */
         /* Override global styles — fit everything inside the visible blue area of the panel image */
         :root { --max-width: 1040px !important; }
-        /* panel overflow handled by panel-template.css */
+        /* Fade at top and bottom of content viewport */
+        .panel-content {
+          mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 97%, transparent 100%) !important;
+          -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 97%, transparent 100%) !important;
+        }
         /* panel content handled by panel-template.css */
         .pricing-tier-grid { width: 100% !important; box-sizing: border-box !important; }
         .pricing-card-featured .pill-tag {

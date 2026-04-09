@@ -41,10 +41,10 @@ body {
 /* Main content area — SAME as index.html */
 .panel-main {
     position: absolute;
-    top: 1%;
+    top: 3%;
     left: 2%;
     right: 2%;
-    height: 65%;
+    height: 70%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
