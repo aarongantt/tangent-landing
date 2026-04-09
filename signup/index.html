@@ -149,13 +149,16 @@
             opacity: 0.6;
         }
 
-        /* Match account page's grid sizing — auto-fit to stay within panel */
+        /* Force grid to match account page exactly */
         .pricing-tier-grid {
             display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+            grid-template-columns: repeat(3, 1fr) !important;
             gap: 16px !important;
             width: 100% !important;
+            max-width: 100% !important;
             box-sizing: border-box !important;
+            padding: 0 !important;
+            margin: 0 !important;
         }
         .pricing-card {
             position: relative;
@@ -163,6 +166,20 @@
             border-radius: 14px !important;
             overflow: hidden !important;
             min-width: 0 !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            word-wrap: break-word !important;
+        }
+        /* Constrain everything to match account page width */
+        .panel-content { overflow-x: hidden !important; }
+        main, .section, .section-alt { padding: 0 !important; margin: 0 !important; width: 100% !important; overflow: hidden !important; }
+        .container.pricing-layout {
+            max-width: 1040px !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            padding: 0 16px !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
         }
         .pricing-card .pricing-name { font-size: 24px !important; margin-bottom: 6px !important; }
         .pricing-card .pricing-price { font-size: 26px !important; font-weight: 800 !important; margin-bottom: 8px !important; }
