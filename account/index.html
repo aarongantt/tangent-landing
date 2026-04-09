@@ -1293,7 +1293,7 @@
                   if (hasPaidPlan) return '';
 
                   return `
-                  <div class="plan-card ${isCurrentTrial ? "active" : ""}" ${isCurrentTrial ? 'style="opacity:0.6;"' : ''}>
+                  <div class="plan-card ${isCurrentTrial ? "active" : ""}" style="${isCurrentTrial ? 'opacity:0.6;' : ''}margin-top:16px;">
                     ${isCurrentTrial
                       ? '<div class="pill pill-tag">Current Plan</div>'
                       : `<div class="pill pill-tag upgrade upgrade-pill sign-up-pill" data-plan="trial">Start Free Trial</div>`}
