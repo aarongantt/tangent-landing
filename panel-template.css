@@ -28,22 +28,23 @@ body {
     filter: none;
 }
 
-/* Panel overlay — uses blue panel image */
+/* Panel overlay — uses blue panel image — SAME as index.html */
 .panel-overlay {
-    background: url('/images/tangent_blue_panel.png') top center / 100% auto no-repeat;
+    background: url('/images/tangent_blue_panel.png') center center / contain no-repeat;
     width: 100%;
-    max-width: 85vw;
-    aspect-ratio: 3378 / 2369; /* Match actual image dimensions */
+    max-width: 98vw;
+    max-height: 85vh;
+    aspect-ratio: 2 / 1;
     position: relative;
 }
 
-/* Main content area (top portion of panel — the blue box, not the reflection) */
+/* Main content area — SAME as index.html */
 .panel-main {
     position: absolute;
-    top: 2%;
-    left: 3%;
-    right: 3%;
-    height: 57%;
+    top: 1%;
+    left: 2%;
+    right: 2%;
+    height: 65%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -69,21 +70,19 @@ body {
     display: none;
 }
 
-/* Reflection area — positioned in the lower portion of the panel image */
+/* Reflection area — SAME as index.html */
 .panel-reflection {
     position: absolute;
-    top: 60%;
-    left: 3%;
-    right: 3%;
-    transform: scaleY(-1);
-    transform-origin: top center;
-    width: auto;
-    height: 28%;
+    top: 76%;
+    left: 50%;
+    transform: translateX(-50%) scaleY(-1);
+    width: 96%;
+    height: 35%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    opacity: 0.35;
-    filter: blur(1.5px);
+    justify-content: flex-start;
+    opacity: 0.4;
+    filter: blur(1px);
     pointer-events: none;
     overflow: hidden;
 }
