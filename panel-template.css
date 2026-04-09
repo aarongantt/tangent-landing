@@ -41,10 +41,10 @@ body {
 /* Main content area — SAME as index.html */
 .panel-main {
     position: absolute;
-    top: 3%;
+    top: 1%;
     left: 2%;
     right: 2%;
-    height: 70%;
+    height: 72%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -63,6 +63,9 @@ body {
     box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
     text-align: center;
+    /* Subtle fade at top and bottom edges */
+    mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 97%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 3%, black 97%, transparent 100%);
 }
 
 .panel-content::-webkit-scrollbar {
