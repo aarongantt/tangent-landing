@@ -743,7 +743,11 @@
         }
       }
 
+      // Initial + delayed updates to catch async content (plan cards load after auth)
       updateReflection();
+      setTimeout(updateReflection, 1000);
+      setTimeout(updateReflection, 3000);
+      setTimeout(updateReflection, 6000);
 
       const observer = new MutationObserver((mutations) => {
         const shouldUpdate = mutations.some(m =>

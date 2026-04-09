@@ -661,8 +661,10 @@
           }
         }
 
-        // Initial setup
+        // Initial + delayed updates
         updateReflection();
+        setTimeout(updateReflection, 1000);
+        setTimeout(updateReflection, 3000);
 
         // Watch for DOM changes
         const observer = new MutationObserver((mutations) => {

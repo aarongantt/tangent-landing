@@ -101,6 +101,9 @@ body {
     overflow-x: hidden;
     padding: 1% 3%;
     color: #ffffff;
+    /* Remove fade mask from reflection clone */
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
     display: flex;
     flex-direction: column;
     align-items: center;
