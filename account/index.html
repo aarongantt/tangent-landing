@@ -38,7 +38,7 @@
       padding: 14px 22px 10px !important;
       min-height: auto !important;
     }
-    .account-card::before { opacity: 0.08 !important; filter: brightness(2) !important; }
+    .account-card::before { display: none !important; }
     .account-card h1, .account-card h2, .account-card h3 { color: #ffffff !important; }
     .account-card p, .account-card span, .account-card label { color: rgba(255,255,255,0.9) !important; }
     .account-card a { color: #ffffff !important; text-decoration: underline !important; }
@@ -56,6 +56,31 @@
     .plan-card.active { border-color: #ffffff !important; background: rgba(255,255,255,0.18) !important; opacity: 1 !important; }
     .plan-price { color: #ffffff !important; }
     .plan-price small { color: rgba(255,255,255,0.7) !important; }
+
+    /* Most Popular badge */
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffffff;
+      color: #5381ac;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      z-index: 100;
+      white-space: nowrap;
+    }
+    .plan-card-featured {
+      border-color: #ffffff !important;
+      background: rgba(255,255,255,0.18) !important;
+    }
+    .plan-card { overflow: visible !important; position: relative !important; }
+    .plans-grid { overflow: visible !important; }
 
     /* Section headings */
     #plans-container h3, .section h3 { color: #ffffff !important; }
@@ -318,18 +343,19 @@
     .plan-cta {
       width: 100%;
       padding: 10px;
-      border-radius: 999px;
-      border: 1px solid #ffffff;
-      background: #3b82f6;
+      border-radius: 8px;
+      border: none;
+      background: #2a8fd5;
       color: #ffffff;
-      font-weight: 800;
+      font-weight: 600;
       font-size: 14px;
       cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     .plan-cta:disabled {
-      background: #4b5563;
-      border-color: #9ca3af;
-      color: #e5e7eb;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.6);
       cursor: not-allowed;
       opacity: 0.8;
     }
@@ -361,9 +387,9 @@
       right: 10px;
     }
     .pill.upgrade {
-      background: #2a8fd5;
-      color: #ffffff;
-      border: 1px solid #ffffff;
+      background: #ffffff;
+      color: #5381ac !important;
+      border: 1px solid #5381ac;
       font-weight: 700;
       cursor: pointer;
     }
@@ -691,32 +717,59 @@
 
   <!-- Reflection sync script -->
   <script>
+    // ===== LIVE MIRROR REFLECTION (same approach as index.html) =====
     (function() {
-      const content = document.getElementById('account-panel-content');
+      const mainPanelContent = document.getElementById('account-panel-content');
       const reflection = document.getElementById('account-panel-reflection');
-      if (content && reflection) {
-        // Clone content into reflection
-        function syncReflection() {
-          reflection.innerHTML = '';
-          const clone = content.cloneNode(true);
-          clone.removeAttribute('id');
-          clone.style.pointerEvents = 'none';
-          reflection.appendChild(clone);
-        }
-        // Initial sync + periodic updates
-        setTimeout(syncReflection, 500);
-        setInterval(syncReflection, 3000);
-        // Sync scroll position
-        content.addEventListener('scroll', () => {
-          const clone = reflection.querySelector('.panel-content');
-          if (clone) clone.scrollTop = content.scrollTop;
-        });
+      if (!mainPanelContent || !reflection) return;
+
+      function updateReflection() {
+        const contentClone = mainPanelContent.cloneNode(true);
+        contentClone.removeAttribute('id');
+        reflection.innerHTML = '';
+        reflection.appendChild(contentClone);
+        syncReflectionScroll();
       }
+
+      function syncReflectionScroll() {
+        const reflectionContent = reflection.querySelector('.panel-content');
+        if (!reflectionContent) return;
+        if (Math.abs(reflectionContent.scrollTop - mainPanelContent.scrollTop) > 1) {
+          reflectionContent.scrollTop = mainPanelContent.scrollTop;
+        }
+      }
+
+      updateReflection();
+
+      const observer = new MutationObserver((mutations) => {
+        const shouldUpdate = mutations.some(m =>
+          m.type === 'childList' || m.type === 'characterData' ||
+          (m.type === 'attributes' && m.attributeName !== 'style')
+        );
+        if (shouldUpdate) updateReflection();
+        else syncReflectionScroll();
+      });
+      observer.observe(mainPanelContent, {
+        childList: true, subtree: true, attributes: true,
+        attributeFilter: ['class', 'style'], characterData: true
+      });
+
+      let ticking = false;
+      mainPanelContent.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            syncReflectionScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+
       // Scroll chevron
       const chevron = document.getElementById('scroll-chevron');
-      if (chevron && content) {
+      if (chevron) {
         chevron.addEventListener('click', () => {
-          content.scrollBy({ top: 200, behavior: 'smooth' });
+          mainPanelContent.scrollBy({ top: 200, behavior: 'smooth' });
         });
       }
     })();
@@ -1228,7 +1281,7 @@
       container.innerHTML = `
         <div class="section-block" style="margin-top:8px;">
           <div class="content-narrow">
-            <h3 style="margin-bottom:14px;">Subscription Plans</h3>
+            <h3 style="margin-bottom:8px;">Subscription Plans:</h3>
             <div class="plans-grid">
               ${plans.map(pl => {
                 const isSignedIn = activePlanCode !== null;
@@ -1294,8 +1347,10 @@
                   </div>`;
                 }
 
+                const isPro = pl.code === 'tangent_pro_monthly';
                 return `
-                <div class="plan-card ${isCurrentPlan ? "active" : ""}" ${isCurrentPlan ? 'style="opacity:0.6;"' : ''}>
+                <div class="plan-card ${isCurrentPlan ? "active" : ""} ${isPro ? "plan-card-featured" : ""}" ${isCurrentPlan ? 'style="opacity:0.6;"' : ''} ${!isPro ? 'style="margin-top:16px;"' : 'style="margin-top:16px;"'}>
+                  ${isPro ? '<div class="pricing-badge">Most Popular</div>' : ''}
                   ${isCurrentPlan
                     ? '<div class="pill pill-tag">Current Plan</div>'
                     : `<div class="pill pill-tag upgrade upgrade-pill ${!isSignedIn ? 'sign-up-pill' : ''}" data-price="${monthlyId}" data-plan="${pl.code}">${pillText}</div>`}

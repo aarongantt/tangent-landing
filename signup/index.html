@@ -231,7 +231,7 @@
         /* panel content handled by panel-template.css */
         .pricing-tier-grid { width: 100% !important; box-sizing: border-box !important; }
         .pricing-card-featured .pill-tag {
-            top: 14px;
+            top: 22px;
         }
         .pricing-features {
             list-style: none;
@@ -260,7 +260,7 @@
         }
         .pill-tag {
             position: absolute;
-            top: 14px;
+            top: 22px;
             right: 10px;
         }
         .pill.upgrade {
@@ -642,35 +642,56 @@
     </div><!-- /.panel-overlay -->
 
     <script>
+      // ===== LIVE MIRROR REFLECTION (same approach as index.html) =====
       (function() {
-        const content = document.getElementById('signup-panel-content');
+        const mainPanelContent = document.getElementById('signup-panel-content');
         const reflection = document.getElementById('signup-panel-reflection');
-        if (!content || !reflection) return;
+        if (!mainPanelContent || !reflection) return;
 
-        let reflectionClone = null;
-
-        function syncReflection() {
+        function updateReflection() {
+          const contentClone = mainPanelContent.cloneNode(true);
+          contentClone.removeAttribute('id');
           reflection.innerHTML = '';
-          reflectionClone = content.cloneNode(true);
-          reflectionClone.removeAttribute('id');
-          reflectionClone.style.pointerEvents = 'none';
-          reflectionClone.style.overflow = 'hidden';
-          reflection.appendChild(reflectionClone);
-          // Match scroll position
-          reflectionClone.scrollTop = content.scrollTop;
+          reflection.appendChild(contentClone);
+          syncReflectionScroll();
         }
 
-        // Initial sync after page loads
-        setTimeout(syncReflection, 800);
-        // Periodic sync to catch dynamic content changes
-        setInterval(syncReflection, 5000);
-
-        // Sync scroll position in real-time
-        content.addEventListener('scroll', () => {
-          if (reflectionClone) {
-            reflectionClone.scrollTop = content.scrollTop;
+        function syncReflectionScroll() {
+          const reflectionContent = reflection.querySelector('.panel-content');
+          if (!reflectionContent) return;
+          if (Math.abs(reflectionContent.scrollTop - mainPanelContent.scrollTop) > 1) {
+            reflectionContent.scrollTop = mainPanelContent.scrollTop;
           }
+        }
+
+        // Initial setup
+        updateReflection();
+
+        // Watch for DOM changes
+        const observer = new MutationObserver((mutations) => {
+          const shouldUpdate = mutations.some(m =>
+            m.type === 'childList' || m.type === 'characterData' ||
+            (m.type === 'attributes' && m.attributeName !== 'style')
+          );
+          if (shouldUpdate) updateReflection();
+          else syncReflectionScroll();
         });
+        observer.observe(mainPanelContent, {
+          childList: true, subtree: true, attributes: true,
+          attributeFilter: ['class', 'style'], characterData: true
+        });
+
+        // Sync scroll with requestAnimationFrame
+        let ticking = false;
+        mainPanelContent.addEventListener('scroll', function() {
+          if (!ticking) {
+            window.requestAnimationFrame(function() {
+              syncReflectionScroll();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }, { passive: true });
       })();
     </script>
 
