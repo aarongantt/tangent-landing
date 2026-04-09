@@ -36,33 +36,36 @@
     }
     .panel-main { left: 3% !important; right: 3% !important; top: 2% !important; height: 57% !important; overflow: hidden !important; }
 
-    /* Account card inside panel — white card with dark text */
+    /* Account card — semi-transparent matching signup style */
     .account-card {
-      background: rgba(255,255,255,0.92) !important;
-      border: 1px solid rgba(255,255,255,0.6) !important;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important;
-      color: #2a3444 !important;
+      background: rgba(255,255,255,0.1) !important;
+      border: 1px solid rgba(255,255,255,0.15) !important;
+      box-shadow: none !important;
+      color: #ffffff !important;
       padding: 14px 22px 10px !important;
       min-height: auto !important;
     }
-    .account-card::before { opacity: 0.06 !important; filter: none !important; }
-    .account-card h1, .account-card h2, .account-card h3 { color: #1a2a3a !important; }
-    .account-card p, .account-card span, .account-card label { color: #3a4a5a !important; }
-    .account-card a { color: #2a8fd5 !important; }
-    .account-card .cta-button { color: #ffffff !important; }
+    .account-card::before { opacity: 0.08 !important; filter: brightness(2) !important; }
+    .account-card h1, .account-card h2, .account-card h3 { color: #ffffff !important; }
+    .account-card p, .account-card span, .account-card label { color: rgba(255,255,255,0.9) !important; }
+    .account-card a { color: #ffffff !important; text-decoration: underline !important; }
+    .account-card .cta-button { color: #4a6a8a !important; background: #ffffff !important; text-decoration: none !important; }
 
-    /* Plan cards inside panel — white cards with dark text */
+    /* Plan cards — semi-transparent matching signup style */
     .plan-card {
-      background: rgba(255,255,255,0.92) !important;
-      border: 1px solid rgba(255,255,255,0.6) !important;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important;
-      color: #2a3444 !important;
+      background: rgba(255,255,255,0.1) !important;
+      border: 1px solid rgba(255,255,255,0.15) !important;
+      box-shadow: none !important;
+      color: #ffffff !important;
     }
-    .plan-card h4 { color: #1a2a3a !important; }
-    .plan-card p, .plan-card li, .plan-card span { color: #3a4a5a !important; }
-    .plan-card.active { border-color: #2a8fd5 !important; background: rgba(255,255,255,0.95) !important; opacity: 1 !important; }
-    .plan-price { color: #1a2a3a !important; }
-    .plan-price small { color: #6b7a8a !important; }
+    .plan-card h4 { color: #ffffff !important; }
+    .plan-card p, .plan-card li, .plan-card span { color: rgba(255,255,255,0.9) !important; }
+    .plan-card.active { border-color: #ffffff !important; background: rgba(255,255,255,0.18) !important; opacity: 1 !important; }
+    .plan-price { color: #ffffff !important; }
+    .plan-price small { color: rgba(255,255,255,0.7) !important; }
+
+    /* Section headings */
+    #plans-container h3, .section h3 { color: #ffffff !important; }
 
     /* Payment modal inside panel */
     .tg-payment-card {

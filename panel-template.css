@@ -72,17 +72,18 @@ body {
 /* Reflection area — positioned in the lower portion of the panel image */
 .panel-reflection {
     position: absolute;
-    top: 62%;
+    top: 60%;
     left: 3%;
     right: 3%;
     transform: scaleY(-1);
+    transform-origin: top center;
     width: auto;
-    height: 30%;
+    height: 28%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    opacity: 0.4;
-    filter: blur(1px);
+    justify-content: flex-end;
+    opacity: 0.35;
+    filter: blur(1.5px);
     pointer-events: none;
     overflow: hidden;
 }
