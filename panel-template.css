@@ -79,7 +79,7 @@ body {
 /* Reflection area */
 .panel-reflection {
     position: absolute;
-    top: 68%;
+    top: 70%;
     left: 50%;
     transform: translateX(-50%) scaleY(-1);
     width: 96%;

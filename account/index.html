@@ -744,8 +744,10 @@
       function syncReflectionScroll() {
         var reflectionContent = reflection.querySelector('.panel-content');
         if (!reflectionContent) return;
-        if (Math.abs(reflectionContent.scrollTop - mainPanelContent.scrollTop) > 1) {
-          reflectionContent.scrollTop = mainPanelContent.scrollTop;
+        // Show the bottom edge of the visible content in the reflection
+        var targetScroll = mainPanelContent.scrollTop + mainPanelContent.clientHeight;
+        if (Math.abs(reflectionContent.scrollTop - targetScroll) > 1) {
+          reflectionContent.scrollTop = targetScroll;
         }
       }
 
