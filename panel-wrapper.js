@@ -89,43 +89,25 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.insertBefore(logo, document.body.firstChild);
   logo.after(panelOverlay);
 
-  // Reflection — same approach as account/signup pages
+  // Reflection
   function updateReflection() {
     var contentClone = panelContent.cloneNode(true);
     contentClone.removeAttribute('id');
+    // Bake the current scroll position into the clone
+    // by scrolling it after appending
     reflection.innerHTML = '';
     reflection.appendChild(contentClone);
-    syncReflectionScroll();
-  }
-
-  function syncReflectionScroll() {
-    var reflectionContent = reflection.querySelector('.panel-content');
-    if (!reflectionContent) return;
+    // Sync scroll position
     var bottomEdge = panelContent.scrollTop + panelContent.clientHeight;
-    reflectionContent.scrollTop = Math.max(0, bottomEdge - reflectionContent.clientHeight);
+    contentClone.scrollTop = Math.max(0, bottomEdge - contentClone.clientHeight);
   }
 
   updateReflection();
   setTimeout(updateReflection, 1000);
   setTimeout(updateReflection, 3000);
 
-  var observer = new MutationObserver(function(mutations) {
-    var shouldUpdate = mutations.some(function(m) {
-      return m.type === 'childList' || m.type === 'characterData' ||
-        (m.type === 'attributes' && m.attributeName !== 'style');
-    });
-    if (shouldUpdate) updateReflection();
-    else syncReflectionScroll();
-  });
-  observer.observe(panelContent, {
-    childList: true, subtree: true, attributes: true,
-    attributeFilter: ['class', 'style'], characterData: true
-  });
-
-  var scrollTimeout = null;
+  // Re-clone on every scroll for reliable sync
   panelContent.addEventListener('scroll', function() {
-    syncReflectionScroll();
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(updateReflection, 150);
+    requestAnimationFrame(updateReflection);
   }, { passive: true });
 });
