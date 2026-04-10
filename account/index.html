@@ -721,14 +721,20 @@
 
   <!-- Reflection sync script -->
   <script>
-    // ===== LIVE MIRROR REFLECTION (same approach as index.html) =====
+    // ===== LIVE MIRROR REFLECTION =====
     (function() {
-      const mainPanelContent = document.getElementById('account-panel-content');
-      const reflection = document.getElementById('account-panel-reflection');
-      if (!mainPanelContent || !reflection) return;
+      var mainPanelContent = document.querySelector('.panel-main .panel-content');
+      var reflection = document.getElementById('account-panel-reflection');
+
+      if (!mainPanelContent || !reflection) {
+        console.error('[REFLECTION] Elements not found');
+        return;
+      }
+      console.log('[REFLECTION] Setting up reflection');
 
       function updateReflection() {
-        const contentClone = mainPanelContent.cloneNode(true);
+        console.log('[REFLECTION] Updating');
+        var contentClone = mainPanelContent.cloneNode(true);
         contentClone.removeAttribute('id');
         reflection.innerHTML = '';
         reflection.appendChild(contentClone);
@@ -736,24 +742,23 @@
       }
 
       function syncReflectionScroll() {
-        const reflectionContent = reflection.querySelector('.panel-content');
+        var reflectionContent = reflection.querySelector('.panel-content');
         if (!reflectionContent) return;
         if (Math.abs(reflectionContent.scrollTop - mainPanelContent.scrollTop) > 1) {
           reflectionContent.scrollTop = mainPanelContent.scrollTop;
         }
       }
 
-      // Initial + delayed updates to catch async content (plan cards load after auth)
       updateReflection();
       setTimeout(updateReflection, 1000);
       setTimeout(updateReflection, 3000);
       setTimeout(updateReflection, 6000);
 
-      const observer = new MutationObserver((mutations) => {
-        const shouldUpdate = mutations.some(m =>
-          m.type === 'childList' || m.type === 'characterData' ||
-          (m.type === 'attributes' && m.attributeName !== 'style')
-        );
+      var observer = new MutationObserver(function(mutations) {
+        var shouldUpdate = mutations.some(function(m) {
+          return m.type === 'childList' || m.type === 'characterData' ||
+            (m.type === 'attributes' && m.attributeName !== 'style');
+        });
         if (shouldUpdate) updateReflection();
         else syncReflectionScroll();
       });
@@ -762,7 +767,7 @@
         attributeFilter: ['class', 'style'], characterData: true
       });
 
-      let ticking = false;
+      var ticking = false;
       mainPanelContent.addEventListener('scroll', function() {
         if (!ticking) {
           window.requestAnimationFrame(function() {
@@ -772,14 +777,6 @@
           ticking = true;
         }
       }, { passive: true });
-
-      // Scroll chevron
-      const chevron = document.getElementById('scroll-chevron');
-      if (chevron) {
-        chevron.addEventListener('click', () => {
-          mainPanelContent.scrollBy({ top: 200, behavior: 'smooth' });
-        });
-      }
     })();
   </script>
 

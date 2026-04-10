@@ -639,39 +639,46 @@
     </div><!-- /.panel-overlay -->
 
     <script>
-      // ===== LIVE MIRROR REFLECTION (same approach as index.html) =====
+      // ===== LIVE MIRROR REFLECTION (copied from index.html exactly) =====
       (function() {
-        const mainPanelContent = document.getElementById('signup-panel-content');
-        const reflection = document.getElementById('signup-panel-reflection');
-        if (!mainPanelContent || !reflection) return;
+        var mainPanelContent = document.querySelector('.panel-main .panel-content');
+        var reflection = document.getElementById('signup-panel-reflection');
+
+        if (!mainPanelContent || !reflection) {
+          console.error('[REFLECTION] Elements not found:', { mainPanelContent, reflection });
+          return;
+        }
+        console.log('[REFLECTION] Elements found, setting up reflection');
 
         function updateReflection() {
-          const contentClone = mainPanelContent.cloneNode(true);
+          console.log('[REFLECTION] Updating reflection');
+          var contentClone = mainPanelContent.cloneNode(true);
           contentClone.removeAttribute('id');
           reflection.innerHTML = '';
           reflection.appendChild(contentClone);
+          console.log('[REFLECTION] Clone added, children:', reflection.children.length);
           syncReflectionScroll();
         }
 
         function syncReflectionScroll() {
-          const reflectionContent = reflection.querySelector('.panel-content');
+          var reflectionContent = reflection.querySelector('.panel-content');
           if (!reflectionContent) return;
           if (Math.abs(reflectionContent.scrollTop - mainPanelContent.scrollTop) > 1) {
             reflectionContent.scrollTop = mainPanelContent.scrollTop;
           }
         }
 
-        // Initial + delayed updates
+        // Initial + delayed
         updateReflection();
         setTimeout(updateReflection, 1000);
         setTimeout(updateReflection, 3000);
 
-        // Watch for DOM changes
-        const observer = new MutationObserver((mutations) => {
-          const shouldUpdate = mutations.some(m =>
-            m.type === 'childList' || m.type === 'characterData' ||
-            (m.type === 'attributes' && m.attributeName !== 'style')
-          );
+        // MutationObserver
+        var observer = new MutationObserver(function(mutations) {
+          var shouldUpdate = mutations.some(function(m) {
+            return m.type === 'childList' || m.type === 'characterData' ||
+              (m.type === 'attributes' && m.attributeName !== 'style');
+          });
           if (shouldUpdate) updateReflection();
           else syncReflectionScroll();
         });
@@ -680,8 +687,8 @@
           attributeFilter: ['class', 'style'], characterData: true
         });
 
-        // Sync scroll with requestAnimationFrame
-        let ticking = false;
+        // Scroll sync
+        var ticking = false;
         mainPanelContent.addEventListener('scroll', function() {
           if (!ticking) {
             window.requestAnimationFrame(function() {
