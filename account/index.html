@@ -61,9 +61,12 @@
     .plan-price { color: #ffffff !important; }
     .plan-price small { color: rgba(255,255,255,0.7) !important; }
 
-    /* Most Popular badge — inline inside card, not absolute */
+    /* Most Popular badge — centered on top border */
     .pricing-badge {
-      display: inline-block;
+      position: absolute;
+      top: -11px;
+      left: 50%;
+      transform: translateX(-50%);
       background: #ffffff;
       color: #5381ac;
       font-size: 0.7rem;
@@ -73,7 +76,8 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      margin-bottom: 6px;
+      z-index: 100;
+      white-space: nowrap;
     }
     .plan-card-featured {
       border-color: #ffffff !important;
