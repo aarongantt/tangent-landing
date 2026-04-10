@@ -114,7 +114,17 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(updateReflection, 1000);
   setTimeout(updateReflection, 3000);
 
-  // Scroll sync — update clone scroll position, re-clone periodically
+  // Watch for DOM changes (FAQ expanding, content loading, etc.)
+  var updateTimeout = null;
+  var observer = new MutationObserver(function() {
+    clearTimeout(updateTimeout);
+    updateTimeout = setTimeout(updateReflection, 100);
+  });
+  observer.observe(panelContent, {
+    childList: true, subtree: true, attributes: true, characterData: true
+  });
+
+  // Scroll sync
   var scrollTimeout = null;
   panelContent.addEventListener('scroll', function() {
     requestAnimationFrame(syncReflectionScroll);
