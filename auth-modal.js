@@ -17,7 +17,7 @@
     loginModal.style.justifyContent = "center";
     loginModal.style.zIndex = "9999";
     loginModal.innerHTML = `
-      <div style="background:linear-gradient(180deg,#6b87a8 0%,#8da4bc 40%,#a7b8c9 100%);border:none;border-radius:12px;padding:22px;width:100%;max-width:420px;box-shadow:0 12px 40px rgba(0,0,0,0.2);color:#ffffff;position:relative;">
+      <div style="background:linear-gradient(180deg,#396087 0%,#5d8ab8 100%);border:none;border-radius:12px;padding:22px;width:100%;max-width:420px;box-shadow:0 12px 40px rgba(0,0,0,0.2);color:#ffffff;position:relative;">
         <button id="tgLoginClose" style="position:absolute;top:10px;right:10px;background:transparent;border:0;color:#ffffff;font-size:18px;cursor:pointer;">×</button>
         <div style="display:flex;justify-content:center;margin-bottom:12px;">
           <img src="/images/tangent_logo.png" alt="Tangent" style="height:28px;" />
