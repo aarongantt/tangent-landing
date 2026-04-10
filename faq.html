@@ -52,12 +52,12 @@
         main, section, .section { background: transparent !important; width: 100% !important; overflow: hidden !important; }
         /* Force hide header and footer — they load dynamically after panel-wrapper runs */
         .site-header, header, #header-placeholder, .site-footer, footer { display: none !important; }
-        /* Fix FAQ text visibility — white text on semi-transparent panels */
-        .faq-accordion-item { background: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.15) !important; }
-        .faq-question { color: #ffffff !important; }
-        .faq-answer, .faq-answer p, .faq-answer li, .faq-answer ul { color: rgba(255,255,255,0.85) !important; }
-        .faq-answer a { color: #ffffff !important; }
-        .faq-icon { color: #ffffff !important; }
+        /* FAQ text — dark text on light panels for guaranteed readability */
+        .faq-accordion-item { background: rgba(255,255,255,0.85) !important; border: 1px solid rgba(255,255,255,0.6) !important; box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important; }
+        .faq-question { color: #1a2a3a !important; }
+        .faq-answer, .faq-answer p, .faq-answer li, .faq-answer ul { color: #3a4a5a !important; }
+        .faq-answer a { color: #2a8fd5 !important; }
+        .faq-icon { color: #5381ac !important; }
         .faq-section-title { color: #ffffff !important; }
 
         /* FAQ page spacing */
