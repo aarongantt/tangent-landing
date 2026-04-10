@@ -1172,12 +1172,12 @@
       const map = {
         tangent_pro_monthly: "Pro (Monthly)",
         tangent_pro_annual: "Pro (Annual)",
-        tangent_business_solo_monthly: "Business Solo (Monthly)",
-        tangent_business_solo_annual: "Business Solo (Annual)",
+        tangent_business_solo_monthly: "Business (Monthly)",
+        tangent_business_solo_annual: "Business (Annual)",
         pro_monthly: "Pro (Monthly)",
         pro_annual: "Pro (Annual)",
-        business_solo_monthly: "Business Solo (Monthly)",
-        business_solo_annual: "Business Solo (Annual)",
+        business_solo_monthly: "Business (Monthly)",
+        business_solo_annual: "Business (Annual)",
         free_trial: "Free Trial"
       };
       return map[planCode] || planCode || "Unknown";
@@ -1230,7 +1230,8 @@
       {
         code: "tangent_pro_monthly",
         title: "Pro",
-        price: "$10",
+        displayPrice: "$10",
+        price: "$12",
         suffix: "/ month",
         desc: "For people who live in their browser and rely on AI every day.",
         bullets: [
@@ -1245,8 +1246,9 @@
       },
       {
         code: "tangent_business_solo_monthly",
-        title: "Business (Solo)",
-        price: "$25",
+        title: "Business",
+        displayPrice: "$25",
+        price: "$30",
         suffix: "/ month",
         desc: "For creators, freelancers, and power users who need more headroom.",
         bullets: [
@@ -1266,12 +1268,26 @@
       'tangent_pro_monthly': 1,
       'tangent_pro_annual': 1,
       'tangent_business_solo_monthly': 2,
-      'tangent_business_solo_annual': 2
+      'tangent_business_solo_annual': 2,
+      'pro_monthly': 1,
+      'pro_annual': 1,
+      'business_solo_monthly': 2,
+      'business_solo_annual': 2
     };
 
-    function renderTokensAndPlans(activePlanCode) {
+    function renderTokensAndPlans(rawPlanCode) {
       const container = document.getElementById("plans-container");
       if (!container) return;
+
+      // Normalize plan code — API returns 'pro_monthly', plan data uses 'tangent_pro_monthly'
+      const PLAN_CODE_MAP = {
+        'pro_monthly': 'tangent_pro_monthly',
+        'pro_annual': 'tangent_pro_annual',
+        'business_solo_monthly': 'tangent_business_solo_monthly',
+        'business_solo_annual': 'tangent_business_solo_annual',
+        'free_trial': 'free_trial'
+      };
+      const activePlanCode = PLAN_CODE_MAP[rawPlanCode] || rawPlanCode;
 
       const planLower = (activePlanCode || "").toLowerCase();
       // Hide token packs for: signed out users (null), free trial users, and any non-paid plan
@@ -1301,7 +1317,7 @@
                       ? '<div class="pill pill-tag">Current Plan</div>'
                       : `<div class="pill pill-tag upgrade upgrade-pill sign-up-pill" data-plan="trial">Start Free Trial</div>`}
                     <h4>${pl.title}</h4>
-                    <div class="plan-price">${pl.price} <small>${pl.suffix}</small></div>
+                    <div class="plan-price">${pl.displayPrice || pl.price} <small>${pl.suffix}</small></div>
                     <p class="plan-desc">${pl.desc}</p>
                     <ul class="plan-list">
                       ${pl.bullets.map(b => `<li>${b}</li>`).join("")}
@@ -1342,7 +1358,7 @@
                   return `
                   <div class="plan-card" style="opacity:0.4;pointer-events:none;">
                     <h4>${pl.title}</h4>
-                    <div class="plan-price">${pl.price} <small>${pl.suffix}</small></div>
+                    <div class="plan-price">${pl.displayPrice || pl.price} <small>${pl.suffix}</small></div>
                     <p class="plan-desc">${pl.desc}</p>
                     <ul class="plan-list">
                       ${pl.bullets.map(b => `<li>${b}</li>`).join("")}
@@ -1362,7 +1378,7 @@
                     ? '<div class="pill pill-tag">Current Plan</div>'
                     : `<div class="pill pill-tag upgrade upgrade-pill ${!isSignedIn ? 'sign-up-pill' : ''}" data-price="${monthlyId}" data-plan="${pl.code}">${pillText}</div>`}
                   <h4>${pl.title}</h4>
-                  <div class="plan-price">${pl.price} <small>${pl.suffix}</small></div>
+                  <div class="plan-price">${pl.displayPrice || pl.price} <small>${pl.suffix}</small></div>
                   <p class="plan-desc">${pl.desc}</p>
                   <ul class="plan-list">
                     ${pl.bullets.map(b => `<li>${b}</li>`).join("")}
@@ -1454,7 +1470,7 @@
               planName = "Pro";
               planPrice = "$12/month";
             } else if (planCode.includes("business_solo")) {
-              planName = "Business (Solo)";
+              planName = "Business";
               planPrice = "$30/month";
             } else if (planCode.includes("business_teams")) {
               planName = "Business (Teams)";
@@ -1466,7 +1482,7 @@
               planName = "Pro";
               planPrice = "$10/month ($120 billed annually)";
             } else if (planCode.includes("business_solo")) {
-              planName = "Business (Solo)";
+              planName = "Business";
               planPrice = "$25/month ($300 Billed Annually)";
             } else if (planCode.includes("business_teams")) {
               planName = "Business (Teams)";
