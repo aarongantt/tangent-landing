@@ -227,7 +227,8 @@
         /* removed — conflicted with 1040px max-width above */
         /* Override global styles — fit everything inside the visible blue area of the panel image */
         :root { --max-width: 1040px !important; }
-        /* fade handled by panel-template.css */
+        /* No scrolling on signup — content fits in panel */
+        .panel-content { overflow: hidden !important; }
         /* panel content handled by panel-template.css */
         .pricing-tier-grid { width: 100% !important; box-sizing: border-box !important; }
         .pricing-card-featured .pill-tag {
