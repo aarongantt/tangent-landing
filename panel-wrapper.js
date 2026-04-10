@@ -63,25 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
   styleOverride.textContent = `
     :root { --max-width: 1040px !important; }
     .container { max-width: 1040px !important; width: 100% !important; margin: 0 auto !important; padding: 0 16px !important; box-sizing: border-box !important; }
-    .panel-content * { color: #ffffff; }
-    .panel-content h1, .panel-content h2, .panel-content h3, .panel-content h4 { color: #ffffff !important; background: none !important; -webkit-text-fill-color: #ffffff !important; }
-    .panel-content p, .panel-content li, .panel-content span, .panel-content label, .panel-content td, .panel-content th { color: rgba(255,255,255,0.9) !important; }
-    .panel-content a { color: #ffffff !important; text-decoration: underline; }
-    .panel-content a:hover { opacity: 0.8; }
     main, section, .section, .section-alt, .hero, .hero--center { background: transparent !important; padding-left: 0 !important; padding-right: 0 !important; }
-    .panel-content .card--center, .panel-content .faq-item, .panel-content .step-card {
-      background: rgba(255,255,255,0.1) !important;
-      border: 1px solid rgba(255,255,255,0.15) !important;
-      color: #ffffff !important;
-    }
-    .panel-content button, .panel-content .cta-button, .panel-content .btn {
-      background: #ffffff !important;
-      color: #4a6a8a !important;
-      border: none !important;
-    }
-    .panel-content pre, .panel-content code {
-      background: rgba(0,0,0,0.2) !important;
-      color: #e0e8f0 !important;
     }
     /* FAQ specific */
     .panel-content .faq-answer { color: rgba(255,255,255,0.85) !important; }
@@ -107,19 +89,43 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.insertBefore(logo, document.body.firstChild);
   logo.after(panelOverlay);
 
-  // Sync reflection
-  function syncReflection() {
+  // Reflection — same approach as account/signup pages
+  function updateReflection() {
+    var contentClone = panelContent.cloneNode(true);
+    contentClone.removeAttribute('id');
     reflection.innerHTML = '';
-    const clone = panelContent.cloneNode(true);
-    clone.removeAttribute('id');
-    clone.style.pointerEvents = 'none';
-    reflection.appendChild(clone);
+    reflection.appendChild(contentClone);
+    syncReflectionScroll();
   }
-  setTimeout(syncReflection, 500);
-  setInterval(syncReflection, 5000);
 
-  panelContent.addEventListener('scroll', () => {
-    const clone = reflection.querySelector('.panel-content');
-    if (clone) clone.scrollTop = panelContent.scrollTop;
+  function syncReflectionScroll() {
+    var reflectionContent = reflection.querySelector('.panel-content');
+    if (!reflectionContent) return;
+    var bottomEdge = panelContent.scrollTop + panelContent.clientHeight;
+    reflectionContent.scrollTop = Math.max(0, bottomEdge - reflectionContent.clientHeight);
+  }
+
+  updateReflection();
+  setTimeout(updateReflection, 1000);
+  setTimeout(updateReflection, 3000);
+
+  var observer = new MutationObserver(function(mutations) {
+    var shouldUpdate = mutations.some(function(m) {
+      return m.type === 'childList' || m.type === 'characterData' ||
+        (m.type === 'attributes' && m.attributeName !== 'style');
+    });
+    if (shouldUpdate) updateReflection();
+    else syncReflectionScroll();
   });
+  observer.observe(panelContent, {
+    childList: true, subtree: true, attributes: true,
+    attributeFilter: ['class', 'style'], characterData: true
+  });
+
+  var scrollTimeout = null;
+  panelContent.addEventListener('scroll', function() {
+    syncReflectionScroll();
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(updateReflection, 150);
+  }, { passive: true });
 });
