@@ -95,10 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateReflection() {
     reflectionClone = panelContent.cloneNode(true);
     reflectionClone.removeAttribute('id');
-    reflectionClone.style.overflowY = 'auto';
+    // CRITICAL: clone must have fixed height + overflow to be scrollable
+    reflectionClone.style.cssText = 'height:100% !important;max-height:100% !important;overflow-y:scroll !important;display:block !important;';
     reflection.innerHTML = '';
     reflection.appendChild(reflectionClone);
-    // Need a frame for layout before scrolling
     requestAnimationFrame(function() {
       syncReflectionScroll();
     });
