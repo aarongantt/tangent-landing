@@ -61,8 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Override content styles for white-on-blue
   const styleOverride = document.createElement('style');
   styleOverride.textContent = `
-    :root { --max-width: 100% !important; }
-    .container { max-width: 100% !important; width: 100% !important; padding: 0 !important; box-sizing: border-box !important; }
+    :root { --max-width: 1040px !important; }
+    .container { max-width: 1040px !important; width: 100% !important; margin: 0 auto !important; padding: 0 16px !important; box-sizing: border-box !important; }
     .panel-content * { color: #ffffff; }
     .panel-content h1, .panel-content h2, .panel-content h3, .panel-content h4 { color: #ffffff !important; background: none !important; -webkit-text-fill-color: #ffffff !important; }
     .panel-content p, .panel-content li, .panel-content span, .panel-content label, .panel-content td, .panel-content th { color: rgba(255,255,255,0.9) !important; }

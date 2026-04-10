@@ -44,11 +44,12 @@
             caret-color: #e5e7eb;
         }
 
-        /* Panel overrides */
+        /* Panel overrides — ensure content fits inside blue panel */
         body { overflow: hidden !important; }
         html { overflow: hidden !important; }
-        :root { --max-width: 100% !important; }
-        .container { max-width: 1040px !important; margin: 0 auto !important; }
+        :root { --max-width: 1040px !important; }
+        .container { max-width: 1040px !important; margin: 0 auto !important; padding: 0 16px !important; box-sizing: border-box !important; }
+        main, section, .section { background: transparent !important; width: 100% !important; overflow: hidden !important; }
 
         /* FAQ page spacing */
         .section {
