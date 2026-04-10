@@ -90,24 +90,35 @@ document.addEventListener('DOMContentLoaded', () => {
   logo.after(panelOverlay);
 
   // Reflection
+  var reflectionClone = null;
+
   function updateReflection() {
-    var contentClone = panelContent.cloneNode(true);
-    contentClone.removeAttribute('id');
-    // Bake the current scroll position into the clone
-    // by scrolling it after appending
+    reflectionClone = panelContent.cloneNode(true);
+    reflectionClone.removeAttribute('id');
+    reflectionClone.style.overflowY = 'auto';
     reflection.innerHTML = '';
-    reflection.appendChild(contentClone);
-    // Sync scroll position
+    reflection.appendChild(reflectionClone);
+    // Need a frame for layout before scrolling
+    requestAnimationFrame(function() {
+      syncReflectionScroll();
+    });
+  }
+
+  function syncReflectionScroll() {
+    if (!reflectionClone) return;
     var bottomEdge = panelContent.scrollTop + panelContent.clientHeight;
-    contentClone.scrollTop = Math.max(0, bottomEdge - contentClone.clientHeight);
+    reflectionClone.scrollTop = Math.max(0, bottomEdge - reflectionClone.clientHeight);
   }
 
   updateReflection();
   setTimeout(updateReflection, 1000);
   setTimeout(updateReflection, 3000);
 
-  // Re-clone on every scroll for reliable sync
+  // Scroll sync — update clone scroll position, re-clone periodically
+  var scrollTimeout = null;
   panelContent.addEventListener('scroll', function() {
-    requestAnimationFrame(updateReflection);
+    requestAnimationFrame(syncReflectionScroll);
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(updateReflection, 200);
   }, { passive: true });
 });
