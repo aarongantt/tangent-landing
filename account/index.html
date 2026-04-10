@@ -745,7 +745,8 @@
       function syncReflectionScroll() {
         var reflectionContent = reflection.querySelector('.panel-content');
         if (!reflectionContent) return;
-        reflectionContent.scrollTop = mainPanelContent.scrollTop;
+        var bottomEdge = mainPanelContent.scrollTop + mainPanelContent.clientHeight;
+        reflectionContent.scrollTop = Math.max(0, bottomEdge - reflectionContent.clientHeight);
       }
 
       updateReflection();

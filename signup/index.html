@@ -663,7 +663,13 @@
         function syncReflectionScroll() {
           var reflectionContent = reflection.querySelector('.panel-content');
           if (!reflectionContent) return;
-          reflectionContent.scrollTop = mainPanelContent.scrollTop;
+          // The reflection is flipped with scaleY(-1), so the TOP of the clone
+          // appears at the BOTTOM visually. We need the bottom of the main
+          // viewport to be at the top of the clone.
+          // scrollTop + clientHeight = bottom edge of visible area
+          // Subtract a small offset so the seam aligns perfectly
+          var bottomEdge = mainPanelContent.scrollTop + mainPanelContent.clientHeight;
+          reflectionContent.scrollTop = Math.max(0, bottomEdge - reflectionContent.clientHeight);
         }
 
         // Initial + delayed
