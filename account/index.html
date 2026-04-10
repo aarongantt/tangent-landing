@@ -1170,13 +1170,14 @@
 
     function formatPlan(planCode = "") {
       const map = {
-        tangent_pro_monthly: "Tangent Pro (Monthly)",
-        tangent_pro_annual: "Tangent Pro (Annual)",
-        tangent_business_solo_monthly: "Tangent Business Solo (Monthly)",
-        tangent_business_solo_annual: "Tangent Business Solo (Annual)",
-        // TEMPORARILY HIDDEN: Business Teams plan
-        // tangent_business_teams_monthly: "Tangent Business Teams (Monthly)",
-        // tangent_business_teams_annual: "Tangent Business Teams (Annual)",
+        tangent_pro_monthly: "Pro (Monthly)",
+        tangent_pro_annual: "Pro (Annual)",
+        tangent_business_solo_monthly: "Business Solo (Monthly)",
+        tangent_business_solo_annual: "Business Solo (Annual)",
+        pro_monthly: "Pro (Monthly)",
+        pro_annual: "Pro (Annual)",
+        business_solo_monthly: "Business Solo (Monthly)",
+        business_solo_annual: "Business Solo (Annual)",
         free_trial: "Free Trial"
       };
       return map[planCode] || planCode || "Unknown";
