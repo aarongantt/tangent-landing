@@ -1298,7 +1298,7 @@
       container.innerHTML = `
         <div class="section-block" style="margin-top:8px;">
           <div class="content-narrow">
-            <h3 style="margin-bottom:8px;">Subscription Plans:</h3>
+            <h3 style="margin-bottom:20px;">Subscription Plans:</h3>
             <div class="plans-grid">
               ${plans.map(pl => {
                 const isSignedIn = activePlanCode !== null;
@@ -1539,7 +1539,7 @@
         const resetDate = periodEnd ? new Date(periodEnd).toLocaleDateString() : "—";
 
         const isTrial = (plan || '').toLowerCase() === 'free_trial';
-        const resetLabel = isTrial ? 'Trial expires on' : 'Resets on';
+        const resetLabel = isTrial ? '<strong>Trial Expires On:</strong>' : '<strong>Resets On:</strong>';
 
         const isActive = plan && plan !== 'free_trial' && !info.cancel_at_period_end;
         const isCancelling = info.cancel_at_period_end;
