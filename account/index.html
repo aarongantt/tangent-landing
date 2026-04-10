@@ -28,7 +28,8 @@
     .section, .section-alt { background: transparent !important; padding: 8px 0 !important; }
     .container { max-width: 100% !important; padding: 0 !important; }
     .panel-main { overflow: hidden !important; }
-    /* fade handled by panel-template.css */
+    /* Reflection position override for account page */
+    .panel-reflection { top: 72% !important; }
 
     /* Account card — semi-transparent matching signup style */
     .account-card {
@@ -765,15 +766,11 @@
         attributeFilter: ['class', 'style'], characterData: true
       });
 
-      var ticking = false;
+      var scrollTimeout = null;
       mainPanelContent.addEventListener('scroll', function() {
-        if (!ticking) {
-          window.requestAnimationFrame(function() {
-            syncReflectionScroll();
-            ticking = false;
-          });
-          ticking = true;
-        }
+        syncReflectionScroll();
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(updateReflection, 150);
       }, { passive: true });
     })();
   </script>

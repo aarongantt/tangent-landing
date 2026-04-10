@@ -685,16 +685,13 @@
           attributeFilter: ['class', 'style'], characterData: true
         });
 
-        // Scroll sync
-        var ticking = false;
+        // Scroll sync — re-clone on scroll for reliable sync
+        var scrollTimeout = null;
         mainPanelContent.addEventListener('scroll', function() {
-          if (!ticking) {
-            window.requestAnimationFrame(function() {
-              syncReflectionScroll();
-              ticking = false;
-            });
-            ticking = true;
-          }
+          syncReflectionScroll();
+          // Also re-clone periodically during scroll for visual accuracy
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(updateReflection, 150);
         }, { passive: true });
       })();
     </script>
