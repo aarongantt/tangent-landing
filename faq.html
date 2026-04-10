@@ -50,6 +50,15 @@
         :root { --max-width: 1040px !important; }
         .container { max-width: 1040px !important; margin: 0 auto !important; padding: 0 16px !important; box-sizing: border-box !important; }
         main, section, .section { background: transparent !important; width: 100% !important; overflow: hidden !important; }
+        /* Force hide header and footer — they load dynamically after panel-wrapper runs */
+        .site-header, header, #header-placeholder, .site-footer, footer { display: none !important; }
+        /* Fix FAQ text visibility — white text on semi-transparent panels */
+        .faq-accordion-item { background: rgba(255,255,255,0.1) !important; border: 1px solid rgba(255,255,255,0.15) !important; }
+        .faq-question { color: #ffffff !important; }
+        .faq-answer, .faq-answer p, .faq-answer li, .faq-answer ul { color: rgba(255,255,255,0.85) !important; }
+        .faq-answer a { color: #ffffff !important; }
+        .faq-icon { color: #ffffff !important; }
+        .faq-section-title { color: #ffffff !important; }
 
         /* FAQ page spacing */
         .section {
