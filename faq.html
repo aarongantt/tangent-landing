@@ -44,14 +44,15 @@
             caret-color: #e5e7eb;
         }
 
-        /* FAQ page background */
-        body {
-            background: radial-gradient(circle at top, #171b2a 0, #05060a 55%);
-        }
+        /* Panel overrides */
+        body { overflow: hidden !important; }
+        html { overflow: hidden !important; }
+        :root { --max-width: 100% !important; }
+        .container { max-width: 1040px !important; margin: 0 auto !important; }
 
         /* FAQ page spacing */
         .section {
-            padding-top: 20px;
+            padding-top: 10px;
         }
 
         /* Center the CTA section */
@@ -67,8 +68,8 @@
         .faq-section-title {
             font-size: 1.5rem;
             margin-bottom: 20px;
-            color: var(--accent-strong);
-            border-bottom: 2px solid rgba(74, 144, 226, 0.3);
+            color: #ffffff !important;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
             padding-bottom: 10px;
         }
 
@@ -79,15 +80,16 @@
         }
 
         .faq-accordion-item {
-            border-radius: var(--radius-md);
-            background: rgba(9, 12, 24, 0.94);
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             overflow: hidden;
             transition: border-color 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .faq-accordion-item.active {
-            border-color: rgba(74, 144, 226, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .faq-question {
@@ -95,7 +97,7 @@
             padding: 16px 18px;
             background: transparent;
             border: none;
-            color: var(--text-main);
+            color: #ffffff !important;
             font-size: 1rem;
             font-weight: 600;
             text-align: left;
@@ -107,13 +109,13 @@
         }
 
         .faq-question:hover {
-            color: var(--accent-strong);
+            color: rgba(255,255,255,0.8) !important;
         }
 
         .faq-icon {
             font-size: 1.2rem;
             transition: transform 0.3s ease;
-            color: var(--accent);
+            color: #ffffff !important;
             flex-shrink: 0;
             margin-left: 12px;
         }
@@ -136,7 +138,7 @@
 
         .faq-answer p {
             margin: 0 0 12px 0;
-            color: var(--text-muted);
+            color: rgba(255,255,255,0.85) !important;
             font-size: 0.95rem;
             line-height: 1.7;
         }
@@ -148,30 +150,31 @@
         .faq-answer ul {
             margin: 8px 0;
             padding-left: 24px;
-            color: var(--text-muted);
+            color: rgba(255,255,255,0.85) !important;
             font-size: 0.95rem;
             line-height: 1.7;
         }
 
         .faq-answer li {
             margin-bottom: 6px;
+            color: rgba(255,255,255,0.85) !important;
         }
 
         .faq-answer a {
-            color: var(--accent-strong);
+            color: #ffffff !important;
             text-decoration: underline;
         }
 
         .faq-answer a:hover {
-            color: var(--accent);
+            opacity: 0.8;
         }
 
         .faq-page-intro {
             max-width: 800px;
-            margin: 0 auto 40px;
+            margin: 0 auto 20px;
             text-align: center;
-            color: var(--text-muted);
-            font-size: 1.05rem;
+            color: rgba(255,255,255,0.8) !important;
+            font-size: 1rem;
             line-height: 1.7;
         }
     </style>
@@ -185,7 +188,7 @@
     <main>
         <section class="section">
             <div class="container">
-                <h1 style="text-align: center; font-size: 2.5rem; margin-bottom: 16px; background: linear-gradient(135deg, #ffffff 0%, #ffffff 30%, #4a90e2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">TANGENT - FAQs</h1>
+                <h1 style="text-align: center; font-size: 2rem; margin-bottom: 16px; color: #ffffff; -webkit-text-fill-color: #ffffff;">FAQs</h1>
 
                 <!-- GENERAL OVERVIEW -->
                 <div class="faq-section">
