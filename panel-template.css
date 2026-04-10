@@ -76,21 +76,23 @@ body {
     display: none;
 }
 
-/* Reflection area — SAME as index.html */
+/* Reflection area */
 .panel-reflection {
     position: absolute;
-    top: 76%;
+    top: 68%;
     left: 50%;
     transform: translateX(-50%) scaleY(-1);
     width: 96%;
-    height: 35%;
+    height: 30%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    opacity: 0.4;
-    filter: blur(1px);
+    opacity: 0.35;
+    filter: blur(1.5px);
     pointer-events: none;
     overflow: hidden;
+    mask-image: linear-gradient(to top, black 0%, transparent 80%);
+    -webkit-mask-image: linear-gradient(to top, black 0%, transparent 80%);
 }
 
 .panel-reflection > .panel-content {
