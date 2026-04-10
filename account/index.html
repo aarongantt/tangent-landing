@@ -61,23 +61,19 @@
     .plan-price { color: #ffffff !important; }
     .plan-price small { color: rgba(255,255,255,0.7) !important; }
 
-    /* Most Popular badge */
+    /* Most Popular badge — inline inside card, not absolute */
     .pricing-badge {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
+      display: inline-block;
       background: #ffffff;
       color: #5381ac;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 4px 14px;
+      padding: 3px 12px;
       border-radius: 20px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      z-index: 100;
-      white-space: nowrap;
+      margin-bottom: 6px;
     }
     .plan-card-featured {
       border-color: #ffffff !important;
@@ -1312,7 +1308,7 @@
                   if (hasPaidPlan) return '';
 
                   return `
-                  <div class="plan-card ${isCurrentTrial ? "active" : ""}" style="${isCurrentTrial ? 'opacity:0.6;' : ''}margin-top:16px;">
+                  <div class="plan-card ${isCurrentTrial ? "active" : ""}" style="${isCurrentTrial ? 'opacity:0.6;' : ''}">
                     ${isCurrentTrial
                       ? '<div class="pill pill-tag">Current Plan</div>'
                       : `<div class="pill pill-tag upgrade upgrade-pill sign-up-pill" data-plan="trial">Start Free Trial</div>`}
@@ -1372,7 +1368,7 @@
 
                 const isPro = pl.code === 'tangent_pro_monthly';
                 return `
-                <div class="plan-card ${isCurrentPlan ? "active" : ""} ${isPro ? "plan-card-featured" : ""}" ${isCurrentPlan ? 'style="opacity:0.6;"' : ''} ${!isPro ? 'style="margin-top:16px;"' : 'style="margin-top:16px;"'}>
+                <div class="plan-card ${isCurrentPlan ? "active" : ""} ${isPro ? "plan-card-featured" : ""}" style="${isCurrentPlan ? 'opacity:0.6;' : ''}">
                   ${isPro ? '<div class="pricing-badge">Most Popular</div>' : ''}
                   ${isCurrentPlan
                     ? '<div class="pill pill-tag">Current Plan</div>'
