@@ -39,7 +39,7 @@ body {
 .panel-overlay {
     background: url('/images/tangent_blue_panel.png') top center / 100% 100% no-repeat;
     width: 100%;
-    max-width: min(98vw, 1400px);
+    max-width: min(98vw, 2000px);
     max-height: calc(100vh - 6vw - 2vh);
     aspect-ratio: 3378 / 2369;
     position: relative;
