@@ -250,7 +250,7 @@
         /* ===== PANEL OVERLAY ===== */
         .panel-overlay {
             /* Blue panel image fills full width — eliminates side gaps */
-            background: url('images/tangent_blue_panel.png') top center / 100% auto no-repeat;
+            background: url('images/tangent_blue_panel.png') top center / 100% 100% no-repeat;
 
             /* Size: capped width prevents over-stretching on ultra-wide */
             width: 100%;
@@ -268,7 +268,7 @@
             top: 1%;       /* Raised even higher */
             left: 2%;      /* Ultra-minimal gutters - cut to 2% */
             right: 2%;     /* Ultra-minimal gutters - cut to 2% */
-            height: 58%;   /* Matches blue panel area of image */
+            height: 66%;   /* Content area within blue panel (panel ends at 68%) */
 
             display: flex;
             flex-direction: column;
@@ -302,7 +302,7 @@
         /* Reflection area (positioned directly below main panel) */
         .panel-reflection {
             position: absolute;
-            top: 68%;      /* Aligned to reflection zone of image (below blue panel) */
+            top: 69%;      /* Reflection zone starts at 69% of image */
             left: 50%;     /* Center horizontally */
             transform: translateX(-50%) scaleY(-1); /* Center + vertical flip for mirror effect */
             width: 96%;    /* Match main panel width (2% gutters = 96% width) */

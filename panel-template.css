@@ -37,7 +37,7 @@ body {
 /* Image is 3378x2369 (aspect ratio 1.426:1). Using 100% width fill eliminates */
 /* transparent side gaps that break content positioning at different widths. */
 .panel-overlay {
-    background: url('/images/tangent_blue_panel.png') top center / 100% auto no-repeat;
+    background: url('/images/tangent_blue_panel.png') top center / 100% 100% no-repeat;
     width: 100%;
     max-width: min(98vw, 1400px);
     max-height: calc(100vh - 6vw - 2vh);
@@ -51,7 +51,7 @@ body {
     top: 1%;
     left: 2%;
     right: 2%;
-    height: 58%;
+    height: 66%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -82,7 +82,7 @@ body {
 /* Reflection area — matches index.html positioning */
 .panel-reflection {
     position: absolute;
-    top: 68%;
+    top: 69%;
     left: 50%;
     transform: translateX(-50%) scaleY(-1);
     width: 96%;
