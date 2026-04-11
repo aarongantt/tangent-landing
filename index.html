@@ -262,6 +262,19 @@
             position: relative;
         }
 
+        /* Fade out bottom edge of panel image to prevent visible seam */
+        .panel-overlay::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 15%;
+            background: linear-gradient(to bottom, transparent 0%, #c8ced4 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
         /* Main content area (top half - "red box") */
         .panel-main {
             position: absolute;
@@ -980,9 +993,9 @@
 
                         <!-- Other chips (hidden in email state) -->
                         <div id="other-chips">
-                            <button class="chip">What is...</button>
-                            <button class="chip">Context</button>
-                            <button class="chip">Summarize</button>
+                            <button class="chip" onclick="window.location.href='/demo.html'">Demos</button>
+                            <button class="chip" onclick="window.location.href='/faq.html'">FAQs</button>
+                            <button class="chip" onclick="window.location.href='/download.html'">Download</button>
                             <button class="chip chip-icon chip-chevron">
                                 <img src="images/chevron_down_arrow.png" alt="More">
                             </button>
@@ -1348,37 +1361,10 @@
             // Chip bar appears immediately when highlighting completes
             chipBar.classList.add('visible');
 
-            // Switch back to regular cursor immediately when leaving text
+            // Switch back to regular cursor and fade out — animation done
             cursorImage.src = 'images/cursor.png';
-
-            // Pause at the end of selection
-            await wait(800);
             await wait(500);
-
-            // Get position of T chip
-            const tChipRect = tChip.getBoundingClientRect();
-            const tChipX = tChipRect.left + tChipRect.width / 2;
-            const tChipY = tChipRect.top + tChipRect.height / 2;
-
-            // Move to T chip
-            await moveCursor(tChipX, tChipY, 1000);
-            await wait(300);
-
-            // Animate T chip click
-            tChip.classList.add('chip-clicking');
-            await wait(100); // Wait for animation to reach middle (scale down)
-
-            // Click T chip (trigger the toggle)
-            tChip.click();
-            await wait(100); // Wait for animation to complete (scale back up)
-
-            // Remove animation class
-            tChip.classList.remove('chip-clicking');
-            await wait(300);
-
-            // Fade out cursor
             animatedCursor.classList.remove('visible');
-            await wait(500);
 
             // Keep "Tangent" highlighted after animation completes
         }
