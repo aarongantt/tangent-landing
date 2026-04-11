@@ -34,9 +34,10 @@
         .main-logo {
             height: clamp(35px, 4vw, 55px);
             margin-top: clamp(4px, 1vw, 15px);
-            margin-bottom: clamp(4px, 1vw, 15px);
+            margin-bottom: clamp(8px, 1.5vw, 20px);
             filter: none;
             flex-shrink: 0;
+            cursor: pointer;
         }
 
         /* ===== TAGLINE (inside panel) ===== */
@@ -953,7 +954,7 @@
 </head>
 <body>
     <!-- TANGENT Logo (above panel) -->
-    <img src="images/tangent_blue_logo.png" alt="TANGENT" class="main-logo">
+    <a href="/"><img src="images/tangent_blue_logo.png" alt="TANGENT" class="main-logo"></a>
 
     <!-- Toast notification -->
     <div id="toast" class="toast"></div>

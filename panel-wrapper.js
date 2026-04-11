@@ -41,11 +41,14 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   });
 
-  // Create logo
+  // Create logo (clickable, links to home)
+  const logoLink = document.createElement('a');
+  logoLink.href = '/';
   const logo = document.createElement('img');
   logo.src = '/images/tangent_blue_logo.png';
   logo.alt = 'TANGENT';
   logo.className = 'main-logo';
+  logoLink.appendChild(logo);
 
   // Create panel structure
   const panelOverlay = document.createElement('div');
@@ -86,8 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
   panelOverlay.appendChild(reflection);
 
   // Insert into body
-  document.body.insertBefore(logo, document.body.firstChild);
-  logo.after(panelOverlay);
+  document.body.insertBefore(logoLink, document.body.firstChild);
+  logoLink.after(panelOverlay);
 
   // Reflection
   var reflectionClone = null;
