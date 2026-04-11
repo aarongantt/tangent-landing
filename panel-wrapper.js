@@ -79,6 +79,28 @@ document.addEventListener('DOMContentLoaded', () => {
     panelContent.appendChild(child);
   });
 
+  // Create navigation menu
+  const panelNav = document.createElement('nav');
+  panelNav.className = 'panel-nav';
+  const currentPath = window.location.pathname;
+  const navLinks = [
+    { href: '/', label: 'Home' },
+    { href: '/demos.html', label: 'Demo Videos' },
+    { href: '/signup', label: 'Subscriptions' },
+    { href: '/faq.html', label: 'FAQs' },
+    { href: '/download.html', label: 'Download Tangent' }
+  ];
+  navLinks.forEach(function(link) {
+    var a = document.createElement('a');
+    a.href = link.href;
+    a.textContent = link.label;
+    if (currentPath === link.href || currentPath === link.href + '/' || currentPath === link.href + '/index.html') {
+      a.className = 'active';
+    }
+    panelNav.appendChild(a);
+  });
+
+  panelMain.appendChild(panelNav);
   panelMain.appendChild(panelContent);
   panelOverlay.appendChild(panelMain);
 
