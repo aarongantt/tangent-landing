@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>How It Works | Tangent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="See how Tangent works: page-aware AI that understands context and responds without leaving your browser." />
+    <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="panel-template.css" />
+  <script src="panel-wrapper.js" defer></script>
+    <link rel="icon" type="image/png" href="images/tangent_t_logo.png" />
+    <style>
+        /* How It Works page specific styles */
+        .hiw-hero {
+            padding: 20px 0 40px;
+            text-align: center;
+            background: radial-gradient(circle at top, #171b2a 0, #05060a 55%);
+        }
+
+        .hiw-hero h1 {
+            font-size: clamp(2.4rem, 3vw + 1.4rem, 3.2rem);
+            line-height: 1.1;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 30%, #4a90e2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hiw-hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .hiw-features {
+            padding: 60px 0;
+        }
+
+        .feature-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+            margin-bottom: 80px;
+            max-width: 1120px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+            overflow: visible;
+            position: relative;
+            isolation: isolate;
+        }
+
+        .feature-detail:hover {
+            z-index: 100;
+        }
+
+        .feature-detail.reverse {
+            direction: rtl;
+        }
+
+        .feature-detail.reverse > * {
+            direction: ltr;
+        }
+
+        .feature-visual {
+            overflow: visible;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-visual video {
+            width: 85%;
+            height: auto;
+            border-radius: 12px;
+            border: 2px solid #ffffff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+            display: block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-visual video:hover {
+            transform: scale(2.35);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+        }
+
+        .feature-text h2 {
+            font-size: 1.9rem;
+            margin-bottom: 16px;
+        }
+
+        .feature-text p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .feature-text ul {
+            list-style: none;
+            padding: 0;
+            margin: 18px 0;
+        }
+
+        .feature-text ul li {
+            position: relative;
+            padding-left: 22px;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .feature-text ul li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-strong);
+            font-weight: 700;
+        }
+
+        .hiw-videos {
+            padding: 60px 0;
+            background: radial-gradient(circle at top, #131727 0, #05060a 55%);
+        }
+
+        .hiw-videos h2 {
+            text-align: center;
+            font-size: 1.9rem;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 30%, #4a90e2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 20px;
+            overflow: visible;
+        }
+
+        .video-card {
+            overflow: visible;
+            position: relative;
+            isolation: isolate;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-card:hover {
+            z-index: 100;
+        }
+
+        .video-card video {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+            border: 2px solid #ffffff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            object-fit: cover;
+            aspect-ratio: 16 / 9;
+        }
+
+        .video-card video:hover {
+            transform: scale(2.6);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+        }
+
+        .video-placeholder {
+            background: radial-gradient(circle at center, #202741 0, #0a0d18 100%);
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b8fad;
+            font-size: 0.88rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .video-card h3 {
+            padding: 16px 18px;
+            margin: 0;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .hiw-cta {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .hiw-cta h2 {
+            font-size: 2rem;
+            margin-bottom: 24px;
+        }
+
+        .hiw-cta .cta-button {
+            padding: 14px 32px;
+            border-radius: var(--radius-pill);
+            font-weight: 600;
+            font-size: 1.05rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 28px rgba(5, 122, 255, 0.6);
+            cursor: pointer;
+            transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, filter 0.12s ease-out;
+            display: inline-block;
+        }
+
+        .hiw-cta .cta-button:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.05);
+            box-shadow: 0 0 34px rgba(5, 122, 255, 0.8);
+        }
+
+        @media (max-width: 900px) {
+            .feature-detail,
+            .feature-detail.reverse {
+                grid-template-columns: 1fr;
+                direction: ltr;
+            }
+
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Site header -->
+    <div id="header-placeholder"></div>
+
+    <main>
+        <!-- Hero -->
+        <section class="hiw-hero">
+            <div class="container">
+                <h1>How Tangent Works</h1>
+                <p>See the full power of page-aware AI in action.</p>
+            </div>
+        </section>
+
+        <!-- Detailed Feature Breakdowns -->
+        <section class="hiw-features">
+            <div class="feature-detail">
+                <div class="feature-visual">
+                    <video autoplay loop muted playsinline preload="auto">
+                        <source src="videos/step_1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="feature-text">
+                    <h2>1. Select text on any webpage</h2>
+                    <p>Highlight anything—a paragraph, a sentence, a single word. Tangent's chip bar appears instantly, ready to help.</p>
+                    <ul>
+                        <li>Works on articles, documentation, social media</li>
+                        <li>Understands full page context, not just selection</li>
+                        <li>No copy/paste required</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-detail reverse">
+                <div class="feature-visual">
+                    <video autoplay loop muted playsinline preload="auto">
+                        <source src="videos/step_2.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="feature-text">
+                    <h2>2. Choose an action or ask a question</h2>
+                    <p>Click a pre-built chip (Summarize, Explain, Translate) or type your own question in the chat panel.</p>
+                    <ul>
+                        <li>20+ built-in chips for common tasks</li>
+                        <li>Create custom chips for repeated workflows</li>
+                        <li>Freeform chat for open-ended exploration</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-detail">
+                <div class="feature-visual">
+                    <video autoplay loop muted playsinline preload="auto">
+                        <source src="videos/step_3.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="feature-text">
+                    <h2>3. Get intelligent, context-aware responses</h2>
+                    <p>Tangent analyzes the entire page and responds based on what you're looking at—with clickable references that scroll to specific sections.</p>
+                    <ul>
+                        <li>Reference detection highlights exact locations</li>
+                        <li>Context modes: full page, window, or paragraph</li>
+                        <li>Streaming responses for instant feedback</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-detail reverse">
+                <div class="feature-visual">
+                    <video autoplay loop muted playsinline preload="auto">
+                        <source src="videos/step_4.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="feature-text">
+                    <h2>4. Go further when you're ready</h2>
+                    <p>Continue the conversation—or shift into Draft mode to think and write with AI-powered notes.</p>
+                    <ul>
+                        <li>Multi-turn conversations for deeper exploration</li>
+                        <li>Draft mode for AI-assisted note-taking and writing</li>
+                        <li>Seamlessly switch between chat and drafting</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Gallery (Placeholder for Future) -->
+        <section class="hiw-videos">
+            <div class="container">
+                <h2>See Tangent in Action</h2>
+                <div class="videos-grid">
+                    <div class="video-card">
+                        <video autoplay loop muted playsinline preload="auto">
+                            <source src="videos/key_points.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <h3>Key Points Prompt</h3>
+                    </div>
+                    <div class="video-card">
+                        <video autoplay loop muted playsinline preload="auto">
+                            <source src="videos/custom_prompt_math.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <h3>Custom User-Prompt</h3>
+                    </div>
+                    <div class="video-card">
+                        <video autoplay loop muted playsinline preload="auto">
+                            <source src="videos/feature_review.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <h3>Feature Review</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="section section-cta">
+            <div class="container cta-inner">
+                <h2>Ready to get started?</h2>
+                <p>Start your free 7-day trial. No credit card required.</p>
+                <div class="cta-buttons">
+                    <a href="/download" class="cta-button primary large">Add to Chrome</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-links">
+                <a href="/privacy.html">Privacy</a>
+                <a href="/privacy.html#security">Security</a>
+                <a href="/faq.html">FAQ</a>
+                <a href="mailto:support@tangentapp.co">Support</a>
+            </div>
+            <div class="footer-tagline">
+                <span>© <span id="year"></span> Tangent -- Discover Without Distraction.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Unified auth and navigation -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="/auth-nav.js"></script>
+    <script src="/auth-modal.js"></script>
+
+</body>
+
+</html>

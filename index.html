@@ -33,9 +33,10 @@
         /* ===== MAIN LOGO (above panel) ===== */
         .main-logo {
             height: clamp(35px, 4vw, 55px);
-            margin-top: 2.33vw;
-            margin-bottom: 2vw;
+            margin-top: clamp(8px, 2.33vw, 30px);
+            margin-bottom: clamp(6px, 2vw, 25px);
             filter: none;
+            flex-shrink: 0;
         }
 
         /* ===== TAGLINE (inside panel) ===== */
@@ -254,7 +255,7 @@
             /* Size and proportions - much larger and correct aspect ratio */
             width: 100%;
             max-width: 98vw; /* Much larger - scales with viewport */
-            max-height: 85vh; /* PREVENT getting too tall and cutting off reflection */
+            max-height: calc(100vh - 10vw - 4vh); /* Dynamic: reserves space for logo + margins + padding */
             aspect-ratio: 2 / 1; /* Adjusted to match panel + reflection */
 
             /* Structure */

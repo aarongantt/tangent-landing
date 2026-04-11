@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tangent – Download Chrome Extension</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/panel-template.css" />
+  <script src="/panel-wrapper.js" defer></script>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: #05060a;
+      color: #e5e7eb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .site-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .logo-img { height: 36px; }
+    .hero--center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px 60px;
+      text-align: center;
+    }
+    .hero__title { margin: 0 0 12px; font-size: 36px; }
+    .hero__subtitle { margin: 0 0 32px; color: #cbd5e1; font-size: 18px; max-width: 560px; }
+    .card--center {
+      padding: 32px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      max-width: 560px;
+      width: 100%;
+    }
+    .btn--chrome {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      border-radius: 12px;
+      background: #3b82f6;
+      color: #f8fafc;
+      border: 1px solid #ffffff;
+      font-weight: 700;
+      font-size: 18px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn--chrome:hover { background: #2563eb; }
+    .btn--chrome svg { width: 24px; height: 24px; }
+    .steps {
+      margin: 32px 0 0;
+      text-align: left;
+      list-style: none;
+      padding: 0;
+    }
+    .steps li {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .steps li:last-child { border-bottom: none; }
+    .step-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(59,130,246,0.2);
+      color: #3b82f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .requirements {
+      margin: 32px 0 0;
+      padding: 16px 20px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 14px;
+      color: #94a3b8;
+    }
+    .requirements strong { color: #e5e7eb; }
+  </style>
+</head>
+<body class="page">
+  <header class="site-header">
+    <a href="/" class="logo">
+      <img src="/images/tangent_logo.png" alt="Tangent" class="logo-img" />
+    </a>
+  </header>
+
+  <main class="hero hero--center">
+    <h1 class="hero__title">Download Tangent</h1>
+    <p class="hero__subtitle">
+      AI-powered browser assistant. Select text, choose a prompt chip, and get instant AI responses on any webpage.
+    </p>
+
+    <div class="card card--center">
+      <!-- UPDATE THIS HREF with your Chrome Web Store listing URL -->
+      <a href="https://chromewebstore.google.com/detail/tangent/cgfcbinngikhfljfjmgdoledgcaalgmm" class="btn--chrome">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+        Add to Chrome
+      </a>
+
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <div><strong>Click "Add to Chrome"</strong> above to open the Chrome Web Store listing.</div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div><strong>Click "Add to Chrome"</strong> in the Web Store, then confirm the installation.</div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div><strong>Select any text</strong> on a webpage. The Tangent chip bar will appear automatically.</div>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <div><strong>Click a chip</strong> (Summarize, Explain, Teach Me, etc.) to get an instant AI response.</div>
+        </li>
+      </ol>
+
+      <div class="requirements">
+        <strong>Requirements:</strong> Google Chrome (version 128 or later) on desktop.
+        Firefox and Safari support coming soon.
+      </div>
+    </div>
+  </main>
+</body>
+</html>
