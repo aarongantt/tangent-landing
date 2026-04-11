@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demo Videos – TANGENT</title>
+    <meta name="description" content="Watch demo videos of TANGENT in action." />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="panel-template.css" />
+    <link rel="icon" type="image/png" href="images/tangent_t_logo.png" />
+    <style>
+        body { overflow: hidden !important; }
+        html { overflow: hidden !important; }
+        .site-header, header, #header-placeholder, .site-footer, footer { display: none !important; }
+        :root { --max-width: 1040px !important; }
+        .container { max-width: 1040px !important; margin: 0 auto !important; padding: 0 16px !important; box-sizing: border-box !important; }
+
+        .demos-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .demos-subtitle {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            margin-bottom: 32px;
+            font-style: italic;
+        }
+
+        .demos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1040px;
+            margin: 0 auto;
+        }
+
+        .demo-card {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .demo-card h3 {
+            color: #ffffff;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .demo-card p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+        }
+
+        .demo-placeholder {
+            background: rgba(255,255,255,0.05);
+            border: 1px dashed rgba(255,255,255,0.2);
+            border-radius: 8px;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <!-- TANGENT Logo -->
+    <img src="images/tangent_blue_logo.png" alt="TANGENT" class="main-logo">
+
+    <div class="panel-overlay">
+        <div class="panel-main">
+            <div class="panel-content" id="demos-panel-content">
+
+                <h1 class="demos-title">Demo Videos</h1>
+                <p class="demos-subtitle">Coming Soon</p>
+
+                <div class="demos-grid">
+                    <div class="demo-card">
+                        <div class="demo-placeholder">Video Coming Soon</div>
+                        <h3>Getting Started</h3>
+                        <p>Learn The Basics Of TANGENT</p>
+                    </div>
+                    <div class="demo-card">
+                        <div class="demo-placeholder">Video Coming Soon</div>
+                        <h3>Chips In Action</h3>
+                        <p>See How Prompt Chips Work</p>
+                    </div>
+                    <div class="demo-card">
+                        <div class="demo-placeholder">Video Coming Soon</div>
+                        <h3>Custom Chips</h3>
+                        <p>Create Your Own AI Workflows</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Reflection -->
+        <div class="panel-reflection" id="demos-panel-reflection"></div>
+    </div>
+
+    <script>
+        // Reflection
+        (function() {
+            var mainPanelContent = document.getElementById('demos-panel-content');
+            var reflection = document.getElementById('demos-panel-reflection');
+            if (!mainPanelContent || !reflection) return;
+
+            function updateReflection() {
+                var contentClone = mainPanelContent.cloneNode(true);
+                contentClone.removeAttribute('id');
+                reflection.innerHTML = '';
+                reflection.appendChild(contentClone);
+            }
+
+            updateReflection();
+            setTimeout(updateReflection, 1000);
+        })();
+    </script>
+
+    <script src="auth-nav.js"></script>
+</body>
+</html>
