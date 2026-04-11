@@ -249,14 +249,14 @@
 
         /* ===== PANEL OVERLAY ===== */
         .panel-overlay {
-            /* Blue panel image as background - LOCKS to HTML container */
-            background: url('images/tangent_blue_panel.png') center center / contain no-repeat;
+            /* Blue panel image fills full width — eliminates side gaps */
+            background: url('images/tangent_blue_panel.png') top center / 100% auto no-repeat;
 
-            /* Size and proportions - much larger and correct aspect ratio */
+            /* Size: capped width prevents over-stretching on ultra-wide */
             width: 100%;
-            max-width: 98vw; /* Much larger - scales with viewport */
-            max-height: calc(100vh - 10vw - 4vh); /* Dynamic: reserves space for logo + margins + padding */
-            aspect-ratio: 2 / 1; /* Adjusted to match panel + reflection */
+            max-width: min(98vw, 1400px);
+            max-height: calc(100vh - 10vw - 4vh);
+            aspect-ratio: 3378 / 2369; /* Match actual image dimensions */
 
             /* Structure */
             position: relative;
@@ -775,8 +775,8 @@
             }
 
             .panel-overlay {
-                aspect-ratio: 1.8 / 1;
-                max-width: 98vw; /* Ensure it fits on mobile */
+                aspect-ratio: 3378 / 2369;
+                max-width: 100vw;
             }
 
             .panel-main {

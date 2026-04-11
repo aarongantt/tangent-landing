@@ -33,13 +33,15 @@ body {
     flex-shrink: 0;
 }
 
-/* Panel overlay — uses blue panel image — SAME as index.html */
+/* Panel overlay — uses blue panel image */
+/* Image is 3378x2369 (aspect ratio 1.426:1). Using 100% width fill eliminates */
+/* transparent side gaps that break content positioning at different widths. */
 .panel-overlay {
-    background: url('/images/tangent_blue_panel.png') center center / contain no-repeat;
+    background: url('/images/tangent_blue_panel.png') top center / 100% auto no-repeat;
     width: 100%;
-    max-width: 98vw;
+    max-width: min(98vw, 1400px);
     max-height: calc(100vh - 10vw - 4vh);
-    aspect-ratio: 2 / 1;
+    aspect-ratio: 3378 / 2369;
     position: relative;
 }
 
@@ -299,7 +301,6 @@ body {
     }
     .panel-overlay {
         max-width: 100vw;
-        aspect-ratio: 1.8 / 1;
         max-height: calc(100vh - 8vh - 4vh);
     }
 }
