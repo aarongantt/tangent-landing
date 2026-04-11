@@ -262,19 +262,6 @@
             position: relative;
         }
 
-        /* Fade out bottom edge of panel image to prevent visible seam */
-        .panel-overlay::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 15%;
-            background: linear-gradient(to bottom, transparent 0%, #c8ced4 100%);
-            pointer-events: none;
-            z-index: 1;
-        }
-
         /* Main content area (top half - "red box") */
         .panel-main {
             position: absolute;
