@@ -254,7 +254,7 @@
 
             /* Size: capped width prevents over-stretching on ultra-wide */
             width: 100%;
-            max-width: min(98vw, 2000px);
+            max-width: min(98vw, 1400px);
             max-height: calc(100vh - 6vw - 2vh);
             aspect-ratio: 3378 / 2369; /* Match actual image dimensions */
 
@@ -447,12 +447,13 @@
         }
 
         .triptych-image {
-            width: 100%;
-            max-width: 100%; /* Never exceed container width */
+            width: 140%;
+            max-width: 140%;
             height: auto;
             border-radius: 12px;
             display: block;
-            box-sizing: border-box; /* Include any border in width calculation */
+            box-sizing: border-box;
+            margin-left: -20%;
         }
 
         /* ===== SCROLL CHEVRON (fixed at bottom of panel) ===== */
