@@ -431,19 +431,19 @@
 
         /* Spacer creates scroll distance - matches panel height exactly */
         .scroll-spacer {
-            height: 100%; /* Full height of panel-content container = one "page" */
-            min-height: 50vh; /* Fallback minimum */
+            height: 100%;
+            min-height: 60vh;
         }
 
         /* ===== TRIPTYCH SECTION ===== */
         .triptych-section {
             /* Scale based on container width with reasonable min/max bounds */
-            width: 82%; /* Slightly reduced to prevent overflow on small screens */
-            min-width: 600px; /* Prevent too small */
-            max-width: 2200px; /* Larger cap for ultra-wide screens */
-            padding: 20px 20px 40px 20px; /* Added horizontal padding to prevent edge bleeding */
+            width: 90%;
+            min-width: 700px;
+            max-width: 2200px;
+            padding: 20px 20px 40px 20px;
             margin: 0 auto;
-            box-sizing: border-box; /* Include padding in width calculation */
+            box-sizing: border-box;
         }
 
         .triptych-image {
