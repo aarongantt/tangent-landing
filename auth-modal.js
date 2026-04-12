@@ -24,10 +24,10 @@
         </div>
         <h3 style="margin:0 0 14px 0;font-weight:700;color:#ffffff;">Sign In:</h3>
         <label style="display:block;margin-bottom:10px;font-weight:600;font-size:13px;color:#fff;">Email
-          <input id="tgLoginEmail" type="email" autocomplete="email" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.15);color:#ffffff;" />
+          <input id="tgLoginEmail" type="email" autocomplete="email" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:#ffffff;color:#1a2a3a;" />
         </label>
         <label style="display:block;margin-bottom:14px;font-weight:600;font-size:13px;color:#fff;">Password
-          <input id="tgLoginPassword" type="password" autocomplete="current-password" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.15);color:#ffffff;" />
+          <input id="tgLoginPassword" type="password" autocomplete="current-password" style="width:100%;padding:12px 12px;margin-top:4px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:#ffffff;color:#1a2a3a;" />
         </label>
         <div style="display:flex;gap:10px;margin-top:12px;">
           <button id="tgLoginSignIn" class="cta-button secondary" style="flex:1;padding:10px 14px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:opacity 120ms ease;background:#ffffff;color:#4a6a8a;">Sign In</button>
