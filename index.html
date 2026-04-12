@@ -1588,11 +1588,6 @@
         }
 
         // ===== VIDEO THUMBNAIL EXPAND/COLLAPSE =====
-        const videoOverlay = document.getElementById('videoOverlay');
-        const videoClose = document.getElementById('videoClose');
-        const videoContentArea = document.getElementById('videoContentArea');
-        const videoThumbs = document.querySelectorAll('.video-thumb');
-
         // Video sources — replace with actual video URLs
         const videoSources = {
             '1': '', // Getting Started video URL
@@ -1600,40 +1595,38 @@
             '3': ''  // Custom Chips video URL
         };
 
-        videoThumbs.forEach(function(thumb) {
+        document.querySelectorAll('.video-thumb').forEach(function(thumb) {
             thumb.addEventListener('click', function() {
-                const videoId = thumb.getAttribute('data-video-id');
-                const src = videoSources[videoId];
+                var overlay = document.getElementById('videoOverlay');
+                var contentArea = document.getElementById('videoContentArea');
+                if (!overlay || !contentArea) return;
+
+                var videoId = thumb.getAttribute('data-video-id');
+                var src = videoSources[videoId];
 
                 if (src) {
                     if (src.includes('youtube') || src.includes('vimeo')) {
-                        videoContentArea.innerHTML = '<iframe src="' + src + '?autoplay=1" allowfullscreen allow="autoplay"></iframe>';
+                        contentArea.innerHTML = '<iframe src="' + src + '?autoplay=1" allowfullscreen allow="autoplay"></iframe>';
                     } else {
-                        videoContentArea.innerHTML = '<video src="' + src + '" autoplay controls playsinline></video>';
+                        contentArea.innerHTML = '<video src="' + src + '" autoplay controls playsinline></video>';
                     }
                 } else {
-                    videoContentArea.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;font-size:1.2rem;">Video Coming Soon</div>';
+                    contentArea.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;font-size:1.2rem;">Video Coming Soon</div>';
                 }
 
-                videoOverlay.classList.add('active');
+                overlay.classList.add('active');
             });
         });
 
-        if (videoClose) {
-            videoClose.addEventListener('click', function() {
-                videoOverlay.classList.remove('active');
-                videoContentArea.innerHTML = '';
-            });
-        }
-
-        if (videoOverlay) {
-            videoOverlay.addEventListener('click', function(e) {
-                if (e.target === videoOverlay) {
-                    videoOverlay.classList.remove('active');
-                    videoContentArea.innerHTML = '';
-                }
-            });
-        }
+        // Close handlers — use event delegation on document since elements load later
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'videoClose' || e.target.classList.contains('video-expanded-overlay')) {
+                var overlay = document.getElementById('videoOverlay');
+                var contentArea = document.getElementById('videoContentArea');
+                if (overlay) overlay.classList.remove('active');
+                if (contentArea) contentArea.innerHTML = '';
+            }
+        });
 
         // Mouse wheel scroll detection (alternative trigger)
         let wheelTimeout;
