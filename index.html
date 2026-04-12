@@ -505,17 +505,17 @@
             pointer-events: none;
         }
 
-        /* Expanded video player overlay */
+        /* Expanded video player — positioned inside panel-content, overlays scrollable area */
         .video-expanded-overlay {
             display: none;
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 35%;
-            z-index: 100;
-            background: transparent;
-            align-items: stretch;
+            bottom: 0;
+            z-index: 1000;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
             justify-content: center;
         }
 
@@ -525,22 +525,24 @@
 
         .video-expanded-player {
             position: relative;
-            width: 100%;
-            height: 100%;
+            width: 90vw;
+            max-width: 1000px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
         }
 
         .video-expanded-player .browser-window-image {
             width: 100%;
-            height: 100%;
-            object-fit: fill;
+            height: auto;
             display: block;
         }
 
         .video-expanded-player .video-content-area {
             position: absolute;
-            top: 7%;
-            left: 1.5%;
-            right: 1.5%;
+            top: 7.5%;
+            left: 1.8%;
+            right: 1.8%;
             bottom: 2%;
             overflow: hidden;
             background: #ffffff;
@@ -557,16 +559,16 @@
         /* Close button — invisible, sits over the red dot in chrome window */
         .video-expanded-close {
             position: absolute;
-            top: 0.8%;
-            left: 1%;
-            width: 20px;
-            height: 20px;
+            top: 0.5%;
+            left: 1.2%;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             background: transparent;
             color: transparent;
             border: none;
             cursor: pointer;
-            z-index: 101;
+            z-index: 1001;
         }
 
         /* ===== TRIPTYCH SECTION ===== */
@@ -1161,16 +1163,7 @@
                     </div>
                 </div>
 
-                <!-- Expanded video player (overlays the entire panel) -->
-                <div class="video-expanded-overlay" id="videoOverlay">
-                    <div class="video-expanded-player">
-                        <button class="video-expanded-close" id="videoClose">×</button>
-                        <img src="images/chrome_browser_window.png" alt="Browser" class="browser-window-image">
-                        <div class="video-content-area" id="videoContentArea">
-                            <!-- Video/iframe injected here when thumbnail is clicked -->
-                        </div>
-                    </div>
-                </div>
+                <!-- placeholder removed — overlay moved outside panel -->
 
                 <!-- Spacer between browser window and triptych -->
                 <div class="scroll-spacer"></div>
@@ -1671,5 +1664,13 @@
         // Reflection scroll is automatically synced via scroll event listener
         // The scaleY(-1) flip on .panel-reflection creates the mirror effect
     </script>
+    <!-- Expanded video player overlay (outside all panels for proper positioning) -->
+    <div class="video-expanded-overlay" id="videoOverlay">
+        <div class="video-expanded-player">
+            <button class="video-expanded-close" id="videoClose">×</button>
+            <img src="images/chrome_browser_window.png" alt="Browser" class="browser-window-image">
+            <div class="video-content-area" id="videoContentArea"></div>
+        </div>
+    </div>
 </body>
 </html>
