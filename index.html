@@ -436,41 +436,143 @@
             min-height: 30vh;
         }
 
-        /* ===== BROWSER WINDOW SECTION (page 2) ===== */
-        .browser-window-section {
-            width: calc(100% + 6%); /* Break out of panel-content 3% padding on each side */
-            margin-left: -3%;
-            margin-right: -3%;
-            padding: 0;
-            position: relative;
+        /* ===== VIDEO THUMBNAILS SECTION (page 2) ===== */
+        .video-thumbnails-section {
+            width: 100%;
+            padding: 10vh 0 5vh;
             display: flex;
-            align-items: center;
             justify-content: center;
+            gap: 20px;
         }
 
-        .browser-window-image {
+        .video-thumb {
+            flex: 1;
+            max-width: 280px;
+            cursor: pointer;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .video-thumb:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        }
+
+        .video-thumb-img {
             width: 100%;
             height: auto;
             display: block;
         }
 
-        /* Video overlay positioned in the white area of the browser window */
-        .browser-video-container {
-            position: absolute;
-            /* These percentages match the white content area of chrome_browser_window.png */
-            top: 14%;
-            left: 2.5%;
-            right: 2.5%;
-            bottom: 3%;
-            overflow: hidden;
+        .video-thumb-label {
+            padding: 10px 12px;
+            text-align: center;
         }
 
-        .browser-video-container video,
-        .browser-video-container iframe {
+        .video-thumb-label h3 {
+            color: #ffffff;
+            font-size: 0.9rem;
+            margin: 0 0 4px;
+        }
+
+        .video-thumb-label p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.75rem;
+            margin: 0;
+        }
+
+        /* Play icon overlay on thumbnails */
+        .video-thumb::after {
+            content: '▶';
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: rgba(255,255,255,0.8);
+            background: rgba(0,0,0,0.4);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        /* Expanded video player overlay */
+        .video-expanded-overlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+            background: rgba(0,0,0,0.3);
+            align-items: center;
+            justify-content: center;
+            padding: 2%;
+        }
+
+        .video-expanded-overlay.active {
+            display: flex;
+        }
+
+        .video-expanded-player {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        }
+
+        .video-expanded-player .browser-window-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .video-expanded-player .video-content-area {
+            position: absolute;
+            top: 7%;
+            left: 1.5%;
+            right: 1.5%;
+            bottom: 2%;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .video-expanded-player .video-content-area video,
+        .video-expanded-player .video-content-area iframe {
             width: 100%;
             height: 100%;
             object-fit: cover;
             border: none;
+        }
+
+        .video-expanded-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.6);
+            color: #ffffff;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 101;
         }
 
         /* ===== TRIPTYCH SECTION ===== */
@@ -1040,13 +1142,39 @@
                 <!-- Spacer pushes browser window below viewport -->
                 <div class="scroll-spacer"></div>
 
-                <!-- Browser Window Section (page 2) -->
-                <div class="browser-window-section">
-                    <img src="images/chrome_browser_window.png" alt="TANGENT in Chrome" class="browser-window-image">
-                    <div class="browser-video-container">
-                        <!-- Video goes here — replace with actual video source -->
-                        <!-- Example: <video src="videos/demo.mp4" autoplay muted loop playsinline></video> -->
-                        <!-- Example: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
+                <!-- Video Thumbnails Section (page 2) -->
+                <div class="video-thumbnails-section">
+                    <div class="video-thumb" data-video-id="1">
+                        <img src="images/chrome_browser_window.png" alt="Getting Started" class="video-thumb-img">
+                        <div class="video-thumb-label">
+                            <h3>Getting Started</h3>
+                            <p>Learn The Basics Of TANGENT</p>
+                        </div>
+                    </div>
+                    <div class="video-thumb" data-video-id="2">
+                        <img src="images/chrome_browser_window.png" alt="Chips In Action" class="video-thumb-img">
+                        <div class="video-thumb-label">
+                            <h3>Chips In Action</h3>
+                            <p>See How Prompt Chips Work</p>
+                        </div>
+                    </div>
+                    <div class="video-thumb" data-video-id="3">
+                        <img src="images/chrome_browser_window.png" alt="Custom Chips" class="video-thumb-img">
+                        <div class="video-thumb-label">
+                            <h3>Custom Chips</h3>
+                            <p>Create Your Own AI Workflows</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expanded video player (overlays the entire panel) -->
+                <div class="video-expanded-overlay" id="videoOverlay">
+                    <div class="video-expanded-player">
+                        <button class="video-expanded-close" id="videoClose">×</button>
+                        <img src="images/chrome_browser_window.png" alt="Browser" class="browser-window-image">
+                        <div class="video-content-area" id="videoContentArea">
+                            <!-- Video/iframe injected here when thumbnail is clicked -->
+                        </div>
                     </div>
                 </div>
 
@@ -1470,6 +1598,54 @@
             });
 
             // Chevron now shown directly by runCursorAnimation() when it completes
+        }
+
+        // ===== VIDEO THUMBNAIL EXPAND/COLLAPSE =====
+        const videoOverlay = document.getElementById('videoOverlay');
+        const videoClose = document.getElementById('videoClose');
+        const videoContentArea = document.getElementById('videoContentArea');
+        const videoThumbs = document.querySelectorAll('.video-thumb');
+
+        // Video sources — replace with actual video URLs
+        const videoSources = {
+            '1': '', // Getting Started video URL
+            '2': '', // Chips In Action video URL
+            '3': ''  // Custom Chips video URL
+        };
+
+        videoThumbs.forEach(function(thumb) {
+            thumb.addEventListener('click', function() {
+                const videoId = thumb.getAttribute('data-video-id');
+                const src = videoSources[videoId];
+
+                if (src) {
+                    if (src.includes('youtube') || src.includes('vimeo')) {
+                        videoContentArea.innerHTML = '<iframe src="' + src + '?autoplay=1" allowfullscreen allow="autoplay"></iframe>';
+                    } else {
+                        videoContentArea.innerHTML = '<video src="' + src + '" autoplay controls playsinline></video>';
+                    }
+                } else {
+                    videoContentArea.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;font-size:1.2rem;">Video Coming Soon</div>';
+                }
+
+                videoOverlay.classList.add('active');
+            });
+        });
+
+        if (videoClose) {
+            videoClose.addEventListener('click', function() {
+                videoOverlay.classList.remove('active');
+                videoContentArea.innerHTML = '';
+            });
+        }
+
+        if (videoOverlay) {
+            videoOverlay.addEventListener('click', function(e) {
+                if (e.target === videoOverlay) {
+                    videoOverlay.classList.remove('active');
+                    videoContentArea.innerHTML = '';
+                }
+            });
         }
 
         // Mouse wheel scroll detection (alternative trigger)
