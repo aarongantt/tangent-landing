@@ -58,17 +58,22 @@
   // Update panel nav auth link (Sign In → Account when logged in)
   const panelNavAuth = document.getElementById('panel-nav-auth');
   if (panelNavAuth) {
+    // Clone and replace to remove ALL old event listeners
+    const newNavAuth = panelNavAuth.cloneNode(true);
+    panelNavAuth.parentNode.replaceChild(newNavAuth, panelNavAuth);
+
     if (loggedIn) {
-      panelNavAuth.textContent = 'Account';
-      panelNavAuth.href = '/account';
-      panelNavAuth.onclick = null;
+      newNavAuth.textContent = 'Account';
+      newNavAuth.href = '/account';
+      newNavAuth.removeAttribute('onclick');
     } else {
-      panelNavAuth.textContent = 'Sign In';
-      panelNavAuth.href = '#';
-      panelNavAuth.onclick = function(e) {
+      newNavAuth.textContent = 'Sign In';
+      newNavAuth.href = '#';
+      newNavAuth.removeAttribute('onclick');
+      newNavAuth.addEventListener('click', function(e) {
         e.preventDefault();
         if (typeof openLoginModal === 'function') openLoginModal();
-      };
+      });
     }
   }
 
