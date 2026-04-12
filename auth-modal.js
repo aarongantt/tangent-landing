@@ -114,5 +114,6 @@
 
   // Expose functions globally for manual use if needed
   window.openTangentLogin = openLoginModal;
+  window.openLoginModal = openLoginModal;
   window.closeTangentLogin = closeLoginModal;
 })();
