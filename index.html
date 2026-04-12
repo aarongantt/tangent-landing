@@ -436,6 +436,24 @@
             min-height: 30vh;
         }
 
+        /* ===== BROWSER WINDOW SECTION (page 2) ===== */
+        .browser-window-section {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
+        }
+
+        .browser-window-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
         /* ===== TRIPTYCH SECTION ===== */
         .triptych-section {
             width: 96%;
@@ -1000,10 +1018,18 @@
                     </div>
                 </div>
 
-                <!-- Spacer pushes triptych below viewport -->
+                <!-- Spacer pushes browser window below viewport -->
                 <div class="scroll-spacer"></div>
 
-                <!-- Triptych Section -->
+                <!-- Browser Window Section (page 2) -->
+                <div class="browser-window-section">
+                    <img src="images/chrome_browser_window.png" alt="TANGENT in Chrome" class="browser-window-image">
+                </div>
+
+                <!-- Spacer between browser window and triptych -->
+                <div class="scroll-spacer"></div>
+
+                <!-- Triptych Section (page 3) -->
                 <div class="triptych-section">
                     <img src="images/tangent_triptych.png" alt="TANGENT Features" class="triptych-image">
                 </div>
@@ -1368,55 +1394,40 @@
         const panelContent = document.querySelector('.panel-content');
         // reflection variable already declared above in MutationObserver section
 
-        let isScrolledDown = false;
+        let scrollPage = 0; // 0 = hero, 1 = browser window, 2 = triptych
         let isAnimating = false;
 
-        // Calculate scroll distance (height of visible content area)
-        function getScrollDistance() {
-            return panelContent.scrollHeight - panelContent.clientHeight;
+        // Get scroll targets for each page
+        function getPageTargets() {
+            const browserSection = document.querySelector('.browser-window-section');
+            const triptychSection = document.querySelector('.triptych-section');
+            return [
+                0,
+                browserSection ? browserSection.offsetTop - 20 : 0,
+                triptychSection ? triptychSection.offsetTop - 20 : panelContent.scrollHeight - panelContent.clientHeight
+            ];
         }
 
-        // Toggle scroll state
+        // Cycle through pages
         function toggleScrollState() {
-            if (isAnimating) return; // Prevent rapid clicking
-
+            if (isAnimating) return;
             isAnimating = true;
-            isScrolledDown = !isScrolledDown;
 
-            if (isScrolledDown) {
-                // SCROLL DOWN: Show triptych
-                panelContent.scrollTo({
-                    top: getScrollDistance(),
-                    behavior: 'smooth'
-                });
+            scrollPage = (scrollPage + 1) % 3;
+            const targets = getPageTargets();
 
+            panelContent.scrollTo({
+                top: targets[scrollPage],
+                behavior: 'smooth'
+            });
+
+            // Rotate chevron on last page
+            if (scrollPage === 2) {
                 scrollChevron.classList.add('rotated');
-                scrollChevron.setAttribute('aria-label', 'Back to top');
-
-                // Sync rotation to reflection chevron
-                const reflectionChevron = reflection.querySelector('.scroll-chevron');
-                if (reflectionChevron) {
-                    reflectionChevron.classList.add('rotated');
-                }
-
             } else {
-                // SCROLL UP: Show hero content
-                panelContent.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-
                 scrollChevron.classList.remove('rotated');
-                scrollChevron.setAttribute('aria-label', 'View features');
-
-                // Sync rotation to reflection chevron
-                const reflectionChevron = reflection.querySelector('.scroll-chevron');
-                if (reflectionChevron) {
-                    reflectionChevron.classList.remove('rotated');
-                }
             }
 
-            // Re-enable after animation completes (smooth scroll takes ~800ms)
             setTimeout(() => {
                 isAnimating = false;
             }, 900);
