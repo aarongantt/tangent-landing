@@ -66,6 +66,12 @@
       newNavAuth.textContent = 'Account';
       newNavAuth.href = '/account';
       newNavAuth.removeAttribute('onclick');
+      newNavAuth.className = 'nav-auth';
+      // Highlight if on account page
+      var path = window.location.pathname;
+      if (path === '/account' || path === '/account/' || path === '/account/index.html') {
+        newNavAuth.classList.add('active');
+      }
     } else {
       newNavAuth.textContent = 'Sign In';
       newNavAuth.href = '#';
