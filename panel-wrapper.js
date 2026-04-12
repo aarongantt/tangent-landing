@@ -164,4 +164,25 @@ document.addEventListener('DOMContentLoaded', () => {
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(updateReflection, 200);
   }, { passive: true });
+
+  // Ensure auth scripts are loaded for Sign In functionality
+  function loadScript(src) {
+    if (document.querySelector('script[src="' + src + '"]')) return;
+    var s = document.createElement('script');
+    s.src = src;
+    document.body.appendChild(s);
+  }
+  // Load Supabase client if not already present
+  if (!window.supabase) {
+    var sb = document.createElement('script');
+    sb.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    sb.onload = function() {
+      loadScript('/auth-modal.js');
+      loadScript('/auth-nav.js');
+    };
+    document.body.appendChild(sb);
+  } else {
+    loadScript('/auth-modal.js');
+    loadScript('/auth-nav.js');
+  }
 });
