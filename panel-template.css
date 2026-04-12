@@ -90,6 +90,11 @@ body {
     font-size: 1.05rem;
 }
 
+.panel-nav a.nav-auth {
+    color: rgba(255,255,255,0.7);
+    font-weight: 500;
+}
+
 /* Scrollable content inside panel */
 .panel-content {
     flex: 1 1 0;

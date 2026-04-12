@@ -88,13 +88,21 @@ document.addEventListener('DOMContentLoaded', () => {
     { href: '/demos.html', label: 'Demo Videos' },
     { href: '/signup', label: 'Subscriptions' },
     { href: '/faq.html', label: 'FAQs' },
+    { href: '#', label: 'Sign In', isAuth: true },
     { href: '/download.html', label: 'Download Tangent' }
   ];
   navLinks.forEach(function(link) {
     var a = document.createElement('a');
     a.href = link.href;
     a.textContent = link.label;
-    if (currentPath === link.href || currentPath === link.href + '/' || currentPath === link.href + '/index.html') {
+    if (link.isAuth) {
+      a.className = 'nav-auth';
+      a.id = 'panel-nav-auth';
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (typeof openLoginModal === 'function') openLoginModal();
+      });
+    } else if (currentPath === link.href || currentPath === link.href + '/' || currentPath === link.href + '/index.html') {
       a.className = 'active';
     }
     panelNav.appendChild(a);

@@ -228,7 +228,7 @@
         /* Override global styles — fit everything inside the visible blue area of the panel image */
         :root { --max-width: 1040px !important; }
         /* No scrolling on signup — content fits in panel */
-        .panel-content { overflow: hidden !important; }
+        .panel-content { overflow-y: auto !important; overflow-x: hidden !important; }
         /* panel content handled by panel-template.css */
         .pricing-tier-grid { width: 100% !important; box-sizing: border-box !important; }
         .pricing-card-featured .pill-tag {
@@ -483,6 +483,7 @@
           <a href="/demos.html">Demo Videos</a>
           <a href="/signup" class="active">Subscriptions</a>
           <a href="/faq.html">FAQs</a>
+          <a href="#" class="nav-auth" id="panel-nav-auth" onclick="event.preventDefault(); if(typeof openLoginModal==='function') openLoginModal();">Sign In</a>
           <a href="/download.html">Download Tangent</a>
         </nav>
         <div class="panel-content" id="signup-panel-content">

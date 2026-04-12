@@ -55,6 +55,23 @@
     if (el) el.style.display = show ? '' : 'none';
   }
 
+  // Update panel nav auth link (Sign In → Account when logged in)
+  const panelNavAuth = document.getElementById('panel-nav-auth');
+  if (panelNavAuth) {
+    if (loggedIn) {
+      panelNavAuth.textContent = 'Account';
+      panelNavAuth.href = '/account';
+      panelNavAuth.onclick = null;
+    } else {
+      panelNavAuth.textContent = 'Sign In';
+      panelNavAuth.href = '#';
+      panelNavAuth.onclick = function(e) {
+        e.preventDefault();
+        if (typeof openLoginModal === 'function') openLoginModal();
+      };
+    }
+  }
+
   // Desktop nav elements
   const navSignOut = document.getElementById('navSignOut');
   const navLogin = document.getElementById('navLogin');
