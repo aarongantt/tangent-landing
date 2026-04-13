@@ -1528,25 +1528,30 @@
         const panelContent = document.querySelector('.panel-content');
         // reflection variable already declared above in MutationObserver section
 
-        let isScrolledDown = false;
+        let scrollPage = 0;
         let isAnimating = false;
 
         function toggleScrollState() {
             if (isAnimating) return;
             isAnimating = true;
-            isScrolledDown = !isScrolledDown;
 
-            if (isScrolledDown) {
-                panelContent.scrollTo({
-                    top: panelContent.scrollHeight - panelContent.clientHeight,
-                    behavior: 'smooth'
-                });
+            scrollPage++;
+
+            if (scrollPage === 1) {
+                // Scroll to video thumbnails
+                var thumbs = document.querySelector('.video-thumbnails-section');
+                if (thumbs) {
+                    panelContent.scrollTo({ top: thumbs.offsetTop - 40, behavior: 'smooth' });
+                }
+                scrollChevron.classList.remove('rotated');
+            } else if (scrollPage === 2) {
+                // Scroll to triptych
+                panelContent.scrollTo({ top: panelContent.scrollHeight - panelContent.clientHeight, behavior: 'smooth' });
                 scrollChevron.classList.add('rotated');
             } else {
-                panelContent.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+                // Back to top
+                scrollPage = 0;
+                panelContent.scrollTo({ top: 0, behavior: 'smooth' });
                 scrollChevron.classList.remove('rotated');
             }
 
