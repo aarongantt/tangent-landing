@@ -291,13 +291,15 @@
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 1% 3%;
+            padding: 0 3%;
             color: #ffffff;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
             box-sizing: border-box;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
         }
 
         /* Reflection area (positioned directly below main panel) */
@@ -425,21 +427,26 @@
             background: rgba(106, 182, 254, 0.7); /* Brighter highlight */
         }
 
-        /* Keep hero content centered using padding instead of flex center */
-        .hero-content {
-            padding-top: 15%;
+        /* Each scroll page fills the full panel viewport */
+        .scroll-page {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            scroll-snap-align: start;
         }
 
-        /* Spacer creates scroll distance - matches panel height exactly */
-        .scroll-spacer {
-            height: 50%;
-            min-height: 30vh;
+        /* Keep hero content centered */
+        .hero-content {
+            padding-top: 0;
         }
 
         /* ===== VIDEO THUMBNAILS SECTION (page 2) ===== */
         .video-thumbnails-section {
             width: 100%;
-            padding: 10vh 0 5vh;
+            padding: 0;
             display: flex;
             justify-content: center;
             gap: 20px;
@@ -576,8 +583,8 @@
             width: 96%;
             min-width: 800px;
             max-width: 2200px;
-            padding: 35vh 20px 5vh 20px;
-            margin: 10px auto 0;
+            padding: 0 20px;
+            margin: 0 auto;
             box-sizing: border-box;
         }
 
@@ -1103,6 +1110,8 @@
         <!-- Main content area (top half - "red box") -->
         <div class="panel-main">
             <div class="panel-content">
+            <!-- Page 1: Hero -->
+            <div class="scroll-page">
                 <div class="hero-content">
                     <h1 class="tagline">
                         Stay in the flow.&nbsp;&nbsp;Go on a <span class="highlight" id="tangent-word"><span class="letter">T</span><span class="letter">a</span><span class="letter">n</span><span class="letter">g</span><span class="letter">e</span><span class="letter">n</span><span class="letter">t</span><span class="letter">.</span></span>
@@ -1134,11 +1143,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Spacer pushes browser window below viewport -->
-                <div class="scroll-spacer"></div>
-
-                <!-- Video Thumbnails Section (page 2) -->
+            <!-- Page 2: Video Thumbnails -->
+            <div class="scroll-page">
                 <div class="video-thumbnails-section">
                     <div class="video-thumb" data-video-id="1" onclick="openVideo('1')">
                         <img src="images/chrome_browser_window.png" alt="Getting Started" class="video-thumb-img">
@@ -1165,10 +1173,10 @@
 
                 <!-- placeholder removed — overlay moved outside panel -->
 
-                <!-- Spacer between browser window and triptych -->
-                <div class="scroll-spacer"></div>
+            </div>
 
-                <!-- Triptych Section (page 3) -->
+            <!-- Page 3: Triptych -->
+            <div class="scroll-page">
                 <div class="triptych-section">
                     <img src="images/tangent_triptych.png" alt="TANGENT Features" class="triptych-image">
                 </div>
@@ -1533,38 +1541,29 @@
         const panelContent = document.querySelector('.panel-content');
         // reflection variable already declared above in MutationObserver section
 
-        let scrollPage = 0; // 0 = hero, 1 = browser window, 2 = triptych
+        let scrollPage = 0; // 0 = hero, 1 = video thumbs, 2 = triptych
         let isAnimating = false;
+        const scrollPages = document.querySelectorAll('.panel-content .scroll-page');
 
-        // Get scroll targets for each page
-        function getPageTargets() {
-            const browserSection = document.querySelector('.browser-window-section');
-            const triptychSection = document.querySelector('.triptych-section');
-            return [
-                0,
-                browserSection ? browserSection.offsetTop - 20 : 0,
-                triptychSection ? triptychSection.offsetTop - 20 : panelContent.scrollHeight - panelContent.clientHeight
-            ];
-        }
-
-        // Cycle through pages
         function toggleScrollState() {
             if (isAnimating) return;
             isAnimating = true;
 
-            scrollPage = (scrollPage + 1) % 3;
-            const targets = getPageTargets();
+            if (scrollPage === 2) {
+                // On last page — go back to top
+                scrollPage = 0;
+                scrollChevron.classList.remove('rotated');
+            } else {
+                scrollPage++;
+            }
 
-            panelContent.scrollTo({
-                top: targets[scrollPage],
-                behavior: 'smooth'
-            });
+            if (scrollPages[scrollPage]) {
+                scrollPages[scrollPage].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
 
-            // Rotate chevron on last page
+            // Show up arrow on last page
             if (scrollPage === 2) {
                 scrollChevron.classList.add('rotated');
-            } else {
-                scrollChevron.classList.remove('rotated');
             }
 
             setTimeout(() => {
