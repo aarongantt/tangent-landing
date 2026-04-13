@@ -1140,21 +1140,21 @@
 
                 <!-- Video Thumbnails Section (page 2) -->
                 <div class="video-thumbnails-section">
-                    <div class="video-thumb" data-video-id="1">
+                    <div class="video-thumb" data-video-id="1" onclick="openVideo('1')">
                         <img src="images/chrome_browser_window.png" alt="Getting Started" class="video-thumb-img">
                         <div class="video-thumb-label">
                             <h3>Getting Started</h3>
                             <p>Learn The Basics Of TANGENT</p>
                         </div>
                     </div>
-                    <div class="video-thumb" data-video-id="2">
+                    <div class="video-thumb" data-video-id="2" onclick="openVideo('2')">
                         <img src="images/chrome_browser_window.png" alt="Chips In Action" class="video-thumb-img">
                         <div class="video-thumb-label">
                             <h3>Chips In Action</h3>
                             <p>See How Prompt Chips Work</p>
                         </div>
                     </div>
-                    <div class="video-thumb" data-video-id="3">
+                    <div class="video-thumb" data-video-id="3" onclick="openVideo('3')">
                         <img src="images/chrome_browser_window.png" alt="Custom Chips" class="video-thumb-img">
                         <div class="video-thumb-label">
                             <h3>Custom Chips</h3>
@@ -1588,45 +1588,6 @@
         }
 
         // ===== VIDEO THUMBNAIL EXPAND/COLLAPSE =====
-        // Video sources — replace with actual video URLs
-        const videoSources = {
-            '1': '', // Getting Started video URL
-            '2': '', // Chips In Action video URL
-            '3': ''  // Custom Chips video URL
-        };
-
-        document.querySelectorAll('.video-thumb').forEach(function(thumb) {
-            thumb.addEventListener('click', function() {
-                var overlay = document.getElementById('videoOverlay');
-                var contentArea = document.getElementById('videoContentArea');
-                if (!overlay || !contentArea) return;
-
-                var videoId = thumb.getAttribute('data-video-id');
-                var src = videoSources[videoId];
-
-                if (src) {
-                    if (src.includes('youtube') || src.includes('vimeo')) {
-                        contentArea.innerHTML = '<iframe src="' + src + '?autoplay=1" allowfullscreen allow="autoplay"></iframe>';
-                    } else {
-                        contentArea.innerHTML = '<video src="' + src + '" autoplay controls playsinline></video>';
-                    }
-                } else {
-                    contentArea.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;font-size:1.2rem;">Video Coming Soon</div>';
-                }
-
-                overlay.classList.add('active');
-            });
-        });
-
-        // Close handlers — use event delegation on document since elements load later
-        document.addEventListener('click', function(e) {
-            if (e.target.id === 'videoClose' || e.target.classList.contains('video-expanded-overlay')) {
-                var overlay = document.getElementById('videoOverlay');
-                var contentArea = document.getElementById('videoContentArea');
-                if (overlay) overlay.classList.remove('active');
-                if (contentArea) contentArea.innerHTML = '';
-            }
-        });
 
         // Mouse wheel scroll detection (alternative trigger)
         let wheelTimeout;
@@ -1657,13 +1618,49 @@
         // Reflection scroll is automatically synced via scroll event listener
         // The scaleY(-1) flip on .panel-reflection creates the mirror effect
     </script>
-    <!-- Expanded video player overlay (outside all panels for proper positioning) -->
-    <div class="video-expanded-overlay" id="videoOverlay">
+    <!-- Expanded video player overlay -->
+    <div class="video-expanded-overlay" id="videoOverlay" onclick="closeVideo(event)">
         <div class="video-expanded-player">
-            <button class="video-expanded-close" id="videoClose">×</button>
+            <button class="video-expanded-close" onclick="closeVideo(event)">×</button>
             <img src="images/chrome_browser_window.png" alt="Browser" class="browser-window-image">
             <div class="video-content-area" id="videoContentArea"></div>
         </div>
     </div>
+
+    <script>
+        // Video sources — replace with actual URLs
+        var _videoSources = {
+            '1': '', // Getting Started
+            '2': '', // Chips In Action
+            '3': ''  // Custom Chips
+        };
+
+        function openVideo(id) {
+            var overlay = document.getElementById('videoOverlay');
+            var area = document.getElementById('videoContentArea');
+            if (!overlay || !area) return;
+
+            var src = _videoSources[id];
+            if (src) {
+                if (src.includes('youtube') || src.includes('vimeo')) {
+                    area.innerHTML = '<iframe src="' + src + '?autoplay=1" allowfullscreen allow="autoplay"></iframe>';
+                } else {
+                    area.innerHTML = '<video src="' + src + '" autoplay controls playsinline></video>';
+                }
+            } else {
+                area.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;font-size:1.2rem;">Video Coming Soon</div>';
+            }
+            overlay.classList.add('active');
+        }
+
+        function closeVideo(e) {
+            if (e.target.classList.contains('video-expanded-overlay') || e.target.classList.contains('video-expanded-close')) {
+                var overlay = document.getElementById('videoOverlay');
+                var area = document.getElementById('videoContentArea');
+                if (overlay) overlay.classList.remove('active');
+                if (area) area.innerHTML = '';
+            }
+        }
+    </script>
 </body>
 </html>
