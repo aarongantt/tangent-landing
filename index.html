@@ -298,7 +298,6 @@
             align-items: center;
             justify-content: flex-start;
             box-sizing: border-box;
-            scroll-snap-type: y mandatory;
             scroll-behavior: smooth;
         }
 
@@ -427,20 +426,15 @@
             background: rgba(106, 182, 254, 0.7); /* Brighter highlight */
         }
 
-        /* Each scroll page fills the full panel viewport */
-        .scroll-page {
-            min-height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            scroll-snap-align: start;
+        /* Spacer creates scroll distance */
+        .scroll-spacer {
+            height: 50%;
+            min-height: 30vh;
         }
 
         /* Keep hero content centered */
         .hero-content {
-            padding-top: 0;
+            padding-top: 15%;
         }
 
         /* ===== VIDEO THUMBNAILS SECTION (page 2) ===== */
@@ -583,8 +577,8 @@
             width: 96%;
             min-width: 800px;
             max-width: 2200px;
-            padding: 0 20px;
-            margin: 0 auto;
+            padding: 16vh 20px 10vh 20px;
+            margin: 10px auto 0;
             box-sizing: border-box;
         }
 
@@ -1110,8 +1104,6 @@
         <!-- Main content area (top half - "red box") -->
         <div class="panel-main">
             <div class="panel-content">
-            <!-- Page 1: Hero -->
-            <div class="scroll-page">
                 <div class="hero-content">
                     <h1 class="tagline">
                         Stay in the flow.&nbsp;&nbsp;Go on a <span class="highlight" id="tangent-word"><span class="letter">T</span><span class="letter">a</span><span class="letter">n</span><span class="letter">g</span><span class="letter">e</span><span class="letter">n</span><span class="letter">t</span><span class="letter">.</span></span>
@@ -1143,10 +1135,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Page 2: Video Thumbnails -->
-            <div class="scroll-page">
+                <div class="scroll-spacer"></div>
                 <div class="video-thumbnails-section">
                     <div class="video-thumb" data-video-id="1" onclick="openVideo('1')">
                         <img src="images/chrome_browser_window.png" alt="Getting Started" class="video-thumb-img">
@@ -1173,10 +1163,7 @@
 
                 <!-- placeholder removed — overlay moved outside panel -->
 
-            </div>
-
-            <!-- Page 3: Triptych -->
-            <div class="scroll-page">
+                <div class="scroll-spacer"></div>
                 <div class="triptych-section">
                     <img src="images/tangent_triptych.png" alt="TANGENT Features" class="triptych-image">
                 </div>
@@ -1541,29 +1528,26 @@
         const panelContent = document.querySelector('.panel-content');
         // reflection variable already declared above in MutationObserver section
 
-        let scrollPage = 0; // 0 = hero, 1 = video thumbs, 2 = triptych
+        let isScrolledDown = false;
         let isAnimating = false;
-        const scrollPages = document.querySelectorAll('.panel-content .scroll-page');
 
         function toggleScrollState() {
             if (isAnimating) return;
             isAnimating = true;
+            isScrolledDown = !isScrolledDown;
 
-            if (scrollPage === 2) {
-                // On last page — go back to top
-                scrollPage = 0;
-                scrollChevron.classList.remove('rotated');
-            } else {
-                scrollPage++;
-            }
-
-            if (scrollPages[scrollPage]) {
-                scrollPages[scrollPage].scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-
-            // Show up arrow on last page
-            if (scrollPage === 2) {
+            if (isScrolledDown) {
+                panelContent.scrollTo({
+                    top: panelContent.scrollHeight - panelContent.clientHeight,
+                    behavior: 'smooth'
+                });
                 scrollChevron.classList.add('rotated');
+            } else {
+                panelContent.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                scrollChevron.classList.remove('rotated');
             }
 
             setTimeout(() => {
