@@ -118,6 +118,7 @@
         .chip-icon,
         .chip-bar.email-state .chip-icon {
             width: 35px;
+            min-width: 35px;
             height: 35px;
             padding: 3px;
             border-radius: 6px;
@@ -126,6 +127,8 @@
             align-items: center;
             justify-content: center;
             box-sizing: border-box;
+            flex-shrink: 0;
+            aspect-ratio: 1;
         }
 
         .chip-icon img {
@@ -692,11 +695,14 @@
             .chip-icon,
             .chip-bar.email-state .chip-icon {
                 width: 52px;
+                min-width: 52px;
                 height: 52px;
                 padding: 5px;
                 border-width: 2px;
                 border-radius: 8px;
                 box-sizing: border-box;
+                flex-shrink: 0;
+                aspect-ratio: 1;
             }
 
             .chip-chevron {
