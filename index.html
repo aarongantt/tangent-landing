@@ -1394,17 +1394,11 @@
             if (!reflection || !mainPanelContent) return;
 
             const reflectionContent = reflection.querySelector('.panel-content');
+
             if (!reflectionContent) return;
 
-            // Ensure clone is scrollable
-            reflectionContent.style.overflowY = 'auto';
-            reflectionContent.style.height = '100%';
-
-            // Show bottom of visible content in reflection
-            var bottomEdge = mainPanelContent.scrollTop + mainPanelContent.clientHeight;
-            var target = Math.max(0, bottomEdge - reflectionContent.clientHeight);
-            if (Math.abs(reflectionContent.scrollTop - target) > 1) {
-                reflectionContent.scrollTop = target;
+            if (Math.abs(reflectionContent.scrollTop - mainPanelContent.scrollTop) > 1) {
+                reflectionContent.scrollTop = mainPanelContent.scrollTop;
             }
         }
 
@@ -1442,13 +1436,17 @@
             emailInput.addEventListener('input', updateReflection);
         }
 
-        // Sync reflection scroll on every scroll event + re-clone periodically
+        // Sync reflection scroll when main panel scrolls - with RAF for smooth updates
         if (mainPanelContent) {
-            var reflectionScrollTimeout = null;
+            let ticking = false;
             mainPanelContent.addEventListener('scroll', function() {
-                syncReflectionScroll();
-                clearTimeout(reflectionScrollTimeout);
-                reflectionScrollTimeout = setTimeout(updateReflection, 200);
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        syncReflectionScroll();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
             }, { passive: true });
         }
 
