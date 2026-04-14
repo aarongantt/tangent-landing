@@ -1394,16 +1394,17 @@
             if (!reflection || !mainPanelContent) return;
 
             const reflectionContent = reflection.querySelector('.panel-content');
-
             if (!reflectionContent) return;
 
-            // MATCH scroll position directly - scaleY(-1) handles the visual flipping
-            // When main shows slogan (scrollTop=0), reflection also scrolls to 0
-            // The scaleY(-1) transform makes it appear flipped visually
+            // Ensure clone is scrollable
+            reflectionContent.style.overflowY = 'auto';
+            reflectionContent.style.height = '100%';
 
-            // Only update if there's a meaningful difference (prevents jitter)
-            if (Math.abs(reflectionContent.scrollTop - mainPanelContent.scrollTop) > 1) {
-                reflectionContent.scrollTop = mainPanelContent.scrollTop;
+            // Show bottom of visible content in reflection
+            var bottomEdge = mainPanelContent.scrollTop + mainPanelContent.clientHeight;
+            var target = Math.max(0, bottomEdge - reflectionContent.clientHeight);
+            if (Math.abs(reflectionContent.scrollTop - target) > 1) {
+                reflectionContent.scrollTop = target;
             }
         }
 
@@ -1441,17 +1442,13 @@
             emailInput.addEventListener('input', updateReflection);
         }
 
-        // Sync reflection scroll when main panel scrolls - with RAF for smooth updates
+        // Sync reflection scroll on every scroll event + re-clone periodically
         if (mainPanelContent) {
-            let ticking = false;
+            var reflectionScrollTimeout = null;
             mainPanelContent.addEventListener('scroll', function() {
-                if (!ticking) {
-                    window.requestAnimationFrame(function() {
-                        syncReflectionScroll();
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
+                syncReflectionScroll();
+                clearTimeout(reflectionScrollTimeout);
+                reflectionScrollTimeout = setTimeout(updateReflection, 200);
             }, { passive: true });
         }
 
