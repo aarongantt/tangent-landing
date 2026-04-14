@@ -790,7 +790,7 @@
   </footer>
 
   <!-- Supabase client -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2.103.0/dist/umd/supabase.js" integrity="sha384-rm08XZM5pQreOGZb7BaDgXaNmLp98HwlhS7C7puAkkSRHtyJztgFgPVcgmvCXmBt" crossorigin="anonymous"></script>
   <script>
     // Public anon key only (same project used by the extension)
         const SUPABASE_URL = "https://xnuqrfnfokxtuvhlgslc.supabase.co";
@@ -1740,8 +1740,8 @@
         setAuthStatus("Enter email and password.", true);
         return;
       }
-      if (password.length < 6) {
-        setAuthStatus("Password must be at least 6 characters.", true);
+      if (password.length < 8) {
+        setAuthStatus("Password Must Be At Least 8 Characters.", true);
         return;
       }
 
@@ -2190,7 +2190,7 @@
 
   </script>
   <!-- Unified auth and navigation -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2.103.0/dist/umd/supabase.js" integrity="sha384-rm08XZM5pQreOGZb7BaDgXaNmLp98HwlhS7C7puAkkSRHtyJztgFgPVcgmvCXmBt" crossorigin="anonymous"></script>
   <script src="/auth-nav.js"></script>
   <script src="/account/account-init.js"></script>
   <script src="/auth-modal.js"></script>

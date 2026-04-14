@@ -14,7 +14,9 @@
       document.documentElement.setAttribute('data-theme', theme);
 
       // Force exact background color from URL parameter
-      document.write('<style>body { background: #' + bgColor + ' !important; }</style>');
+      // Validate hex color to prevent injection via URL parameter
+      const safeBg = /^[0-9a-fA-F]{3,6}$/.test(bgColor) ? bgColor : (theme === 'dark' ? '0b0f1b' : 'ffffff');
+      document.documentElement.style.setProperty('background', '#' + safeBg, 'important');
     })();
   </script>
   <style>
@@ -127,7 +129,7 @@
     </div>
   </div>
 
-  <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2.103.0/dist/umd/supabase.js" integrity="sha384-rm08XZM5pQreOGZb7BaDgXaNmLp98HwlhS7C7puAkkSRHtyJztgFgPVcgmvCXmBt" crossorigin="anonymous"></script>
   <script>
     (function() {
       const params = new URLSearchParams(location.search);

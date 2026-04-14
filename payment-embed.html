@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Payment</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2.103.0/dist/umd/supabase.js" integrity="sha384-rm08XZM5pQreOGZb7BaDgXaNmLp98HwlhS7C7puAkkSRHtyJztgFgPVcgmvCXmBt" crossorigin="anonymous"></script>
   <script src="https://js.stripe.com/v3/"></script>
   <style>
     * {
@@ -367,7 +367,7 @@
             type: 'TANGENT_PAYMENT_SUCCESS',
             priceId,
             planName
-          }, '*');
+          }, 'https://www.tangentapp.co');
         }
 
       } catch (error) {
@@ -392,7 +392,7 @@
       // Auto-close after 3 seconds
       setTimeout(() => {
         if (window.parent !== window) {
-          window.parent.postMessage({ type: 'TANGENT_PAYMENT_CLOSE' }, '*');
+          window.parent.postMessage({ type: 'TANGENT_PAYMENT_CLOSE' }, 'https://www.tangentapp.co');
         }
       }, 3000);
     }

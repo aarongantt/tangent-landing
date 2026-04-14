@@ -175,7 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load Supabase client if not already present
   if (!window.supabase) {
     var sb = document.createElement('script');
-    sb.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+    sb.src = 'https://unpkg.com/@supabase/supabase-js@2.103.0/dist/umd/supabase.js';
+    sb.integrity = 'sha384-rm08XZM5pQreOGZb7BaDgXaNmLp98HwlhS7C7puAkkSRHtyJztgFgPVcgmvCXmBt';
+    sb.crossOrigin = 'anonymous';
     sb.onload = function() {
       loadScript('/auth-modal.js');
       loadScript('/auth-nav.js');

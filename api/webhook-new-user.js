@@ -10,7 +10,7 @@
  * 4. Add secret header: x-webhook-secret = YOUR_WEBHOOK_SECRET
  */
 
-const ADMIN_EMAIL = 'aaron.gantt@gmail.com';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'aaron.gantt@gmail.com';
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || 'your-webhook-secret-here';
 
 // Initialize Resend (for email notifications)
