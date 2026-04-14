@@ -57,6 +57,15 @@
           "value": "geolocation=(), microphone=(), camera=()"
         }
       ]
+    },
+    {
+      "source": "/account/extension-login.html",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' chrome-extension://cgfcbinngikhfljfjmgdoledgcaalgmm https://www.tangentapp.co https://tangentapp.co"
+        }
+      ]
     }
   ]
 }
