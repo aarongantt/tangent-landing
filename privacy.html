@@ -74,7 +74,7 @@
 
     <div class="privacy-container">
         <h1>Privacy Policy</h1>
-        <p class="last-updated"><strong>Last Updated:</strong> February 10, 2026</p>
+        <p class="last-updated"><strong>Last Updated:</strong> April 21, 2026</p>
 
         <div class="highlight-box">
             <p><strong>Your Privacy Matters:</strong> TANGENT is committed to protecting your privacy. We only collect the minimum data necessary to provide our AI-powered browser assistant service. Your conversations are processed solely to generate AI responses and are not used to train AI models or shared with third parties.</p>
@@ -132,7 +132,7 @@
 
         <h3>2.1 Service Delivery</h3>
         <ul>
-            <li>Process AI queries and generate responses using OpenAI's GPT models</li>
+            <li>Process AI queries and generate responses using OpenAI's GPT models and Anthropic's Claude models</li>
             <li>Maintain conversation context within chat sessions</li>
             <li>Track quota usage and enforce subscription limits</li>
             <li>Provide personalized AI assistance based on webpage context</li>
@@ -192,15 +192,20 @@
 
         <h2>4. Data Sharing and Third Parties</h2>
 
-        <h3>4.1 Essential Service Providers</h3>
-        <p>We share data only with trusted partners essential to our service:</p>
+        <h3>4.1 Essential Service Providers (Sub-processors)</h3>
+        <p>We share data only with trusted sub-processors essential to our service. Each sub-processor below operates under a Data Processing Agreement (DPA) with TANGENT, and processes data only on our documented instructions per GDPR Article 28.</p>
         <ul>
-            <li><strong>OpenAI</strong> – AI model provider. Your queries are sent to OpenAI's API to generate responses. OpenAI does not use TANGENT queries to train their models per <a href="https://openai.com/enterprise-privacy" target="_blank">Enterprise Privacy Policy</a>.</li>
+            <li><strong>OpenAI</strong> (United States) – AI model provider for GPT-4o and GPT-4o-mini. Your selected text and relevant page context are sent to OpenAI's API to generate responses. OpenAI does not use API data to train their models, and processes data under our signed DPA per <a href="https://openai.com/policies/data-processing-addendum/" target="_blank">OpenAI's Data Processing Addendum</a>.</li>
+            <li><strong>Anthropic</strong> (United States) – AI model provider for Claude Sonnet 4.5 and Claude Haiku 4.5. Used when our auto-router selects a Claude model for your query, or when you explicitly choose Claude on the Business plan. Anthropic does not train on API data, and processes data under their <a href="https://www.anthropic.com/legal/commercial-terms" target="_blank">Commercial Terms of Service</a> which incorporate a DPA.</li>
             <li><strong>Supabase</strong> – Database and authentication provider. Stores user accounts, quotas, and usage logs securely.</li>
             <li><strong>Stripe</strong> – Payment processor. Handles all credit card transactions. Stripe is PCI DSS Level 1 certified.</li>
             <li><strong>Vercel</strong> – Cloud hosting provider. Hosts our backend API functions.</li>
             <li><strong>Resend</strong> – Email delivery service for transactional emails (receipts, notifications).</li>
+            <li><strong>cron-job.org</strong> – External scheduler that triggers our internal monitoring and cleanup tasks. Receives only an authentication token, never your data.</li>
         </ul>
+
+        <h3>4.1.1 Data Residency</h3>
+        <p>Your AI queries are processed by US-based servers operated by OpenAI and Anthropic. By using TANGENT, you consent to this international transfer. Both sub-processors operate under EU Standard Contractual Clauses (SCCs) for transfers from the European Economic Area, and both contractually limit retention of API request data to a maximum of 30 days for abuse monitoring before deletion.</p>
 
         <h3>4.2 Legal Requirements</h3>
         <p>We may disclose information if required by law or to:</p>
