@@ -1,0 +1,15 @@
+{
+  "name": "tangent-landing-tests",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Playwright E2E for the TANGENT marketing/landing site (all external network mocked)",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2"
+  }
+}
