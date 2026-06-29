@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tangent Uninstalled — We're sorry to see you go</title>
+    <meta name="description" content="Tangent has been removed from your browser. Tell us why, or reinstall any time.">
+    <meta name="robots" content="noindex">
+    <link rel="icon" href="/images/tangent_t_logo.png">
+    <style>
+        :root {
+            --bg: #05060a;
+            --bg-soft: #121520;
+            --border: #1f2232;
+            --text-main: #f5f7ff;
+            --text-muted: #b1b5c9;
+            --accent: #2a8fd5;
+            --accent-strong: #4a9eff;
+        }
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+        a { color: var(--accent-strong); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .wrap {
+            max-width: 560px;
+            margin: 0 auto;
+            padding: 64px 24px 80px;
+            text-align: center;
+        }
+        .logo { width: 168px; height: auto; margin-bottom: 36px; opacity: 0.95; }
+        h1 { font-size: 1.9rem; line-height: 1.25; margin: 0 0 14px; letter-spacing: -0.01em; }
+        .lede { color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; margin: 0 auto 8px; max-width: 460px; }
+        .card {
+            background: var(--bg-soft);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 26px;
+            margin: 36px 0 28px;
+            text-align: left;
+        }
+        .card h2 { font-size: 1.05rem; margin: 0 0 6px; }
+        .card .sub { color: var(--text-muted); font-size: 0.9rem; margin: 0 0 18px; }
+        .reasons { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+        .reason {
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-main);
+            font: inherit;
+            font-size: 0.9rem;
+            padding: 9px 14px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: border-color .15s ease, background .15s ease;
+        }
+        .reason:hover { border-color: var(--accent); }
+        .reason[aria-pressed="true"] {
+            border-color: var(--accent-strong);
+            background: rgba(74, 158, 255, 0.14);
+            color: var(--accent-strong);
+        }
+        textarea {
+            width: 100%;
+            min-height: 92px;
+            resize: vertical;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-main);
+            font: inherit;
+            font-size: 0.95rem;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+        }
+        textarea:focus { outline: none; border-color: var(--accent); }
+        .btn {
+            display: inline-block;
+            font: inherit;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 12px 22px;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover { text-decoration: none; }
+        .btn-primary { background: var(--accent-strong); color: #05060a; }
+        .btn-primary:hover { background: #6fb2ff; }
+        .btn-ghost { background: transparent; border-color: var(--border); color: var(--text-main); }
+        .btn-ghost:hover { border-color: var(--accent); }
+        .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 8px; }
+        .send-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .thanks { color: var(--accent-strong); font-size: 0.9rem; margin: 0; display: none; }
+        .footnote { color: var(--text-muted); font-size: 0.82rem; line-height: 1.6; margin-top: 40px; }
+        @media (max-width: 480px) {
+            .wrap { padding-top: 44px; }
+            h1 { font-size: 1.55rem; }
+        }
+    </style>
+</head>
+<body>
+    <main class="wrap">
+        <a href="/"><img class="logo" src="/images/tangent_white_logo.png" alt="Tangent"></a>
+
+        <h1>Tangent has been removed</h1>
+        <p class="lede">Thanks for giving it a try. Your drafts and notes lived only in your browser, so nothing of yours is left on our servers.</p>
+
+        <div class="card">
+            <h2>Mind telling us why you left?</h2>
+            <p class="sub">Optional — it genuinely helps us make Tangent better.</p>
+
+            <div class="reasons" id="reasons">
+                <button type="button" class="reason" data-reason="Didn't find it useful">Didn't find it useful</button>
+                <button type="button" class="reason" data-reason="Too confusing to use">Too confusing</button>
+                <button type="button" class="reason" data-reason="Performance / slowed my browser">Slowed my browser</button>
+                <button type="button" class="reason" data-reason="Privacy concerns">Privacy concerns</button>
+                <button type="button" class="reason" data-reason="Found a better alternative">Found an alternative</button>
+                <button type="button" class="reason" data-reason="Only needed it temporarily">Only needed it briefly</button>
+                <button type="button" class="reason" data-reason="Something was broken">Something was broken</button>
+            </div>
+
+            <textarea id="details" placeholder="Anything else you'd like us to know? (optional)"></textarea>
+
+            <div class="send-row">
+                <button type="button" class="btn btn-primary" id="sendBtn">Send feedback</button>
+                <p class="thanks" id="thanks">Thanks — your email draft is ready to send. 💙</p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/tangent/cgfcbinngikhfljfjmgdoledgcaalgmm">Reinstall Tangent</a>
+            <a class="btn btn-ghost" href="/">Back to tangentapp.co</a>
+        </div>
+
+        <p class="footnote">
+            Changed your mind, or left by accident? You can reinstall any time and your account picks up where it left off.<br>
+            Questions? <a href="mailto:support@tangentapp.co">support@tangentapp.co</a>
+        </p>
+    </main>
+
+    <script>
+        (function () {
+            var selected = new Set();
+            var reasonsEl = document.getElementById('reasons');
+            var detailsEl = document.getElementById('details');
+            var sendBtn = document.getElementById('sendBtn');
+            var thanks = document.getElementById('thanks');
+
+            reasonsEl.addEventListener('click', function (e) {
+                var btn = e.target.closest('.reason');
+                if (!btn) return;
+                var reason = btn.getAttribute('data-reason');
+                var pressed = btn.getAttribute('aria-pressed') === 'true';
+                btn.setAttribute('aria-pressed', pressed ? 'false' : 'true');
+                if (pressed) { selected.delete(reason); } else { selected.add(reason); }
+            });
+
+            sendBtn.addEventListener('click', function () {
+                var reasons = Array.from(selected);
+                var details = (detailsEl.value || '').trim();
+                var lines = ['Reason for uninstalling Tangent:', ''];
+                lines.push(reasons.length ? reasons.map(function (r) { return '- ' + r; }).join('\n') : '- (not specified)');
+                if (details) { lines.push('', 'Additional notes:', details); }
+                var subject = 'Tangent uninstall feedback';
+                var body = lines.join('\n');
+                window.location.href = 'mailto:support@tangentapp.co'
+                    + '?subject=' + encodeURIComponent(subject)
+                    + '&body=' + encodeURIComponent(body);
+                thanks.style.display = 'block';
+            });
+        })();
+    </script>
+</body>
+</html>
