@@ -21,6 +21,11 @@
       "source": "/demo-tutorial.html",
       "destination": "/",
       "permanent": false
+    },
+    {
+      "source": "/download.html",
+      "destination": "/download",
+      "permanent": true
     }
   ],
   "headers": [

@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { href: '/signup', label: 'Subscriptions' },
     { href: '/faq.html', label: 'FAQs' },
     { href: '#', label: 'Sign In', isAuth: true },
-    { href: '/download.html', label: 'Download Tangent' }
+    { href: '/download', label: 'Download Tangent' }
   ];
   navLinks.forEach(function(link) {
     var a = document.createElement('a');
